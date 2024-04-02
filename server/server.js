@@ -22,6 +22,7 @@ mongoose.connection.on('connected', () => {
   console.log('MongoDB Connected');
 });
 
+//test용주석->나중에 삭제할게요
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.static('views'));

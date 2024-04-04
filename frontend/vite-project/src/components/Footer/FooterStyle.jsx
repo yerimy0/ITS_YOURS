@@ -5,16 +5,13 @@ const Content = styled.div`
     color: #fff;
     display: flex;
 
-    bottom:0;
     width: 100vW;
     height: 150px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 23px;
-
-    position : absolute;
-    bottom:0;
+    bottom:0px;
 `
 
 const Icons = styled.div`

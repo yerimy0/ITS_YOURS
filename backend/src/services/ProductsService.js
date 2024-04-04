@@ -6,4 +6,9 @@ async function productsList() {
   return productsList;
 }
 
-module.exports = productsList;
+async function searchProduct(name, author) {
+  const result = await Products.find({ name });
+  return result;
+}
+
+module.exports = { productsList, searchProduct };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { LoginWrapper, Logo } from './LoginStyles.jsx';
-import LoginForm from '../../components/LoginForm.jsx';
-import SocialLoginOptions from '../../components/SocialLoginOptions.jsx';
+import LoginForm from './LoginForm.jsx';
+import SocialLoginOptions from './SocialLoginOptions.jsx';
 import AdditionalOptions from './AdditionalOptions.jsx';
 
 const Login = () => {

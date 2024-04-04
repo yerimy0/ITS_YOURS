@@ -104,3 +104,41 @@ export const SocialButton = styled.button`
     height: auto;
   }
 `;
+
+export const ProfileWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem; 
+`;
+
+export const ProfileImage = styled.img`
+  width: 120px; 
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #009DFF; 
+`;
+
+export const IconWrapper = styled.label`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 35px; 
+  height: 35px;
+  border-radius: 50%;
+  background-color: #DED8E1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const IconImage = styled.img`
+  width: 20px; 
+  height: 20px;
+`;
+
+export const HiddenFileInput = styled.input`
+  display: none;
+`;

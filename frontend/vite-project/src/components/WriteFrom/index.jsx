@@ -1,6 +1,94 @@
-import { RegisterBox, Title, RedStar, TopTitle, Line, Input, Label, StateButtons, RegButtons, MainContent, Sentence, ProductTwoInput, SmallButton, BigButton, Notion, Img, ProductImg, Box  } from './WriteFormStyle'
+import { RegisterBox, Title, RedStar, TopTitle, Line, Input, Label, StateButtons, RegButtons, MainContent, Sentence, ProductTwoInput, SmallButton, BigButton, Notion, Img, ProductImg, Box } from './WriteFormStyle';
+import InputImg from './components/InputImg'
+import {Section, Section2, Section3, Section4} from './components/Section'
+import { useEffect, useState } from 'react';
 
-function WriteForm () {
+function WriteForm() {
+    const [register, setRegister] = useState({
+        prodName: '',
+        prodPrice: 0,
+        prodAuth: '',
+        prodPub: '',
+        prodStatus: '',
+        district: '',
+        prodDisc: '',
+        uploadImgUrls: ['', '', '']
+    });
+
+    const { prodName,
+        prodPrice,
+        prodAuth,
+        prodPub,
+        prodStatus,
+        district,
+        prodDisc, 
+        uploadImgUrls } = register;
+
+    useEffect(() => {
+        const dbReq = indexedDB.open('tempSave', 1);
+        dbReq.addEventListener('success', function (e) {
+            const db = e.target.result;
+
+            const transaction = db.transaction(['topics'], 'readonly');
+            const store = transaction.objectStore('topics');
+            const request = store.getAll();
+
+            request.onsuccess = function (e) {
+                const savedData = e.target.result;
+                if (savedData.length > 0) { 
+                    const latestData = savedData[savedData.length - 1]; 
+                    setRegister(latestData);
+                }
+            };
+        });
+    }, []);
+
+    function onChange(e) {
+        const { value, name } = e.target;
+        setRegister({
+            ...register,
+            [name]: value,
+        });
+    }
+
+    function handleImageChange(newUrls) {
+        setRegister({
+            ...register,
+            uploadImgUrls: newUrls
+        });
+    }
+
+    function tempSave() {
+        const dbReq = indexedDB.open('tempSave', 1);
+        let db;
+        dbReq.addEventListener('success', function (e) {
+            db = e.target.result;
+
+            const transaction = db.transaction(['topics'], 'readwrite'); 
+            const store = transaction.objectStore('topics');
+            const request = store.put(register);
+
+            request.onsuccess = function () {
+                console.log('임시 저장되었습니다.');
+            };
+
+            request.onerror = function () {
+                console.log('임시 저장에 실패했습니다.');
+            };
+        });
+        dbReq.addEventListener('error', function (e) {
+            const error = e.target.error;
+            console.log('error', error.name);
+        });
+        dbReq.addEventListener('upgradeneeded', function (e) {
+            db = e.target.result;
+            let oldVersion = e.oldVersion;
+            if (oldVersion < 1) {
+                const topicsStore = db.createObjectStore('topics', { keyPath: 'id', autoIncrement: true });
+            }
+        });
+    }
+
     return (
         <RegisterBox>
             <Title>
@@ -9,90 +97,23 @@ function WriteForm () {
             </Title>
             <Line><hr /></Line>
             <MainContent>
-                <InputImg />
-                <Section label={"상품명"}/>
-                <Section label={"판매가"}/>
+                <InputImg onImageChange={handleImageChange} />
+                <Section label={"상품명"} onChange={onChange} value={prodName} name="prodName" />
+                <Section label={"판매가"} onChange={onChange} value={prodPrice} name="prodPrice" />
                 <ProductTwoInput>
-                    <Section2 label={"출판사"}/>
-                    <Section2 label={"저자"}/>
+                    <Section2 label={"출판사"} onChange={onChange} value={prodPub} name="prodPub" />
+                    <Section2 label={"저자"} onChange={onChange} value={prodAuth} name="prodAuth" />
                 </ProductTwoInput>
-                <Section3 />
+                <Section3 label={"상품 설명"} onChange={onChange} value={prodDisc} name="prodDisc" />
                 <Section4 />
             </MainContent>
             <RegButtons>
-                    <BigButton className="Button">임시저장</BigButton>
-                    <BigButton className="Button">등록하기</BigButton>
+                <BigButton className="Button" onClick={tempSave}>임시저장</BigButton>
+                <BigButton className="Button">등록하기</BigButton>
             </RegButtons>
         </RegisterBox>
-    )
-}
-function InputImg () {
-    return (
-        <Box>
-            <Sentence>
-            <RedStar>*</RedStar>
-            <Label>상품이미지</Label>
-            <Notion>첫번째 사진은 책표지를 올려주세요</Notion>
-            </Sentence>
-            <ProductImg>
-                <Img src="/book1.jpeg" />
-                <Img src="/book2.jpeg" />
-                <Img src="/book3.jpeg" />
-            </ProductImg>
-        </Box>
-    )
+    );
 }
 
-function Section ({label}) {
-    return (
-        <Box>
-            <Sentence>
-                <RedStar>*</RedStar>
-                <Label>{label}</Label>
-            </Sentence>
-            {label === "상품명" ? <Input className="Medium" placeholder="상품명을 입력해주세요" /> : <Input className="Medium" placeholder="판매가를 입력해주세요" />}
-        </Box>
-    )
-}
-
-function Section2 ({label}) {
-    return (
-        <Box>
-            <Sentence>
-                <RedStar>*</RedStar>
-                <Label>{label}</Label>
-            </Sentence>
-            {label === "출판사" ? <Input className="Small" placeholder="출판사를 입력해주세요" /> : <Input className="Small" placeholder="저자를 입력해주세요" />}
-        </Box>
-    )
-}
-
-function Section3 () {
-    return (
-        <Box>
-            <Sentence>
-                <RedStar>*</RedStar>
-                <Label>상품 설명</Label>
-            </Sentence>
-            <Input className="Large" placeholder="상품에 대한 설명을 입력해주세요" />
-        </Box>
-    )
-}
-
-function Section4 () {
-    return (
-        <Box>
-            <Sentence>
-                <RedStar>*</RedStar>
-                <Label>상품 상태</Label>
-            </Sentence>
-            <StateButtons>
-                <SmallButton className="Button"> 새상품</SmallButton>
-                <SmallButton className="Button">거의 새것</SmallButton>
-                <SmallButton className="Button">중고</SmallButton>
-            </StateButtons>
-        </Box>
-    )
-}
 
 export default WriteForm;

@@ -6,7 +6,7 @@ async function productsList() {
   return productsList;
 }
 
-async function searchProduct(name, author) {
+async function searchProduct(name) {
   const result = await Products.find({ name });
   return result;
 }

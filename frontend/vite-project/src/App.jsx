@@ -1,10 +1,12 @@
-// import React, { Component } from "react";
-// import { useState } from "react";
+import Layout from "./components/Layout";
 import "./App.css";
-import Mypage from "./pages/mypage/mypage.jsx";
 
 function App() {
-  return <Mypage />;
+  return (
+    <>
+      <Layout />
+    </>
+  );
 }
 
 export default App;

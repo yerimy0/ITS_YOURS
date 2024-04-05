@@ -5,12 +5,12 @@ class MemberService {
   async signUp(id, password, realName, email, univName, phoneNum) {
     const hashedPassword = await bcrypt.hash(password, 8);
     const newMember = {
-          id: id,
-          password: hashedPassword,
-          realName: realName,
-          email: email,
-          univName: univName,
-          phoneNum: phoneNum
+      id: id,
+      password: hashedPassword,
+      realName: realName,
+      email: email,
+      univName: univName,
+      phoneNum: phoneNum,
     };
     const member = await Members.create(newMember);
     return member;
@@ -26,7 +26,7 @@ class MemberService {
         {
           user: {
             username: member.name,
-            id: member.id
+            id: member.id,
           },
         },
         process.env.ACCESS_TOKEN_SECERT,
@@ -38,9 +38,11 @@ class MemberService {
       return [accessToken, isAdmin];
     } else return false;
   }
+
+  async getMemberInfo(userId) {
+    const memberInfo = await Members.findOne({ userId });
+    return memberInfo;
+  }
 }
 
-module.exports = {
-  MemberService,
-  getUserInfo,
-};
+module.exports = MemberService;

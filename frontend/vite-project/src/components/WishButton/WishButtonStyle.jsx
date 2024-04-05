@@ -9,9 +9,4 @@ border: 0;
 padding: 0;
 `;
 
-const Icon = styled.img`
-width: 23px;
-height: 22px;
-`;
-
-export {WishBtn, Icon};
+export default WishBtn;

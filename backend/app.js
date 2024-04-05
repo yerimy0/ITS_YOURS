@@ -1,5 +1,6 @@
 const express = require('express');
 const logger = require('morgan');
+const memberRouter = require('./src/routes/MemberRouter');
 const mongoose = require('mongoose');
 
 require('dotenv').config();
@@ -14,5 +15,8 @@ var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/api/members', memberRouter);
 
 module.exports = app;

@@ -35,7 +35,7 @@ const ProductsSchema = new Schema({
   // 상품 상태
   condition: {
     type: String,
-    required: true,
+    //required: true,
   },
   // 찜 개수
   wishesCount: {
@@ -49,17 +49,16 @@ const ProductsSchema = new Schema({
   // 상품 설명
   description: {
     type: String,
-    required: true,
+    //required: true,
   },
   // 판매자 id
   sellerId: {
     type: String,
-    required: true,
+    //required: true,
   },
   // 구매자 id
   buyerId: {
-    type: String,
-    required: true,
+    type: String
   },
   // 거래 완료여부
   isCompleted: {

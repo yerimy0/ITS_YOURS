@@ -1,16 +1,20 @@
 import { Box, Sentence, RedStar, Label, Notion, ProductImg, Img, ButtonUpload } from '../WriteFormStyle';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
-function InputImg({ onImageChange}) {
-    const [uploadImgUrls, setUploadImgUrls] = useState(['', '', '']); 
+function InputImg({ onImageChange, value }) {
+    const [uploadImgUrls, setUploadImgUrls] = useState(value); 
     const FileInputs = useRef([]);
+
+    useEffect(() => {
+        setUploadImgUrls(value);
+    }, [value]);
 
     function handleChange(index, e) {
         const fileUploaded = e.target.files[0];
         const reader = new FileReader();
         reader.onloadend = () => {
             const newUrls = [...uploadImgUrls];
-            newUrls[index] = reader.result; 
+            newUrls[index] = reader.result;
             setUploadImgUrls(newUrls);
             onImageChange(newUrls);
         };
@@ -48,6 +52,5 @@ function InputImg({ onImageChange}) {
         </Box>
     );
 }
-
 
 export default InputImg;

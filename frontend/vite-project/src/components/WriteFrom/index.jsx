@@ -2,6 +2,7 @@ import { RegisterBox, Title, RedStar, TopTitle, Line, Input, Label, StateButtons
 import InputImg from './components/InputImg'
 import {Section, Section2, Section3, Section4} from './components/Section'
 import { useEffect, useState } from 'react';
+// import tempSave from '../../utils/tempSave'
 
 function WriteForm() {
     const [register, setRegister] = useState({
@@ -28,21 +29,21 @@ function WriteForm() {
         const dbReq = indexedDB.open('tempSave', 1);
         dbReq.addEventListener('success', function (e) {
             const db = e.target.result;
-
-            const transaction = db.transaction(['topics'], 'readonly');
-            const store = transaction.objectStore('topics');
+    
+            const transaction = db.transaction(['product'], 'readwrite'); 
+            const store = transaction.objectStore('product');
             const request = store.getAll();
-
+    
             request.onsuccess = function (e) {
                 const savedData = e.target.result;
                 if (savedData.length > 0) { 
-                    const latestData = savedData[savedData.length - 1]; 
+                    const latestData = savedData[0]; 
                     setRegister(latestData);
                 }
             };
         });
     }, []);
-
+    
     function onChange(e) {
         const { value, name } = e.target;
         setRegister({
@@ -57,21 +58,21 @@ function WriteForm() {
             uploadImgUrls: newUrls
         });
     }
-
+    
     function tempSave() {
         const dbReq = indexedDB.open('tempSave', 1);
         let db;
         dbReq.addEventListener('success', function (e) {
             db = e.target.result;
-
-            const transaction = db.transaction(['topics'], 'readwrite'); 
-            const store = transaction.objectStore('topics');
+    
+            const transaction = db.transaction(['product'], 'readwrite'); 
+            const store = transaction.objectStore('product');
             const request = store.put(register);
-
+    
             request.onsuccess = function () {
                 console.log('임시 저장되었습니다.');
             };
-
+    
             request.onerror = function () {
                 console.log('임시 저장에 실패했습니다.');
             };
@@ -84,10 +85,11 @@ function WriteForm() {
             db = e.target.result;
             let oldVersion = e.oldVersion;
             if (oldVersion < 1) {
-                const topicsStore = db.createObjectStore('topics', { keyPath: 'id', autoIncrement: true });
+                const productStore = db.createObjectStore('product', { keyPath: 'id', autoIncrement: true });
             }
         });
     }
+
 
     return (
         <RegisterBox>
@@ -97,7 +99,7 @@ function WriteForm() {
             </Title>
             <Line><hr /></Line>
             <MainContent>
-                <InputImg onImageChange={handleImageChange} />
+                <InputImg onImageChange={handleImageChange} value={uploadImgUrls}/>
                 <Section label={"상품명"} onChange={onChange} value={prodName} name="prodName" />
                 <Section label={"판매가"} onChange={onChange} value={prodPrice} name="prodPrice" />
                 <ProductTwoInput>
@@ -114,6 +116,5 @@ function WriteForm() {
         </RegisterBox>
     );
 }
-
 
 export default WriteForm;

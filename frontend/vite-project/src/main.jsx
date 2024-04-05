@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import Login from './pages/Login/Login';
 import ProductWrite from './pages/ProductWrite';
 import Product from './pages/Product';
+import MyPageWish from './pages/Mypage/MypageWish';
 
 
 const router = createBrowserRouter([
@@ -18,7 +19,8 @@ const router = createBrowserRouter([
       {path: "/home", element: <Home/>}, 
       {path: "/product/write", element: <ProductWrite />},
       {path: "/product", element: <Product />},
-      {path: "/product/edit/:id", element: <ProductWrite />}
+      {path: "/product/edit/:id", element: <ProductWrite />},
+      {path: "/mypage/wish", element: <MyPageWish />}
     ]}, {path: "login", element: <Login/>}
   ]);
 

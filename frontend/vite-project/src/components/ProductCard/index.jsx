@@ -6,7 +6,7 @@ function ProductCard() {
 
   return (
     <ProductCardWrap>
-      <ProductImage src="./book_cover.jpg" alt=""/>
+      <ProductImage src="/book_cover.jpg" alt=""/>
       <ProductInfoWrap>
         <ProductInfo>
           <ProductTitle>

@@ -4,13 +4,13 @@ const RegisterBox =styled.div`
     left: 263px;
     display: flex;
     align-items: flex-start;
-    width: 914px;
+    width: 1090px;
     padding: 70px 30px;
     flex-direction: column;
     justify-content: center;
 
     gap: 30px;
-    margin-left: auto;
+    margin-left: 40vh;
 
     .Button {
         border-radius: 20px;
@@ -28,7 +28,7 @@ const RegisterBox =styled.div`
     }
 
     input::placeholder {
-        font-size: 15px;
+        font-size: 18px;
         color: #888;
         font-weight: 400;
         line-height: normal;
@@ -120,6 +120,8 @@ const RegButtons = styled.div`
     align-items: center;
     gap: 45px;
     align-self: stretch;
+    width: 870px;
+    
 `
 
 const StateButtons = styled.div`
@@ -174,4 +176,13 @@ const ProductImg = styled.div`
     flex-wrap: wrap;
 `
 
-export { RegisterBox, Box, Title, Notion, RedStar, TopTitle, Line, Input, Label, StateButtons, RegButtons, MainContent, Sentence, ProductTwoInput, SmallButton, BigButton, Img, ProductImg }
+const ButtonUpload = styled.button`
+    cursor: pointer;
+    font: inherit;
+    min-height: 48px;
+    min-width: 48px;
+    border: none;
+    background-color: #fff;
+`
+
+export { RegisterBox, Box, Title, Notion, RedStar, TopTitle, Line, Input, Label, StateButtons, RegButtons, MainContent, Sentence, ProductTwoInput, SmallButton, BigButton, Img, ProductImg, ButtonUpload }

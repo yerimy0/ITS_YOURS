@@ -7,7 +7,7 @@ class MemberService {
    * 회원가입 service
    * 작성자 : 이정은
    * 작성 시작일 : 2024-04-03
-   * 회원가입시 동작되는 DB작업을 모아놓은 service입니다. 
+   * 회원가입시 동작되는 DB작업을 모아놓은 service입니다.
    */
   async signUp(id, password, realName, email, univName, phoneNum) {
     //사용자 입력 비밀번호 해시화
@@ -18,7 +18,7 @@ class MemberService {
       realName: realName,
       email: email,
       univName: univName,
-      phoneNum: phoneNum
+      phoneNum: phoneNum,
     };
     //회원 정보 create
     const member = await Members.create(newMember);
@@ -44,7 +44,7 @@ class MemberService {
         {
           user: {
             username: member.name,
-            id: member.id
+            id: member.id,
           },
         },
         process.env.ACCESS_TOKEN_SECERT,
@@ -52,14 +52,19 @@ class MemberService {
       );
 
       isAdmin = member.isAdmin; //관리자 회원여부
-      
+
       //액세스 토큰 & 관리자 회원여부 반환
       return [accessToken, isAdmin];
     }
-    //로그인 실패 
+    //로그인 실패
     else {
-      return false;  
+      return false;
     }
+  }
+
+  async getMemberInfo(userId) {
+    const memberInfo = await Members.findOne({ userId });
+    return memberInfo;
   }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Wrapper, Logo } from '../../components/Users/UsersStyles';
 import SignUpForm from '../../components/Users/SignUpForm';
-import AdditionalOptions from '../../components/Users/AdditionalOprions';
+import AdditionalOptions from '../../components/Users/AdditionalOptions';
 
 const SignUp = () => {
   const additionalOptions = [

@@ -1,14 +1,18 @@
-const OrderService = require("../service");
+const OrderService = require("../services/OrderService");
 
-/** 주문정보 조회 */
+/**
+ * 주문 정보 조회 controller
+ * 작성자 : 유경아
+ * 작성 시작일 : 2024-04-04
+ * 기능 : 회원 정보 조회시 필요한 동작들을 모아놓은 컨트롤러입니다.
+ */
 const getOrderInfo = async (req, res, next) => {
   try {
     const orderService = new OrderService();
 
-    const { buyId } = req.params;
+    const buyerId = req.params;
 
-    // buyId 또는 prodId를 이용하여 주문 내역 조회
-    const order = await orderService.getOrderById({ buyId });
+    const order = await orderService.getOrderInfo(buyerId);
 
     if (!order) {
       return res
@@ -22,4 +26,4 @@ const getOrderInfo = async (req, res, next) => {
   }
 };
 
-module.exports = { getOrderInfo };
+module.exports = getOrderInfo;

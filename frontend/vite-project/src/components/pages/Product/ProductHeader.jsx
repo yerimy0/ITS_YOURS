@@ -1,9 +1,10 @@
+import React, { useState } from 'react';
 import SearchBar from '../../SearchBar';
-import ProductFilter from './ProductFilter';
-import {ProductListHeader, ProductListTitle, SearchResultContainer, SearchResult, ProductFilterWrap, 
-  Alignments, Bilnd, Alignment, Filter} from './ProductHeaderStyle'; 
+import ProductFilter from '../../ProductFilter/ProductFilter';
+import {ProductListHeader, ProductListTitle, SearchResultContainer, SearchResult, ProductFilterWrap} from './ProductHeaderStyle'; 
 
 function ProductHeader () {
+
 
   return (
     <ProductListHeader>
@@ -14,14 +15,7 @@ function ProductHeader () {
         <SearchResult>개의 도서를 찾았어요.</SearchResult>
       </SearchResultContainer>
       <ProductFilterWrap>
-        <Alignments>
-          <Bilnd>정렬</Bilnd>
-          <Alignment>최신순</Alignment>
-          <Alignment>저가순</Alignment>
-        </Alignments>
-        <Filter>
-          <ProductFilter />
-        </Filter>
+        <ProductFilter />
       </ProductFilterWrap>
     </ProductListHeader>
   );

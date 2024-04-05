@@ -7,7 +7,7 @@ const ProductListHeader = styled.section`
   flex-direction: column;
   gap: 30px;
   align-items: center;
-  `;
+`;
 
 const ProductListTitle = styled.h1`
   display: flex;
@@ -43,44 +43,4 @@ const ProductFilterWrap = styled.div`
   align-items: center;
 `;
 
-const Alignments = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-`;
-
-const Bilnd = styled.span`
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  width: 1px;
-`;
-
-const Alignment = styled.a`
-  color: #000;
-  text-decoration: none;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: 0.15px;
-  &:visited {
-    color: #000;
-  }
-  &:hover {
-    color: #000;
-    text-decoration: underline;
-  };
-`;
-
-const Filter = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  position: relative;
-`;
-
-
-export {ProductListHeader, ProductListTitle, SearchResultContainer, SearchResult, 
-  ProductFilterWrap, Alignments, Bilnd, Alignment, Filter,};
+export {ProductListHeader, ProductListTitle, SearchResultContainer, SearchResult, ProductFilterWrap};

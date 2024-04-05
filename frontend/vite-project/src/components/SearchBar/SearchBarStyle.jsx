@@ -22,6 +22,7 @@ const SearchInputBox = styled.div`
 `;
 
 const SearchInput = styled.input`
+  width: 100%;
   border: none;
   font-size: 28px;
   line-height: 36px;
@@ -33,7 +34,21 @@ const SearchInput = styled.input`
     outline: none;
     }
 `;
+const ClearButton = styled.button`
+  cursor: pointer;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #DED8E1;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 400;
+  position: relative;
+  padding: 5px;
+`;
+
 const SearchButton = styled.button`
+  cursor: pointer;
   background-color: transparent;
   display: flex;
   align-items: center;
@@ -41,4 +56,4 @@ const SearchButton = styled.button`
   border: none;
 `;
 
-export {SearchWrap, SearchInputBox, SearchInput, SearchButton};
+export {SearchWrap, SearchInputBox, SearchInput, ClearButton, SearchButton};

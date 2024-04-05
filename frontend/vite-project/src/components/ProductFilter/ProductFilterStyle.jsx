@@ -1,5 +1,45 @@
 import styled from 'styled-components';
 
+const Alignments = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+`;
+
+const Bilnd = styled.span`
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  width: 1px;
+`;
+
+const Alignment = styled.a`
+  color: #000;
+  text-decoration: none;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: ${props => props.isActive ? '700' : '500'};
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  cursor: pointer;
+  &:visited {
+    color: #000;
+  }
+  &:hover {
+    color: #000;
+    text-decoration: underline;
+  };
+`;
+
+const Filter = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+`;
+
 const FilterButton = styled.button`
   font-size: 16px;
   font-style: normal;
@@ -96,10 +136,12 @@ const FilterInButton = styled.button`
   letter-spacing: 0.15px;
   text-align: center;
   white-space:nowrap;
+  cursor: pointer;
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed; 
   }
 `;
 
-export { FilterButton, FilterContent, LocationList, UniversityList, LocationItem, FilterList, Buttons, FilterInButton };
+export { Alignments, Bilnd, Alignment, Filter, FilterButton, FilterContent, LocationList, UniversityList, LocationItem, 
+  FilterList, Buttons, FilterInButton };

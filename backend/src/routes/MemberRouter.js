@@ -1,9 +1,16 @@
 const { Router } = require("express");
-
-const { signUp } = require("../controllers");
+const {
+  signUp,
+  login,
+  getMemberInfo,
+} = require("../controllers/MemberController");
 
 const router = Router();
-
-router.post('/signup', signup);
+// 회원가입
+router.post("/signUp", signUp);
+// 로그인
+router.post("/login", login);
+// 회원정보 조회
+router.get("/me", getMemberInfo);
 
 module.exports = router;

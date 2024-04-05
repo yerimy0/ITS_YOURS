@@ -7,7 +7,7 @@ function Header() {
   return (
     <HeaderMain>
       <RightNav>
-        <img src="./main_logo.png" />
+        <img src="/main_logo.png" />
         <NavLink className="MainLink" to="/">
           도서거래
         </NavLink>
@@ -21,7 +21,7 @@ function Header() {
         ) : (
           <NavLink to="/">로그인/회원가입</NavLink>
         )}
-        <img src="./light.png" />
+        <img src="/light.png" />
       </LeftNav>
     </HeaderMain>
   );

@@ -5,8 +5,9 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
-import Mypage from "./pages/Mypage/Mypage";
-
+import ProductWrite from "./pages/ProductWrite";
+import Product from "./pages/Product";
+import SalesHistory from "./pages/Mypage/SalesHistory.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,8 +17,9 @@ const router = createBrowserRouter([
         path: "/home",
         element: <Home />,
       },
-      { path: "/product/write", element: <></> },
-      { path: "/mypage", element: <Mypage /> },
+      { path: "/product/write", element: <ProductWrite /> },
+      { path: "/product", element: <Product /> },
+      { path: "/saleshistory", element: <SalesHistory /> },
     ],
   },
 ]);

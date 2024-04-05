@@ -7,7 +7,7 @@ const {
 
 const router = Router();
 
-router.post("/productsList", productsList);
-router.post("/searchProduct", searchProduct);
+router.get("/productsList", productsList);
+router.get("/searchProduct", searchProduct);
 
 module.exports = router;

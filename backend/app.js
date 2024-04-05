@@ -2,6 +2,7 @@ const express = require("express");
 const logger = require("morgan");
 const memberRouter = require("./src/routes/MemberRouter");
 const productsRouter = require("./src/routes/ProductsRouter");
+const insertBooks = require('./src/scripts/insertBooks');
 const mongoose = require("mongoose");
 
 require("dotenv").config();
@@ -20,5 +21,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/members", memberRouter);
 app.use("/api/products", productsRouter);
+app.use("/scripts", insertBooks);
 
 module.exports = app;

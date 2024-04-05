@@ -1,6 +1,6 @@
 const { Schema } = require("mongoose");
 
-const MembersSchema = new Schema({
+const ProductsSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -52,3 +52,5 @@ const MembersSchema = new Schema({
     default: () => Date.now() + 9 * 60 * 60 * 1000,
   },
 });
+
+module.exports = ProductsSchema;

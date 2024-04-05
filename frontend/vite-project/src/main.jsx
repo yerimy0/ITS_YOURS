@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import Login from './pages/Login/Login';
 import ProductWrite from './pages/ProductWrite';
 import Product from './pages/Product';
+import  NotFound from './components/pages/NotFound'
 
 const router = createBrowserRouter([
     {path: "/", 
@@ -16,7 +17,8 @@ const router = createBrowserRouter([
       {path: "/home", element: <Home/>}, 
       {path: "/product/write", element: <ProductWrite />},
       {path: "/product", element: <Product />},
-      {path: "/product/edit/:id", element: <ProductWrite />}
+      {path: "/product/edit/:id", element: <ProductWrite />},
+      {path: "/*", element: <NotFound />}
     ]}, {path: "login", element: <Login/>}
   ]);
 

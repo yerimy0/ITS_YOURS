@@ -1,19 +1,8 @@
 import styled from 'styled-components';
 
-const SearchBar = () => {
-  return (
-    <SearchWrap className="search_wrap">
-        <SearchInputBox className="search_input_box">
-          <SearchInput  className="search_input" type="text" placeholder="원하는 책을 검색하세요." />
-          <SearchButton className="search_button" href="">
-            <SearchIcon src="./search_icon.svg" alt="검색 버튼 아이콘" />
-          </SearchButton>
-        </SearchInputBox>
-      </SearchWrap>
-  )
-}
 
 const SearchWrap = styled.div`
+  max-width: 1200px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -33,6 +22,7 @@ const SearchInputBox = styled.div`
 `;
 
 const SearchInput = styled.input`
+  width: 100%;
   border: none;
   font-size: 28px;
   line-height: 36px;
@@ -40,20 +30,30 @@ const SearchInput = styled.input`
   position: relative;
   padding: 5px;
   background: none;
+  &:focus {
+    outline: none;
+    }
 `;
+const ClearButton = styled.button`
+  cursor: pointer;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #DED8E1;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 400;
+  position: relative;
+  padding: 5px;
+`;
+
 const SearchButton = styled.button`
-  width: 30px;
-  height: 30px;
+  cursor: pointer;
   background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
 `;
-const SearchIcon = styled.img`
-  width: 24px;
-  position: relative;
-  height: 24px;
-`;
 
-export default SearchBar;
+export {SearchWrap, SearchInputBox, SearchInput, ClearButton, SearchButton};

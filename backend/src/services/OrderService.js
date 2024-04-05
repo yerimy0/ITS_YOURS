@@ -10,7 +10,6 @@ class OrderService {
     const memberInfo = await Members.find({});
     // 가장 최신의것 하나
 
-    
     return memberInfo;
   }
 }

@@ -11,6 +11,7 @@ import FindId from './pages/Find/FindId'
 import FindPassword from './pages/Find/FindPassword'
 import ProductWrite from './pages/ProductWrite';
 import Product from './pages/Product';
+import  NotFound from './components/pages/NotFound'
 import MyPageWish from './pages/Mypage/MypageWish';
 
 
@@ -22,8 +23,10 @@ const router = createBrowserRouter([
       {path: "/product/write", element: <ProductWrite />},
       {path: "/product", element: <Product />},
       {path: "/product/edit/:id", element: <ProductWrite />},
+      {path: "/*", element: <NotFound />},
       {path: "/mypage/wish", element: <MyPageWish />}
     ]}, {path: "login", element: <Login/>},
+        {path: "login", element: <Login/>},
         {path: "findid", element: <FindId/>},
         {path: "findpassword", element: <FindPassword/>}
   ]);

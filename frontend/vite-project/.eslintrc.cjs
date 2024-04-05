@@ -1,4 +1,5 @@
 module.exports = {
+  //eslintrc 파일을 찾을 때, 해당 프로젝트 디텍뿐만 아니라 내PC의 root 디텍까지 탐색
   root: true,
   env: { browser: true, es2020: true },
   extends: [

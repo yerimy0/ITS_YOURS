@@ -1,10 +1,13 @@
+import { useParams } from 'react-router-dom';
 import { RegisterBox, Title, RedStar, TopTitle, Line, Input, Label, StateButtons, RegButtons, MainContent, Sentence, ProductTwoInput, SmallButton, BigButton, Notion, Img, ProductImg, Box } from './WriteFormStyle';
 import InputImg from './components/InputImg'
 import {Section, Section2, Section3, Section4} from './components/Section'
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 // import tempSave from '../../utils/tempSave'
 
 function WriteForm() {
+    const {id} = useParams();
+    console.log(id)
     const [register, setRegister] = useState({
         prodName: '',
         prodPrice: 0,
@@ -58,7 +61,7 @@ function WriteForm() {
             uploadImgUrls: newUrls
         });
     }
-    
+
     function tempSave() {
         const dbReq = indexedDB.open('tempSave', 1);
         let db;
@@ -94,7 +97,7 @@ function WriteForm() {
     return (
         <RegisterBox>
             <Title>
-                <TopTitle>상품 등록</TopTitle>
+                {id === undefined? (<TopTitle>상품 등록</TopTitle>): (<TopTitle>상품 수정</TopTitle>)}
                 <RedStar>*필수 항목</RedStar>
             </Title>
             <Line><hr /></Line>
@@ -111,7 +114,7 @@ function WriteForm() {
             </MainContent>
             <RegButtons>
                 <BigButton className="Button" onClick={tempSave}>임시저장</BigButton>
-                <BigButton className="Button">등록하기</BigButton>
+                {id === undefined? (<BigButton className="Button">등록하기</BigButton>): (<BigButton className="Button">수정하기</BigButton>)}
             </RegButtons>
         </RegisterBox>
     );

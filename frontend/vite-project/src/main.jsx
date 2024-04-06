@@ -14,6 +14,7 @@ import ProductWrite from './pages/ProductWrite';
 import Product from './pages/Product';
 import  NotFound from './components/pages/NotFound'
 import MyPageWish from './pages/Mypage/MypageWish';
+import MyPage from './pages/Mypage/Mypage.jsx'
 
 
 const router = createBrowserRouter([
@@ -25,9 +26,9 @@ const router = createBrowserRouter([
       {path: "/product", element: <Product />},
       {path: "/product/edit/:id", element: <ProductWrite />},
       {path: "/*", element: <NotFound />},
-      {path: "/mypage/wish", element: <MyPageWish />}
+      {path: "/mypage/wish", element: <MyPageWish />},
+      {path: "/mypage", element: <MyPage />}
     ]}, {path: "login", element: <Login/>},
-        {path: "login", element: <Login/>},
         {path: "findid", element: <FindId/>},
         {path: "findpassword", element: <FindPassword/>},
         {path: "/signup", element: <SignUp/>}

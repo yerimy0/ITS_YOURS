@@ -40,7 +40,7 @@ const TitleName = styled.p`
 
 const Box2 = styled.section`
 	width: 100%;
-	height: 740px;
+	height: 750px;
 	display: inline-flex;
 	flex-direction: column;
 	align-items: center;
@@ -129,6 +129,87 @@ const BookInfo = styled.div`
 	line-height: normal;
 `;
 
+const Container = styled.div`
+	display: flex;
+	padding: 50px;
+	width: 1016px;
+	height: 190px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	align-self: stretch;
+	border-radius: 15px 15px 0px 0px;
+	background: #f2f2f2;
+`;
+
+const Border = styled.img`
+	position: absolute;
+	width: 1175px;
+	left: 15%;
+`;
+
+const Line = styled.div`
+	width: 700px;
+	height: 1px;
+`;
+
+const PRCOntainer = styled.div`
+	width: 1100px;
+	height: 400px;
+	display: flex;
+
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 10px;
+	border-radius: 40px;
+	background: #f2fdff;
+`;
+
+const PRContent = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	gap: 20px;
+	align-self: stretch;
+	flex-wrap: wrap;
+	margin: 90px;
+`;
+
+const EachInfo = styled.div`
+	display: flex;
+	width: 209px;
+	height: 200px;
+	flex-direction: column;
+	align-items: center;
+	gap: 0;
+	justify-content: flex-end;
+}
+`;
+
+const SmallIcon = styled.img`
+	width: 100px;
+`;
+
+const SmallTitle = styled(Title)`
+	font-size: 15px;
+	color: #666;
+`;
+
+const CountNum = styled.p`
+	font-size: 45px;
+	font-style: normal;
+	font-weight: 800;
+	margin-right: 11px;
+`;
+
+const Unit = styled.div`
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+`;
 export {
 	Box1,
 	Title,
@@ -144,4 +225,14 @@ export {
 	Icon,
 	Box3,
 	BookInfo,
+	Container,
+	Border,
+	Line,
+	PRCOntainer,
+	PRContent,
+	EachInfo,
+	SmallIcon,
+	SmallTitle,
+	CountNum,
+	Unit,
 };

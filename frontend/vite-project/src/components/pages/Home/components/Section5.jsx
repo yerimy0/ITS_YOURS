@@ -41,9 +41,9 @@ function Section5() {
 		</Box2>
 	);
 }
-// CountUp 컴포넌트
+
 function CountUp({ end }) {
-	const count = useCountUp(end); // useCountUp hook을 사용하여 숫자를 애니메이션화합니다.
+	const count = useCountUp(end);
 	return <CountNum>{count}</CountNum>;
 }
 export default Section5;

@@ -11,4 +11,26 @@ async function searchProduct(name) {
   return result;
 }
 
-module.exports = { productsList, searchProduct };
+async function productInfo(id) {
+  const result = await Products.find({ id });
+  return result;
+}
+
+async function insertProduct(userId, name, imgUrls, price, author, publisher, condition, region, description) {
+  const newProduct = {
+    sellerId: userId,
+    name: name,
+    imgUrls: imgUrls,
+    price: price,
+    author: author,
+    publisher: publisher,
+    condition: condition,
+    region: region,
+    description: description
+  }
+
+  const product = await Products.create(newProduct);
+  return product;
+}
+
+module.exports = { productsList, searchProduct, productInfo, insertProduct };

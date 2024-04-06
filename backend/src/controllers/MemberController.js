@@ -8,8 +8,7 @@ const MemberService = require("../services/MemberService");
  */
 const signUp = async (req, res, next) => {
   try {
-    const { id, password, realName, email, univName, phoneNum } = req.body;
-
+    const { id, password, realName, email, univName, phoneNum, nickName } = req.body;
     //서비스 객체 생성
     const memberService = new MemberService();
     //서비스 접근, signUp 메소드 실행
@@ -19,7 +18,8 @@ const signUp = async (req, res, next) => {
       realName,
       email,
       univName,
-      phoneNum
+      phoneNum,
+      nickName
     );
     //통신 실패
     if (!member) {
@@ -65,7 +65,12 @@ const login = async (req, res, next) => {
   }
 };
 
-// 회원정보 조회
+/**
+ * 회원정보 조회 controller
+ * 작성자 : 유경아
+ * 작성 시작일 : 2024-04-04
+ * 회원정보 기능에 필요한 동작들을 모아놓은 controller입니다.
+ */
 const getMemberInfo = async (req, res, next) => {
   try {
     const userId = req.id;

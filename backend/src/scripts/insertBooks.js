@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-const Products = require('../models');
+const Products = require('../models/index');
 const app = express();
 
 function getRandomRegion(regions) {

@@ -6,42 +6,39 @@
   import Layout from './components/Layout';
   import Home from './pages/Home'
 
-import Login from './pages/Login/Login';
-import SignUp from './pages/Signup/Signup';
-import FindId from './pages/Find/FindId'
-import FindPassword from './pages/Find/FindPassword'
-import ProductWrite from './pages/ProductWrite';
-import Product from './pages/Product';
-import  NotFound from './components/pages/NotFound'
-import MyPageWish from './pages/Mypage/MypageWish';
-import MyPage from './pages/Mypage/Mypage.jsx'
+  import Login from './pages/Login/Login';
+  import SignUp from './pages/Signup/Signup';
+  import FindId from './pages/Find/FindId'
+  import FindPassword from './pages/Find/FindPassword'
+  import ProductWrite from './pages/ProductWrite';
+  import Product from './pages/Product';
+  import  NotFound from './components/pages/NotFound'
+  import MyPageWish from './pages/Mypage/MypageWish';
+  import MyPage from './pages/Mypage/Mypage.jsx'
 
+  const router = createBrowserRouter([
+      {path: "/", 
+      element: <Layout/>, 
+      children: [
+        {path: "/home", element: <Home/>}, 
+        {path: "/product/write", element: <ProductWrite />},
+        {path: "/product", element: <Product />},
+        {path: "/product/edit/:id", element: <ProductWrite />},
+        {path: "/*", element: <NotFound />},
+        {path: "/mypage/wish", element: <MyPageWish />},
+        {path: "/mypage", element: <MyPage />}
 
-const router = createBrowserRouter([
-    {path: "/", 
-    element: <Layout/>, 
-    children: [
-      {path: "/home", element: <Home/>}, 
-      {path: "/product/write", element: <ProductWrite />},
-      {path: "/product", element: <Product />},
-      {path: "/product/edit/:id", element: <ProductWrite />},
-      {path: "/*", element: <NotFound />},
-      {path: "/mypage/wish", element: <MyPageWish />},
-      {path: "/mypage", element: <MyPage />}
-    ]}, {path: "login", element: <Login/>},
-        {path: "findid", element: <FindId/>},
-        {path: "findpassword", element: <FindPassword/>},
-        {path: "/signup", element: <SignUp/>}
-  ]);
+      ]}, {path: "login", element: <Login/>},
+          {path: "findid", element: <FindId/>},
+          {path: "findpassword", element: <FindPassword/>},
+          {path: "/signup", element: <SignUp/>}
+    ]);
 
   ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
       {/* <BrowserRouter>
         <App />
       </BrowserRouter> */}
-      <RouterProvider router={router} />
-      
-    </React.StrictMode>,
-  )
-
-
+    <RouterProvider router={router} />
+  </React.StrictMode>,
+)

@@ -1,4 +1,4 @@
-const { Members } = require("../models");
+const { Members } = require("../models/index");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -9,7 +9,7 @@ class MemberService {
    * 작성 시작일 : 2024-04-03
    * 회원가입시 동작되는 DB작업을 모아놓은 service입니다.
    */
-  async signUp(id, password, realName, email, univName, phoneNum) {
+  async signUp(id, password, realName, email, univName, phoneNum, nickName) {
     //사용자 입력 비밀번호 해시화
     const hashedPassword = await bcrypt.hash(password, 8);
     const newMember = {
@@ -19,6 +19,7 @@ class MemberService {
       email: email,
       univName: univName,
       phoneNum: phoneNum,
+      nickName: nickName
     };
     //회원 정보 create
     const member = await Members.create(newMember);

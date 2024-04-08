@@ -52,12 +52,12 @@ const MembersSchema = new Schema({
   // 회원정보 수정일
   updatedAt: {
     type: Date,
-    default: () => Date.now() + 9 * 60 * 60 * 1000,
+    //default: () => Date.now() + 9 * 60 * 60 * 1000,
   },
   // 회원 탈퇴일
   deletedAt: {
     type: Date,
-    default: null,
+    //default: null,
   },
   // 관리자 회원 여부
   isAdmin: {

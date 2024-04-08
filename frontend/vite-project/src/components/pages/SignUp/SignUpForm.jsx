@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ProfileForm from './ProfileForm';
-import ProfileImageUploader from './ProfileImageUploader';
+import ProfileForm from '../../Users/ProfileForm';
+import ProfileImageUploader from '../../Users/ProfileImageUploader';
 
 const SignUpForm = () => {
   const [profileImage, setProfileImage] = useState(null);

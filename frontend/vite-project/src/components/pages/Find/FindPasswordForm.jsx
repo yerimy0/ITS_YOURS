@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DynamicForm from './DynamicForm';
-import Modal from './Modal';
-import sendDataToServer from './sendDataToServer';
+import DynamicForm from '../../Users/DynamicForm';
+import Modal from '../../Users/Modal';
+import sendDataToServer from '../../Users/sendDataToServer';
 
 const FindPasswordForm = () => {
   const navigate = useNavigate();

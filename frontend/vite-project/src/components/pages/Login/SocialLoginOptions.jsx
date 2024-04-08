@@ -1,5 +1,5 @@
 import React from 'react';
-import { SocialLogin, SocialLoginTitle, SocialButtonContainer, SocialButton } from './UsersStyles';
+import { SocialLogin, SocialLoginTitle, SocialButtonContainer, SocialButton } from '../../Users/UsersStyles';
 
 const SocialLoginOptions = () => (
   <SocialLogin>

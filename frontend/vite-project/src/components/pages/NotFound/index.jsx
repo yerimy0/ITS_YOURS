@@ -7,7 +7,7 @@ function NotFound() {
         <FirstText> 404</FirstText>
         <NotFoundText>PAGE NOT FOUND</NotFoundText>
       </Words>
-      <MainCharacter src="main_character.png" alt="Main Character" />
+      <MainCharacter src="./main_character.png" alt="Main Character" />
     </Container>
   )
 }

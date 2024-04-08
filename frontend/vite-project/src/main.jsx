@@ -15,6 +15,7 @@
   import  NotFound from './components/pages/NotFound'
   import MyPageWish from './pages/Mypage/MypageWish';
   import MyPage from './pages/Mypage/Mypage.jsx'
+  import ProductDetail from './pages/ProductDetail';
 
   const router = createBrowserRouter([
       {path: "/", 
@@ -26,7 +27,8 @@
         {path: "/product/edit/:id", element: <ProductWrite />},
         {path: "/*", element: <NotFound />},
         {path: "/mypage/wish", element: <MyPageWish />},
-        {path: "/mypage", element: <MyPage />}
+        {path: "/mypage", element: <MyPage />},
+        {path: "/product/detail", element: <ProductDetail />}
 
       ]}, {path: "login", element: <Login/>},
           {path: "findid", element: <FindId/>},

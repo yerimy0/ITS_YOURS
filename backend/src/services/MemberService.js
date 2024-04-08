@@ -48,7 +48,7 @@ class MemberService {
             id: member.id,
           },
         },
-        process.env.ACCESS_TOKEN_SECERT,
+        process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: "14d" } //토큰 유효기간
       );
 

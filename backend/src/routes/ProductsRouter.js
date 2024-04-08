@@ -4,7 +4,8 @@ const {
   productsList,
   searchProduct,
   productInfo,
-  insertProduct
+  insertProduct,
+  updateProduct
 } = require("../controllers/ProductsController");
 
 const router = Router();
@@ -14,5 +15,7 @@ router.get("/searchProduct", searchProduct);
 router.get("/productInfo?", productInfo);
 
 router.post('/', insertProduct);
+router.put('/', updateProduct);
+router.delete
 
 module.exports = router;

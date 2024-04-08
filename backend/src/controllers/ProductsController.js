@@ -1,5 +1,5 @@
 const productsService = require("../services/ProductsService");
-const ObjectId = require("mongodb").ObjectId;
+const ObjectId = require('mongodb').ObjectId;
 const axios = require('axios');
 
 // 상품 전체목록 조회
@@ -46,9 +46,11 @@ const productInfo = async (req, res) => {
 const insertProduct = async (req, res, next) => {
   try {
     const { name, condition, region, description } = req.body;
+    //알라딘 상품검색 API 연동
     const apiUrl = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=${process.env.TTBKey}&Query=${name}&QueryType=Title&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101`;
 
     const response = await axios.get(apiUrl);
+    //통신값 중 첫번째 값
     const productData = response.data.item[0];
 
     const product = await productsService.insertProduct({
@@ -71,7 +73,33 @@ const insertProduct = async (req, res, next) => {
   }
 };
 
-//상품정보 수정
+const updateProduct = async (req, res, next) => {
+  try {
+    const { prodId } = req.query;
+    const prodObjectId = new ObjectId(prodId); // 상품의 _id 값
 
+    // 수정하고자 하는 상품 정보
+    const { name, imgUrls, price, author, publisher, condition, region, description } = req.body;
+    // productsService.updateProduct 함수를 호출하여 상품 정보를 수정
+    const updatedProduct = await productsService.updateProduct(
+      prodObjectId,
+      { name, imgUrls, price, author, publisher, condition, region, description }
+    );
+    
+    res.status(200).json({
+      message: "상품 정보 수정 성공",
+      data: updatedProduct,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
-module.exports = { productsList, searchProduct, productInfo, insertProduct };
+const deleteProduct = async(req, res, next) => {
+  try {
+
+  } catch(err) {
+    next(err);
+  }
+}
+module.exports = { productsList, searchProduct, productInfo, insertProduct, updateProduct };

@@ -69,6 +69,12 @@ const ProductsSchema = new Schema({
     type: Date,
     default: () => Date.now() + 9 * 60 * 60 * 1000,
   },
+  updatedAt: {
+    type: Date
+  },
+  deletedAt: {
+    type: Date
+  }
 });
 
 module.exports = ProductsSchema;

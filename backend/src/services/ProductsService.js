@@ -1,4 +1,4 @@
-const { Products } = require("../models");
+const { Products } = require("../models/index");
 
 async function productsList() {
   const productsList = await Products.find();
@@ -16,9 +16,8 @@ async function productInfo(id) {
   return result;
 }
 
-async function insertProduct(userId, name, imgUrls, price, author, publisher, condition, region, description) {
+async function insertProduct({ name, imgUrls, price, author, publisher, condition, region, description }) {
   const newProduct = {
-    sellerId: userId,
     name: name,
     imgUrls: imgUrls,
     price: price,

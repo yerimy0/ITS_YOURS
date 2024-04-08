@@ -62,7 +62,7 @@ const insertProduct = async (req, res, next) => {
     });
 
     if (!product) {
-      throw new Error('서버 오류');
+      throw new Error("서버 오류");
     }
     res.status(200).json({ data: product, message: '상품정보 추가 성공' });
   } catch (err) {

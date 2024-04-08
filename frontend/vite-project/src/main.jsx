@@ -1,10 +1,10 @@
-  import React from "react";
-  import ReactDOM from "react-dom/client";
-  import App from "./App.jsx";
-  import "./index.css";
-  import { RouterProvider, createBrowserRouter } from "react-router-dom";
-  import Layout from "./components/Layout";
-  import Home from "./pages/Home";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import './index.css';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Layout from './components/Layout';
+import Home from './pages/Home';
 
   import Login from './pages/Login/Login';
   import SignUp from './pages/SignUp/Signup';
@@ -19,7 +19,7 @@
   import ProductDetail from './pages/ProductDetail';
   import SalesHistory from './pages/Mypage/SalesHistory.jsx';
   import SignOut from './pages/SignOut/SignOut';
-  
+
 
   const router = createBrowserRouter([
       {path: "/", 
@@ -40,14 +40,14 @@
       ]}, {path: "/login", element: <Login/>},
           {path: "/findid", element: <FindId/>},
           {path: "/findpassword", element: <FindPassword/>},
-          {path: "/signup", element: <SignUp/>},
+          {path: "/signup", element: <SignUp/>}
     ]);
 
-  ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
-      {/* <BrowserRouter>
+ReactDOM.createRoot(document.getElementById('root')).render(
+	<React.StrictMode>
+		{/* <BrowserRouter>
         <App />
       </BrowserRouter> */}
-    <RouterProvider router={router} />
-  </React.StrictMode>,
-)
+		<RouterProvider router={router} />
+	</React.StrictMode>,
+);

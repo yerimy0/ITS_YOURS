@@ -1,4 +1,4 @@
-const { Members } = require("../models");
+const { Members } = require("../models/index");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -9,7 +9,7 @@ class MemberService {
    * 작성 시작일 : 2024-04-03
    * 회원가입시 동작되는 DB작업을 모아놓은 service입니다.
    */
-  async signUp(id, password, realName, email, univName, phoneNum) {
+  async signUp(id, password, realName, email, univName, phoneNum, nickName) {
     //사용자 입력 비밀번호 해시화
     const hashedPassword = await bcrypt.hash(password, 8);
     const newMember = {
@@ -19,6 +19,7 @@ class MemberService {
       email: email,
       univName: univName,
       phoneNum: phoneNum,
+      nickName: nickName
     };
     //회원 정보 create
     const member = await Members.create(newMember);
@@ -62,9 +63,40 @@ class MemberService {
     }
   }
 
+  /**
+   * 회원 정보 조회 service
+   * 작성자 : 유경아
+   * 작성 시작일 : 2024-04-05
+   * 회원정보조회 기능 관련 DB작업이 모여있는 service입니다.
+   */
   async getMemberInfo(userId) {
     const memberInfo = await Members.findOne({ userId });
     return memberInfo;
+  }
+
+  /**
+   * 회원 정보 수정 service
+   * 작성자 : 유경아
+   * 작성 시작일 : 2024-04-05
+   * 회원정보수정 기능 관련 DB작업이 모여있는 service입니다.
+   */
+  async updateMember(userId, updateData) {
+    try {
+      // MongoDB의 findByIdAndUpdate 메서드를 사용하여 회원 정보 업데이트
+      // { new: true } 옵션을 사용하여 업데이트된 문서 반환
+      const updatedMember = await Member.findByIdAndUpdate(userId, updateData, {
+        new: true,
+      });
+
+      if (!updatedMember) {
+        // 업데이트할 회원을 찾을 수 없는 경우, 에러 발생
+        throw new Error("회원을 찾을 수 없습니다.");
+      }
+
+      return updatedMember; // 업데이트된 회원 정보 반환
+    } catch (error) {
+      throw error; // 에러는 컨트롤러에서 핸들링
+    }
   }
 }
 

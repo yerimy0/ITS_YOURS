@@ -28,7 +28,7 @@ function useCountUp(end, start = 0, duration = 2000) {
 
 		const handleScroll = () => {
 			const scrollY = window.scrollY || window.pageYOffset;
-			if (scrollY >= 2900) {
+			if (scrollY >= 2300) {
 				startTime = null;
 				if (!requestId) {
 					requestId = requestAnimationFrame(updateCount);

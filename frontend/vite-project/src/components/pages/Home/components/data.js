@@ -21,6 +21,10 @@ const books = [
 	},
 ];
 
+const pics = ['book1.png', 'book2.png', 'book3.png', 'book4.png', 'book5.png'];
+
+const schools = ['school1.png', 'school2.png', 'school3.png', 'school4.png', 'school5.png'];
+
 const infos = [
 	{
 		image: 'sub_map.png',
@@ -48,4 +52,4 @@ const infos = [
 	},
 ];
 
-export { books, infos };
+export { books, infos, pics, schools };

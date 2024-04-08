@@ -17,6 +17,8 @@
   import MyPage from './pages/Mypage/Mypage.jsx'
   import ProductDetail from './pages/ProductDetail';
   import SalesHistory from './pages/Mypage/SalesHistory.jsx';
+  import SignOut from './pages/SignOut/SignOut';
+  
 
   const router = createBrowserRouter([
       {path: "/", 
@@ -30,12 +32,13 @@
         {path: "/mypage/wish", element: <MyPageWish />},
         {path: "/mypage", element: <MyPage />},
         {path: "/product/detail", element: <ProductDetail />},
-        {path: "/saleshistory", element: <SalesHistory /> }
+        {path: "/saleshistory", element: <SalesHistory /> },
+        {path: "/signout", element: <SignOut/>}
 
       ]}, {path: "login", element: <Login/>},
           {path: "findid", element: <FindId/>},
           {path: "findpassword", element: <FindPassword/>},
-          {path: "/signup", element: <SignUp/>}
+          {path: "/signup", element: <SignUp/>},
     ]);
 
   ReactDOM.createRoot(document.getElementById("root")).render(

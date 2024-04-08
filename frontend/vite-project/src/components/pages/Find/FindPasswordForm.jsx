@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DynamicForm from './DynamicForm';
-import Modal from './Modal';
-import sendDataToServer from './sendDataToServer';
+import DynamicForm from '../../Users/DynamicForm';
+import Modal from '../../Users/Modal';
+import sendDataToServer from '../../Users/sendDataToServer';
 
-const FindIdForm = () => {
+const FindPasswordForm = () => {
 	const navigate = useNavigate();
-	const [name, setName] = useState('');
+	const [userId, setUserId] = useState('');
 	const [email, setEmail] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
@@ -14,10 +14,13 @@ const FindIdForm = () => {
 	const handleSubmit = async event => {
 		event.preventDefault();
 
-		const isEmailSent = await sendDataToServer('http://example.com/api/send-id', { name, email });
+		const isEmailSent = await sendDataToServer('http://example.com/api/send-password', {
+			userId,
+			email,
+		});
 		setIsModalOpen(true);
 		if (isEmailSent) {
-			setModalMessage(`입력하신 이메일 주소로 아이디를 보냈습니다.\n이메일을 확인해주세요.`);
+			setModalMessage(`입력하신 이메일 주소로 비밀번호를 보냈습니다.\n이메일을 확인해주세요.`);
 			setTimeout(() => {
 				setIsModalOpen(false);
 				navigate('/login');
@@ -30,11 +33,11 @@ const FindIdForm = () => {
 	return (
 		<>
 			<DynamicForm
-				inputPlaceholder1="이름을 입력해주세요"
+				inputPlaceholder1="아이디를 입력해주세요"
 				inputPlaceholder2="이메일을 입력해주세요"
-				buttonText="아이디 찾기"
+				buttonText="비밀번호 찾기"
 				onSubmit={handleSubmit}
-				setInput1={setName}
+				setInput1={setUserId}
 				setInput2={setEmail}
 			/>
 			{isModalOpen && (
@@ -44,4 +47,4 @@ const FindIdForm = () => {
 	);
 };
 
-export default FindIdForm;
+export default FindPasswordForm;

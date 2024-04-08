@@ -1,7 +1,7 @@
 import React from 'react';
-import { Wrapper } from '../../components/Users/UsersStyles.jsx';
-import FindPasswordForm from '../../components/Users/FindPasswordForm.jsx';
-import AdditionalOptions from '../../components/Users/AdditionalOptions.jsx';
+import { Wrapper } from '../../components/Users/UsersStyles';
+import FindPasswordForm from '../../components/pages/Find/FindPasswordForm';
+import AdditionalOptions from '../../components/Users/AdditionalOptions';
 import LogoLink from '../../components/Users/LogoLink';
 
 function FindPassword () {

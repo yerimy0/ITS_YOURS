@@ -1,7 +1,7 @@
 import React from 'react';
-import { Wrapper } from '../../components/Users/UsersStyles.jsx';
-import FindIdForm from '../../components/Users/FindIdForm.jsx';
-import AdditionalOptions from '../../components/Users/AdditionalOptions.jsx';
+import { Wrapper } from '../../components/Users/UsersStyles';
+import FindIdForm from '../../components/pages/Find/FindIdForm';
+import AdditionalOptions from '../../components/Users/AdditionalOptions';
 import LogoLink from '../../components/Users/LogoLink';
 
 function FindId () {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Wrapper, Logo } from '../../components/Users/UsersStyles';
-import SignUpForm from '../../components/Users/SignUpForm';
+import SignUpForm from '../../components/pages/SignUp/SignUpForm';
 import AdditionalOptions from '../../components/Users/AdditionalOptions';
 
 function SignUp() {

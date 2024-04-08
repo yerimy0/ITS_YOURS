@@ -1,7 +1,7 @@
 import React from 'react';
-import { Wrapper } from '../../components/Users/UsersStyles.jsx';
-import LoginForm from '../../components/Users/LoginForm.jsx';
-import SocialLoginOptions from '../../components/Users/SocialLoginOptions';
+import { Wrapper } from '../../components/Users/UsersStyles';
+import LoginForm from '../../components/pages/Login/LoginForm';
+import SocialLoginOptions from '../../components/pages/Login/SocialLoginOptions';
 import AdditionalOptions from '../../components/Users/AdditionalOptions';
 import LogoLink from '../../components/Users/LogoLink';
 

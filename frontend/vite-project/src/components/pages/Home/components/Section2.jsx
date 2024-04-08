@@ -1,8 +1,14 @@
 import { Box2, UpdateBooks, UpdateTitle, Button, ButtonBox, Img } from '../HomeStyle';
 import SearchBar from '../../../../components/SearchBar';
 import { pics } from './data';
+import { useNavigate } from 'react-router-dom';
 
 function Section2() {
+	const navigate = useNavigate();
+
+	function OnClick() {
+		navigate('/product');
+	}
 	return (
 		<Box2>
 			<SearchBar />
@@ -14,7 +20,7 @@ function Section2() {
 					))}
 				</UpdateBooks>
 				<ButtonBox>
-					<Button>더보기</Button>
+					<Button onClick={OnClick}>더보기</Button>
 				</ButtonBox>
 			</div>
 		</Box2>

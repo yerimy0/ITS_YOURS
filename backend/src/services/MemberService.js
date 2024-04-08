@@ -19,7 +19,7 @@ class MemberService {
       email: email,
       univName: univName,
       phoneNum: phoneNum,
-      nickName: nickName
+      nickName: nickName,
     };
     //회원 정보 create
     const member = await Members.create(newMember);
@@ -48,7 +48,7 @@ class MemberService {
             id: member.id,
           },
         },
-        process.env.ACCESS_TOKEN_SECERT,
+        process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: "14d" } //토큰 유효기간
       );
 

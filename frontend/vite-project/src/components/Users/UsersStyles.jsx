@@ -58,6 +58,8 @@ export const ClickableWrapper = styled.div`
 export const Div1 = styled.div`
   font-size: 1rem;
   color: #79747E;
+  &:hover {
+    text-decoration: underline;
 `;
 
 export const Container = styled.div`
@@ -118,7 +120,7 @@ export const ProfileImage = styled.img`
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  background-color: #009DFF; 
+  background-color: #009DFF;
 `;
 
 export const IconWrapper = styled.label`
@@ -142,4 +144,17 @@ export const IconImage = styled.img`
 
 export const HiddenFileInput = styled.input`
   display: none;
+`;
+
+export const Title = styled.h1`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 30px;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 64px;
+  text-align: center;
+  margin: 0;
 `;

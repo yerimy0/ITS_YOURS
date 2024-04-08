@@ -1,17 +1,17 @@
 import React from 'react';
-import { Wrapper, Logo } from '../../components/Users/UsersStyles';
+import { Wrapper } from '../../components/Users/UsersStyles';
 import SignUpForm from '../../components/pages/SignUp/SignUpForm';
 import AdditionalOptions from '../../components/Users/AdditionalOptions';
+import LogoLink from '../../components/Users/LogoLink';
 
-function SignUp() {
-  const additionalOptions = [
-    { label: '로그인하기', path: '/login' },
-  ];
+function SignUp () {
   return (
     <Wrapper>
-      <Logo src="/logoText.png" alt="로고" />
+      <LogoLink src="/logoText.png" alt="로고" />
       <SignUpForm />
-      <AdditionalOptions options={additionalOptions} />
+      <AdditionalOptions options={[
+        { label: '로그인하기', path: '/login' }
+      ]} />
     </Wrapper>
   );
 }

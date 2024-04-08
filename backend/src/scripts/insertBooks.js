@@ -53,5 +53,3 @@ app.get("/getData", async (req, res) => {
 });
 
 module.exports = app;
-
-To;

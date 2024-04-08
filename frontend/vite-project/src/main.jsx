@@ -15,6 +15,7 @@
   import NotFound from './components/pages/NotFound'
   import MyPageWish from './pages/Mypage/MypageWish';
   import MyPage from './pages/Mypage/Mypage.jsx'
+  import ProductDetail from './pages/ProductDetail';
   import SalesHistory from './pages/Mypage/SalesHistory.jsx';
 
   const router = createBrowserRouter([
@@ -28,7 +29,8 @@
         {path: "/*", element: <NotFound />},
         {path: "/mypage/wish", element: <MyPageWish />},
         {path: "/mypage", element: <MyPage />},
-        {path: "/saleshistory", element: <SalesHistory /> },
+        {path: "/product/detail", element: <ProductDetail />},
+        {path: "/saleshistory", element: <SalesHistory /> }
 
       ]}, {path: "login", element: <Login/>},
           {path: "findid", element: <FindId/>},

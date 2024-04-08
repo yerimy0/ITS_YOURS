@@ -41,4 +41,37 @@ const productInfo = async (req, res) => {
   }
 };
 
-module.exports = { productsList, searchProduct, productInfo };
+const insertProduct = async(req, res, next) => {
+  try {
+    const {
+      name,
+      imgUrls,
+      price,
+      author,
+      publisher,
+      condition,
+      region,
+      description
+    } = req.body;
+
+    const product = await productsService.insertProduct(
+      name,
+      imgUrls,
+      price,
+      author,
+      publisher,
+      condition,
+      region,
+      description
+    );
+
+    if(!product) {
+      throw new Error('서버 오류');
+    }
+    res.status(200).json({ data: product, message: "상품정보 추가 성공" });
+  } catch(err) {
+    next(err);
+  }
+};
+
+module.exports = { productsList, searchProduct, productInfo, insertProduct };

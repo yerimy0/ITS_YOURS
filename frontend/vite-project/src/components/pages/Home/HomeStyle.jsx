@@ -99,6 +99,8 @@ const Button = styled.button`
 const Img = styled.img`
 	background: lightgray 50% / cover no-repeat;
 	box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.25);
+	width: 203px;
+	height: 238px;
 `;
 
 const SchoolBox = styled.div`

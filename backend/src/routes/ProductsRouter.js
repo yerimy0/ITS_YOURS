@@ -4,15 +4,15 @@ const {
   productsList,
   searchProduct,
   productInfo,
-  insertProduct
+  insertProduct,
 } = require("../controllers/ProductsController");
 
 const router = Router();
 
 router.get("/productsList", productsList);
 router.get("/searchProduct", searchProduct);
-router.get("/productInfo?", productInfo);
+router.get("/productInfo", productInfo);
 
-router.post('/', insertProduct);
+router.post("/", insertProduct);
 
 module.exports = router;

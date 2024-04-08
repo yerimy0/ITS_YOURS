@@ -1,25 +1,4 @@
 import styled from "styled-components";
-import WishButton from "./WishButton";
-
-const ProductCard = () => {
-  return (
-    <ProductCardWrap className="productCard">
-      <ProductImage src="./book_cover.jpg" alt="" />
-      <ProductInfoWrap className="productInfoWrap">
-        <ProductInfo className="productInfo">
-          <ProductTitle className="productTitle">공예란 무엇인가</ProductTitle>
-          <ProductPrice className="producPrice">
-            <Price className="price">27,000</Price>
-            <PriceWon className="price_won">원</PriceWon>
-          </ProductPrice>
-        </ProductInfo>
-        <ProductButton>
-          <WishButton />
-        </ProductButton>
-      </ProductInfoWrap>
-    </ProductCardWrap>
-  );
-};
 
 const ProductCardWrap = styled.div`
   display: flex;
@@ -63,7 +42,7 @@ const ProductTitle = styled.p`
   line-height: 24px;
   letter-spacing: 0.15px;
 `;
-const ProductPrice = styled.p`
+const ProductPrice = styled.div`
   display: flex;
   align-items: center;
   margin-top: 10px;
@@ -76,12 +55,10 @@ const Price = styled.p`
   margin: 0;
 `;
 const PriceWon = styled.p`
-  flex: 1 0 0;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px;
-  letter-spacing: 0.15px;
+  line-height: 28px;
   margin: 0;
 `;
 const ProductButton = styled.div`
@@ -93,4 +70,14 @@ const ProductButton = styled.div`
   gap: 5px;
 `;
 
-export default ProductCard;
+export {
+  ProductCardWrap,
+  ProductImage,
+  ProductInfoWrap,
+  ProductInfo,
+  ProductTitle,
+  ProductPrice,
+  Price,
+  PriceWon,
+  ProductButton,
+};

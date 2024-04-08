@@ -64,7 +64,8 @@ const SalesListTitle = styled.div`
   font-style: normal;
   font-weight: 300;
   letter-spacing: 0.15px;
-  margin-top: 10px;
+  margin-top: 40px;
+  margin-left: 10px;
 `;
 
 const SalesListPrice = styled.div`
@@ -141,11 +142,14 @@ const DateStatus = styled.p`
 `;
 
 const SalesListBtnBox = styled.div`
-  float: right;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 1000px;
+  margin-top: 100px;
 `;
 
 const EdditBtnBox = styled.div`
-  display: inline-block;
+  margin-left: auto; /* 버튼을 오른쪽으로 정렬 */
 `;
 
 const EdditBtn = styled.button`
@@ -159,10 +163,13 @@ const EdditBtn = styled.button`
   font-size: 16px;
   font-weight: 700;
   margin: 3px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const DeleteBtnBox = styled.div`
-  display: inline-block;
+  margin-left: auto; /* 버튼을 오른쪽으로 정렬 */
 `;
 const DeleteBtn = styled.button`
   width: 66px;
@@ -174,4 +181,8 @@ const DeleteBtn = styled.button`
   font-family: SUIT;
   font-size: 16px;
   font-weight: 700;
+  margin: 3px;
+  &:hover {
+    cursor: pointer;
+  }
 `;

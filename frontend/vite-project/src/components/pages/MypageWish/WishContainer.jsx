@@ -1,31 +1,33 @@
-import { React, useEffect, useState } from "react";
+import {React, useEffect, useState} from "react";
+import {WishsWrap, Wishs} from './WishContainerStyle';
 import ProductCard from "../../ProductCard";
-import { ProductsWrap, Products } from "./ProductsContainerStyle";
 import PaginationBar from "../../PaginationBar";
 
-function ProductsContainer() {
-  const [products, setProducts] = useState([]);
+function WishContainer () {
+  const [userWishList, setUserWishList] = useState([]);
   const [activePage, setActivePage] = useState(1);
   const itemsCountPerPage = 20;
   const totalItemsCount = 100; //서버에서 받아올 예정
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiUrl = "https://api.example.com/products";
+    // 유저의 찜한 상품 목록 호출
+    const fetchUserWishList = async () => {
+      try{
+        const apiUrl = 'https://api.example.com/wishList';
         const res = await fetch(apiUrl);
         const data = await res.json();
-        setProducts(data);
+        setUserWishList(data);
       } catch (err) {
-        console.log("Error fetching data:", err);
+        console.log("Error fetching wishlist data:", err);
       }
     };
-    fetchData();
+    fetchUserWishList();
   }, []);
+
 
   const startIndex = (activePage - 1) * itemsCountPerPage;
   const endIndex = startIndex + itemsCountPerPage;
-  const productsToShow = products.slice(startIndex, endIndex);
+  const productsToShow = userWishList.slice(startIndex, endIndex);
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
@@ -33,14 +35,14 @@ function ProductsContainer() {
 
   return (
     <>
-      <ProductsWrap>
-        <Products>
+      <WishsWrap>
+        <Wishs>
           <ProductCard />
-          {productsToShow.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {productsToShow.map((productId) => (
+            <ProductCard key={productId} productId={productId} />
           ))}
-        </Products>
-      </ProductsWrap>
+        </Wishs>
+      </WishsWrap>
       <PaginationBar
         activePage={activePage}
         itemsCountPerPage={itemsCountPerPage}
@@ -51,4 +53,4 @@ function ProductsContainer() {
   );
 }
 
-export default ProductsContainer;
+export default WishContainer;

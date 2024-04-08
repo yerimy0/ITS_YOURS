@@ -58,6 +58,9 @@ const ForSale = styled.button`
   font-weight: 300;
   border: 0px;
   height: 100%;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const SalesCompleted = styled.button`
@@ -71,6 +74,9 @@ const SalesCompleted = styled.button`
   font-weight: 300;
   background: #fff;
   height: 100%;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default SalesHistoryHeader;

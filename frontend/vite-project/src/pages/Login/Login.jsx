@@ -5,7 +5,7 @@ import SocialLoginOptions from '../../components/Users/SocialLoginOptions';
 import AdditionalOptions from '../../components/Users/AdditionalOptions';
 import LogoLink from '../../components/Users/LogoLink';
 
-const Login = () => {
+function Login () {
   return (
     <Wrapper>
       <LogoLink src="/logoText.png" alt="로고" />

@@ -4,7 +4,7 @@ import FindPasswordForm from '../../components/Users/FindPasswordForm.jsx';
 import AdditionalOptions from '../../components/Users/AdditionalOptions.jsx';
 import LogoLink from '../../components/Users/LogoLink';
 
-const FindPassword = () => {
+function FindPassword () {
   return (
     <Wrapper>
       <LogoLink src="/logoText.png" alt="로고" />

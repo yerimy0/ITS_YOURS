@@ -4,7 +4,7 @@ import FindIdForm from '../../components/Users/FindIdForm.jsx';
 import AdditionalOptions from '../../components/Users/AdditionalOptions.jsx';
 import LogoLink from '../../components/Users/LogoLink';
 
-const FindId = () => {
+function FindId () {
   return (
     <Wrapper>
       <LogoLink src="/logoText.png" />

@@ -3,7 +3,7 @@ import { Wrapper, Logo } from '../../components/Users/UsersStyles';
 import SignUpForm from '../../components/Users/SignUpForm';
 import AdditionalOptions from '../../components/Users/AdditionalOptions';
 
-const SignUp = () => {
+function SignUp() {
   const additionalOptions = [
     { label: '로그인하기', path: '/login' },
   ];
@@ -14,6 +14,6 @@ const SignUp = () => {
       <AdditionalOptions options={additionalOptions} />
     </Wrapper>
   );
-};
+}
 
 export default SignUp;

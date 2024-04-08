@@ -3,7 +3,11 @@ const logger = require("morgan");
 const memberRouter = require("./src/routes/MemberRouter");
 const productsRouter = require("./src/routes/ProductsRouter");
 const orderRouter = require("./src/routes/OrderRouter");
+
+const qnaRouter = require("./src/routes/QnaRouter");
+
 const postRouter = require("./src/routes/PostRouter");
+
 const insertBooks = require("./src/scripts/insertBooks");
 const mongoose = require("mongoose");
 
@@ -21,6 +25,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/qna", qnaRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/members", memberRouter);
 app.use("/api/products", productsRouter);

@@ -1,6 +1,6 @@
 const productsService = require("../services/ProductsService");
 const ObjectId = require("mongodb").ObjectId;
-const axios = require('axios');
+const axios = require("axios");
 
 // 상품 전체목록 조회
 async function productsList(req, res) {
@@ -16,7 +16,7 @@ async function productsList(req, res) {
 const searchProduct = async (req, res, next) => {
   try {
     const name = req.query;
-    const productsService = new productsService();
+    //const productsService = new productsService();
     const result = await productsService.searchProduct(name);
 
     res.status(200).json({
@@ -59,11 +59,11 @@ const insertProduct = async (req, res, next) => {
       publisher: productData.publisher,
       condition: condition,
       region: region,
-      description: description
+      description: description,
     });
 
     if (!product) {
-      throw new Error('서버 오류');
+      throw new Error("서버 오류");
     }
     res.status(200).json({ data: product, message: "상품정보 추가 성공" });
   } catch (err) {
@@ -72,6 +72,5 @@ const insertProduct = async (req, res, next) => {
 };
 
 //상품정보 수정
-
 
 module.exports = { productsList, searchProduct, productInfo, insertProduct };

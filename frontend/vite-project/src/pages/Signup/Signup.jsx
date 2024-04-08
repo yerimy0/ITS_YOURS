@@ -4,16 +4,14 @@ import SignUpForm from '../../components/Users/SignUpForm';
 import AdditionalOptions from '../../components/Users/AdditionalOptions';
 
 const SignUp = () => {
-  const additionalOptions = [
-    { label: '로그인하기', path: '/login' },
-  ];
-  return (
-    <Wrapper>
-      <Logo src="/logoText.png" alt="로고" />
-      <SignUpForm />
-      <AdditionalOptions options={additionalOptions} />
-    </Wrapper>
-  );
+	const additionalOptions = [{ label: '로그인하기', path: '/login' }];
+	return (
+		<Wrapper>
+			<Logo src="/logoText.png" alt="로고" />
+			<SignUpForm />
+			<AdditionalOptions options={additionalOptions} />
+		</Wrapper>
+	);
 };
 
 export default SignUp;

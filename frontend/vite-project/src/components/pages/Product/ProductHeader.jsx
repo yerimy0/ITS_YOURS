@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import SearchBar from '../../SearchBar';
-import ProductFilter from '../../ProductFilter/ProductFilter';
-import {ProductListHeader, ProductListTitle, SearchResultContainer, SearchResult, ProductFilterWrap} from './ProductHeaderStyle'; 
+import React, { useState } from "react";
+import SearchBar from "../../SearchBar";
+import ProductFilter from "../../ProductFilter/ProductFilter";
+import {
+  ProductListHeader,
+  ProductListTitle,
+  SearchResultContainer,
+  SearchResult,
+  ProductFilterWrap,
+} from "./ProductHeaderStyle";
 
-function ProductHeader () {
-
-
+function ProductHeader() {
   return (
     <ProductListHeader>
       <ProductListTitle>상품목록</ProductListTitle>

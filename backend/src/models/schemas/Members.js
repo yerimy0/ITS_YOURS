@@ -83,4 +83,4 @@ const MembersSchema = new Schema({
   },
 });
 
-module.exports = { MembersSchema };
+module.exports = MembersSchema;

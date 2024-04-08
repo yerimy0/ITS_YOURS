@@ -91,4 +91,26 @@ const getMemberInfo = async (req, res, next) => {
   }
 };
 
-module.exports = { signUp, login, getMemberInfo };
+/**
+ * 회원 정보수정 controller
+ * 작성자 : 유경아
+ * 작성 시작일 : 2024-04-08
+ * 회원 정보수정에 필요한 동작들을 모아놓은 controller입니다.
+ */
+const updateMember = async (req, res) => {
+  try {
+    // 현재 로그인한 사용자의 ID를 인증 시스템에서 가져옵니다.
+    // 예시에서는 req.user.id를 사용한다고 가정합니다.
+    const userId = req.user.id;
+    const memberService = new MemberService();
+    const updatedMember = await memberService.updateMember(userId, req.body);
+
+    res.json({
+      message: "회원 정보가 성공적으로 업데이트되었습니다.",
+      data: updatedMember,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+module.exports = { signUp, login, getMemberInfo, updateMember };

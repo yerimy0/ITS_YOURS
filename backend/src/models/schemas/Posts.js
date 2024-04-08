@@ -21,6 +21,9 @@ const PostsSchema = new Schema({
     type: String,
     required: true,
   },
+  profilePic: {
+    type: String,
+  },
   // 게시글 등록일
   createdAt: {
     type: Date,
@@ -39,4 +42,4 @@ const PostsSchema = new Schema({
   },
 });
 
-module.exports = { PostsSchema };
+module.exports = PostsSchema;

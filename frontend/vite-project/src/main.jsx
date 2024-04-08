@@ -17,6 +17,7 @@
   import MyPage from './pages/Mypage/Mypage.jsx'
   import ProductDetail from './pages/ProductDetail';
   import SalesHistory from './pages/Mypage/SalesHistory.jsx';
+  import Chat from './pages/Chat';
 
   const router = createBrowserRouter([
       {path: "/", 
@@ -30,7 +31,8 @@
         {path: "/mypage/wish", element: <MyPageWish />},
         {path: "/mypage", element: <MyPage />},
         {path: "/product/detail", element: <ProductDetail />},
-        {path: "/saleshistory", element: <SalesHistory /> }
+        {path: "/saleshistory", element: <SalesHistory /> },
+        {path: "/chat", element: <Chat />},
 
       ]}, {path: "login", element: <Login/>},
           {path: "findid", element: <FindId/>},

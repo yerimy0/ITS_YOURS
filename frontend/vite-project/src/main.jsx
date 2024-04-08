@@ -21,6 +21,7 @@ import SalesHistory from './pages/Mypage/SalesHistory.jsx';
 import SignOut from './pages/SignOut/SignOut';
 import { Provider } from 'react-redux';
 import store from './store.js';
+import Chat from './pages/Chat';
 
 const router = createBrowserRouter([
 	{
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
 			{ path: '/saleshistory', element: <SalesHistory /> },
 			{ path: '/signout', element: <SignOut /> },
 			{ path: '/profileedit', element: <ProfileEdit /> },
+			{ path: '/chat', element: <Chat /> },
 		],
 	},
 	{ path: '/login', element: <Login /> },

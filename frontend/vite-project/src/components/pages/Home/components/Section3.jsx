@@ -13,8 +13,14 @@ import {
 } from '../HomeStyle';
 import { books } from './data';
 import { schools } from './data';
+import { useNavigate } from 'react-router-dom';
 
 function Section3() {
+	const navigate = useNavigate();
+
+	function OnClick() {
+		navigate('/product');
+	}
 	return (
 		<Box3 className="BlueBack">
 			<Title>

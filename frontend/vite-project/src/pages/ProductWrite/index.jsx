@@ -1,11 +1,11 @@
-import WriteForm from '../../components/WriteFrom'
+import WriteForm from '../../components/WriteFrom';
 
-function ProductWrite () {
-    return (
-        <>
-            <WriteForm/>
-        </>
-    )
+function ProductWrite() {
+	return (
+		<>
+			<WriteForm />
+		</>
+	);
 }
 
 export default ProductWrite;

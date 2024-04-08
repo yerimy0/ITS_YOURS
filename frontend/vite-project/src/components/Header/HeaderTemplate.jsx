@@ -13,7 +13,7 @@ function Header() {
 	return (
 		<HeaderMain istoggled={isToggled}>
 			<NavLink to="/">
-				<img src="./main_logo.png" />
+				<img src="/main_logo.png" />
 			</NavLink>
 			<Nav>
 				<RightNav istoggled={isToggled}>

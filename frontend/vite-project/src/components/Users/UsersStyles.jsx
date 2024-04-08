@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
+  padding: 150px;
 `;
 
 export const Logo = styled.img`

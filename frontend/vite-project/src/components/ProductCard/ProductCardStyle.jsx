@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const ProductCardWrap = styled.div`
   display: flex;
@@ -6,9 +6,9 @@ const ProductCardWrap = styled.div`
   height: 360px;
   flex-direction: column;
   align-items: flex-start;
-  &:hover{
+  &:hover {
     cursor: pointer;
-  };
+  }
 `;
 
 const ProductImage = styled.img`
@@ -53,22 +53,31 @@ const Price = styled.p`
   font-weight: 400;
   font-style: normal;
   margin: 0;
-
 `;
 const PriceWon = styled.p`
-font-size: 16px;
-font-style: normal;
-font-weight: 500;
-line-height: 28px;
-margin: 0;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px;
+  margin: 0;
 `;
 const ProductButton = styled.div`
-display: flex;
-width: 25px;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-gap: 5px;
+  display: flex;
+  width: 25px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 `;
 
-export {ProductCardWrap, ProductImage, ProductInfoWrap, ProductInfo, ProductTitle, ProductPrice, Price, PriceWon, ProductButton };
+export {
+  ProductCardWrap,
+  ProductImage,
+  ProductInfoWrap,
+  ProductInfo,
+  ProductTitle,
+  ProductPrice,
+  Price,
+  PriceWon,
+  ProductButton,
+};

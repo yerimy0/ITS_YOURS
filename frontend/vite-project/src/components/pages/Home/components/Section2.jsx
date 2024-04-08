@@ -1,8 +1,14 @@
 import { Box2, UpdateBooks, UpdateTitle, Button, ButtonBox, Img } from '../HomeStyle';
 import SearchBar from '../../../../components/SearchBar';
+import { pics } from './data';
+import { useNavigate } from 'react-router-dom';
 
 function Section2() {
-	const pics = ['book1.png', 'book2.png', 'book3.png', 'book4.png', 'book5.png'];
+	const navigate = useNavigate();
+
+	function OnClick() {
+		navigate('/product');
+	}
 	return (
 		<Box2>
 			<SearchBar />
@@ -10,11 +16,11 @@ function Section2() {
 				<UpdateTitle>방금 올라온 도서</UpdateTitle>
 				<UpdateBooks>
 					{pics.map((pic, i) => (
-						<Img key={i} src={`/${pic}`} alt={`Book ${i}`} />
+						<Img key={i} src={`./${pic}`} alt={`Book ${i}`} />
 					))}
 				</UpdateBooks>
 				<ButtonBox>
-					<Button>더보기</Button>
+					<Button onClick={OnClick}>더보기</Button>
 				</ButtonBox>
 			</div>
 		</Box2>

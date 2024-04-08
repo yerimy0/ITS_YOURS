@@ -7,7 +7,7 @@
   import Home from "./pages/Home";
 
   import Login from './pages/Login/Login';
-  import SignUp from './pages/SignUp/SignUp';
+  import SignUp from './pages/SignUp/Signup';
   import FindId from './pages/Find/FindId'
   import FindPassword from './pages/Find/FindPassword'
   import ProductWrite from './pages/ProductWrite';
@@ -15,6 +15,7 @@
   import NotFound from './components/pages/NotFound'
   import MyPageWish from './pages/Mypage/MypageWish';
   import MyPage from './pages/Mypage/Mypage.jsx'
+  import ProfileEdit from './pages/Mypage/ProfileEdit'
   import ProductDetail from './pages/ProductDetail';
   import SalesHistory from './pages/Mypage/SalesHistory.jsx';
   import SignOut from './pages/SignOut/SignOut';
@@ -33,11 +34,12 @@
         {path: "/mypage", element: <MyPage />},
         {path: "/product/detail", element: <ProductDetail />},
         {path: "/saleshistory", element: <SalesHistory /> },
-        {path: "/signout", element: <SignOut/>}
+        {path: "/signout", element: <SignOut/>},
+        {path: "/profileedit", element: <ProfileEdit />}
 
-      ]}, {path: "login", element: <Login/>},
-          {path: "findid", element: <FindId/>},
-          {path: "findpassword", element: <FindPassword/>},
+      ]}, {path: "/login", element: <Login/>},
+          {path: "/findid", element: <FindId/>},
+          {path: "/findpassword", element: <FindPassword/>},
           {path: "/signup", element: <SignUp/>},
     ]);
 

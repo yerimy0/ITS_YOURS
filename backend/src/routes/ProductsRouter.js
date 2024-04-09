@@ -2,6 +2,7 @@ const { Router } = require('express');
 const {
 	getProductsList,
 	searchProduct,
+	getProduct,
 	getProductInfo,
 	insertProduct,
 	updateProduct,
@@ -13,7 +14,8 @@ const router = Router();
 
 router.get('/list', getProductsList);
 router.get('/search', searchProduct);
-router.get('/:prodId', getProductInfo);
+router.get('/:prodId', getProduct);
+router.get('/', getProductInfo);
 router.get('/myTradedProducts', myTradedProducts);
 
 router.post('/', insertProduct);

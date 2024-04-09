@@ -10,19 +10,19 @@ function ProductsContainer() {
 	const totalItems = 100; // 더미
 	const perPage = 20; // 더미
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const apiUrl = 'https://api.example.com/products';
-				const res = await fetch(apiUrl);
-				const data = await res.json();
-				setProducts(data);
-			} catch (err) {
-				console.log('Error fetching data:', err);
-			}
-		};
-		fetchData();
-	}, []);
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		try {
+	// 			const apiUrl = 'https://api.example.com/products';
+	// 			const res = await fetch(apiUrl);
+	// 			const data = await res.json();
+	// 			setProducts(data);
+	// 		} catch (err) {
+	// 			console.log('Error fetching data:', err);
+	// 		}
+	// 	};
+	// 	fetchData();
+	// }, []);
 
 	const startIndex = (activePage - 1) * perPage;
 	const endIndex = startIndex + perPage;

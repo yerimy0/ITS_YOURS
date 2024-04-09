@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { WishsWrap, Wishs } from './WishContainerStyle';
 import ProductCard from '../../ProductCard';
-import PaginationBar from '../../PaginationBar';
+import Paginator from '../../Paginator';
 
 function WishContainer() {
 	const [userWishList, setUserWishList] = useState([]);
@@ -42,12 +42,7 @@ function WishContainer() {
 					))}
 				</Wishs>
 			</WishsWrap>
-			<PaginationBar
-				activePage={activePage}
-				itemsCountPerPage={itemsCountPerPage}
-				totalItemsCount={totalItemsCount}
-				onChange={handlePageChange}
-			/>
+			<Paginator />
 		</>
 	);
 }

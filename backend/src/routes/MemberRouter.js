@@ -1,19 +1,22 @@
-const { Router } = require("express");
+const { Router } = require('express');
 const {
-  signUp,
-  login,
-  getMemberInfo,
-  updateMember,
-} = require("../controllers/MemberController");
+	signUp,
+	login,
+	getMemberInfo,
+	updateMember,
+	deleteMember,
+} = require('../controllers/MemberController');
 
 const router = Router();
 // 회원가입
-router.post("/signUp", signUp);
+router.post('/signUp', signUp);
 // 로그인
-router.post("/login", login);
+router.post('/login', login);
 // 회원정보 조회
-router.get("/me", getMemberInfo);
+router.get('/me', getMemberInfo);
 // 회원정보 수정
-router.put("/me", updateMember);
+router.put('/me', updateMember);
+// 회원정보 삭제
+router.delete('/me', deleteMember);
 
 module.exports = router;

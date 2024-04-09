@@ -29,7 +29,7 @@ function Section3() {
 			</Title>
 			<SchoolBox>
 				{schools.map((school, i) => (
-					<Icon key={i} src={`./${school}`} alt={`${school}`} />
+					<Icon key={`List-school-${i}`} src={`./${school}`} alt={`${school}`} />
 				))}
 			</SchoolBox>
 			<UpdateBooks>

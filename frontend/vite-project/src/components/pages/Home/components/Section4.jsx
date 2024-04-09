@@ -24,7 +24,7 @@ function Section5() {
 			<PRCOntainer>
 				<PRContent>
 					{infos.map((info, i) => (
-						<EachInfo key={i}>
+						<EachInfo key={`List-info-${i}`}>
 							<SmallIcon src={`/${info.image}`} />
 							<SmallTitle>{info.content}</SmallTitle>
 							<Unit>

@@ -149,6 +149,10 @@ const SmallButton = styled.button`
 	width: 152.5px;
 	height: 40px;
 	margin: 10px 0;
+	&.active {
+		color: #fff;
+		background: #009dff;
+	}
 `;
 const BigButton = styled.button`
 	font-size: 32px;

@@ -1,6 +1,7 @@
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
 import WishButton from '../WishButton';
+import { BASE_URI } from '../../constants/URL';
 import {
 	ProductCardWrap,
 	ProductImage,
@@ -19,9 +20,9 @@ function ProductCard() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await axios.get('http://localhost:4000/api/products/list');
-				// 데이터를 받아오면 state에 저장
+				const response = await axios.get(`${BASE_URI}/api/products/list`);
 				setProductData(response.data);
+				console.log(response.data);
 			} catch (error) {
 				console.error('Error fetching product data:', error);
 			}
@@ -34,12 +35,12 @@ function ProductCard() {
 		<ProductCardWrap>
 			{productData && (
 				<>
-					<ProductImage src={productData.imgUrls[0]} alt="" />
+					<ProductImage src="/book_cover.jpg" alt="" />
 					<ProductInfoWrap>
 						<ProductInfo>
-							<ProductTitle>{productData.name}</ProductTitle>
+							<ProductTitle></ProductTitle>
 							<ProductPrice>
-								<Price>{productData.price.toLocaleString()}</Price>
+								<Price></Price>
 								<PriceWon>원</PriceWon>
 							</ProductPrice>
 						</ProductInfo>

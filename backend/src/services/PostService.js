@@ -37,8 +37,19 @@ class PostService {
 	 * 작성 시작일 : 2024-04-07
 	 * 커뮤니티 글 상세조회시 동작되는 DB작업을 모아놓은 service입니다.
 	 */
-	async getPostDetails(id) {
-		return await Posts.findOne({ _id: id, deletedAt: { $exists: false } });
+	// async getPostDetails(id) {
+	// 	return await Posts.findOne({ _id: id, deletedAt: { $exists: false } });
+	// }
+	async getPostDetails(postId) {
+		try {
+			const getPostDetails = await Posts.findById(postId);
+			if (!getPostDetails) {
+				throw new Error('게시글을 찾을 수 없습니다.');
+			}
+			return getPostDetails;
+		} catch (err) {
+			throw err;
+		}
 	}
 
 	/**
@@ -47,11 +58,11 @@ class PostService {
 	 * 작성 시작일 : 2024-04-07
 	 * 커뮤니티 글 수정에 동작되는 DB작업을 모아놓은 service입니다.
 	 */
-	async updatePost(id, newData) {
+	async updatePost(postId, newData) {
 		try {
 			// 게시글 ID로 게시글을 찾고 업데이트합니다.
 			const updatedPost = await Posts.findByIdAndUpdate(
-				id,
+				postId,
 				{
 					title: newData.title, // 게시글 제목 업데이트
 					content: newData.content, // 게시글 본문 업데이트
@@ -76,10 +87,10 @@ class PostService {
 	 * 작성 시작일 : 2024-04-07
 	 * 커뮤니티 글 삭제에 동작되는 DB작업을 모아놓은 service입니다.
 	 */
-	async deletePost(id) {
+	async deletePost(postId) {
 		try {
 			const deletedAt = Date.now() + 9 * 60 * 60 * 1000; // 현재 시간
-			const deletedPost = await Posts.findByIdAndUpdate(id, { deletedAt }, { new: true });
+			const deletedPost = await Posts.findByIdAndUpdate(postId, { deletedAt }, { new: true });
 			if (!deletedPost) {
 				throw new Error('게시글을 찾을 수 없습니다.');
 			}

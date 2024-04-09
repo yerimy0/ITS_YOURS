@@ -4,6 +4,7 @@ const memberRouter = require('./src/routes/MemberRouter');
 const productsRouter = require('./src/routes/ProductsRouter');
 const qnaRouter = require('./src/routes/QnaRouter');
 const postRouter = require('./src/routes/PostRouter');
+const commentRouter = require('./src/routes/CommentRouter');
 const insertBooks = require('./src/scripts/insertBooks');
 const mongoose = require('mongoose');
 
@@ -25,6 +26,8 @@ app.use('/api/qna', qnaRouter);
 app.use('/api/members', memberRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/community', postRouter);
+app.use('/api/community', commentRouter);
+
 app.use('/scripts', insertBooks);
 
 module.exports = app;

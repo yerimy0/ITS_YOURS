@@ -1,4 +1,4 @@
-import CommunityList from '../../components/pages/Community/CommunityList/CommunityList';
+import CommunityList from '../../components/pages/Community/CommunityList';
 
 function Community() {
 	return (

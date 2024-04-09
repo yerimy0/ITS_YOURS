@@ -16,7 +16,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../CommunityList/CommunityStyle';
 import { FaComments } from 'react-icons/fa';
-import commus from './data';
+import { commus } from './data';
 
 function CommuList() {
 	const navigate = useNavigate();
@@ -42,8 +42,14 @@ function CommuList() {
 }
 
 function ListOne({ commu }) {
+	const navigate = useNavigate();
 	return (
-		<ListOfOne>
+		<ListOfOne
+			onClick={() => {
+				console.log(1);
+				navigate(`/community/${commu.id}`);
+			}}
+		>
 			<ListLeft>
 				<ListTitle>{commu.title}</ListTitle>
 				<ListSub>{commu.content}</ListSub>

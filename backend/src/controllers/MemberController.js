@@ -9,7 +9,6 @@ const memberService = require('../services/MemberService');
 const signUp = async (req, res, next) => {
 	try {
 		const { id, password, realName, email, univName, phoneNum, nickName } = req.body;
-
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
 			id,
@@ -40,7 +39,6 @@ const signUp = async (req, res, next) => {
 const login = async (req, res, next) => {
 	try {
 		const { id, password } = req.body;
-		// 로그인 결과값
 		const loginResult = await memberService.login(id, password);
 		if (loginResult === false) {
 			// 로그인 실패 시 처리
@@ -75,7 +73,6 @@ const getMember = async (req, res, next) => {
 		if (!memberInfo) {
 			return res.status(404).json({ data: null, message: '사용자 정보를 찾을 수 없습니다.' });
 		}
-
 		// 사용자 정보 조회 성공 응답
 		res.status(200).json({ data: memberInfo, message: '회원 정보 조회 성공' });
 	} catch (err) {
@@ -105,4 +102,31 @@ const updateMember = async (req, res) => {
 		res.status(500).json({ message: error.message });
 	}
 };
-module.exports = { signUp, login, getMember, updateMember };
+
+/**
+ * 회원 정보 삭제 controller
+ * 작성자 : 유경아
+ * 작성 시작일 : 2024-04-08
+ * 회원 정보 삭제에 필요한 동작들을 모아놓은 controller입니다.
+ */
+const deleteMember = async (req, res) => {
+	try {
+		const { id } = req.query;
+		// const id = req.params.id;
+		const memberService = new MemberService();
+		const deleteMember = await memberService.deleteMember(id);
+
+		if (!deleteMember) {
+			return res.status(400).send({ message: '회원 정보를 찾을 수 없습니다.', deleteMember });
+		}
+
+		return res
+			.status(200)
+			.json({ message: '회원 정보가 성공적으로 삭제되었습니다.', deleteMember });
+	} catch (err) {
+		console.log(err);
+		return res.status(500).send({ message: '회원 정보 삭제 중 오류가 발생했습니다' });
+	}
+};
+
+module.exports = { signUp, login, getMember, updateMember, deleteMember };

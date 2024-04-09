@@ -1,4 +1,5 @@
 const { Router } = require('express');
+
 const { signUp, login, getMember, updateMember } = require('../controllers/MemberController');
 const validateToken = require('../middlewares/ValidateToken');
 

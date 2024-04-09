@@ -1,54 +1,50 @@
-import { React, useEffect, useState } from "react";
-import ProductCard from "../../ProductCard";
-import { ProductsWrap, Products } from "./ProductsContainerStyle";
-import PaginationBar from "../../PaginationBar";
+import { React, useEffect, useState } from 'react';
+import ProductCard from '../../ProductCard';
+import { ProductsWrap, Products } from './ProductsContainerStyle';
+import Paginator from '../../Paginator';
 
 function ProductsContainer() {
-  const [products, setProducts] = useState([]);
-  const [activePage, setActivePage] = useState(1);
-  const itemsCountPerPage = 20;
-  const totalItemsCount = 100; //서버에서 받아올 예정
+	const [products, setProducts] = useState([]);
+	const [activePage, setActivePage] = useState(1);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiUrl = "https://api.example.com/products";
-        const res = await fetch(apiUrl);
-        const data = await res.json();
-        setProducts(data);
-      } catch (err) {
-        console.log("Error fetching data:", err);
-      }
-    };
-    fetchData();
-  }, []);
+	const totalItems = 100; // 더미
+	const perPage = 20; // 더미
 
-  const startIndex = (activePage - 1) * itemsCountPerPage;
-  const endIndex = startIndex + itemsCountPerPage;
-  const productsToShow = products.slice(startIndex, endIndex);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const apiUrl = 'https://api.example.com/products';
+				const res = await fetch(apiUrl);
+				const data = await res.json();
+				setProducts(data);
+			} catch (err) {
+				console.log('Error fetching data:', err);
+			}
+		};
+		fetchData();
+	}, []);
 
-  const handlePageChange = (pageNumber) => {
-    setActivePage(pageNumber);
-  };
+	const startIndex = (activePage - 1) * perPage;
+	const endIndex = startIndex + perPage;
+	const productsToShow = products.slice(startIndex, endIndex);
 
-  return (
-    <>
-      <ProductsWrap>
-        <Products>
-          <ProductCard />
-          {productsToShow.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </Products>
-      </ProductsWrap>
-      <PaginationBar
-        activePage={activePage}
-        itemsCountPerPage={itemsCountPerPage}
-        totalItemsCount={totalItemsCount}
-        onChange={handlePageChange}
-      />
-    </>
-  );
+	const handlePageChange = pageNumber => {
+		setActivePage(pageNumber);
+	};
+
+	return (
+		<>
+			<ProductsWrap>
+				<Products>
+					<ProductCard />
+					{productsToShow.map(product => (
+						<ProductCard key={product.id} product={product} />
+					))}
+				</Products>
+			</ProductsWrap>
+			<Paginator totalItems={totalItems} perPage={perPage} />
+		</>
+	);
 }
 
 export default ProductsContainer;

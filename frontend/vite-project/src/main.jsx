@@ -19,7 +19,8 @@ import ProfileEdit from './pages/Mypage/ProfileEdit';
 import ProductDetail from './pages/ProductDetail';
 import SalesHistory from './pages/Mypage/SalesHistory.jsx';
 import SignOut from './pages/SignOut/SignOut';
-import Community from './pages/Community';
+import Community from './pages/Community/CommunityList';
+import CommunityWrite from './pages/Community/CommunityWrite';
 import { Provider } from 'react-redux';
 import store from './store.js';
 import Chat from './pages/Chat';
@@ -42,6 +43,8 @@ const router = createBrowserRouter([
 			{ path: '/profileedit', element: <ProfileEdit /> },
 			{ path: '/chat', element: <Chat /> },
 			{ path: '/community', element: <Community /> },
+			{ path: '/community/write', element: <CommunityWrite /> },
+			{ path: '/community/edit/:id', element: <CommunityWrite /> },
 		],
 	},
 	{ path: '/login', element: <Login /> },

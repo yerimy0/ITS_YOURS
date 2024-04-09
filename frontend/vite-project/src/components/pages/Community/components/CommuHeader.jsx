@@ -6,7 +6,7 @@ import {
 	HeaderTop,
 	Line,
 	HeaderLeft,
-} from '../CommunityStyle';
+} from '../CommunityList/CommunityStyle';
 
 function CommuHeader() {
 	return (

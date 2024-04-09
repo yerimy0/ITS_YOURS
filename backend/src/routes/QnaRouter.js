@@ -1,9 +1,10 @@
-const { Router } = require("express");
+const { Router } = require('express');
 
-const { createQna } = require("../controllers/QnaController");
+const { createQna, updateQna } = require('../controllers/QnaController');
 
 const router = Router();
 // Q&A
-router.post("/", createQna);
+router.post('/', createQna);
+router.put('/', updateQna);
 
 module.exports = router;

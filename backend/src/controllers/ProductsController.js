@@ -5,7 +5,7 @@ const axios = require('axios');
 // 상품 전체목록 조회
 async function getProductsList(req, res) {
 	try {
-		const result = await productsService.productsList();
+		const result = await productsService.getProductsList();
 		res.status(200).json(result);
 	} catch (err) {
 		res.status(400).json({ message: 'failed' });
@@ -26,8 +26,8 @@ const searchProduct = async (req, res, next) => {
 		next(error);
 	}
 };
-
-const getProductInfo = async (req, res) => {
+//상품 목록 > 상품 상세정보 조회
+const getProduct = async (req, res) => {
 	try {
 		const prodId = req.params.prodId;
 		const prodObjectId = new ObjectId(prodId);
@@ -39,26 +39,49 @@ const getProductInfo = async (req, res) => {
 	}
 };
 
-//상품정보 추가
-const insertProduct = async (req, res, next) => {
+//상품등록-상품 상세정보 알라딘 api로 가져오기
+const getProductInfo = async (req, res) => {
 	try {
-		const { name, condition, region, description } = req.body;
+		const { name } = req.body;
 		//알라딘 상품검색 API 연동
-		const apiUrl = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=${process.env.TTBKey}&Query=${name}&QueryType=Title&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101`;
+		const apiUrl = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=${process.env.TTBKey}
+			&Query=${name}&QueryType=Title&MaxResults=100&start=1
+			&SearchTarget=Book&output=js&Version=20131101`;
 
 		const response = await axios.get(apiUrl);
 		//통신값 중 첫번째 값
-		const productData = response.data.item[0];
+		const productData = response.data.item;
+		console.log(productData);
+
+		const productDatas = productData.map(item => ({
+			title: item.title,
+			author: item.author,
+			publisher: item.publisher,
+			cover: item.cover,
+		}));
+
+		res.status(200).json({ data: productDatas, message: '상품등록-상품정보 검색 성공' });
+
+		return productDatas;
+	} catch (err) {
+		next(err);
+	}
+};
+
+//상품정보 추가
+const insertProduct = async (req, res, next) => {
+	try {
+		const { name, imgUrls, price, author, publisher, condition, region, description } = req.body;
 
 		const product = await productsService.insertProduct({
-			name: productData.title,
-			imgUrls: productData.cover,
-			price: productData.priceStandard,
-			author: productData.author,
-			publisher: productData.publisher,
-			condition: condition,
-			region: region,
-			description: description,
+			name,
+			imgUrls,
+			price,
+			author,
+			publisher,
+			condition,
+			region,
+			description,
 		});
 
 		if (!product) {
@@ -70,6 +93,7 @@ const insertProduct = async (req, res, next) => {
 	}
 };
 
+//상품정보 수정
 const updateProduct = async (req, res, next) => {
 	try {
 		const { prodId } = req.query;
@@ -98,6 +122,7 @@ const updateProduct = async (req, res, next) => {
 	}
 };
 
+//상품정보 삭제
 const deleteProduct = async (req, res, next) => {
 	try {
 		const { prodId } = req.query;
@@ -130,6 +155,7 @@ const myTradedProducts = async (req, res) => {
 module.exports = {
 	getProductsList,
 	searchProduct,
+	getProduct,
 	getProductInfo,
 	insertProduct,
 	updateProduct,

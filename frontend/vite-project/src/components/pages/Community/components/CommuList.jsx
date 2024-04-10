@@ -12,15 +12,21 @@ import {
 	Img,
 	ListRight,
 	Comment,
-} from '../CommunityStyle';
-import { Button } from '../CommunityStyle';
+} from '../CommunityList/CommunityStyle';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../CommunityList/CommunityStyle';
 import { FaComments } from 'react-icons/fa';
-import commus from './data';
+import { commus } from './data';
 
 function CommuList() {
+	const navigate = useNavigate();
 	return (
 		<Box>
-			<ButtonBox>
+			<ButtonBox
+				onClick={() => {
+					navigate('/community/write');
+				}}
+			>
 				<Button>새글 등록</Button>
 			</ButtonBox>
 			<Line>
@@ -36,8 +42,14 @@ function CommuList() {
 }
 
 function ListOne({ commu }) {
+	const navigate = useNavigate();
 	return (
-		<ListOfOne>
+		<ListOfOne
+			onClick={() => {
+				console.log(1);
+				navigate(`/community/${commu.id}`);
+			}}
+		>
 			<ListLeft>
 				<ListTitle>{commu.title}</ListTitle>
 				<ListSub>{commu.content}</ListSub>

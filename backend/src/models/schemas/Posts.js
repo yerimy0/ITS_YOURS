@@ -38,7 +38,7 @@ const PostsSchema = new Schema({
 		type: Date,
 	},
 	photos: {
-		type: Array,
+		type: String,
 	},
 });
 

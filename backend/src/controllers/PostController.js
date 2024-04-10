@@ -1,4 +1,5 @@
 const PostService = require('../services/PostService');
+
 /**
  * 커뮤니티 게시글 작성 controller
  * 작성자 : 유경아
@@ -7,10 +8,10 @@ const PostService = require('../services/PostService');
  */
 const createPost = async (req, res, next) => {
 	try {
-		const { title, content, nickName, profilePic, photos } = req.body;
+		const nickName = req.user.nickName;
+		const { title, content, profilePic, photos } = req.body;
+		const post = await PostService.createPost(title, content, nickName, profilePic, photos);
 
-		const postService = new PostService();
-		const post = await postService.createPost(title, content, nickName, profilePic, photos);
 		if (!post) {
 			throw new Error('서버 오류 입니다.');
 		}
@@ -28,8 +29,7 @@ const createPost = async (req, res, next) => {
  */
 const getAllPosts = async (req, res, next) => {
 	try {
-		const postService = new PostService();
-		const posts = await postService.getAllPosts();
+		const posts = await PostService.getAllPosts();
 		res.json(posts);
 	} catch (err) {
 		next(err);
@@ -45,14 +45,13 @@ const getAllPosts = async (req, res, next) => {
 const getPostDetails = async (req, res, next) => {
 	try {
 		const { postId } = req.params;
-		const postService = new PostService();
-		const post = await postService.getPostDetails(postId);
+		const post = await PostService.getPostDetails(postId);
 
 		if (!post) {
 			return res.status(404).json({ message: 'Post not found' });
 		}
 
-		res.status(200).json(post);
+		res.status(200).json({ data: post });
 	} catch (error) {
 		next(error);
 	}
@@ -69,13 +68,12 @@ const updatePost = async (req, res, next) => {
 
 	try {
 		const { postId } = req.params;
-		const postService = new PostService();
-		const updatedPost = await postService.updatePost(postId, {
+		// const postService = new PostService();
+		const updatedPost = await PostService.updatePost(postId, {
 			title,
 			content,
 			photos,
 		});
-		console.log(req.body);
 		if (!updatedPost) {
 			return res.status(404).json({ message: 'post not found' });
 		}
@@ -93,22 +91,16 @@ const updatePost = async (req, res, next) => {
  */
 const deletePost = async (req, res, next) => {
 	try {
-		const { postId } = req.params; // URL 파라미터로부터 postId 추출
-		const postService = new PostService();
-		const deletedPost = await postService.deletePost(postId);
+		const { postId } = req.params;
+		const deletedPost = await PostService.deletePost(postId);
 
 		if (!deletedPost) {
-			// 이 경우는 postService.deletePost 메소드에서 적절히 처리되어야 합니다.
-			// 예를 들어, 해당 postId를 가진 게시글이 없을 경우 null을 반환하거나, 에러를 throw할 수 있습니다.
-			// 여기서는 게시글이 없는 경우에 대한 처리를 예시로 추가하였습니다.
 			return res.status(404).send({ message: '게시글을 찾을 수 없습니다.' });
 		}
 
 		// 삭제 성공 응답
 		res.status(200).send({ message: '게시글이 성공적으로 삭제되었습니다.', deletedPost });
 	} catch (error) {
-		console.error(error); // 에러 로깅을 추가하여 디버깅을 용이하게 합니다.
-		// 삭제 실패 응답
 		res.status(500).send({
 			message: '게시글 삭제 중 오류가 발생했습니다.',
 			error: error.message,

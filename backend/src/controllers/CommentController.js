@@ -3,23 +3,12 @@ const CommentService = require('../services/CommentService');
 const createComment = async (req, res, next) => {
 	try {
 		const { postId } = req.params;
-		const { content, userId } = req.body;
-		// const email = req.decoded.user.email;
-		const commentService = new CommentService();
-		const newComment = await commentService.createComment(postId, content, userId);
-		// const validateMember = await commentService.validateMember(email);
+		const nickName = req.user.nickName;
+		const { content, profilePic } = req.body;
 
-		// if (!validateMember) {
-		// 	throw new Error('로그인어쩌고~~');
-		// }
+		const newComment = await CommentService.createComment(postId, content, nickName, profilePic);
 
-		// const newComment = await commentService.createComment({
-		// 	postId,
-		// 	content,
-		// 	userId,
-		// });
-
-		res.status(200).json(newComment);
+		res.status(200).json({ data: newComment });
 	} catch (err) {
 		next(err);
 	}
@@ -29,10 +18,9 @@ const getComment = async (req, res, next) => {
 	try {
 		const { postId } = req.params;
 		console.log(req.params);
-		const commentService = new CommentService();
-		const getComment = await commentService.getComment(postId);
+		const getComment = await CommentService.getComment(postId);
 
-		res.status(200).json(getComment);
+		res.status(200).json({ data: getComment });
 	} catch (error) {
 		next(error);
 	}
@@ -48,15 +36,14 @@ const updateComment = async (req, res, next) => {
 	try {
 		const { commentId } = req.params;
 		const { content } = req.body;
-		const commentService = new CommentService();
-		const updateResult = await commentService.updateComment(commentId, content);
+
+		const updateResult = await CommentService.updateComment(commentId, content);
 
 		if (!updateComment) {
 			return res.status(400).json({ message: '댓글을 찾을 수 없습니다.' });
 		}
 		res.status(200).json({
-			message: '댓글이 성공적으로 수정되었습니다.',
-			updateResult,
+			date: updateResult,
 		});
 	} catch (err) {
 		next(err);
@@ -73,8 +60,7 @@ const deleteComment = async (req, res) => {
 	try {
 		const { commentId } = req.params;
 
-		const commentService = new CommentService();
-		const deleteComment = await commentService.deleteComment(commentId);
+		const deleteComment = await CommentService.deleteComment(commentId);
 
 		if (!deleteComment) {
 			return res.status(400).json({ message: '댓글을 찾을 수 없습니다' });
@@ -84,4 +70,5 @@ const deleteComment = async (req, res) => {
 		res.status(500).json({ message: err.message });
 	}
 };
+
 module.exports = { updateComment, deleteComment, createComment, getComment };

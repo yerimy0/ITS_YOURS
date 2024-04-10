@@ -9,7 +9,6 @@ const CommentsSchema = new Schema({
 	// 게시글 id
 	postId: {
 		type: SchemaTypes.ObjectId,
-		// type: String,
 		required: true,
 		ref: 'Posts',
 	},
@@ -18,11 +17,19 @@ const CommentsSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	// 사용자 id (작성자)
 	userId: {
-		// type: String,
 		type: SchemaTypes.ObjectId,
 		required: true,
-		ref: 'Members', // 'Members' 에서 프로필사진, 닉네임 가져옴
+		ref: 'Members',
+	},
+	nickName: {
+		type: String,
+		// type: SchemaTypes.ObjectId,
+		required: true,
+	},
+	profilePic: {
+		type: String,
 	},
 	// 댓글 생성일자
 	createdAt: {

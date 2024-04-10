@@ -140,8 +140,9 @@ const deleteProduct = async (req, res, next) => {
 
 // 구매내역 조회
 const myTradedProducts = async (req, res) => {
-	// const userid = req.user.id
-	const buyerId = req.query.buyerId;
+	const buyerId = req.user.id;
+	console.log(buyerId);
+
 	try {
 		const tradedProducts = await productsService.tradedProductsByBuyerId(buyerId);
 

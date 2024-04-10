@@ -8,6 +8,7 @@ const postRouter = require('./src/routes/PostRouter');
 
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+import cors from 'cors';
 
 require('dotenv').config();
 mongoose.connect(
@@ -28,5 +29,7 @@ app.use('/api/qna', qnaRouter);
 app.use('/api/members', memberRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/community', postRouter);
+
+app.use(cors());
 
 module.exports = app;

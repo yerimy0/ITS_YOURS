@@ -1,4 +1,3 @@
-// AskSupportWrite.js
 import React from 'react';
 import { Title } from '../../components/Users/UsersStyles';
 import { Container } from '../../components/pages/Mypage/AskSupportWrite/AskSupportWriteStyles';

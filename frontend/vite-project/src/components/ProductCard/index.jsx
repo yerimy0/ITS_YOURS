@@ -1,4 +1,7 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import WishButton from '../WishButton';
+import { BASE_URI } from '../../constants/URL';
 import {
 	ProductCardWrap,
 	ProductImage,
@@ -12,21 +15,41 @@ import {
 } from './ProductCardStyle';
 
 function ProductCard() {
+	const [productData, setProductData] = useState(null);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await axios.get(`${BASE_URI}/api/products/list`);
+				setProductData(response.data);
+				console.log(response.data);
+			} catch (error) {
+				console.error('Error fetching product data:', error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
 	return (
 		<ProductCardWrap>
-			<ProductImage src="/book_cover.jpg" alt="" />
-			<ProductInfoWrap>
-				<ProductInfo>
-					<ProductTitle>공예란 무엇인가</ProductTitle>
-					<ProductPrice>
-						<Price>27,000</Price>
-						<PriceWon>원</PriceWon>
-					</ProductPrice>
-				</ProductInfo>
-				<ProductButton>
-					<WishButton />
-				</ProductButton>
-			</ProductInfoWrap>
+			{productData && (
+				<>
+					<ProductImage src="/book_cover.jpg" alt="" />
+					<ProductInfoWrap>
+						<ProductInfo>
+							<ProductTitle></ProductTitle>
+							<ProductPrice>
+								<Price></Price>
+								<PriceWon>원</PriceWon>
+							</ProductPrice>
+						</ProductInfo>
+						<ProductButton>
+							<WishButton />
+						</ProductButton>
+					</ProductInfoWrap>
+				</>
+			)}
 		</ProductCardWrap>
 	);
 }

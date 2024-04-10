@@ -7,7 +7,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 
 import Login from './pages/Login/Login';
-import SignUp from './pages/SignUp/SignUp';
+import SignUp from './pages/Signup/Signup';
 import FindId from './pages/Find/FindId';
 import FindPassword from './pages/Find/FindPassword';
 import ProductWrite from './pages/ProductWrite';

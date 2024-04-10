@@ -8,7 +8,7 @@ const postRouter = require('./src/routes/PostRouter');
 
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-import cors from 'cors';
+const cors = require('cors');
 
 require('dotenv').config();
 mongoose.connect(

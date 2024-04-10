@@ -25,6 +25,7 @@ import CommunityDetail from './pages/Community/CommunityDetail.jsx';
 import { Provider } from 'react-redux';
 import store from './store.js';
 import Chat from './pages/Chat';
+import AdminPage from './pages/Admin';
 
 const router = createBrowserRouter([
 	{
@@ -53,6 +54,7 @@ const router = createBrowserRouter([
 	{ path: '/findid', element: <FindId /> },
 	{ path: '/findpassword', element: <FindPassword /> },
 	{ path: '/signup', element: <SignUp /> },
+	{ path: '/adminpage', element: <AdminPage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

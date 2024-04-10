@@ -49,9 +49,8 @@ const getProductInfo = async (req, res) => {
 			&SearchTarget=Book&output=js&Version=20131101`;
 
 		const response = await axios.get(apiUrl);
-		//통신값 중 첫번째 값
+
 		const productData = response.data.item;
-		console.log(productData);
 
 		const productDatas = productData.map(item => ({
 			title: item.title,
@@ -71,9 +70,10 @@ const getProductInfo = async (req, res) => {
 //상품정보 추가
 const insertProduct = async (req, res, next) => {
 	try {
+		const userId = req.user.id;
 		const { name, imgUrls, price, author, publisher, condition, region, description } = req.body;
-
 		const product = await productsService.insertProduct({
+			userId,
 			name,
 			imgUrls,
 			price,

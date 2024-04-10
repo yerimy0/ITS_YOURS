@@ -23,7 +23,7 @@ const CommentsSchema = new Schema({
 		type: String,
 		// type: Schema.Types.ObjectId,
 		required: true,
-		ref: 'User', // 'User' 에서 프로필사진, 닉네임 가져옴
+		ref: 'Members', // 'Members' 에서 프로필사진, 닉네임 가져옴
 	},
 	// 댓글 생성일자
 	createdAt: {

@@ -20,10 +20,7 @@ class CommentService {
 			deletedAt: { $exists: false },
 		};
 
-		return await Comments.find(getComment);
-		// return await Posts.find({ deletedAt: { $exists: false } });
-		// const comment = await Comments.find(getComment);
-		// return comment;
+		return await Comments.find(getComment).populate('userId', 'nickName profilePic').exec();
 	}
 
 	/**

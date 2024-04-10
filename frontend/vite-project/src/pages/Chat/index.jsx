@@ -9,7 +9,7 @@ function Chat() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await instance.get('/api/products/list');
+				const response = await instance.get('api/products/list');
 				console.log(response.data);
 				setProducts(response.data);
 				setLoading(false);

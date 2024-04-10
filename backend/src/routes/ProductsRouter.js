@@ -1,4 +1,6 @@
 const { Router } = require('express');
+const validateToken = require('../middlewares/ValidateToken');
+
 const {
 	getProductsList,
 	searchProduct,
@@ -18,8 +20,11 @@ router.get('/:prodId', getProduct);
 router.get('/', getProductInfo);
 router.get('/myTradedProducts', myTradedProducts);
 
-router.post('/', insertProduct);
+//상품 등록
+router.post('/', validateToken, insertProduct);
+//상품 정보 수정
 router.put('/', updateProduct);
+//상품 삭제
 router.delete('/', deleteProduct);
 
 module.exports = router;

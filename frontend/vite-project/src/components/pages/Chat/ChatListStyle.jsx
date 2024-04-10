@@ -33,6 +33,12 @@ const ChatContainer = styled.div`
 	align-items: center;
 	gap: 25px;
 	box-sizing: border-box;
-	overflow: auto;
+	overflow-y: scroll;
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+	::-webkit-scrollbar {
+		display: none; /* Chrome, Safari, Opera */
+	}
 `;
+
 export { ChatListWrap, ChatListHeader, ChatContainer };

@@ -22,12 +22,15 @@ async function searchProduct(name) {
 	}
 }
 
+//상품목록 > 상품 상세정보 조회
 async function getProductInfo(prodId) {
 	const result = await Products.findOne({ _id: prodId });
 	return result;
 }
 
+//상품 등록(추가)
 async function insertProduct({
+	userId,
 	name,
 	imgUrls,
 	price,
@@ -45,6 +48,7 @@ async function insertProduct({
 		publisher: publisher,
 		condition: condition,
 		region: region,
+		sellerId: userId,
 		description: description,
 	};
 
@@ -52,11 +56,17 @@ async function insertProduct({
 	return product;
 }
 
+//상품정보 수정
 async function updateProduct(
 	prodId,
 	{ name, imgUrls, price, author, publisher, condition, region, description },
 ) {
 	try {
+		const product = await Products.findOne({ _id: prodId });
+
+		if (product.deletedAt) {
+			throw new Error('이미 삭제된 상품입니다.');
+		}
 		// 상품을 업데이트하고자 하는 정보로 업데이트합니다.
 		await Products.findOneAndUpdate(
 			{ _id: prodId },
@@ -73,21 +83,27 @@ async function updateProduct(
 			},
 		);
 		const result = await Products.findOne({ _id: prodId });
+
 		return result;
 	} catch (error) {
 		throw new Error('상품 정보를 업데이트하는 동안 오류가 발생했습니다.');
 	}
 }
 
+// 상품 정보 삭제
 async function deleteProduct(prodId) {
 	try {
-		console.log(prodId);
+		// 상품을 삭제하고자 하는 정보로 업데이트합니다.
+		const product = await Products.findOne({ _id: prodId });
+		if (product.deletedAt) {
+			throw new Error('이미 삭제된 상품입니다.');
+		}
 		await Products.findOneAndUpdate(
 			{ _id: prodId },
 			{ deletedAt: Date.now() + 9 * 60 * 60 * 1000 },
 		);
 		const result = await Products.findOne({ _id: prodId });
-		console.log(result);
+
 		return result;
 	} catch (error) {
 		throw new Error('상품 정보를 삭제하는 동안 오류가 발생했습니다.');

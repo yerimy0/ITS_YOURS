@@ -1,24 +1,36 @@
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import PurchaseHistoryCard from '../../PurchaseHistoryCard';
+import PurchaseHistoryCard from '../../MypageHistoryCard/PurchaseHistoryCard';
 
 const PurchaseHistoryContainer = () => {
+	const [purchaseList, setPurchaseList] = useState([]);
+
+	useEffect(() => {
+		async function fetchPurchaseList() {
+			try {
+				const response = await fetch('https://api.example.com/purchases');
+				const data = await response.json();
+				setPurchaseList(data);
+			} catch (error) {
+				console.error('구매목록을 가져오는데 실패했습니다.', error);
+			}
+		}
+
+		fetchPurchaseList();
+	}, []);
+
 	return (
-		<PurchaseHistoryWrap className="sales_history_wrap">
-			<ForPurchaseList className="for_sales_list">
-				<PurchaseHistoryCard />
-			</ForPurchaseList>
-			<ForPurchaseList className="for_sales_list">
-				<PurchaseHistoryCard />
-			</ForPurchaseList>
-			<ForPurchaseList className="for_sales_list">
-				<PurchaseHistoryCard />
-			</ForPurchaseList>
-			<ForPurchaseList className="for_sales_list">
-				<PurchaseHistoryCard />
-			</ForPurchaseList>
+		<PurchaseHistoryWrap>
+			{purchaseList.map(purchase => (
+				<ForPurchaseList key={purchase.id}>
+					<PurchaseHistoryCard purchase={purchase} />
+				</ForPurchaseList>
+			))}
 		</PurchaseHistoryWrap>
 	);
 };
+
+export default PurchaseHistoryContainer;
 
 const PurchaseHistoryWrap = styled.section`
 	padding: 20px;
@@ -32,5 +44,3 @@ const ForPurchaseList = styled.div`
 	height: auto;
 	padding: 10px;
 `;
-
-export default PurchaseHistoryContainer;

@@ -15,9 +15,16 @@ import Product from './pages/Product';
 import NotFound from './components/pages/NotFound';
 import MyPageWish from './pages/Mypage/MypageWish';
 import MyPage from './pages/Mypage/Mypage.jsx';
+import ProfileEdit from './pages/Mypage/ProfileEdit';
+import ProductDetail from './pages/ProductDetail';
 import SalesHistory from './pages/Mypage/SalesHistory.jsx';
 import PurchaseHistory from './pages/Mypage/PurchaseHistory.jsx';
-import Admin from './pages/Admin/Admin';
+import AdminPage from './pages/Admin/AdminPage.jsx';
+import SignOut from './pages/SignOut/SignOut';
+import Community from './pages/Community';
+import { Provider } from 'react-redux';
+import store from './store.js';
+import Chat from './pages/Chat';
 
 const router = createBrowserRouter([
 	{
@@ -31,22 +38,26 @@ const router = createBrowserRouter([
 			{ path: '/*', element: <NotFound /> },
 			{ path: '/mypage/wish', element: <MyPageWish /> },
 			{ path: '/mypage', element: <MyPage /> },
+			{ path: '/product/detail', element: <ProductDetail /> },
 			{ path: '/saleshistory', element: <SalesHistory /> },
 			{ path: '/purchasehistory', element: <PurchaseHistory /> },
+			{ path: '/signout', element: <SignOut /> },
+			{ path: '/profileedit', element: <ProfileEdit /> },
+			{ path: '/chat', element: <Chat /> },
+			{ path: '/community', element: <Community /> },
 		],
 	},
-	{ path: 'login', element: <Login /> },
-	{ path: 'findid', element: <FindId /> },
-	{ path: 'findpassword', element: <FindPassword /> },
+	{ path: '/login', element: <Login /> },
+	{ path: '/findid', element: <FindId /> },
+	{ path: '/findpassword', element: <FindPassword /> },
 	{ path: '/signup', element: <SignUp /> },
-  { path: '/admin', element: <Admin /> },
+	{ path: '/adminpage', element: <AdminPage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
-		{/* <BrowserRouter>
-        <App />
-      </BrowserRouter> */}
+		{/* <Provider store={store}> */}
 		<RouterProvider router={router} />
+		{/* </Provider> */}
 	</React.StrictMode>,
 );

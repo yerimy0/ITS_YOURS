@@ -30,6 +30,7 @@ async function getProductInfo(prodId) {
 
 //상품 등록(추가)
 async function insertProduct({
+	userId,
 	name,
 	imgUrls,
 	price,
@@ -47,6 +48,7 @@ async function insertProduct({
 		publisher: publisher,
 		condition: condition,
 		region: region,
+		sellerId: userId,
 		description: description,
 	};
 

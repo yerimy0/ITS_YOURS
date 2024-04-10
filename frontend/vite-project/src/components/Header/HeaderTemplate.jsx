@@ -23,10 +23,10 @@ function Header() {
 						</NavLink>
 					</li>
 					<li>
-						<NavLink to="/">커뮤니티</NavLink>
+						<NavLink to="/community">커뮤니티</NavLink>
 					</li>
 					<li>
-						<NavLink to="/">채팅하기</NavLink>
+						<NavLink to="/chat">채팅하기</NavLink>
 					</li>
 					<li>
 						<NavLink to="/product/write">내책판매</NavLink>

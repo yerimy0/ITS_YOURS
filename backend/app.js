@@ -6,10 +6,8 @@ const productsRouter = require('./src/routes/ProductsRouter');
 const qnaRouter = require('./src/routes/QnaRouter');
 const postRouter = require('./src/routes/PostRouter');
 const commentRouter = require('./src/routes/CommentRouter');
-// const insertBooks = require('./src/scripts/insertBooks');
 
 const mongoose = require('mongoose');
-// const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
 mongoose.connect(
@@ -23,7 +21,6 @@ const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
-// app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/qna', qnaRouter);
@@ -31,7 +28,5 @@ app.use('/api/members', memberRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/community', postRouter);
 app.use('/api/community', commentRouter);
-
-// app.use('/scripts', insertBooks);
 
 module.exports = app;

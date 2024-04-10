@@ -1,12 +1,12 @@
 import axios, { HttpStatusCode, isAxiosError } from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:4000';
-axios.defaults.headers.common['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = 'http://localhost:4000';
+// axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.timeout = 5000;
 
 const instance = axios.create({
 	withCredentials: true,
-	baseURL: 'http://localhost:4000',
+	baseURL: '/api',
 	headers: {
 		'Content-Type': 'application/json',
 	},

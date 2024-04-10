@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const { Schema } = require('mongoose');
+const { Schema, SchemaTypes } = require('mongoose');
 
 /**
  * 커뮤니티 댓글 Schema
@@ -9,8 +8,8 @@ const { Schema } = require('mongoose');
 const CommentsSchema = new Schema({
 	// 게시글 id
 	postId: {
-		// type: Schema.Types.ObjectId,
-		type: String,
+		type: SchemaTypes.ObjectId,
+		// type: String,
 		required: true,
 		ref: 'Posts',
 	},
@@ -20,8 +19,8 @@ const CommentsSchema = new Schema({
 		required: true,
 	},
 	userId: {
-		type: String,
-		// type: Schema.Types.ObjectId,
+		// type: String,
+		type: SchemaTypes.ObjectId,
 		required: true,
 		ref: 'Members', // 'Members' 에서 프로필사진, 닉네임 가져옴
 	},

@@ -4,8 +4,20 @@ const createComment = async (req, res, next) => {
 	try {
 		const { postId } = req.params;
 		const { content, userId } = req.body;
+		// const email = req.decoded.user.email;
 		const commentService = new CommentService();
 		const newComment = await commentService.createComment(postId, content, userId);
+		// const validateMember = await commentService.validateMember(email);
+
+		// if (!validateMember) {
+		// 	throw new Error('로그인어쩌고~~');
+		// }
+
+		// const newComment = await commentService.createComment({
+		// 	postId,
+		// 	content,
+		// 	userId,
+		// });
 
 		res.status(200).json(newComment);
 	} catch (err) {

@@ -1,6 +1,23 @@
 const { Comments } = require('../models');
 
 class CommentService {
+	// 유저확인!!!!!!!!!!!!
+	// async validateMember() {
+	// 	try {
+	// 		const memberId = await Members.findOne({ email }).select('_id');
+
+	// 		console.log('memberId', memberId);
+
+	// 		if (!memberId) {
+	// 			return false;
+	// 		} else {
+	// 			return true;
+	// 		}
+	// 	} catch (error) {
+	// 		console.log(err);
+	// 	}
+	// }
+
 	async createComment(postId, content, userId) {
 		const newComment = {
 			postId: postId,

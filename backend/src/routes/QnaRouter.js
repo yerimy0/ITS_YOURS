@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const validateToken = require('../middlewares/ValidateToken');
 
 const {
 	createQna,
@@ -10,10 +11,10 @@ const {
 
 const router = Router();
 // Q&A
-router.post('/', createQna);
-router.put('/', updateQna);
-router.get('/', getAllQna);
-router.delete('/', deleteQna);
-router.get('/', getMyQna);
+router.post('/', validateToken, createQna);
+router.put('/', validateToken, updateQna);
+router.get('/admin', validateToken, getAllQna);
+router.delete('/', validateToken, deleteQna);
+router.get('/', validateToken, getMyQna);
 
 module.exports = router;

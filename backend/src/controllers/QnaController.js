@@ -4,16 +4,15 @@ const ObjectId = require('mongodb').ObjectId;
 // Q&A 작성
 const createQna = async (req, res, next) => {
 	try {
-		const { id, nickname } = req.query;
+		const nickname = req.user.nickName;
 		const { title, content } = req.body;
-		const qna = new Qna();
-		const result = await qna.createQna({ id, title, content, nickname });
+		const result = await qnaService.createQna(title, content, nickname);
 
 		if (!result) {
 			throw new Error('Q&A를 쓸 권한이 없습니다.');
 		}
-		console.log(newQna);
-		return res.status(200).json(newQna);
+		console.log(result);
+		return res.status(200).json(result);
 	} catch (err) {
 		next(err);
 	}
@@ -32,13 +31,11 @@ const getAllQna = async (req, res, next) => {
 
 // Q&A 수정
 const updateQna = async (req, res, next) => {
-	const newQna = req.body.formData;
-	const { title, content } = req.body;
-	const id = req.query;
-
 	try {
-		const qnaService = new QnaService();
-		const updatedQna = await qnaService.updateQna(id, title, content, newQna);
+		const { qnaId } = req.query;
+		const qnaObjectId = new ObjectId(qnaId);
+		const { title, content } = req.body;
+		const updatedQna = await qnaService.updateQna(qnaObjectId, { title, content });
 		if (!updatedQna) {
 			return res.status(400).json({ message: 'Qna not found' });
 		}
@@ -73,9 +70,8 @@ const deleteQna = async (req, res, next) => {
 // 내 Q&A 조회
 const getMyQna = async (req, res, next) => {
 	try {
-		const id = req.decoded.user.id;
-		const qnaService = new QnaService();
-		const qna = await qnaService.getMyQna(id);
+		const nickname = req.user.nickName;
+		const qna = await qnaService.getMyQna(nickname);
 		if (!qna) {
 			throw new NotFoundError('조회되는 Q&A가 없습니다!');
 		}

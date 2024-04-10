@@ -1,7 +1,20 @@
 import { Box, Sentence, RedStar, Label, Input, StateButtons, SmallButton } from '../WriteFormStyle';
 import { useState, useContext, useEffect } from 'react';
 import { SetRegisterContext, RegisterContext } from '../index';
+import instance from '../../../apis/axiosInstance';
+
 function Section({ label, onChange, value, name }) {
+	// const [keyWord, setKeyWord] = useState(''); //검색값
+
+	// function handleInputChange(e) {
+	// 	setKeyWord(e.target.value);
+	// }
+
+	// async function handleSearch() {
+	// 	const res = instance.get(`/api/products/search=${value}`);
+	// 	console.log(res);
+	// }
+
 	return (
 		<Box>
 			<Sentence>

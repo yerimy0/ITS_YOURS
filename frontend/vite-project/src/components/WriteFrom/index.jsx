@@ -14,18 +14,12 @@ import {
 import InputImg from './components/InputImg';
 import { Section, Section2, Section3, Section4 } from './components/Section';
 import { useEffect, useState, createContext } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { onChange, handleImageChange } from '../../store';
-// import tempSave from '../../utils/tempSave'
+import { Register } from '../../apis/service/product.api';
 
 export let RegisterContext = createContext();
 export let SetRegisterContext = createContext(() => {});
 
 function WriteForm() {
-	// const register = useSelector(state => {
-	// 	return state.register;
-	// });
-	// let dispatch = useDispatch();
 	const { id } = useParams();
 	console.log(id);
 	const [register, setRegister] = useState({
@@ -67,21 +61,12 @@ function WriteForm() {
 		});
 	}
 
-	// function onChange(e) {
-	// 	const { value, name } = e.target;
-	// 	dispatch(onChange({ name, value }));
-	// }
-
 	function handleImageChange(newUrls) {
 		setRegister({
 			...register,
 			uploadImgUrls: newUrls,
 		});
 	}
-
-	// function handleImageChange(newUrls) {
-	// 	dispatch(handleImageChange(newUrls));
-	// }
 
 	function tempSave() {
 		const dbReq = indexedDB.open('tempSave', 1);
@@ -144,7 +129,14 @@ function WriteForm() {
 							임시저장
 						</BigButton>
 						{id === undefined ? (
-							<BigButton className="Button">등록하기</BigButton>
+							<BigButton
+								className="Button"
+								onClick={() => {
+									Register(register);
+								}}
+							>
+								등록하기
+							</BigButton>
 						) : (
 							<BigButton className="Button">수정하기</BigButton>
 						)}

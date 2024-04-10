@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DynamicForm from '../../Users/DynamicForm';
 import Modal from '../../Users/Modal';
-import sendDataToServer from '../../Users/sendDataToServer';
+import { loginApi } from './LoginApi';
 
 const LoginForm = () => {
 	const navigate = useNavigate();
@@ -11,23 +11,16 @@ const LoginForm = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
 
-	const authenticateUser = async (userId, password) => {
-		const response = await sendDataToServer('http://example.com/api/authenticate', {
-			userId,
-			password,
-		});
-		return response;
-	};
-
 	const handleSubmit = async event => {
 		event.preventDefault();
-		const isAuthenticated = await authenticateUser(userId, password);
-		setIsModalOpen(true);
-		if (isAuthenticated) {
+		const { token, error } = await loginApi(userId, password);
+		if (token) {
+			// 쿠키에 토큰 저장 (쿠키 관련 코드 직접 추가)
+			document.cookie = `authToken=${token}; path=/; Secure`;
 			navigate('/home');
 		} else {
-			setModalMessage('아이디 또는 비밀번호가 맞지 않습니다.\n다시 확인해주세요.');
 			setIsModalOpen(true);
+			setModalMessage(error || '아이디 또는 비밀번호가 맞지 않습니다.\n다시 확인해주세요.');
 			setTimeout(() => setIsModalOpen(false), 3000);
 		}
 	};

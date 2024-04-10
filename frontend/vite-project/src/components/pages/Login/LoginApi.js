@@ -1,11 +1,12 @@
-import axios from 'axios';
+import instance from '../../../utils/api';
 
 export const loginApi = async (userId, password) => {
 	try {
-		const response = await axios.post('http://example.com/api/authenticate', {
+		const response = await instance.post('/api/members/login', {
 			userId,
 			password,
 		});
+		console.log(response.data);
 		const { token } = response.data;
 		return { token, error: null };
 	} catch (error) {

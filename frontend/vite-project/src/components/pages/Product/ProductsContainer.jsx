@@ -19,19 +19,17 @@ function ProductsContainer() {
 				const response = await instance.get('/api/products/list');
 				console.log(response.data);
 				setProducts(response.data);
-				setLoading(false);
 			} catch (error) {
 				console.error('Error fetching product data:', error);
 				setError('Error fetching product data. Please try again later.');
-				setLoading(false);
 			}
 		};
 		fetchData();
 	}, []);
 
-	// const startIndex = (activePage - 1) * perPage;
-	// const endIndex = startIndex + perPage;
-	// const productsToShow = loading ? [] : products.slice(startIndex, endIndex);
+	const startIndex = (activePage - 1) * perPage;
+	const endIndex = startIndex + perPage;
+	const productsToShow = loading ? [] : products.slice(startIndex, endIndex);
 
 	if (error) {
 		return <div>Error: {error}</div>;
@@ -44,14 +42,14 @@ function ProductsContainer() {
 			) : (
 				<ProductsWrap>
 					<Products>
-						{/* {productsToShow.map(product => (
-                     <ProductCard
-                        key={product._id}
-                        imgUrls={product.imgUrls}
-                        name={product.name}
-                        price={product.price}
-                     />
-                  ))} */}
+						{productsToShow.map(product => (
+							<ProductCard
+								key={product._id}
+								imgUrls={product.imgUrls}
+								name={product.name}
+								price={product.price}
+							/>
+						))}
 					</Products>
 				</ProductsWrap>
 			)}

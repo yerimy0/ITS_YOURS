@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import WishButton from '../WishButton';
-import { BASE_URI } from '../../constants/URL';
 import {
 	ProductCardWrap,
 	ProductImage,
@@ -14,42 +12,23 @@ import {
 	ProductButton,
 } from './ProductCardStyle';
 
-function ProductCard() {
-	const [productData, setProductData] = useState(null);
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await axios.get(`${BASE_URI}/api/products/list`);
-				setProductData(response.data);
-				console.log(response.data);
-			} catch (error) {
-				console.error('Error fetching product data:', error);
-			}
-		};
-
-		fetchData();
-	}, []);
-
+function ProductCard({ _id, imgUrls, name, price }) {
 	return (
-		<ProductCardWrap>
-			{productData && (
-				<>
-					<ProductImage src="/book_cover.jpg" alt="" />
-					<ProductInfoWrap>
-						<ProductInfo>
-							<ProductTitle></ProductTitle>
-							<ProductPrice>
-								<Price></Price>
-								<PriceWon>원</PriceWon>
-							</ProductPrice>
-						</ProductInfo>
-						<ProductButton>
-							<WishButton />
-						</ProductButton>
-					</ProductInfoWrap>
-				</>
-			)}
+		<ProductCardWrap productId={_id}>
+			{/* imgUrls 배열의 첫 번째 요소를 사용하여 이미지를 표시합니다. */}
+			<ProductImage src={imgUrls} alt={name} />
+			<ProductInfoWrap>
+				<ProductInfo>
+					<ProductTitle>{name}</ProductTitle>
+					<ProductPrice>
+						<Price>{price}</Price>
+						<PriceWon>원</PriceWon>
+					</ProductPrice>
+				</ProductInfo>
+				<ProductButton>
+					<WishButton />
+				</ProductButton>
+			</ProductInfoWrap>
 		</ProductCardWrap>
 	);
 }

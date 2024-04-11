@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Line } from '../CommunityList/CommunityStyle';
 import { DetailBox, Content, ContentBox } from './DetailStyle';
@@ -6,15 +5,26 @@ import { DetailBox, Content, ContentBox } from './DetailStyle';
 import CommentSection from '../components/Comment';
 import DetailTopSection from '../components/DetailTop';
 
+import { GetDetail } from '../../../../apis/service/community.api';
+import { useState, useEffect } from 'react';
+
 function CommuDetail() {
 	const { id } = useParams();
+	const [detail, setDeatil] = useState([]);
+	useEffect(() => {
+		async function GetPape() {
+			const res = await GetDetail(id);
+			setDeatil(res);
+		}
+		GetPape();
+	}, []);
 	return (
 		<DetailBox>
-			<DetailTopSection />
+			<DetailTopSection detail={detail} />
 			<ContentBox>
-				<Content>교수님 휴강 휴강 휴강 제발 휴강 갑자기 일 생겨서 휴강 해줘요</Content>
+				<Content>{detail.content}</Content>
 			</ContentBox>
-			<img src="/ex_pic.png" />
+			<img src={detail.photos} />
 			<Line>
 				<hr />
 			</Line>

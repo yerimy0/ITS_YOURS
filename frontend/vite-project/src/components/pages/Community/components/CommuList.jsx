@@ -31,7 +31,7 @@ function CommuList() {
 		}
 		GetData();
 	}, []);
-
+	console.log(communityLists);
 	return (
 		<Box>
 			<ButtonBox
@@ -59,7 +59,6 @@ function ListOne({ commu }) {
 	return (
 		<ListOfOne
 			onClick={() => {
-				console.log(1);
 				navigate(`/community/${commu._id}`);
 			}}
 		>

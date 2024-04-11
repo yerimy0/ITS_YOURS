@@ -11,7 +11,7 @@ function WishButton({ productId }) {
 
 	const toggleWishAdd = async () => {
 		try {
-			const res = await axios.post('api/wishes/toggle', {
+			const res = await instance.post('api/wishes/toggle', {
 				product_id: productId,
 			});
 

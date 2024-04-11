@@ -7,13 +7,13 @@ import {
 	Buttons,
 	FilterInButton,
 } from './ProductFilterStyle';
+import instance from '../../apis/axiosInstance';
 
 function ProductFilterLogic({ onUpdateFilteredBooks, onCloseFilter }) {
 	const [locations, setLocations] = useState([]);
 	const [selectedLocation, setSelectedLocation] = useState('');
 	const [universities, setUniversities] = useState([]);
 	const [selectedUniversity, setSelectedUniversity] = useState('');
-	const [filteredBooks, setFilteredBooks] = useState([]);
 	const [isConfirmEnabled, setIsConfirmEnabled] = useState(false);
 
 	// 컴포넌트가 마운트될 때 지역 데이터 호출
@@ -27,14 +27,25 @@ function ProductFilterLogic({ onUpdateFilteredBooks, onCloseFilter }) {
 	}, [selectedUniversity]);
 
 	// 지역 데이터
-	const fetchLocations = () => {
-		setLocations(['강북구', '강남구', '강동구', '동대문구']); //더미 데이터
+	const fetchLocations = async () => {
+		try{
+			const res = await instance.get('/api/locations');
+      setLocations(res.data);
+		} catch(err){
+			console.error('지역 데이터를 가져오는 중 오류가 발생했습니다.', err);
+		}
 	};
 
 	// 대학교 데이터
-	const fetchUniversities = locationId => {
-		setUniversities(['서울대', '고려대', '연세대', '이화여대']); //더미 데이터
-	};
+	const fetchUniversities = async(locations) => {
+		try{
+			const res = await instance.get('/api/universities?location=${location}`')
+			setUniversities(res.data);
+        } catch(err){
+					console.error('대학교 데이터를 가져오는 중 오류가 발생했습니다.', err);
+				}
+      };
+		};
 
 	// 지역을 선택했을 때 호출
 	const handleLocationSelect = locationId => {

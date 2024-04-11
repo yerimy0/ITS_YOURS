@@ -1,5 +1,11 @@
-const { Comments, Members } = require('../models');
+const { Comments, Posts } = require('../models');
 
+/**
+ * 커뮤니티 댓글 작성 service
+ * 작성자 : 유경아
+ * 작성 시작일 : 2024-04-07
+ * 커뮤니티 댓글 조회에 동작되는 DB작업을 모아놓은 service입니다.
+ */
 async function createComment(postId, content, nickName, profilePic) {
 	const newComment = {
 		postId: postId,
@@ -9,16 +15,20 @@ async function createComment(postId, content, nickName, profilePic) {
 		createdAt: new Date(),
 	};
 	const comment = await Comments.create(newComment);
+	await Posts.findByIdAndUpdate(postId, { $inc: { commentCounts: 1 } });
+
 	return comment;
 }
+
 /**
- * 조회
+ * 커뮤니티 댓글 조회 service
+ * 작성자 : 유경아
+ * 작성 시작일 : 2024-04-07
+ * 커뮤니티 댓글 조회에 동작되는 DB작업을 모아놓은 service입니다.
  */
 async function getComment(postId) {
 	try {
-		const comments = await Comments.find({ postId: postId, deletedAt: { $exists: false } })
-			.populate('userId', 'nickName profilePic') // userId를 통해 Member 정보를 가져옵니다.
-			.exec();
+		const comments = await Comments.find({ postId: postId, deletedAt: { $exists: false } });
 
 		return comments;
 	} catch (error) {
@@ -28,10 +38,10 @@ async function getComment(postId) {
 }
 
 /**
- * 커뮤니티 게시글 수정 service
+ * 커뮤니티 댓글 수정 service
  * 작성자 : 유경아
  * 작성 시작일 : 2024-04-07
- * 커뮤니티 글 수정에 동작되는 DB작업을 모아놓은 service입니다.
+ * 커뮤니티 댓글 수정에 동작되는 DB작업을 모아놓은 service입니다.
  */
 async function updateComment(commentId, content) {
 	const updateComment = await Comments.findByIdAndUpdate(
@@ -60,6 +70,9 @@ async function deleteComment(commentId) {
 	if (!deleteComment) {
 		return null;
 	}
+
+	await Posts.findByIdAndUpdate(deleteComment.postId, { $inc: { commentCounts: -1 } });
+
 	return deleteComment;
 }
 

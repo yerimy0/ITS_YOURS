@@ -8,7 +8,7 @@ const memberService = require('../services/MemberService');
  */
 const signUp = async (req, res, next) => {
 	try {
-		const { id, password, realName, email, univName, phoneNum, nickName } = req.body;
+		const { id, password, realName, email, univName, phoneNum, nickName, profilePic } = req.body;
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
 			id,
@@ -18,6 +18,7 @@ const signUp = async (req, res, next) => {
 			univName,
 			phoneNum,
 			nickName,
+			profilePic,
 		);
 		//통신 실패
 		if (!member) {

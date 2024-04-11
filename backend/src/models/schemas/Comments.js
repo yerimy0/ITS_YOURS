@@ -9,8 +9,8 @@ const CommentsSchema = new Schema({
 	// 게시글 id
 	postId: {
 		type: SchemaTypes.ObjectId,
-		required: true,
 		ref: 'Posts',
+		required: true,
 	},
 	// 댓글내용
 	content: {
@@ -18,11 +18,11 @@ const CommentsSchema = new Schema({
 		required: true,
 	},
 	// 사용자 id (작성자)
-	userId: {
-		type: SchemaTypes.ObjectId,
-		required: true,
-		ref: 'Members',
-	},
+	// userId: {
+	// 	type: SchemaTypes.ObjectId,
+	// 	required: true,
+	// 	ref: 'Members',
+	// },
 	nickName: {
 		type: String,
 		// type: SchemaTypes.ObjectId,

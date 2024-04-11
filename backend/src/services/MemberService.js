@@ -86,7 +86,7 @@ async function login(id, password) {
  * 회원정보조회 기능 관련 DB작업이 모여있는 service입니다.
  */
 async function getMember(userId) {
-	const memberInfo = await Members.findOne({ userId });
+	const memberInfo = await Members.findOne({ id: userId });
 	return memberInfo;
 }
 
@@ -98,9 +98,12 @@ async function getMember(userId) {
  */
 async function updateMember(userId, updateData) {
 	try {
-		// MongoDB의 findByIdAndUpdate 메서드를 사용하여 회원 정보 업데이트
-		// { new: true } 옵션을 사용하여 업데이트된 문서 반환
-		const updatedMember = await Members.findByIdAndUpdate(userId, updateData, {
+		const dataWithTimestamp = {
+			...updateData,
+			updatedAt: new Date(Date.now() + 9 * 60 * 60 * 1000),
+		};
+
+		const updatedMember = await Members.findOneAndUpdate({ id: userId }, dataWithTimestamp, {
 			new: true,
 		});
 
@@ -115,4 +118,28 @@ async function updateMember(userId, updateData) {
 	}
 }
 
-module.exports = { signUp, login, getMember, updateMember };
+/**
+ * 회원 탈퇴 service
+ * 작성자 : 유경아
+ * 작성 시작일 : 2024-04-05
+ * 회원 탈퇴 기능 관련 DB작업이 모여있는 service입니다.
+ */
+async function deleteMember(userId) {
+	try {
+		// 현재 시간을 삭제됨 시각으로 설정
+		const deletedAt = new Date();
+
+		// userId를 사용하여 사용자를 찾고, deletedAt 필드를 업데이트함으로써 소프트 삭제 수행
+		const result = await Members.updateOne({ id: userId }, { $set: { deletedAt: deletedAt } });
+
+		// 업데이트된 문서의 수를 확인하여 삭제 성공 여부 판단
+		if (result.nModified === 0) {
+			return null; // 문서가 업데이트되지 않았다면, null 반환
+		}
+
+		return { userId, deletedAt }; // 삭제 성공 시, 삭제된 사용자의 ID와 삭제 시각 반환
+	} catch (err) {
+		throw err; // 에러가 발생한 경우, 에러를 다시 던져 호출자에게 전달
+	}
+}
+module.exports = { signUp, login, getMember, updateMember, deleteMember };

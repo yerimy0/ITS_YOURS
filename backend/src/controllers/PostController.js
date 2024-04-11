@@ -25,7 +25,7 @@ const createPost = async (req, res, next) => {
 		if (!post) {
 			throw new Error('서버 오류 입니다.');
 		}
-		return res.status(200).json({ data: post, message: '글 작성 성공!!!' });
+		return res.status(200).json(post);
 	} catch (err) {
 		next(err);
 	}
@@ -40,7 +40,7 @@ const createPost = async (req, res, next) => {
 const getAllPosts = async (req, res, next) => {
 	try {
 		const posts = await PostService.getAllPosts();
-		res.status(200).json({ data: posts });
+		res.status(200).json(posts);
 	} catch (err) {
 		next(err);
 	}
@@ -61,7 +61,7 @@ const getPostDetails = async (req, res, next) => {
 			return res.status(404).json({ message: 'Post not found' });
 		}
 
-		res.status(200).json({ data: post });
+		res.status(200).json(post);
 	} catch (error) {
 		next(error);
 	}
@@ -87,7 +87,7 @@ const updatePost = async (req, res, next) => {
 		if (!updatedPost) {
 			return res.status(404).json({ message: 'post not found' });
 		}
-		res.status(200).json({ data: updatedPost });
+		res.status(200).json(updatedPost);
 	} catch (err) {
 		next(err);
 	}

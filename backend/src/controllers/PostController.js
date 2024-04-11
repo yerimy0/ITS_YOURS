@@ -25,7 +25,7 @@ const createPost = async (req, res, next) => {
 		if (!post) {
 			throw new Error('서버 오류 입니다.');
 		}
-		return res.status(200).json({ data: post, message: '글 작성 성공!!!' });
+		return res.status(200).json(post);
 	} catch (err) {
 		next(err);
 	}
@@ -35,12 +35,12 @@ const createPost = async (req, res, next) => {
  * 커뮤니티 모든 게시글 조회 controller
  * 작성자 : 유경아
  * 작성 시작일 : 2024-04-05
- * 기능 : 게시글 리스트 조회시 필요한 동작들을 모아놓은 컨트롤러입니다.
+ * 기능 : 게시글 리스트 조회시 필요한 동작들을 모아놓은  컨트롤러입니다.
  */
 const getAllPosts = async (req, res, next) => {
 	try {
 		const posts = await PostService.getAllPosts();
-		res.status(200).json({ data: posts });
+		res.status(200).json(posts);
 	} catch (err) {
 		next(err);
 	}
@@ -61,7 +61,7 @@ const getPostDetails = async (req, res, next) => {
 			return res.status(404).json({ message: 'Post not found' });
 		}
 
-		res.status(200).json({ data: post });
+		res.status(200).json(post);
 	} catch (error) {
 		next(error);
 	}
@@ -87,7 +87,7 @@ const updatePost = async (req, res, next) => {
 		if (!updatedPost) {
 			return res.status(404).json({ message: 'post not found' });
 		}
-		res.status(200).json({ data: updatedPost });
+		res.status(200).json(updatedPost);
 	} catch (err) {
 		next(err);
 	}

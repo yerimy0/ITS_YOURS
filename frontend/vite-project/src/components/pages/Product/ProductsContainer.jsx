@@ -1,61 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // axios import 추가
 import ProductCard from '../../ProductCard';
-import { ProductsWrap, Products } from './ProductsContainerStyle';
+import { Loading, ProductsWrap, Products } from './ProductsContainerStyle';
 import Paginator from '../../Paginator';
-import instance from '../../../utils/api';
+import instance from '../../../apis/axiosInstance';
 
 function ProductsContainer() {
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const [activePage, setActivePage] = useState(1);
-	const totalItems = 100; // Dummy
-	const perPage = 20; // Dummy
+	const itemsPerPage = 20;
+	const [currentPage, setCurrentPage] = useState(0);
+	const [totalItems, setTotalItems] = useState(0);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await instance.get('/api/products/list');
-				console.log(response.data);
-				setProducts(response.data);
+				const res = await instance.get('/api/products/list');
+				setProducts(res.data);
+				setTotalItems(res.data.length);
 				setLoading(false);
 			} catch (error) {
-				console.error('Error fetching product data:', error);
-				setError('Error fetching product data. Please try again later.');
+				console.error('상품 데이터를 불러오는 중 에러 발생:', error);
+				setError('상품 데이터를 불러오는 중 에러가 발생했습니다. 나중에 다시 시도해주세요.');
 				setLoading(false);
 			}
 		};
 		fetchData();
 	}, []);
 
-	// const startIndex = (activePage - 1) * perPage;
-	// const endIndex = startIndex + perPage;
-	// const productsToShow = loading ? [] : products.slice(startIndex, endIndex);
+	const startIndex = currentPage * itemsPerPage;
+	const endIndex = startIndex + itemsPerPage;
+	const productsToShow = products.slice(startIndex, endIndex);
 
-	if (error) {
-		return <div>Error: {error}</div>;
-	}
+	const handlePageChange = pageNumber => {
+		setCurrentPage(pageNumber);
+	};
 
 	return (
 		<>
 			{loading ? (
-				<div>Loading...</div>
+				<Loading>로딩 중...</Loading>
+			) : error ? (
+				<div>에러가 발생했습니다: {error}</div>
 			) : (
-				<ProductsWrap>
-					<Products>
-						{/* {productsToShow.map(product => (
-                     <ProductCard
-                        key={product._id}
-                        imgUrls={product.imgUrls}
-                        name={product.name}
-                        price={product.price}
-                     />
-                  ))} */}
-					</Products>
-				</ProductsWrap>
+				<>
+					<ProductsWrap>
+						<Products>
+							{productsToShow.map(product => (
+								<ProductCard
+									key={product._id}
+									imgUrls={product.imgUrls}
+									name={product.name}
+									price={product.price}
+								/>
+							))}
+						</Products>
+					</ProductsWrap>
+					<Paginator
+						currentPage={currentPage}
+						totalItems={totalItems}
+						itemsCountPerPage={itemsPerPage}
+						onChange={handlePageChange}
+					/>
+				</>
 			)}
-			<Paginator totalItems={totalItems} perPage={perPage} />
 		</>
 	);
 }

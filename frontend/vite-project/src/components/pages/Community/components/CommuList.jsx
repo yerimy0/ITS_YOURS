@@ -16,10 +16,22 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../CommunityList/CommunityStyle';
 import { FaComments } from 'react-icons/fa';
-import { commus } from './data';
+import { useEffect, useState } from 'react';
+import { GetCommunnityList } from '../../../../apis/service/community.api';
+import detailDate from '../../../../utils/writeTime';
 
 function CommuList() {
 	const navigate = useNavigate();
+	const [communityLists, setCommunityLists] = useState([]);
+
+	useEffect(() => {
+		async function GetData() {
+			const datas = await GetCommunnityList();
+			setCommunityLists(datas);
+		}
+		GetData();
+	}, []);
+
 	return (
 		<Box>
 			<ButtonBox
@@ -33,7 +45,7 @@ function CommuList() {
 				<hr />
 			</Line>
 			<List>
-				{commus.map((commu, i) => (
+				{communityLists.map((commu, i) => (
 					<ListOne key={`list-item-${i}`} commu={commu} />
 				))}
 			</List>
@@ -43,27 +55,28 @@ function CommuList() {
 
 function ListOne({ commu }) {
 	const navigate = useNavigate();
+	const time = detailDate(new Date(commu.createdAt));
 	return (
 		<ListOfOne
 			onClick={() => {
 				console.log(1);
-				navigate(`/community/${commu.id}`);
+				navigate(`/community/${commu._id}`);
 			}}
 		>
 			<ListLeft>
 				<ListTitle>{commu.title}</ListTitle>
 				<ListSub>{commu.content}</ListSub>
 				<LeftBottom>
-					<ListSub>{commu.school}</ListSub>
-					<ListSub>{commu.time}</ListSub>
+					<ListSub>{commu.univName}</ListSub>
+					<ListSub>{time}</ListSub>
 				</LeftBottom>
 			</ListLeft>
 			<ListRight>
 				<Comment>
 					<FaComments />
-					<ListSub>{commu.comment}</ListSub>
+					<ListSub>{commu.commentCounts}</ListSub>
 				</Comment>
-				<Img src={commu.img}></Img>
+				<Img src={commu.profilePic}></Img>
 			</ListRight>
 		</ListOfOne>
 	);

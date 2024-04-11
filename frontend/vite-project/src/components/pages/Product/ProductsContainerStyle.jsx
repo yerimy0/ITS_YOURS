@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+const Loading = styled.div`
+	font-size: 24px;
+	line-height: 28px;
+	margin: 0;
+`;
 const ProductsWrap = styled.section`
 	display: flex;
 	max-width: 1200px;
@@ -17,4 +22,4 @@ const Products = styled.div`
 	margin: 60px 0 30px 0;
 `;
 
-export { ProductsWrap, Products };
+export { Loading, ProductsWrap, Products };

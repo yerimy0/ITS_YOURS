@@ -1,7 +1,29 @@
 const { Products } = require('../models/index');
 
-async function getProductsList() {
-	const productsList = await Products.find({ deletedAt: { $exists: false } });
+async function getProductsList(filterOptions) {
+	// 기본 검색 조건: 삭제되지 않은 상품
+	const searchQuery = { deletedAt: { $exists: false } };
+
+	// 필터 조건 배열
+	const orConditions = [];
+
+	// 지역구 필터 조건 추가
+	if (filterOptions.region) {
+		orConditions.push({ region: filterOptions.region });
+	}
+
+	// 학교명 필터 조건 추가
+	if (filterOptions.univName) {
+		orConditions.push({ univName: filterOptions.univName });
+	}
+
+	// `$or` 연산자를 사용하여 여러 조건 중 하나라도 만족하는 문서 검색
+	if (orConditions.length > 0) {
+		searchQuery.$or = orConditions;
+	}
+
+	// 정렬 옵션과 함께 상품 목록 조회
+	const productsList = await Products.find(searchQuery).sort(filterOptions.sortOption);
 
 	return productsList;
 }

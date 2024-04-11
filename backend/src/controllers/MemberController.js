@@ -8,7 +8,7 @@ const memberService = require('../services/MemberService');
  */
 const signUp = async (req, res, next) => {
 	try {
-		const { id, password, realName, email, univName, phoneNum, nickName } = req.body;
+		const { id, password, realName, email, univName, phoneNum, nickName, profilePic } = req.body;
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
 			id,
@@ -18,6 +18,7 @@ const signUp = async (req, res, next) => {
 			univName,
 			phoneNum,
 			nickName,
+			profilePic,
 		);
 		//통신 실패
 		if (!member) {
@@ -68,7 +69,8 @@ const login = async (req, res, next) => {
 const getMember = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
-		const memberInfo = await memberService.getMemberInfo(userId);
+		console.log(userId);
+		const memberInfo = await memberService.getMember(userId);
 
 		if (!memberInfo) {
 			return res.status(404).json({ data: null, message: '사용자 정보를 찾을 수 없습니다.' });
@@ -91,7 +93,6 @@ const updateMember = async (req, res) => {
 		// 현재 로그인한 사용자의 ID를 인증 시스템에서 가져옵니다.
 		// 예시에서는 req.user.id를 사용한다고 가정합니다.
 		const userId = req.user.id;
-		console.log(userId);
 		const updatedMember = await memberService.updateMember(userId, req.body);
 
 		res.json({
@@ -111,10 +112,9 @@ const updateMember = async (req, res) => {
  */
 const deleteMember = async (req, res) => {
 	try {
-		const { id } = req.query;
-		// const id = req.params.id;
+		const userId = req.user.id;
 		const memberService = new MemberService();
-		const deleteMember = await memberService.deleteMember(id);
+		const deleteMember = await memberService.deleteMember(userId);
 
 		if (!deleteMember) {
 			return res.status(400).send({ message: '회원 정보를 찾을 수 없습니다.', deleteMember });

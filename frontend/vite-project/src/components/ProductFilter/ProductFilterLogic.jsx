@@ -28,37 +28,34 @@ function ProductFilterLogic({ onUpdateFilteredBooks, onCloseFilter }) {
 
 	// 지역 데이터
 	const fetchLocations = async () => {
-		try{
+		try {
 			const res = await instance.get('/api/locations');
-      setLocations(res.data);
-		} catch(err){
+			setLocations(res.data);
+		} catch (err) {
 			console.error('지역 데이터를 가져오는 중 오류가 발생했습니다.', err);
 		}
 	};
 
 	// 대학교 데이터
-	const fetchUniversities = async(locations) => {
-		try{
-			const res = await instance.get('/api/universities?location=${location}`')
+	const fetchUniversities = async location => {
+		try {
+			const res = await instance.get(`/api/universities?location=${location}`);
 			setUniversities(res.data);
-        } catch(err){
-					console.error('대학교 데이터를 가져오는 중 오류가 발생했습니다.', err);
-				}
-      };
-		};
+		} catch (err) {
+			console.error('대학교 데이터를 가져오는 중 오류가 발생했습니다.', err);
+		}
+	};
 
 	// 지역을 선택했을 때 호출
 	const handleLocationSelect = locationId => {
 		setSelectedLocation(locationId);
 		fetchUniversities(locationId); // 선택한 지역에 해당하는 대학교 데이터
 		setSelectedUniversity(''); // 선택한 지역이 변경되면 선택된 대학교 초기화
-		setFilteredBooks([]); // 필터링된 책 데이터 초기화
 	};
 
 	// 대학교를 선택했을 때 호출
 	const handleUniversitySelect = universityId => {
 		setSelectedUniversity(prevUniversity => (prevUniversity === universityId ? '' : universityId));
-		setFilteredBooks([]); // 필터링된 책 데이터 초기화
 	};
 
 	// 필터 초기화
@@ -66,14 +63,20 @@ function ProductFilterLogic({ onUpdateFilteredBooks, onCloseFilter }) {
 		setSelectedLocation('');
 		setSelectedUniversity('');
 		setUniversities([]);
-		setFilteredBooks([]);
 		onCloseFilter();
 	};
 
 	// 확인 버튼을 눌렀을 때 호출
-	const handleApplyFilter = () => {
+	const handleApplyFilter = async () => {
 		if (selectedUniversity) {
-			onUpdateFilteredBooks(filteredBooks); // 필터링된 책 데이터를 부모 컴포넌트로 전달
+			try {
+				const response = await instance.get(
+					`/api/products/list?region=${selectedLocation}&univName=${selectedUniversity}`,
+				);
+				onUpdateFilteredBooks(response.data);
+			} catch (err) {
+				console.error('필터링된 상품 목록을 가져오는 중 오류가 발생했습니다.', err);
+			}
 			onCloseFilter();
 		}
 	};

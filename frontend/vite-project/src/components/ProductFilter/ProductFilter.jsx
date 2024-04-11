@@ -86,7 +86,7 @@ const ProductFilter = ({ onFilterChange, onSortChange }) => {
 				{showButtons && (
 					<FilterContent ref={filterRef}>
 						<ProductFilterLogic
-							onUpdateFilteredBooks={setFilteredBooks}
+							// onUpdateFilteredBooks={setFilteredBooks}
 							onCloseFilter={closeFilter}
 						/>
 					</FilterContent>

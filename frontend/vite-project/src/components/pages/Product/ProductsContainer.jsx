@@ -35,7 +35,7 @@ function ProductsContainer() {
 	const handleSortChange = sortOption => {
 		let sorted = [...products];
 		if (sortOption === 'latest') {
-			sorted.sort((a, b) => new Date(b.createdAt) - newDate(a.createdAt));
+			sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 		} else if (sortOption === 'cheapest') {
 			sorted.sort((a, b) => a.price - b.price);
 		}

@@ -9,8 +9,18 @@ const PostService = require('../services/PostService');
 const createPost = async (req, res, next) => {
 	try {
 		const nickName = req.user.nickName;
-		const { title, content, profilePic, photos } = req.body;
-		const post = await PostService.createPost(title, content, nickName, profilePic, photos);
+		const profilePic = req.user.profilePic;
+		const univName = req.user.univName;
+
+		const { title, content, photos } = req.body;
+		const post = await PostService.createPost(
+			title,
+			content,
+			nickName,
+			profilePic,
+			univName,
+			photos,
+		);
 
 		if (!post) {
 			throw new Error('서버 오류 입니다.');
@@ -30,7 +40,7 @@ const createPost = async (req, res, next) => {
 const getAllPosts = async (req, res, next) => {
 	try {
 		const posts = await PostService.getAllPosts();
-		res.json(posts);
+		res.status(200).json({ data: posts });
 	} catch (err) {
 		next(err);
 	}
@@ -77,7 +87,7 @@ const updatePost = async (req, res, next) => {
 		if (!updatedPost) {
 			return res.status(404).json({ message: 'post not found' });
 		}
-		res.status(200).json(updatedPost);
+		res.status(200).json({ data: updatedPost });
 	} catch (err) {
 		next(err);
 	}
@@ -95,13 +105,16 @@ const deletePost = async (req, res, next) => {
 		const deletedPost = await PostService.deletePost(postId);
 
 		if (!deletedPost) {
-			return res.status(404).send({ message: '게시글을 찾을 수 없습니다.' });
+			return res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
 		}
 
 		// 삭제 성공 응답
-		res.status(200).send({ message: '게시글이 성공적으로 삭제되었습니다.', deletedPost });
+		res.status(200).json({
+			message: deletedPost.message, // 성공 메시지를 서비스로부터 받아온 메시지로 설정
+			data: deletedPost.deletedPost, // deletedPost 객체를 data 속성에 할당
+		});
 	} catch (error) {
-		res.status(500).send({
+		res.status(500).json({
 			message: '게시글 삭제 중 오류가 발생했습니다.',
 			error: error.message,
 		});

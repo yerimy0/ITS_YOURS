@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
  * 작성 시작일 : 2024-04-03
  * 회원가입시 동작되는 DB작업을 모아놓은 service입니다.
  */
-async function signUp(id, password, realName, email, univName, phoneNum, nickName) {
+async function signUp(id, password, realName, email, univName, phoneNum, nickName, profilePic) {
 	// const isRegedId = await Members.find({ id });
 	// const isRegedEmail = await Members.find({ email });
 	// const isRededPhone = await Members.find({ phoneNum });
@@ -31,6 +31,7 @@ async function signUp(id, password, realName, email, univName, phoneNum, nickNam
 		univName: univName,
 		phoneNum: phoneNum,
 		nickName: nickName,
+		profilePic: profilePic,
 	};
 	//회원 정보 create
 	const member = await Members.create(newMember);
@@ -99,7 +100,7 @@ async function updateMember(userId, updateData) {
 	try {
 		// MongoDB의 findByIdAndUpdate 메서드를 사용하여 회원 정보 업데이트
 		// { new: true } 옵션을 사용하여 업데이트된 문서 반환
-		const updatedMember = await Member.findByIdAndUpdate(userId, updateData, {
+		const updatedMember = await Members.findByIdAndUpdate(userId, updateData, {
 			new: true,
 		});
 

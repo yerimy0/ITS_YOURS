@@ -1,10 +1,17 @@
 const CommentService = require('../services/CommentService');
 
+/**
+ * 커뮤니티 댓글 작성 service
+ * 작성자 : 유경아
+ * 작성 시작일 : 2024-04-07
+ * 커뮤니티 댓글 작성 동작되는 DB작업을 모아놓은 service입니다.
+ */
 const createComment = async (req, res, next) => {
 	try {
 		const { postId } = req.params;
 		const nickName = req.user.nickName;
-		const { content, profilePic } = req.body;
+		const profilePic = req.user.profilePic;
+		const { content } = req.body;
 
 		const newComment = await CommentService.createComment(postId, content, nickName, profilePic);
 
@@ -14,6 +21,12 @@ const createComment = async (req, res, next) => {
 	}
 };
 
+/**
+ * 커뮤니티 댓글 조회 service
+ * 작성자 : 유경아
+ * 작성 시작일 : 2024-04-07
+ * 커뮤니티 댓글 조회에 동작되는 DB작업을 모아놓은 service입니다.
+ */
 const getComment = async (req, res, next) => {
 	try {
 		const { postId } = req.params;

@@ -12,6 +12,8 @@ export const Form = styled.form`
 	flex-direction: column;
 	align-items: center;
 	width: 60%;
+	max-width: 800px; // 최대 너비 설정
+	margin: 0 auto; // 가운데 정렬
 `;
 
 export const Input = styled.input`
@@ -24,7 +26,7 @@ export const Input = styled.input`
 
 export const TextArea = styled.textarea`
 	padding: 10px;
-	padding-bottom: 300px;
+	padding-bottom: 300px; // 높이 설정
 	margin-bottom: 10px;
 	border: 1px solid #ccc;
 	border-radius: 4px;

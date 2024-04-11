@@ -18,6 +18,9 @@ import MyPage from './pages/Mypage/Mypage.jsx';
 import ProfileEdit from './pages/Mypage/ProfileEdit';
 import ProductDetail from './pages/ProductDetail';
 import SalesHistory from './pages/Mypage/SalesHistory.jsx';
+import Faq from './pages/Mypage/Faq';
+import AskSupportList from './pages/Mypage/AskSupportList';
+import AskSupportWrite from './pages/Mypage/AskSupportWrite';
 import SignOut from './pages/SignOut/SignOut';
 import Community from './pages/Community/CommunityList';
 import CommunityWrite from './pages/Community/CommunityWrite';
@@ -41,6 +44,9 @@ const router = createBrowserRouter([
 			{ path: '/mypage', element: <MyPage /> },
 			{ path: '/product/detail', element: <ProductDetail /> },
 			{ path: '/saleshistory', element: <SalesHistory /> },
+			{ path: '/faq', element: <Faq /> },
+			{ path: '/asksupportlist', element: <AskSupportList /> },
+			{ path: '/asksupportwrite', element: <AskSupportWrite /> },
 			{ path: '/signout', element: <SignOut /> },
 			{ path: '/profileedit', element: <ProfileEdit /> },
 			{ path: '/chat', element: <Chat /> },

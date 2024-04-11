@@ -18,7 +18,7 @@ router.get('/list', getProductsList);
 router.get('/search', searchProduct);
 router.get('/:prodId', getProduct);
 router.get('/', getProductInfo);
-router.get('/myTradedProducts', myTradedProducts);
+router.get('/myTradedProducts/:buyerId', validateToken, myTradedProducts);
 
 //상품 등록
 router.post('/', validateToken, insertProduct);

@@ -16,7 +16,7 @@ const ModalWrap = styled.div`
 const ModalContent = styled.div`
 	display: flex;
 	width: 400px;
-	height: 250px;
+	height: 200px;
 	padding: 20px 20px 30px 20px;
 	border-radius: 20px;
 	background: #fff;
@@ -36,6 +36,7 @@ const Title = styled.h2`
 	font-style: normal;
 	font-weight: 700;
 	line-height: 28px;
+	margin: 0;
 `;
 
 const Text = styled.p`
@@ -43,13 +44,13 @@ const Text = styled.p`
 	display: flex;
 	padding: 8px;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	text-align: center;
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 700;
 	line-height: 24px;
-	margin: 0;
+	flex-grow: 1;
 `;
 
 const Buttons = styled.div`
@@ -59,7 +60,6 @@ const Buttons = styled.div`
 	justify-content: center;
 	align-items: center;
 	gap: 10px;
-	flex-grow: 1;
 `;
 
 const CancelButton = styled.button`

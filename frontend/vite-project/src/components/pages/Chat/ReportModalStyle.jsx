@@ -78,7 +78,15 @@ const ReportLi = styled.li`
 	font-style: normal;
 	font-weight: 700;
 	line-height: 26px;
+	cursor: pointer;
+	transition:
+		background-color 0.3s,
+		color 0.3s;
 	&:hover {
+		background-color: #79747e;
+		color: #fff;
+	}
+	&.active {
 		background-color: #79747e;
 		color: #fff;
 	}

@@ -10,7 +10,6 @@ const validateToken = async (req, res, next) => {
 		const token = authorization.replace('Bearer ', '');
 
 		jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-			console.log(token);
 			if (err) {
 				throw new Error('엑세스 토큰이 유효하지 않습니다.');
 			} else {

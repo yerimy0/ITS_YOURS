@@ -111,7 +111,11 @@ async function deleteProduct(prodId) {
 }
 
 async function tradedProductsByBuyerId(buyerId) {
-	await Products.find({ buyerId, isCompleted: true });
+	// 거래 완료된 상품들 중 필요한 정보만 선택하여 조회
+	const tradedProducts = await Products.find({ buyerId, isCompleted: true }).select(
+		'name imgUrls price sellerId',
+	);
+	return tradedProducts;
 }
 
 module.exports = {

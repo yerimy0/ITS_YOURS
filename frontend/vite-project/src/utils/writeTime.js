@@ -4,10 +4,6 @@ const detailDate = a => {
 	// 작성 시간의 UTC 시간대를 고려 -> 로컬 시간대로 변환!
 	wrtieDate = new Date(wrtieDate.getTime() + wrtieDate.getTimezoneOffset() * 60 * 1000);
 	const milliSeconds = currentDate.getTime() - wrtieDate.getTime();
-	console.log(a);
-	console.log(wrtieDate);
-	console.log(currentDate);
-	console.log(milliSeconds);
 
 	const seconds = milliSeconds / 1000;
 	if (seconds < 60) return `방금 전`;

@@ -75,7 +75,7 @@ function ListOne({ commu }) {
 					<FaComments />
 					<ListSub>{commu.commentCounts}</ListSub>
 				</Comment>
-				<Img src={commu.profilePic}></Img>
+				<Img src={commu.photos}></Img>
 			</ListRight>
 		</ListOfOne>
 	);

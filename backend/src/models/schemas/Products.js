@@ -40,6 +40,7 @@ const ProductsSchema = new Schema({
   // 찜 개수
   wishesCount: {
     type: Number,
+    default: 0,
   },
   // 지역명
   region: {

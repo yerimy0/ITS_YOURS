@@ -12,4 +12,4 @@ exports.Products = mongoose.model('Products', ProductsSchema);
 exports.Qna = mongoose.model('Qna', QnaSchema);
 exports.Posts = mongoose.model('Posts', PostsSchema);
 exports.Comments = mongoose.model('Comments', CommentsSchema);
-exports.Wisher = mongoose.model('Wisher', WishesSchema);
+exports.Wishes = mongoose.model('Wisher', WishesSchema);

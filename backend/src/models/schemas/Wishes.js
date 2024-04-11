@@ -12,18 +12,18 @@ const WishesSchema = new Schema({
 		required: true,
 	},
 	// 상품명
-	productName: {
+	name: {
 		type: String,
-		required: true,
+		// required: true,
 	},
 	userId: {
 		type: String,
 		required: true,
 	},
 	// 상품 판매가
-	prodPrice: {
+	price: {
 		type: Number,
-		required: true,
+		// required: true,
 	},
 	// 찜 등록일
 	createdAt: {

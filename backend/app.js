@@ -6,6 +6,7 @@ const productsRouter = require('./src/routes/ProductsRouter');
 const qnaRouter = require('./src/routes/QnaRouter');
 const postRouter = require('./src/routes/PostRouter');
 const commentRouter = require('./src/routes/CommentRouter');
+const wishRouter = require('./src/routes/WishesRouter');
 
 const mongoose = require('mongoose');
 
@@ -28,5 +29,6 @@ app.use('/api/members', memberRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/community', postRouter);
 app.use('/api/community', commentRouter);
+app.use('/api/wishes', wishRouter);
 
 module.exports = app;

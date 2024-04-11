@@ -15,7 +15,7 @@ const createComment = async (req, res, next) => {
 
 		const newComment = await CommentService.createComment(postId, content, nickName, profilePic);
 
-		res.status(200).json({ data: newComment });
+		res.status(200).json(newComment);
 	} catch (err) {
 		next(err);
 	}
@@ -33,7 +33,7 @@ const getComment = async (req, res, next) => {
 		console.log(req.params);
 		const getComment = await CommentService.getComment(postId);
 
-		res.status(200).json({ data: getComment });
+		res.status(200).json(getComment);
 	} catch (error) {
 		next(error);
 	}
@@ -55,9 +55,7 @@ const updateComment = async (req, res, next) => {
 		if (!updateComment) {
 			return res.status(400).json({ message: '댓글을 찾을 수 없습니다.' });
 		}
-		res.status(200).json({
-			date: updateResult,
-		});
+		res.status(200).json(updateResult);
 	} catch (err) {
 		next(err);
 	}

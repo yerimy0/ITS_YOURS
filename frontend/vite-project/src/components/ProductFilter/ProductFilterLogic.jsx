@@ -7,13 +7,13 @@ import {
 	Buttons,
 	FilterInButton,
 } from './ProductFilterStyle';
+import instance from '../../apis/axiosInstance';
 
 function ProductFilterLogic({ onUpdateFilteredBooks, onCloseFilter }) {
 	const [locations, setLocations] = useState([]);
 	const [selectedLocation, setSelectedLocation] = useState('');
 	const [universities, setUniversities] = useState([]);
 	const [selectedUniversity, setSelectedUniversity] = useState('');
-	const [filteredBooks, setFilteredBooks] = useState([]);
 	const [isConfirmEnabled, setIsConfirmEnabled] = useState(false);
 
 	// 컴포넌트가 마운트될 때 지역 데이터 호출
@@ -27,13 +27,23 @@ function ProductFilterLogic({ onUpdateFilteredBooks, onCloseFilter }) {
 	}, [selectedUniversity]);
 
 	// 지역 데이터
-	const fetchLocations = () => {
-		setLocations(['강북구', '강남구', '강동구', '동대문구']); //더미 데이터
+	const fetchLocations = async () => {
+		try {
+			const res = await instance.get('/api/locations');
+			setLocations(res.data);
+		} catch (err) {
+			console.error('지역 데이터를 가져오는 중 오류가 발생했습니다.', err);
+		}
 	};
 
 	// 대학교 데이터
-	const fetchUniversities = locationId => {
-		setUniversities(['서울대', '고려대', '연세대', '이화여대']); //더미 데이터
+	const fetchUniversities = async location => {
+		try {
+			const res = await instance.get(`/api/universities?location=${location}`);
+			setUniversities(res.data);
+		} catch (err) {
+			console.error('대학교 데이터를 가져오는 중 오류가 발생했습니다.', err);
+		}
 	};
 
 	// 지역을 선택했을 때 호출
@@ -41,13 +51,11 @@ function ProductFilterLogic({ onUpdateFilteredBooks, onCloseFilter }) {
 		setSelectedLocation(locationId);
 		fetchUniversities(locationId); // 선택한 지역에 해당하는 대학교 데이터
 		setSelectedUniversity(''); // 선택한 지역이 변경되면 선택된 대학교 초기화
-		setFilteredBooks([]); // 필터링된 책 데이터 초기화
 	};
 
 	// 대학교를 선택했을 때 호출
 	const handleUniversitySelect = universityId => {
 		setSelectedUniversity(prevUniversity => (prevUniversity === universityId ? '' : universityId));
-		setFilteredBooks([]); // 필터링된 책 데이터 초기화
 	};
 
 	// 필터 초기화
@@ -55,14 +63,20 @@ function ProductFilterLogic({ onUpdateFilteredBooks, onCloseFilter }) {
 		setSelectedLocation('');
 		setSelectedUniversity('');
 		setUniversities([]);
-		setFilteredBooks([]);
 		onCloseFilter();
 	};
 
 	// 확인 버튼을 눌렀을 때 호출
-	const handleApplyFilter = () => {
+	const handleApplyFilter = async () => {
 		if (selectedUniversity) {
-			onUpdateFilteredBooks(filteredBooks); // 필터링된 책 데이터를 부모 컴포넌트로 전달
+			try {
+				const response = await instance.get(
+					`/api/products/list?region=${selectedLocation}&univName=${selectedUniversity}`,
+				);
+				onUpdateFilteredBooks(response.data);
+			} catch (err) {
+				console.error('필터링된 상품 목록을 가져오는 중 오류가 발생했습니다.', err);
+			}
 			onCloseFilter();
 		}
 	};

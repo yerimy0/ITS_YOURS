@@ -12,16 +12,19 @@ import {
 	ProductButton,
 } from './ProductCardStyle';
 
+function formatPrice(price) {
+	return price.toLocaleString('ko-KR');
+}
+
 function ProductCard({ _id, imgUrls, name, price }) {
 	return (
 		<ProductCardWrap productId={_id}>
-			{/* imgUrls 배열의 첫 번째 요소를 사용하여 이미지를 표시합니다. */}
 			<ProductImage src={imgUrls} alt={name} />
 			<ProductInfoWrap>
 				<ProductInfo>
 					<ProductTitle>{name}</ProductTitle>
 					<ProductPrice>
-						<Price>{price}</Price>
+						<Price>{formatPrice(price)}</Price>
 						<PriceWon>원</PriceWon>
 					</ProductPrice>
 				</ProductInfo>

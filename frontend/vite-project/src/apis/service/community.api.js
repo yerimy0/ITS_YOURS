@@ -18,4 +18,13 @@ async function GetDetail(id) {
 	}
 }
 
-export { GetCommunnityList, GetDetail };
+async function Getcommets(id) {
+	try {
+		const res = await instance.get(`/api/community/posts/${id}/comment`);
+		return res.data;
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+export { GetCommunnityList, GetDetail, Getcommets };

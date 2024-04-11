@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import Paginator, { PagiantorContext } from '../Paginator';
+import Paginator, { PaginatorContext } from '../Paginator';
 import AdminModal from './AdminModal';
 
 function AdminQnA() {
 	const perPage = 10; // 페이지 당
-	const { currentPage } = useContext(PagiantorContext);
+	const { currentPage } = useContext(PaginatorContext);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedQna, setSelectedQna] = useState(null);
 	const [qnaList, setQnaList] = useState([

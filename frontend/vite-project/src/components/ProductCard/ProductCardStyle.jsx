@@ -27,20 +27,23 @@ const ProductInfoWrap = styled.div`
 `;
 
 const ProductInfo = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
+	display: block;
 `;
 
 const ProductTitle = styled.p`
-	display: flex;
-	align-items: flex-start;
+	width: 136px;
+	height: 50px;
 	margin: 0;
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 500;
 	line-height: 24px;
 	letter-spacing: 0.15px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 `;
 const ProductPrice = styled.div`
 	display: flex;
@@ -50,16 +53,16 @@ const ProductPrice = styled.div`
 const Price = styled.p`
 	font-size: 22px;
 	line-height: 28px;
-	font-weight: 400;
+	font-weight: 700;
 	font-style: normal;
 	margin: 0;
 `;
 const PriceWon = styled.p`
 	font-size: 16px;
 	font-style: normal;
-	font-weight: 500;
+	font-weight: 700;
 	line-height: 28px;
-	margin: 0;
+	margin: 0 0 0 3px;
 `;
 const ProductButton = styled.div`
 	display: flex;

@@ -3,9 +3,11 @@ import ProductCard from '../../ProductCard';
 import { Loading, ProductsWrap, Products } from './ProductsContainerStyle';
 import Paginator from '../../Paginator';
 import instance from '../../../apis/axiosInstance';
+import ProductHeader from './ProductHeader';
 
 function ProductsContainer() {
 	const [products, setProducts] = useState([]);
+	const [sortedProducts, setSortedProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const itemsPerPage = 20;
@@ -17,6 +19,7 @@ function ProductsContainer() {
 			try {
 				const res = await instance.get('/api/products/list');
 				setProducts(res.data);
+				setSortedProducts(res.data);
 				setTotalItems(res.data.length);
 				setLoading(false);
 			} catch (error) {
@@ -28,9 +31,24 @@ function ProductsContainer() {
 		fetchData();
 	}, []);
 
+	//정렬 옵션에 따른 제품 정렬
+	const handleSortChange = sortOption => {
+		let sorted = [...products];
+		if (sortOption === 'latest') {
+			sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+		} else if (sortOption === 'cheapest') {
+			sorted.sort((a, b) => a.price - b.price);
+		}
+		setSortedProducts(sorted);
+	};
+
+	const handleFilterChange = fiters => {
+		// 필터링 로직
+	};
+
 	const startIndex = currentPage * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
-	const productsToShow = products.slice(startIndex, endIndex);
+	const productsToShow = sortedProducts.slice(startIndex, endIndex);
 
 	const handlePageChange = pageNumber => {
 		setCurrentPage(pageNumber);
@@ -44,6 +62,7 @@ function ProductsContainer() {
 				<div>에러가 발생했습니다: {error}</div>
 			) : (
 				<>
+					<ProductHeader onSortChange={handleSortChange} onFilterChange={handleFilterChange} />
 					<ProductsWrap>
 						<Products>
 							{productsToShow.map(product => (

@@ -7,6 +7,7 @@ const QnaSchema = require('./schemas/Qna');
 
 const PostsSchema = require('./schemas/Posts');
 const CommentsSchema = require('./schemas/Comments');
+const WishesSchema = require('./schemas/Wishes');
 
 exports.Members = mongoose.model('Members', MembersSchema);
 exports.Products = mongoose.model('Products', ProductsSchema);
@@ -15,3 +16,4 @@ exports.Qna = mongoose.model('Qna', QnaSchema);
 
 exports.Posts = mongoose.model('Posts', PostsSchema);
 exports.Comments = mongoose.model('Comments', CommentsSchema);
+exports.Wishes = mongoose.model('Wisher', WishesSchema);

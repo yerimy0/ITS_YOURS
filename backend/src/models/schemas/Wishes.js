@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, SchemaTypes } = require('mongoose');
 
 /**
  * 찜 목록 Schema
@@ -6,15 +6,24 @@ const { Schema } = require('mongoose');
  * 작성 시작일 : 2024-04-08
  */
 const WishesSchema = new Schema({
+	productId: {
+		type: SchemaTypes.ObjectId,
+		ref: 'Products',
+		required: true,
+	},
 	// 상품명
-	prodName: {
+	name: {
+		type: String,
+		// required: true,
+	},
+	userId: {
 		type: String,
 		required: true,
 	},
 	// 상품 판매가
-	prodPrice: {
+	price: {
 		type: Number,
-		required: true,
+		// required: true,
 	},
 	// 찜 등록일
 	createdAt: {

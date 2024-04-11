@@ -55,7 +55,7 @@ function CommuList() {
 
 function ListOne({ commu }) {
 	const navigate = useNavigate();
-	const time = detailDate(new Date(commu.createdAt));
+	const time = detailDate(commu.createdAt);
 	return (
 		<ListOfOne
 			onClick={() => {

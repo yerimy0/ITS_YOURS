@@ -1,14 +1,15 @@
 import axios, { HttpStatusCode, isAxiosError } from 'axios';
 
+
 const instance = axios.create({
 	withCredentials: true,
-	baseURL: '/api',
+	baseURL: 'http://127.0.0.1:4000',
 	headers: {
 		'Content-Type': 'application/json',
 	},
 });
 
-// instance.defaults.headers.common['Content-Type'] = 'application/json';
+instance.defaults.headers.common['Content-Type'] = 'application/json';
 instance.defaults.timeout = 10000;
 
 instance.interceptors.request.use(
@@ -31,7 +32,7 @@ instance.interceptors.request.use(
 	},
 );
 
-//응답 인터셉터를 작성
+// 응답 인터셉터를 작성
 instance.interceptors.response.use(
 	res => {
 		return res;

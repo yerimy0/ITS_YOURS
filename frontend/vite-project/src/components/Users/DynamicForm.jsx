@@ -6,8 +6,8 @@ const DynamicForm = ({
 	inputPlaceholder2,
 	buttonText,
 	onSubmit,
-	setUserId,
-	setPassword,
+	setInput1,
+	setInput2,
 	inputType1 = 'text',
 	inputType2 = 'text',
 }) => (
@@ -15,12 +15,12 @@ const DynamicForm = ({
 		<Input
 			type={inputType1}
 			placeholder={inputPlaceholder1}
-			onChange={e => setUserId(e.target.value)}
+			onChange={e => setInput1(e.target.value)}
 		/>
 		<Input
 			type={inputType2}
 			placeholder={inputPlaceholder2}
-			onChange={e => setPassword(e.target.value)}
+			onChange={e => setInput2(e.target.value)}
 		/>
 		<Button type="submit">{buttonText}</Button>
 	</Form>

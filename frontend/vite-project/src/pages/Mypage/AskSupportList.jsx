@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Title } from '../../components/Users/UsersStyles'; // Title 컴포넌트 임포트
+import { Title } from '../../components/Users/UsersStyles';
 import InquiryList from '../../components/pages/Mypage/AskSupportList/InquiryList';
 import {
 	InquiryButton,
@@ -33,7 +33,7 @@ function AskSupportList() {
 
 	return (
 		<Container>
-			<Title>1:1문의내역</Title> {/* 타이틀을 컨테이너 안에 추가 */}
+			<Title>1:1문의내역</Title>
 			<InquiryList
 				inquiries={inquiries}
 				toggleContent={toggleContent}

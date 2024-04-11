@@ -65,7 +65,11 @@ function MenuButtonComponent() {
 				isOpen={blockUserModalOpen}
 				onClose={handleCloseModal}
 				title="00님을 차단하시겠습니까?"
-				content="차단하면 00님의 게시글은 보이지 않고, 나에게 댓글과 채팅도 보낼 수 없어요. 차단하시겠어요?"
+				content=<>
+					차단하면 00님의 게시글은 보이지 않고,
+					<br />
+					나에게 댓글과 채팅도 보낼 수 없어요. 차단하시겠어요?
+				</>
 				confirmText="차단하기"
 				onConfirm={handleCloseModal}
 			/>
@@ -73,8 +77,11 @@ function MenuButtonComponent() {
 				isOpen={leaveRoomModalOpen}
 				onClose={handleCloseModal}
 				title="채팅방을 나가시겠습니까?"
-				content="채팅방을 떠나시면 모든 대화 기록이 사라집니다.
-				정말로 나가시겠어요?"
+				content=<>
+					채팅방을 떠나시면 모든 대화 기록이 사라집니다.
+					<br />
+					정말로 나가시겠어요?
+				</>
 				confirmText="나가기"
 				onConfirm={handleCloseModal}
 			/>

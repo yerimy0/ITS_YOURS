@@ -1,66 +1,28 @@
 import React from 'react';
-import styled from 'styled-components';
+import FAQTitle from '../../components/pages/Mypage/Faq/FaqTitle';
+import FaqList from '../../components/pages/Mypage/Faq/FaqList';
+import { ButtonWrapper, Button } from '../../components/pages/Mypage/Faq/FaqStyles';
 
-const ChatContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	overflow: hidden;
-	width: 300px; // 필요에 따라 조절하세요
-`;
-
-const MessageList = styled.div`
-	padding: 10px;
-	height: 300px; // 필요에 따라 조절하세요
-	overflow-y: auto;
-`;
-
-const InputContainer = styled.div`
-	display: flex;
-	padding: 10px;
-	background: #f9f9f9;
-`;
-
-const Input = styled.input`
-	flex-grow: 1;
-	padding: 10px;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-`;
-
-const Button = styled.button`
-	padding: 10px 15px;
-	margin-left: 10px;
-	border: none;
-	background-color: #007bff;
-	color: white;
-	border-radius: 4px;
-	cursor: pointer;
-`;
+const inquiries = [
+	{ id: 1, question: '질문 1', answer: '답변 1' },
+	{ id: 2, question: '질문 2', answer: '답변 2' },
+];
 
 function Faq() {
-	const [message, setMessage] = React.useState('');
-
-	function sendMessage() {
-		// 메시지 보내는 로직
-		console.log(message);
-		setMessage('');
-	}
+	const subtitleText =
+		'1:1 문의하기를 통해 더 자세히 물어봐 주세요.\n상담 운영 시간 : 평일 10:00 ~ 18:00 (점심시간 12:00~13:00)';
 
 	return (
-		<ChatContainer>
-			<MessageList>{/* 메시지 목록을 여기에 표시 */}</MessageList>
-			<InputContainer>
-				<Input
-					value={message}
-					onChange={e => setMessage(e.target.value)}
-					onKeyPress={e => e.key === 'Enter' && sendMessage()}
-					placeholder="메시지를 입력하세요."
-				/>
-				<Button onClick={sendMessage}>보내기</Button>
-			</InputContainer>
-		</ChatContainer>
+		<>
+			<FAQTitle user="임예림" />
+			<FaqList inquiries={inquiries} />
+			<FAQTitle title="원하는 답변을 얻지 못하셨나요?" subtitle={subtitleText} />
+			<ButtonWrapper>
+				{' '}
+				{/* ButtonWrapper로 버튼을 감쌈 */}
+				<Button>1:1 문의하기</Button>
+			</ButtonWrapper>
+		</>
 	);
 }
 

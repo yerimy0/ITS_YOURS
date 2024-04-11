@@ -1,66 +1,46 @@
-import React from 'react';
-import styled from 'styled-components';
-
-const ChatContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	overflow: hidden;
-	width: 300px; // 필요에 따라 조절하세요
-`;
-
-const MessageList = styled.div`
-	padding: 10px;
-	height: 300px; // 필요에 따라 조절하세요
-	overflow-y: auto;
-`;
-
-const InputContainer = styled.div`
-	display: flex;
-	padding: 10px;
-	background: #f9f9f9;
-`;
-
-const Input = styled.input`
-	flex-grow: 1;
-	padding: 10px;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-`;
-
-const Button = styled.button`
-	padding: 10px 15px;
-	margin-left: 10px;
-	border: none;
-	background-color: #007bff;
-	color: white;
-	border-radius: 4px;
-	cursor: pointer;
-`;
+import React, { useState } from 'react';
+import { Title } from '../../components/Users/UsersStyles';
+import InquiryList from '../../components/pages/Mypage/AskSupportList/InquiryList';
+import {
+	InquiryButton,
+	Container,
+} from '../../components/pages/Mypage/AskSupportList/AskSupportListStyles';
 
 function AskSupportList() {
-	const [message, setMessage] = React.useState('');
+	const [inquiries, setInquiries] = useState([
+		...Array(10)
+			.fill(null)
+			.map((_, index) => ({
+				id: index + 1,
+				title: `제목 ${index + 1}`,
+				content: `내용 ${index + 1}`,
+				status: index % 2 === 0 ? '대기중' : '완료',
+				show: false,
+			})),
+	]);
 
-	function sendMessage() {
-		// 메시지 보내는 로직
-		console.log(message);
-		setMessage('');
+	function toggleContent(id) {
+		const updatedInquiries = inquiries.map(inquiry =>
+			inquiry.id === id ? { ...inquiry, show: !inquiry.show } : inquiry,
+		);
+		setInquiries(updatedInquiries);
+	}
+
+	function deleteInquiry(id) {
+		const updatedInquiries = inquiries.filter(inquiry => inquiry.id !== id);
+		setInquiries(updatedInquiries);
 	}
 
 	return (
-		<ChatContainer>
-			<MessageList>{/* 메시지 목록을 여기에 표시 */}</MessageList>
-			<InputContainer>
-				<Input
-					value={message}
-					onChange={e => setMessage(e.target.value)}
-					onKeyPress={e => e.key === 'Enter' && sendMessage()}
-					placeholder="메시지를 입력하세요."
-				/>
-				<Button onClick={sendMessage}>보내기</Button>
-			</InputContainer>
-		</ChatContainer>
+		<Container>
+			<Title>1:1문의내역</Title>
+			<InquiryList
+				inquiries={inquiries}
+				toggleContent={toggleContent}
+				deleteInquiry={deleteInquiry}
+			/>
+			<InquiryButton>1:1문의하기</InquiryButton>
+		</Container>
 	);
 }
 

@@ -17,6 +17,7 @@ const CommentsSchema = new Schema({
 		type: String,
 		required: true,
 	},
+
 	// 사용자 id (작성자)
 	// userId: {
 	// 	type: SchemaTypes.ObjectId,

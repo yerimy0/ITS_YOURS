@@ -64,7 +64,7 @@ const login = async (req, res, next) => {
  * 회원정보 조회 controller
  * 작성자 : 유경아
  * 작성 시작일 : 2024-04-04
- * 회원정보 기능에 필요한 동작들을 모아놓은 controller입니다.
+ * 회원정보 기능에 필요한 동작들을 모아놓은 controller 입니다.
  */
 const getMember = async (req, res, next) => {
 	try {

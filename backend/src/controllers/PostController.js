@@ -35,7 +35,7 @@ const createPost = async (req, res, next) => {
  * 커뮤니티 모든 게시글 조회 controller
  * 작성자 : 유경아
  * 작성 시작일 : 2024-04-05
- * 기능 : 게시글 리스트 조회시 필요한 동작들을 모아놓은 컨트롤러입니다.
+ * 기능 : 게시글 리스트 조회시 필요한 동작들을 모아놓은  컨트롤러입니다.
  */
 const getAllPosts = async (req, res, next) => {
 	try {

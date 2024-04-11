@@ -11,7 +11,7 @@ function NavigationButton() {
 				<ButtonContent>💰 판매내역</ButtonContent>
 				<StyledArrowIcon as="img" src="/ArrowIcon.svg" />
 			</StyledButton>
-			<StyledButton onClick={() => navigate('/saleshistory')}>
+			<StyledButton onClick={() => navigate('/purchasehistory')}>
 				<ButtonContent>📘 구매내역</ButtonContent>
 				<StyledArrowIcon as="img" src="/ArrowIcon.svg" />
 			</StyledButton>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Greeting, NameBadge } from './ProfileStyles';
-import EditButton from './EditButton'; // 분리된 EditButton 컴포넌트
+import EditButton from './EditButton';
 
 function ProfileHeader(props) {
 	return (
@@ -8,7 +8,7 @@ function ProfileHeader(props) {
 			안녕하세요
 			<NameBadge>
 				{props.userName}님
-				<EditButton /> {/* 분리된 EditButton 컴포넌트 사용 */}
+				<EditButton />
 			</NameBadge>
 		</Greeting>
 	);

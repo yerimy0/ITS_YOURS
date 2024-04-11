@@ -17,7 +17,7 @@ function AskSupportWriteForm() {
 		setError('');
 
 		axios
-			.post('/api/mypage/qna', { title, content })
+			.post('/api/qna', { title, content })
 			.then(() => navigate('/asksupportlist'))
 			.catch(() => setError('문제가 발생했습니다. 다시 시도해 주세요.'));
 	}

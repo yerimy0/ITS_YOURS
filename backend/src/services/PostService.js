@@ -1,17 +1,18 @@
-const { Posts } = require('../models');
+const { Posts, Comments } = require('../models');
 
 /**
- * 커뮤니티 글쓰기 service
+ * 커뮤니티 게시글 작성 service
  * 작성자 : 유경아
  * 작성 시작일 : 2024-04-05
  * 커뮤니티 글 작성시 동작되는 DB작업을 모아놓은 service입니다.
  */
-async function createPost(title, content, nickName, profilePic, photos) {
+async function createPost(title, content, nickName, profilePic, univName, photos) {
 	const newPostData = {
 		title: title,
 		content: content,
 		nickName: nickName,
 		profilePic: profilePic,
+		univName: univName,
 		photos: photos,
 	};
 	console.log(newPostData);
@@ -26,8 +27,10 @@ async function createPost(title, content, nickName, profilePic, photos) {
  * 커뮤니티 글 작성시 동작되는 DB작업을 모아놓은 service입니다.
  */
 async function getAllPosts() {
-	// return await Posts.find({});
-	return await Posts.find({ deletedAt: { $exists: false } });
+	// 삭제되지 않은 모든 게시글을 조회
+	const posts = await Posts.find({ deletedAt: { $exists: false } });
+
+	return posts;
 }
 
 /**

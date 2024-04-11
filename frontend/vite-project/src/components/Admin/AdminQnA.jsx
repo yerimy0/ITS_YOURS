@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import Paginator, { PagiantorContext } from '../Paginator';
+import AdminModal from './AdminModal';
 
-function AdminQna() {
+function AdminQnA() {
 	const perPage = 10; // 페이지 당
 	const { currentPage } = useContext(PagiantorContext);
-	const [data, setData] = useState([
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedQna, setSelectedQna] = useState(null);
+	const [qnaList, setQnaList] = useState([
 		{
 			id: '정한석',
 			title: '불량거래지롱헤헤',
 			date: '2024-04-01',
 			detail: '사기가 의심돼요.',
-			Process: '처리',
+			Process: '미처리',
 		},
 		{
 			id: '더글라스 하퍼',
@@ -20,24 +23,28 @@ function AdminQna() {
 			detail: '이것도 사기인 것 같아요.',
 			Process: '미처리',
 		},
-		{
-			id: 'cooper jin',
-			title: '불량거래지롱헤헤',
-			date: '2024-04-01',
-			detail: '사기가 의심돼요.',
-			Process: '처리',
-		},
-		{
-			id: 'Jane Cooper',
-			title: '불량거래지롱헤헤',
-			date: '2024-04-01',
-			detail: '이것도 사기인 것 같아요.',
-			Process: '미처리',
-		},
+
 		// ...추가 데이터
 	]);
 
-	const currentData = data.slice(currentPage * perPage, (currentPage + 1) * perPage);
+	const handleRowClick = qna => {
+		if (qna.Process === '처리') return; // 이미 처리된 경우 동작안함.
+		setSelectedQna(qna); // 선택된 qna 설정
+		setIsModalOpen(true);
+	};
+
+	const handleAnswerSubmit = (answer, qnaId) => {
+		const updatedQnaList = qnaList.map(qna =>
+			qna.id === qnaId ? { ...qna, Process: '처리' } : qna,
+		);
+		setQnaList(updatedQnaList);
+
+		// TODO: nodemailer를 사용하여 이메일보내기
+
+		setIsModalOpen(false); // 모달 닫기
+	};
+
+	const currentData = qnaList.slice(currentPage * perPage, (currentPage + 1) * perPage);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -49,7 +56,7 @@ function AdminQna() {
 				const result = await res.json();
 				setData(result);
 			} catch (error) {
-				console.error('데이터를 가져오는 중 오류발생: ', error);
+				console.error('QnA 데이터를 가져오는 중 오류발생: ', error);
 			}
 		};
 
@@ -57,40 +64,54 @@ function AdminQna() {
 	}, []);
 
 	return (
-		<Container>
-			<TableTitle>신고내역 처리</TableTitle>
-			<Table>
-				<TableHead>
-					<TableRow>
-						<TableHeader>질문자 ID</TableHeader>
-						<TableHeader>글 제목</TableHeader>
-						<TableHeader>작성일자</TableHeader>
-						<TableHeader>글 내용</TableHeader>
-						<TableHeader>답변여부</TableHeader>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{currentData.map((item, index) => (
-						<TableRow key={index}>
-							<TableCell>{item.id}</TableCell>
-							<TableCell>{item.title}</TableCell>
-							<TableCell>{item.date}</TableCell>
-							<TableCell>{item.detail}</TableCell>
-							<TableCell>
-								<ReportProcess processed={item.Process === '처리'}>{item.Process}</ReportProcess>
-							</TableCell>
+		<>
+			<Container>
+				<TableTitle>신고내역 처리</TableTitle>
+				<Table>
+					<TableHead>
+						<TableRow>
+							<TableHeader>질문자 ID</TableHeader>
+							<TableHeader>글 제목</TableHeader>
+							<TableHeader>작성일자</TableHeader>
+							<TableHeader>글 내용</TableHeader>
+							<TableHeader>답변여부</TableHeader>
 						</TableRow>
-					))}
-				</TableBody>
-			</Table>
-			<PaginationContainer>
-				<Paginator totalItems={data.length} perPage={perPage}></Paginator>
-			</PaginationContainer>
-		</Container>
+					</TableHead>
+					<TableBody>
+						{currentData.map(qna => (
+							<TableRow
+								key={qna.id}
+								onClick={() => !qna.Processed && handleRowClick(qna)}
+								processed={qna.Process === '처리'}
+							>
+								<TableCell>{qna.id}</TableCell>
+								<TableCell>{qna.title}</TableCell>
+								<TableCell>{qna.date}</TableCell>
+								<TableCell>{qna.detail}</TableCell>
+								<TableCell>
+									<ReportProcess processed={qna.Process === '처리'}>{qna.Process}</ReportProcess>
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+				<PaginationContainer>
+					<Paginator totalItems={qnaList.length} perPage={perPage} />
+				</PaginationContainer>
+			</Container>
+			{selectedQna && (
+				<AdminModal
+					isOpen={isModalOpen}
+					onClose={() => setIsModalOpen(false)}
+					qna={selectedQna}
+					onAnswer={handleAnswerSubmit}
+				/>
+			)}
+		</>
 	);
 }
 
-export default AdminQna;
+export default AdminQnA;
 
 const Container = styled.div`
 	width: 1440px;
@@ -127,6 +148,9 @@ const TableBody = styled.tbody``;
 const TableRow = styled.tr`
 	&:nth-child(even) {
 		background: #f9f9f9;
+	}
+	&:hover {
+		cursor: ${props => (props.processed ? 'default' : 'pointer')};
 	}
 `;
 

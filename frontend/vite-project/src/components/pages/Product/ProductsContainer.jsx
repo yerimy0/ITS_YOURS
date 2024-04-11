@@ -3,7 +3,7 @@ import axios from 'axios'; // axios import 추가
 import ProductCard from '../../ProductCard';
 import { ProductsWrap, Products } from './ProductsContainerStyle';
 import Paginator from '../../Paginator';
-import instance from '../../../utils/api';
+// import instance from '../../../utils/api';
 
 function ProductsContainer() {
 	const [products, setProducts] = useState([]);

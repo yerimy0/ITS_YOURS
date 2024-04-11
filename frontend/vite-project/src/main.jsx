@@ -25,7 +25,7 @@ import CommunityDetail from './pages/Community/CommunityDetail.jsx';
 import { Provider } from 'react-redux';
 import store from './store.js';
 import Chat from './pages/Chat';
-import AdminPage from './pages/Admin';
+import AdminPage from './pages/Admin/AdminPage.jsx';
 
 const router = createBrowserRouter([
 	{

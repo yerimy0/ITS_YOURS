@@ -1,41 +1,34 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import Paginator, { PagiantorContext } from '../Paginator/';
+import Modal from '../Modal';
 
 function AdminReport() {
 	const perPage = 10; // 페이지 당
 	const { currentPage } = useContext(PagiantorContext);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedItem, setSelectedItem] = useState(null);
+
 	const [data, setData] = useState([
-		{
-			id: '김김김',
-			title: '불량거래지롱헤헤',
-			date: '2024-04-01',
-			detail: '사기가 의심돼요.',
-			Process: '처리',
-		},
-		{
-			id: '박박박',
-			title: '불량거래지롱헤헤',
-			date: '2024-04-01',
-			detail: '이것도 사기인 것 같아요.',
-			Process: '미처리',
-		},
-		{
-			id: 'Jane Cooper',
-			title: '불량거래지롱헤헤',
-			date: '2024-04-01',
-			detail: '사기가 의심돼요.',
-			Process: '처리',
-		},
-		{
-			id: 'Jane Cooper',
-			title: '불량거래지롱헤헤',
-			date: '2024-04-01',
-			detail: '이것도 사기인 것 같아요.',
-			Process: '미처리',
-		},
-		// ...추가 데이터
+		{ id: 11, title: '사기신고', date: '2024-04-02', detail: '사기가 의심되용', Process: '미처리' },
+		{ id: 22, title: '사신기고', date: '2024-04-04', detail: '사기가 의심되용', Process: '미처리' },
 	]);
+
+	const openModal = item => {
+		if (item.Process === '처리') {
+			return;
+		}
+		setSelectedItem(item);
+		setIsModalOpen(true);
+	};
+
+	const handleConfirm = () => {
+		const newData = data.map(item =>
+			item.id === selectedItem.id ? { ...item, Process: '처리' } : item,
+		);
+		setData(newData);
+		setIsModalOpen(false);
+	};
 
 	const currentData = data.slice(currentPage * perPage, (currentPage + 1) * perPage);
 
@@ -57,36 +50,50 @@ function AdminReport() {
 	}, []);
 
 	return (
-		<Container>
-			<TableTitle>신고내역 처리</TableTitle>
-			<Table>
-				<TableHead>
-					<TableRow>
-						<TableHeader>판매자 ID</TableHeader>
-						<TableHeader>글 제목</TableHeader>
-						<TableHeader>신고일자</TableHeader>
-						<TableHeader>신고 내용</TableHeader>
-						<TableHeader>신고처리</TableHeader>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{currentData.map((item, index) => (
-						<TableRow key={index}>
-							<TableCell>{item.id}</TableCell>
-							<TableCell>{item.title}</TableCell>
-							<TableCell>{item.date}</TableCell>
-							<TableCell>{item.detail}</TableCell>
-							<TableCell>
-								<ReportProcess processed={item.Process === '처리'}>{item.Process}</ReportProcess>
-							</TableCell>
+		<>
+			<Container>
+				<TableTitle>신고내역 처리</TableTitle>
+				<Table>
+					<TableHead>
+						<TableRow>
+							<TableHeader>판매자 ID</TableHeader>
+							<TableHeader>글 제목</TableHeader>
+							<TableHeader>신고일자</TableHeader>
+							<TableHeader>신고 내용</TableHeader>
+							<TableHeader>신고처리</TableHeader>
 						</TableRow>
-					))}
-				</TableBody>
-			</Table>
-			<PaginationContainer>
-				<Paginator totalItems={data.length} perPage={perPage}></Paginator>
-			</PaginationContainer>
-		</Container>
+					</TableHead>
+					<TableBody>
+						{currentData.map((item, index) => (
+							<TableRow
+								key={index}
+								onClick={() => openModal(item)}
+								processed={item.Process === '처리'}
+							>
+								<TableCell>{item.id}</TableCell>
+								<TableCell>{item.title}</TableCell>
+								<TableCell>{item.date}</TableCell>
+								<TableCell>{item.detail}</TableCell>
+								<TableCell>
+									<ReportProcess processed={item.Process === '처리'}>{item.Process}</ReportProcess>
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+				<PaginationContainer>
+					<Paginator totalItems={data.length} perPage={perPage}></Paginator>
+				</PaginationContainer>
+			</Container>
+			<Modal
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+				title="신고 처리"
+				content={`"${selectedItem?.id}" 사용자를 신고 처리하시겠습니까?`}
+				confirmText="처리하기"
+				onConfirm={handleConfirm}
+			/>
+		</>
 	);
 }
 
@@ -128,6 +135,17 @@ const TableRow = styled.tr`
 	&:nth-child(even) {
 		background: #f9f9f9;
 	}
+
+	&:hover {
+		cursor: pointer;
+	}
+	${props =>
+		props.processed &&
+		`
+	&:hover {
+	cursor: default;
+		}
+	`}
 `;
 
 const TableCell = styled.td`

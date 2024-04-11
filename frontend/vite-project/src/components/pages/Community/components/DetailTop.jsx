@@ -12,13 +12,15 @@ import {
 } from '../CommunityDetail/DetailStyle';
 
 import { ListTitle } from '../CommunityList/CommunityStyle';
+import DateSlicer from '../../../../utils/dateSlicer';
 
-function DetailTopSection() {
+function DetailTopSection({ detail }) {
+	const date = DateSlicer(detail.createdAt);
 	return (
 		<DetailTop>
 			<TitleBox>
 				<ListTitle>
-					<h3>교수님 내일 휴강 해줘요</h3>
+					<h3>{detail.title}</h3>
 				</ListTitle>
 				<Buttons>
 					<Button>수정</Button>
@@ -27,10 +29,10 @@ function DetailTopSection() {
 				</Buttons>
 			</TitleBox>
 			<Profile>
-				<UserImg src="/main_character.png"></UserImg>
+				<UserImg src={detail.profilePic}></UserImg>
 				<UsernDate>
-					<Writer>김아무개</Writer>
-					<Date>2024.04.01</Date>
+					<Writer>{detail.nickName}</Writer>
+					<Date>{date}</Date>
 				</UsernDate>
 			</Profile>
 		</DetailTop>

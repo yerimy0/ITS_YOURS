@@ -24,6 +24,9 @@ const PostsSchema = new Schema({
 	profilePic: {
 		type: String,
 	},
+	univName: {
+		type: String,
+	},
 	// 게시글 등록일
 	createdAt: {
 		type: Date,
@@ -39,6 +42,10 @@ const PostsSchema = new Schema({
 	},
 	photos: {
 		type: String,
+	},
+	commentCounts: {
+		type: Number,
+		default: 0,
 	},
 });
 

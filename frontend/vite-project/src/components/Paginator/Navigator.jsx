@@ -1,11 +1,11 @@
 import { useContext } from 'react';
-import { PagiantorContext } from '.';
+import { PaginatorContext } from './index';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import { NavigatorContainer } from './PaginatorStyle';
 import PageBlock from './PageBlock';
 
 const Navigator = () => {
-	const { handleClickNav, currentPage, totalPage } = useContext(PagiantorContext);
+	const { handleClickNav, currentPage, totalPage } = useContext(PaginatorContext);
 
 	const onClickPrev = () => {
 		if (currentPage <= 0) {

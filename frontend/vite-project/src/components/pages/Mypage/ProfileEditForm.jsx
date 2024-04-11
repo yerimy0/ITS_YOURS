@@ -1,23 +1,24 @@
+// ProfileEditForm.jsx
 import React, { useState } from 'react';
+import axios from 'axios';
 import ProfileImageUploader from '../../Users/ProfileImageUploader';
 import { Form, Input, Button } from '../../Users/UsersStyles';
 
-function ProfileEditForm() {
+function ProfileEditForm({ userInfo }) {
 	const [profileImage, setProfileImage] = useState(null);
-	const [userId, setUserId] = useState('');
+	const [userId, setUserId] = useState(userInfo?.userId || '');
 	const [password, setPassword] = useState('');
-	const [name, setName] = useState('');
-	const [email, setEmail] = useState('');
-	const [phone, setPhone] = useState('');
-	const [university, setUniversity] = useState('');
-	const [nickname, setNickname] = useState('');
+	const [name, setName] = useState(userInfo?.name || '');
+	const [email, setEmail] = useState(userInfo?.email || '');
+	const [phone, setPhone] = useState(userInfo?.phone || '');
+	const [university, setUniversity] = useState(userInfo?.university || '');
+	const [nickname, setNickname] = useState(userInfo?.nickname || '');
 
 	const handleSubmit = async event => {
 		event.preventDefault();
 		const formData = new FormData();
 		formData.append('userId', userId);
 		if (password) {
-			// 비밀번호 변경 여부 체크
 			formData.append('password', password);
 		}
 		formData.append('name', name);
@@ -30,10 +31,17 @@ function ProfileEditForm() {
 			formData.append('profileImage', profileImage);
 		}
 
-		// 서버에 개인정보 수정 요청을 보내는 코드를 여기에 추가하세요.
-		console.log('개인정보 수정 로직을 구현하세요.');
-		// 예: const response = await fetch('YOUR_API_UPDATE_ENDPOINT', { method: 'POST', body: formData, credentials: 'include' });
-		// 응답 처리 로직
+		try {
+			const response = await axios({
+				method: 'put',
+				url: '/api/members/me',
+				data: formData,
+				headers: { 'Content-Type': 'multipart/form-data' },
+			});
+			console.log(response.data);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	return (

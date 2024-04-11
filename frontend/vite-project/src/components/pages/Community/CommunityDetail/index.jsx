@@ -28,7 +28,7 @@ function CommuDetail() {
 			<Line>
 				<hr />
 			</Line>
-			<CommentSection />
+			<CommentSection id={id} />
 		</DetailBox>
 	);
 }

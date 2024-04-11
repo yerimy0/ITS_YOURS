@@ -4,11 +4,11 @@ import {
 	ProfileSection,
 	LeftSection,
 	RightSection,
-} from '../../components/pages/Mypage/ProfileStyles';
-import ProfileHeader from '../../components/pages/Mypage/ProfileHeader';
-import InfoBoxItem from '../../components/pages/Mypage/InfoBoxItem';
-import ProfilePicture from '../../components/pages/Mypage/ProfilePicture';
-import NavigationButton from '../../components/pages/Mypage/NavigationButton';
+} from '../../components/pages/Mypage/Main/ProfileStyles';
+import ProfileHeader from '../../components/pages/Mypage/Main/ProfileHeader';
+import InfoBoxItem from '../../components/pages/Mypage/Main/InfoBoxItem';
+import ProfilePicture from '../../components/pages/Mypage/Main/ProfilePicture';
+import NavigationButton from '../../components/pages/Mypage/Main/NavigationButton';
 
 function MyPage({ likes, bookmarks, profilePictureUrl }) {
 	return (

@@ -126,20 +126,27 @@ async function updateMember(userId, updateData) {
  */
 async function deleteMember(userId) {
 	try {
-		// 현재 시간을 삭제됨 시각으로 설정
-		const deletedAt = new Date();
+		const deletedAt = new Date(Date.now() + 9 * 60 * 60 * 1000);
+
+		// userId를 사용하여 사용자 정보를 먼저 조회
+		const member = await Members.findOne({ id: userId });
+		if (!member) {
+			return null; // 사용자가 존재하지 않는 경우, null 반환
+		}
 
 		// userId를 사용하여 사용자를 찾고, deletedAt 필드를 업데이트함으로써 소프트 삭제 수행
 		const result = await Members.updateOne({ id: userId }, { $set: { deletedAt: deletedAt } });
 
 		// 업데이트된 문서의 수를 확인하여 삭제 성공 여부 판단
 		if (result.nModified === 0) {
-			return null; // 문서가 업데이트되지 않았다면, null 반환
+			return null;
 		}
 
-		return { userId, deletedAt }; // 삭제 성공 시, 삭제된 사용자의 ID와 삭제 시각 반환
+		member.deletedAt = deletedAt;
+		return member;
 	} catch (err) {
-		throw err; // 에러가 발생한 경우, 에러를 다시 던져 호출자에게 전달
+		throw err;
 	}
 }
+
 module.exports = { signUp, login, getMember, updateMember, deleteMember };

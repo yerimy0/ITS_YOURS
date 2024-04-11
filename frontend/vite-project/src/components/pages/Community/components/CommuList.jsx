@@ -31,7 +31,7 @@ function CommuList() {
 		}
 		GetData();
 	}, []);
-
+	console.log(communityLists);
 	return (
 		<Box>
 			<ButtonBox
@@ -55,11 +55,10 @@ function CommuList() {
 
 function ListOne({ commu }) {
 	const navigate = useNavigate();
-	const time = detailDate(new Date(commu.createdAt));
+	const time = detailDate(commu.createdAt);
 	return (
 		<ListOfOne
 			onClick={() => {
-				console.log(1);
 				navigate(`/community/${commu._id}`);
 			}}
 		>

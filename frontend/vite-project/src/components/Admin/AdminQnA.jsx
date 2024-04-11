@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import Paginator, { PagiantorContext } from '../Paginator';
+import Paginator, { PaginatorContext } from '../Paginator';
 import AdminModal from './AdminModal';
 
 function AdminQnA() {

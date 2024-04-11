@@ -27,8 +27,8 @@ function useCountUp(end, start = 0, duration = 2000) {
 
 	const handleScroll = useCallback(() => {
 		const scrollY = window.scrollY || window.pageYOffset;
-		if (scrollY >= 2500) {
-			startTime = null;
+		if (scrollY >= 2000) {
+			if (!startTime) startTime = performance.now();
 			if (!requestId) {
 				requestId = requestAnimationFrame(updateCount);
 			}
@@ -37,6 +37,7 @@ function useCountUp(end, start = 0, duration = 2000) {
 				cancelAnimationFrame(requestId);
 				requestId = null;
 			}
+			startTime = null;
 		}
 	}, [updateCount]);
 
@@ -49,7 +50,7 @@ function useCountUp(end, start = 0, duration = 2000) {
 				cancelAnimationFrame(requestId);
 			}
 		};
-	}, [handleScroll]);
+	}, []);
 
 	return count;
 }

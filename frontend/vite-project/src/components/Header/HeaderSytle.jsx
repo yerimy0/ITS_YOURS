@@ -2,7 +2,6 @@ import styled from 'styled-components';
 const HeaderMain = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 30px;
 	flex: 1 0 0;
 	padding-top: 20px;
 	width: 100%;

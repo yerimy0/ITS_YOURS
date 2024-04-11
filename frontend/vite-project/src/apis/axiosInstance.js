@@ -9,7 +9,7 @@ const instance = axios.create({
 });
 
 // instance.defaults.headers.common['Content-Type'] = 'application/json';
-instance.defaults.timeout = 5000;
+instance.defaults.timeout = 10000;
 
 instance.interceptors.request.use(
 	req => {

@@ -22,7 +22,6 @@ import Faq from './pages/Mypage/Faq';
 import AskSupportList from './pages/Mypage/AskSupportList';
 import AskSupportWrite from './pages/Mypage/AskSupportWrite';
 import PurchaseHistory from './pages/Mypage/PurchaseHistory.jsx';
-import AdminPage from './pages/Admin/AdminPage.jsx';
 import SignOut from './pages/SignOut/SignOut';
 import Community from './pages/Community/CommunityList';
 import CommunityWrite from './pages/Community/CommunityWrite';

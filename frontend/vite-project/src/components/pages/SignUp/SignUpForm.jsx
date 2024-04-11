@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import ProfileForm from '../../Users/ProfileForm';
 import ProfileImageUploader from '../../Users/ProfileImageUploader';
 
@@ -16,11 +17,19 @@ const SignUpForm = () => {
 			formData.append('profileImage', profileImage);
 		}
 
-		// 서버에 회원가입 요청을 보내는 코드를 여기에 추가하세요.
-		console.log('회원가입 로직을 구현하세요.');
-
-		// 예: const response = await fetch('YOUR_API_ENDPOINT', { method: 'POST', body: formData });
-		// 응답 처리 로직
+		try {
+			// 서버에 회원가입 요청을 보내는 코드를 여기에 추가하세요.
+			const response = await axios.post('/api/members/signUp', formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			});
+			// 응답 처리 로직
+			console.log('회원가입 성공:', response.data);
+		} catch (error) {
+			// 에러 처리 로직
+			console.error('회원가입 실패:', error);
+		}
 	};
 
 	return (

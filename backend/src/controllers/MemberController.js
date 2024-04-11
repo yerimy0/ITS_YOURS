@@ -76,7 +76,7 @@ const getMember = async (req, res, next) => {
 			return res.status(404).json({ data: null, message: '사용자 정보를 찾을 수 없습니다.' });
 		}
 		// 사용자 정보 조회 성공 응답
-		res.status(200).json({ data: memberInfo, message: '회원 정보 조회 성공' });
+		res.status(200).json(memberInfo);
 	} catch (err) {
 		next(err);
 	}
@@ -95,10 +95,7 @@ const updateMember = async (req, res) => {
 		const userId = req.user.id;
 		const updatedMember = await memberService.updateMember(userId, req.body);
 
-		res.json({
-			message: '회원 정보가 성공적으로 업데이트되었습니다.',
-			data: updatedMember,
-		});
+		res.json(updatedMember);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
@@ -113,19 +110,16 @@ const updateMember = async (req, res) => {
 const deleteMember = async (req, res) => {
 	try {
 		const userId = req.user.id;
-		const memberService = new MemberService();
 		const deleteMember = await memberService.deleteMember(userId);
 
 		if (!deleteMember) {
-			return res.status(400).send({ message: '회원 정보를 찾을 수 없습니다.', deleteMember });
+			return res.status(400).json({ message: '회원 정보를 찾을 수 없습니다.', deleteMember });
 		}
 
-		return res
-			.status(200)
-			.json({ message: '회원 정보가 성공적으로 삭제되었습니다.', deleteMember });
+		return res.status(200).json(deleteMember);
 	} catch (err) {
 		console.log(err);
-		return res.status(500).send({ message: '회원 정보 삭제 중 오류가 발생했습니다' });
+		return res.status(500).json({ message: '회원 정보 삭제 중 오류가 발생했습니다' });
 	}
 };
 

@@ -33,7 +33,7 @@ function CommentSection({ id }) {
 	return (
 		<CommentsBox>
 			<CommentList>
-				<CommentNum>4개의 댓글</CommentNum>
+				<CommentNum>{`${comments.length}개의 댓글`}</CommentNum>
 				<Comments>
 					{comments.map((comment, i) => (
 						<EachCommet key={`comment-${i}`} comment={comment} />

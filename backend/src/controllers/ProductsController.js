@@ -69,7 +69,10 @@ const getProductInfo = async (req, res) => {
 const insertProduct = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
-		const { name, imgUrls, price, author, publisher, condition, region, description } = req.body;
+		const region = rqe.user.region;
+		const schoolName = req.user.schoolName;
+
+		const { name, imgUrls, price, author, publisher, condition, description } = req.body;
 		const product = await productsService.insertProduct({
 			userId,
 			name,
@@ -79,6 +82,7 @@ const insertProduct = async (req, res, next) => {
 			publisher,
 			condition,
 			region,
+			schoolName,
 			description,
 		});
 

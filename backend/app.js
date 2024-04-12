@@ -1,6 +1,6 @@
 const express = require('express');
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
+const upload = require('./src/config/MulterConfig');
 
 const insertDataRouter = require('./src/routes/InsertDataRouter');
 const memberRouter = require('./src/routes/MemberRouter');
@@ -24,7 +24,6 @@ mongoose.connection.on('connected', () => {
 
 const app = express();
 
-app.use(cookieParser());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

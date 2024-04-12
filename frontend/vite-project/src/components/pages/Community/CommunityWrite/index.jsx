@@ -3,13 +3,14 @@ import CommuHeader from '../components/CommuHeader';
 import { Box, WriteForm, InputBox, InputTitle, InputContent } from './WriteStyle';
 import { Button } from '../CommunityList/CommunityStyle';
 import { ProductImg, ButtonUpload } from '../../../WriteFrom/WriteFormStyle';
+import { PostCommunity } from '../../../../apis/service/community.api';
 
 function CommuWrite() {
 	const [imgUrl, setImgUrl] = useState('');
 	const [writeCommu, setWriteCommu] = useState({
 		title: '',
-		context: '',
-		img: '',
+		content: '',
+		photos: '',
 	});
 
 	const fileInputRef = useRef(null);
@@ -24,7 +25,7 @@ function CommuWrite() {
 		const reader = new FileReader();
 		reader.onload = () => {
 			setImgUrl(reader.result);
-			setWriteCommu({ ...writeCommu, img: reader.result });
+			setWriteCommu({ ...writeCommu, photos: reader.result });
 		};
 
 		if (file) {
@@ -37,7 +38,10 @@ function CommuWrite() {
 	};
 
 	const handleSubmit = () => {
-		console.log(writeCommu);
+		async function Post() {
+			await PostCommunity(writeCommu);
+		}
+		Post();
 	};
 
 	return (
@@ -53,8 +57,8 @@ function CommuWrite() {
 					/>
 					<InputContent
 						placeholder="글 내용을 입력해주세요"
-						name="context"
-						value={writeCommu.context}
+						name="content"
+						value={writeCommu.content}
 						onChange={handleInputChange}
 					/>
 					<div className="InputPics">

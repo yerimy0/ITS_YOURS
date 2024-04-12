@@ -1,9 +1,8 @@
 import axios, { HttpStatusCode, isAxiosError } from 'axios';
 
-
 const instance = axios.create({
 	withCredentials: true,
-	baseURL: 'http://127.0.0.1:4000',
+	baseURL: '/api',
 	headers: {
 		'Content-Type': 'application/json',
 	},

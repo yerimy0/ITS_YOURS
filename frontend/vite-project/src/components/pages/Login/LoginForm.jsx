@@ -31,16 +31,11 @@ const LoginForm = () => {
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		if (!userId.trim() || !password) {
-			setIsModalOpen(true);
-			setModalMessage('아이디와 비밀번호를 모두 입력해주세요.');
-			setTimeout(() => setIsModalOpen(false), 3000);
-			return;
-		}
-		const { token, error } = await loginApi(userId, password);
-		if (token) {
-			document.cookie = `authToken=${token}; path=/; Secure`;
-			navigate('/home');
+		const res = await loginApi(userId, password);
+		console.log(res);
+		if (res.accessToken) {
+			document.cookie = `authToken=${res.accessToken}; path=/; Secure`;
+			navigate('/');
 		} else {
 			setIsModalOpen(true);
 			setModalMessage(error || '아이디 또는 비밀번호가 맞지 않습니다.\n다시 확인해주세요.');

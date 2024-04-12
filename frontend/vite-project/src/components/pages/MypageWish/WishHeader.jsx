@@ -1,12 +1,12 @@
 import { WishWrap, WishTitle, WishFilterWrap } from './WishHeaderStyle';
 import ProductFilter from '../../ProductFilter/ProductFilter';
 
-function MypageWishHeader() {
+function MypageWishHeader({ onSortChange }) {
 	return (
 		<WishWrap>
 			<WishTitle>찜목록</WishTitle>
 			<WishFilterWrap>
-				<ProductFilter />
+				<ProductFilter onSortChange={onSortChange} />
 			</WishFilterWrap>
 		</WishWrap>
 	);

@@ -8,14 +8,16 @@ const memberService = require('../services/MemberService');
  */
 const signUp = async (req, res, next) => {
 	try {
-		const { id, password, realName, email, univName, phoneNum, nickName, profilePic } = req.body;
+		const { id, password, realName, email, region, schoolName, phoneNum, nickName, profilePic } =
+			req.body;
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
 			id,
 			password,
 			realName,
 			email,
-			univName,
+			region,
+			schoolName,
 			phoneNum,
 			nickName,
 			profilePic,
@@ -43,10 +45,9 @@ const login = async (req, res, next) => {
 		const loginResult = await memberService.login(id, password);
 		if (!loginResult) {
 			res.status(404).json({
-				message: '없는 유저입니다'
-			})
-		}
-		if (loginResult === false) {
+				message: '없는 유저입니다',
+			});
+		} else if (loginResult === false) {
 			// 로그인 실패 시 처리
 			res.status(401).json({
 				message: '로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.',
@@ -54,9 +55,15 @@ const login = async (req, res, next) => {
 		} else {
 			// 로그인 성공 시 처리
 			const { accessToken, isAdmin } = loginResult;
+
+			// accessToken을 쿠키로 설정
+			res.cookie('accessToken', accessToken, {
+				httpOnly: true, // JavaScript를 통한 접근 방지
+				maxAge: 14 * 24 * 60 * 60 * 1000, // 쿠키 유효기간 설정 (14일)
+			});
+
 			res.status(200).json({
-				isAdmin: isAdmin, // 관리자 여부: true -> 관리자/ false -> 일반회원
-				accessToken: accessToken, // 엑세스 토큰값
+				isAdmin: isAdmin, // 관리자 여부
 				message: '로그인에 성공했습니다!',
 			});
 		}

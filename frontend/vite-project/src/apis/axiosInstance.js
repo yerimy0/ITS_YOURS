@@ -1,19 +1,20 @@
 import axios, { HttpStatusCode, isAxiosError } from 'axios';
-
-// axios.defaults.baseURL = 'http://localhost:4000';
-// axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.timeout = 5000;
+const getAuthToken = () => {
+	const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
+	return token ? token.split('=')[1] : null;
+};
 
 const instance = axios.create({
 	withCredentials: true,
 	baseURL: '/api',
-	headers: {
-		'Content-Type': 'application/json',
-	},
 });
 
 instance.interceptors.request.use(
 	req => {
+		const authToken = getAuthToken();
+		req.headers.Authorization = `${authToken}`;
 		return req;
 	},
 	err => {
@@ -26,13 +27,12 @@ instance.interceptors.request.use(
 				console.error('Request Error: ', err.message);
 			}
 		} else {
-			console.error('asios 외부에서 발생한 에러:', err.message);
+			console.error('axios 외부에서 발생한 에러:', err.message);
 		}
 		return Promise.reject(err);
 	},
 );
 
-//응답 인터셉터를 작성
 instance.interceptors.response.use(
 	res => {
 		return res;
@@ -47,7 +47,7 @@ instance.interceptors.response.use(
 				console.error('Request Error: ', err.message);
 			}
 		} else {
-			console.error('asios 외부에서 발생한 에러:', err.message);
+			console.error('axios 외부에서 발생한 에러:', err.message);
 		}
 		return Promise.reject(err);
 	},

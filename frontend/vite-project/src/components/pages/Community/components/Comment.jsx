@@ -16,42 +16,73 @@ import {
 	CommentContext,
 	CommentList,
 } from '../CommunityDetail/DetailStyle';
-
+import { useState, useEffect } from 'react';
 import { Line } from '../CommunityList/CommunityStyle';
+import { Getcommets } from '../../../../apis/service/community.api';
+import detailDate from '../../../../utils/writeTime';
+import { PostComment } from '../../../../apis/service/community.api';
 
-function CommentSection() {
+function CommentSection({ id }) {
+	const [comments, setComments] = useState(['']);
+
+	function onChange(e) {
+		setComments([...comments], e.target.value);
+	}
+
+	async function activeEnter(e) {
+		if (e.key === 'Enter') {
+			const res = await PostComment(comments, id);
+		}
+	}
+	useEffect(() => {
+		async function getComments() {
+			const res = await Getcommets(id);
+			console.log(`댓글 가져오기: ${res}`);
+			// setComments(res.data);
+		}
+		getComments();
+	}, []);
 	return (
 		<CommentsBox>
 			<CommentList>
-				<CommentNum>4개의 댓글</CommentNum>
+				<CommentNum>{`${comments.length}개의 댓글`}</CommentNum>
 				<Comments>
-					<EachComment>
-						<Comment>
-							<UserImg src="/main_character.png"></UserImg>
-							<CommentTexts>
-								<InnerTop>
-									<Writer>개발세발자</Writer>
-									<Date>30초전</Date>
-								</InnerTop>
-								<InnerBottom>
-									<CommentContext>
-										<p>교수님 휴강 휴강 휴강 제발 휴강 갑자기 일 생겨서 휴강 해줘요</p>
-									</CommentContext>
-									<Buttons>
-										<Button>수정</Button>
-										<Button>삭제</Button>
-									</Buttons>
-								</InnerBottom>
-							</CommentTexts>
-						</Comment>
-						<Line>
-							<hr />
-						</Line>
-					</EachComment>
+					{comments.map((comment, i) => (
+						<EachCommet key={`comment-${i}`} comment={comment} />
+					))}
 				</Comments>
 			</CommentList>
-			<CommentInput></CommentInput>
+			<CommentInput onChange={onChange} onKeyDown={e => activeEnter(e)} />
 		</CommentsBox>
+	);
+}
+
+function EachCommet({ comment }) {
+	const time = detailDate(comment.createdAt);
+	return (
+		<EachComment>
+			<Comment>
+				<UserImg src={comment.profilePic}></UserImg>
+				<CommentTexts>
+					<InnerTop>
+						<Writer>{comment.nickName}</Writer>
+						<Date>{time}</Date>
+					</InnerTop>
+					<InnerBottom>
+						<CommentContext>
+							<p>{comment.content}</p>
+						</CommentContext>
+						<Buttons>
+							<Button>수정</Button>
+							<Button>삭제</Button>
+						</Buttons>
+					</InnerBottom>
+				</CommentTexts>
+			</Comment>
+			<Line>
+				<hr />
+			</Line>
+		</EachComment>
 	);
 }
 

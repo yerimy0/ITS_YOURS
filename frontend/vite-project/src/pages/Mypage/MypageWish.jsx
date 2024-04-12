@@ -1,11 +1,9 @@
-import WishHeader from '../../components/pages/MypageWish/WishHeader';
 import WishContainer from '../../components/pages/MypageWish/WishContainer';
 import styled from 'styled-components';
 
 function MypageWish() {
 	return (
 		<ProductWrap>
-			<WishHeader />
 			<WishContainer />
 		</ProductWrap>
 	);

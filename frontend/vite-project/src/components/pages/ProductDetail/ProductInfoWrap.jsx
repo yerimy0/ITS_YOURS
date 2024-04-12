@@ -1,14 +1,21 @@
 import { ProductInfo, Title, PriceContainer, Div, Price, PriceWon } from './ProductInfoStyle';
 import WishButton from '../../WishButton';
 
-function ProductInfoWrap() {
+function formatPrice(price) {
+	if (price === null || price === undefined) {
+		return ''; // 가격이 없을 때 빈 문자열을 반환
+	}
+	return price.toLocaleString('ko-KR');
+}
+
+function ProductInfoWrap({ name, price }) {
 	return (
 		<>
 			<ProductInfo>
-				<Title>디지털 논리 설계와 컴퓨터 구조</Title>
+				<Title>{name}</Title>
 				<Div>
 					<PriceContainer>
-						<Price>27,000</Price>
+						<Price>{formatPrice(price)}</Price>
 						<PriceWon>원</PriceWon>
 					</PriceContainer>
 					<WishButton />

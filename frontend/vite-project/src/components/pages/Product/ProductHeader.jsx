@@ -9,17 +9,17 @@ import {
 	ProductFilterWrap,
 } from './ProductHeaderStyle';
 
-function ProductHeader() {
+function ProductHeader({ onSortChange, onFilterChange, onSearchResults, totalItems }) {
 	return (
 		<ProductListHeader>
 			<ProductListTitle>상품목록</ProductListTitle>
-			<SearchBar />
+			<SearchBar onSearchResults={onSearchResults} />
 			<SearchResultContainer>
-				<SearchResult>10</SearchResult>
+				<SearchResult>{totalItems}</SearchResult>
 				<SearchResult>개의 도서를 찾았어요.</SearchResult>
 			</SearchResultContainer>
 			<ProductFilterWrap>
-				<ProductFilter />
+				<ProductFilter onSortChange={onSortChange} onFilterChange={onFilterChange} />
 			</ProductFilterWrap>
 		</ProductListHeader>
 	);

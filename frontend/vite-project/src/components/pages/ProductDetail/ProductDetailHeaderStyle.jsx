@@ -82,4 +82,43 @@ const ChatButton = styled.button`
 	}
 `;
 
-export { ProductDetail, BookCover, BookImg, ProductContent, SalesInfo, BookContainer, ChatButton };
+const ProductInfoTextWrap = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
+`;
+
+const Title = styled.p`
+	display: flex;
+	align-items: center;
+	font-size: 28px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 36px;
+	margin: 10px 0;
+`;
+
+const ProductInfoText = styled.div`
+	display: flex;
+	align-items: flex-start;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 24px;
+	letter-spacing: 0.15px;
+	margin: 0;
+`;
+
+export {
+	ProductDetail,
+	BookCover,
+	BookImg,
+	ProductContent,
+	SalesInfo,
+	BookContainer,
+	ChatButton,
+	ProductInfoTextWrap,
+	Title,
+	ProductInfoText,
+};

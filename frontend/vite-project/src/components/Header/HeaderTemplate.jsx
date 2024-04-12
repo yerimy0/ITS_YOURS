@@ -34,12 +34,17 @@ function Header() {
 				</RightNav>
 				<LeftNav istoggled={isToggled}>
 					{isAuth ? (
-						<li>
-							<NavLink to="/mypage">너의페이지</NavLink>
-						</li>
+						<>
+							<li>
+								<NavLink to="/mypage">너의페이지</NavLink>
+							</li>
+							<li>
+								<a>로그아웃</a>
+							</li>
+						</>
 					) : (
 						<li>
-							<NavLink to="/login">로그인/회원가입</NavLink>
+							<NavLink to="/login">로그인</NavLink>
 						</li>
 					)}
 					<img src="/light.png" />

@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 const HeaderMain = styled.div`
+	height: auto;
+	padding: 1% 0;
+	width: auto;
+	height: 100px;
+	justify-content: space-between;
 	display: flex;
 	align-items: center;
-	gap: 30px;
-	flex: 1 0 0;
-	padding-top: 20px;
-	width: 100%;
 	list-style: none;
 	.HambergerBtn {
 		display: none;

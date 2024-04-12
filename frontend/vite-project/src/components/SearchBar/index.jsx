@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { CgSearch } from 'react-icons/cg';
 import {
 	SearchWrap,
@@ -8,8 +7,9 @@ import {
 	ClearButton,
 	SearchButton,
 } from './SearchBarStyle';
+import instance from '../../apis/axiosInstance';
 
-function SearchBar() {
+function SearchBar({ onSearchResults }) {
 	const [placeholder, setPlaceholder] = useState('원하는 책을 검색하세요.');
 	const [searchValue, setSearchValue] = useState('');
 	const [isInputFocused, setIsInputFocused] = useState(false);
@@ -44,15 +44,21 @@ function SearchBar() {
 		searchBooks();
 	};
 
-	// 검색 함수
-	const searchBooks = () => {
-		console.log('검색어:', searchValue);
-		// 여기에 검색 로직 구현
-	};
-
 	// 입력값 지우기 버튼 클릭 핸들러
 	const handleClearInput = () => {
 		setSearchValue('');
+	};
+
+	// 검색 함수
+	const searchBooks = async () => {
+		try {
+			const res = await instance.get(`/api/products/search?name=${searchValue}`);
+			onSearchResults(res.data.data); // 검색 결과를 콜백 함수에 전달
+			console.log('검색어:', searchValue);
+			console.log('검색 결과:', res.data);
+		} catch (err) {
+			console.error('검색 에러:', err);
+		}
 	};
 
 	return (

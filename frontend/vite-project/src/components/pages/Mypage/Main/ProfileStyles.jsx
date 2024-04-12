@@ -138,7 +138,7 @@ export const ProfileImage = styled.div`
 	aspect-ratio: 1 / 1;
 	border-radius: 50%;
 	background-color: #009dff;
-	background-image: url(${props => props.imageUrl});
+	background-image: url(${props => props.src}); // imageUrl을 src로 변경
 	background-size: cover;
 	background-position: center;
 	margin-left: auto;

@@ -8,14 +8,16 @@ const memberService = require('../services/MemberService');
  */
 const signUp = async (req, res, next) => {
 	try {
-		const { id, password, realName, email, univName, phoneNum, nickName, profilePic } = req.body;
+		const { id, password, realName, email, region, schoolName, phoneNum, nickName, profilePic } =
+			req.body;
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
 			id,
 			password,
 			realName,
 			email,
-			univName,
+			region,
+			schoolName,
 			phoneNum,
 			nickName,
 			profilePic,
@@ -43,8 +45,8 @@ const login = async (req, res, next) => {
 		const loginResult = await memberService.login(id, password);
 		if (!loginResult) {
 			res.status(404).json({
-				message: '없는 유저입니다'
-			})
+				message: '없는 유저입니다',
+			});
 		}
 		if (loginResult === false) {
 			// 로그인 실패 시 처리

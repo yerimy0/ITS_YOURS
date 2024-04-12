@@ -26,7 +26,7 @@ function ProductDetailHeader() {
 			if (id) {
 				// 상품 ID가 존재할 때만 데이터를 가져옵니다.
 				try {
-					const res = await instance.get(`/api/products/${id}`);
+					const res = await instance.get(`/products/${id}`);
 					setProduct(res.data);
 				} catch (error) {
 					console.error('상품 데이터를 불러오는 중 에러 발생:', error);

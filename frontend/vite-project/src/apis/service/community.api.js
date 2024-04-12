@@ -36,13 +36,22 @@ async function PostCommunity(writeCommu) {
 	}
 }
 
-async function PostComment(comments, id) {
+async function PostComment(newComment, id) {
 	try {
-		const res = await instance.post(`/community/posts/${id}/comment`, comments);
+		const res = await instance.post(`/community/posts/${id}/comment`, { content: newComment });
 		return res.data;
 	} catch (err) {
 		console.log(err);
 	}
 }
 
-export { GetCommunnityList, GetDetail, Getcommets, PostCommunity, PostComment };
+async function DeleteComment(id, commetId) {
+	try {
+		const res = await instance.delete(`/community/posts/${id}/comment/${commetId}`);
+		return res.data;
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+export { GetCommunnityList, GetDetail, Getcommets, PostCommunity, PostComment, DeleteComment };

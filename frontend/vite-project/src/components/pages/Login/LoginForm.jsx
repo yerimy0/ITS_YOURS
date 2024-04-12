@@ -13,11 +13,12 @@ const LoginForm = () => {
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		const { token, error } = await loginApi(userId, password);
-		if (token) {
+		const res = await loginApi(userId, password);
+		console.log(res);
+		if (res.accessToken) {
 			// 쿠키에 토큰 저장 (쿠키 관련 코드 직접 추가)
-			document.cookie = `authToken=${token}; path=/; Secure`;
-			navigate('/home');
+			document.cookie = `authToken=${res.accessToken}; path=/; Secure`;
+			navigate('/');
 		} else {
 			setIsModalOpen(true);
 			setModalMessage(error || '아이디 또는 비밀번호가 맞지 않습니다.\n다시 확인해주세요.');

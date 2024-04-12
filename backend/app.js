@@ -9,6 +9,7 @@ const qnaRouter = require('./src/routes/QnaRouter');
 const postRouter = require('./src/routes/PostRouter');
 const commentRouter = require('./src/routes/CommentRouter');
 const wishRouter = require('./src/routes/WishesRouter');
+const categoriesRouter = require('./src/routes/CategoryRouter');
 const cors = require('cors');
 
 const mongoose = require('mongoose');
@@ -50,5 +51,6 @@ app.use('/api/products', productsRouter);
 app.use('/api/community', postRouter);
 app.use('/api/community', commentRouter);
 app.use('/api/wishes', wishRouter);
+app.use('/api/categories', categoriesRouter);
 
 module.exports = app;

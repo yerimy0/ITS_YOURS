@@ -1,5 +1,4 @@
 const { Qna } = require('../models/index');
-const { User } = require('../models/index');
 
 // Q&A 작성
 async function createQna(title, content, nickname) {
@@ -8,14 +7,13 @@ async function createQna(title, content, nickname) {
 		content: content,
 		nickname: nickname,
 	};
-	console.log(newQnaData);
 	const createQna = await Qna.create(newQnaData);
 	return createQna;
 }
 
 // 모든 Q&A 조회
 async function getAllQna() {
-	return await Qna.find().populate('nickname').populate('title').populate('content');
+	return await Qna.find();
 }
 
 // Q&A 수정
@@ -48,8 +46,7 @@ async function deleteQna(qnaId) {
 		if (qna.deletedAt) {
 			throw new Error('이미 삭제된 문의글입니다');
 		}
-		const deletedAt = Date.now() + 9 * 60 * 60 * 1000;
-		await Qna.findOneAndUpdate({ _id: qnaId }, { deletedAt: deletedAt });
+		await Qna.findOneAndUpdate({ _id: qnaId }, { deletedAt: Date.now() + 9 * 60 * 60 * 1000 });
 		if (!deleteQna) {
 			throw new Error('문의글을 찾을 수 없습니다.');
 		}
@@ -61,9 +58,8 @@ async function deleteQna(qnaId) {
 
 // 내 Q&A 조회
 async function getMyQna(nickname) {
-	const user = await User.findOne({ nickName: nickname });
-	console.log(user);
-	const myQna = await Qna.find({ nickname: user });
+	const myQna = await Qna.find({ nickname: nickname });
+
 	return myQna;
 }
 

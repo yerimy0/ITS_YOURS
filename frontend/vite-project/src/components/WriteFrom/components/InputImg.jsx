@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from 'react';
 import {
 	Box,
 	Sentence,
@@ -8,23 +9,22 @@ import {
 	Img,
 	ButtonUpload,
 } from '../WriteFormStyle';
-import { useState, useRef, useEffect } from 'react';
 
 function InputImg({ onImageChange, value }) {
-	const [uploadImgUrls, setUploadImgUrls] = useState(value);
+	const [imgUrls, setImgUrls] = useState(value);
 	const FileInputs = useRef([]);
 
 	useEffect(() => {
-		setUploadImgUrls(value);
+		setImgUrls(value);
 	}, [value]);
 
 	function handleChange(index, e) {
 		const fileUploaded = e.target.files[0];
 		const reader = new FileReader();
 		reader.onloadend = () => {
-			const newUrls = [...uploadImgUrls];
+			const newUrls = [...imgUrls];
 			newUrls[index] = reader.result;
-			setUploadImgUrls(newUrls);
+			setImgUrls(newUrls);
 			onImageChange(newUrls);
 		};
 		if (fileUploaded) {
@@ -44,7 +44,7 @@ function InputImg({ onImageChange, value }) {
 				<Notion>첫번째 사진은 책표지를 올려주세요</Notion>
 			</Sentence>
 			<ProductImg>
-				{uploadImgUrls.map((url, index) => (
+				{imgUrls.map((url, index) => (
 					<div key={index}>
 						<ButtonUpload onClick={() => handleClick(index)}>
 							{url ? <Img src={url} alt={`image-${index}`} /> : ' 📸 Upload a file'}

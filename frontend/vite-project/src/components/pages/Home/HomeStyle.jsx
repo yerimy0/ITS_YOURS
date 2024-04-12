@@ -3,8 +3,8 @@ import styled from 'styled-components';
 const Box1 = styled.section`
 	background-image: url('/background.png');
 	background-size: contain;
-	width: 100%;
-	height: 728px;
+	width: auto;
+	height: auto;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;

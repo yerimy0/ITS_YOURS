@@ -45,7 +45,7 @@ function ProductDetailHeader() {
 			<ProductContent>
 				<SalesInfo>
 					<SellerProfileWrap sellerId={product.sellerId} />
-					<ProductInfoWrap name={product.name} price={product.price} />
+					<ProductInfoWrap productId={product._id} name={product.name} price={product.price} />
 				</SalesInfo>
 				<BookContainer>
 					<BookInfoWrap

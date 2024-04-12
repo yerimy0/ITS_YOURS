@@ -1,10 +1,10 @@
-import WishContainer from '../../components/pages/MypageWish/WishContainer';
+import WishWrap from '../../components/pages/MypageWish';
 import styled from 'styled-components';
 
 function MypageWish() {
 	return (
 		<ProductWrap>
-			<WishContainer />
+			<WishWrap />
 		</ProductWrap>
 	);
 }

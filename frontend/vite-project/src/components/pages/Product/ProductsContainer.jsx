@@ -33,7 +33,7 @@ function ProductsContainer() {
 
 	const fetchDefaultProducts = async () => {
 		try {
-			const res = await instance.get('/api/products/list');
+			const res = await instance.get('/products/list');
 			const productsData = res.data;
 			setProducts(productsData);
 			setDisplayProducts(productsData);

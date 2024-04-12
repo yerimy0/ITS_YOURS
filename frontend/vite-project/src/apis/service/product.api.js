@@ -9,7 +9,7 @@ export async function Register(register) {
 		// 	.find(row => row.startsWith('authToken='))
 		// 	.split('=')[1];
 
-		const writing = await instance.post('/api/products', register);
+		const writing = await instance.post('/products', register);
 		console.log(writing);
 	} catch (err) {
 		console.log(err.message);

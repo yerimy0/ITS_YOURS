@@ -8,6 +8,10 @@ async function toggleWish(userId, productId) {
 
 		// 찜 개수 줄이기 전에 Products에서 해당 상품 찾기
 		const product = await Products.findById(productId);
+
+		if (product.deletedAt) {
+			throw new Error('이미 삭제된 상품에는 찜을 할 수 없습니다.');
+		}
 		// 만약 wishesCount가 0보다 크다면, 1 감소시키기
 		if (product.wishesCount > 0) {
 			await Products.findByIdAndUpdate(productId, { $inc: { wishesCount: -1 } });

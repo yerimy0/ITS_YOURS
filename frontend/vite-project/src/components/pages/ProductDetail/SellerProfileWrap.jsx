@@ -23,7 +23,7 @@ function SellerProfileWrap({ sellerId }) {
 					<ProfileImg src={sellerData.profilePic} alt={sellerData.nickname + '프로필'} />
 				</Profile>
 				<Div>
-					<NickName className="nickNAme">{sellerData.nickname}</NickName>
+					<NickName>{sellerData.nickname}</NickName>
 					<Category>
 						{sellerData.region} | {sellerData.univName}
 					</Category>

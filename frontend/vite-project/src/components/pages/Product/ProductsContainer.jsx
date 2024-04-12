@@ -51,9 +51,8 @@ function ProductsContainer() {
 		setCurrentPage(pageNumber);
 	};
 
-	// 추가된 부분: 상품 클릭 함수 수정
+	// 상품 ID를 사용하여 상세 페이지로 이동
 	const handleProductClick = productId => {
-		// 상품 ID를 사용하여 상세 페이지로 이동
 		navigate(`/product/${productId}`);
 	};
 

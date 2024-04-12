@@ -9,7 +9,7 @@ import ProfileHeader from '../../components/pages/Mypage/Main/ProfileHeader';
 import InfoBoxItem from '../../components/pages/Mypage/Main/InfoBoxItem';
 import ProfilePicture from '../../components/pages/Mypage/Main/ProfilePicture';
 import NavigationButton from '../../components/pages/Mypage/Main/NavigationButton';
-import { fetchMyPageData } from '../../apis/service/mypagemenu.api';
+import { fetchMyPageData } from '../../apis/service/MyPageMenuApi';
 
 function MyPage() {
 	const [userData, setUserData] = useState({

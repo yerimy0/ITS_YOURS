@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../Users/Modal';
 import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
+import { findPassword } from '../../../apis/service/FindPasswordApi';
 
 const FindPasswordForm = () => {
 	const navigate = useNavigate();
@@ -30,22 +31,15 @@ const FindPasswordForm = () => {
 		}
 	};
 
-	const handleSubmit = async event => {
+	const handleSubmit = event => {
 		event.preventDefault();
-
 		if (!userId.trim() || userIdError || !email.trim() || emailError) {
 			setModalMessage('아이디와 이메일을 정확하게 입력해주세요.');
 			setIsModalOpen(true);
 			setTimeout(() => setIsModalOpen(false), 3000);
 			return;
 		}
-
-		setModalMessage('비밀번호를 이메일로 보냈습니다.\n이메일을 확인해주세요.');
-		setIsModalOpen(true);
-		setTimeout(() => {
-			setIsModalOpen(false);
-			navigate('/login');
-		}, 3000);
+		findPassword(userId, email, setModalMessage, setIsModalOpen, navigate);
 	};
 
 	return (

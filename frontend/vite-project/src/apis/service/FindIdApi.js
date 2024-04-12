@@ -1,8 +1,8 @@
 import instance from '../axiosInstance';
 
-const findUserId = async (name, email, setModalMessage, setIsModalOpen, navigate) => {
+const findUserId = async (realName, email, setModalMessage, setIsModalOpen, navigate) => {
 	try {
-		const response = await instance.post('/members/findId', { realName: name, email });
+		const response = await instance.post('/members/findId', { id: realName, email });
 		const userId = response.data.userId;
 		navigate(`/showid?email=${encodeURIComponent(email)}&userId=${encodeURIComponent(userId)}`);
 	} catch (error) {

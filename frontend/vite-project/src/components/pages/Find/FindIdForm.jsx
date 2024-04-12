@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
 import Modal from '../../Users/Modal';
-import { findUserId } from '../../../apis/service/findid.api';
+import { findUserId } from '../../../apis/service/FindIdApi';
 
 const FindIdForm = () => {
 	const navigate = useNavigate();

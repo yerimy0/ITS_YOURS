@@ -61,6 +61,17 @@ async function PostComment(newComment, id) {
 	}
 }
 
+async function UpdateComment(newComment, id, commentId) {
+	try {
+		const res = await instance.put(`/community/posts/${id}/comment/${commentId}`, {
+			content: newComment,
+		});
+		return res.data;
+	} catch (err) {
+		console.log(err);
+	}
+}
+
 async function DeleteComment(id, commetId) {
 	try {
 		const res = await instance.delete(`/community/posts/${id}/comment/${commetId}`);
@@ -78,5 +89,6 @@ export {
 	Getcommets,
 	PostCommunity,
 	PostComment,
+	UpdateComment,
 	DeleteComment,
 };

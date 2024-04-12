@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
 
 function Header() {
-	const [isAuth, setIsAuth] = useState(true);
+	const [isAuth, setIsAuth] = useState(false);
 	const [isToggled, setIsToggled] = useState(false);
 
 	function handleClick() {

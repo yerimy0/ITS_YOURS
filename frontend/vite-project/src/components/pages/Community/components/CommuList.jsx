@@ -6,7 +6,6 @@ import {
 	ListTitle,
 	ListSub,
 	ListLeft,
-	MainTitle,
 	List,
 	ButtonBox,
 	Img,

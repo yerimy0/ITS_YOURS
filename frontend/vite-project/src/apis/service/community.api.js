@@ -27,4 +27,13 @@ async function Getcommets(id) {
 	}
 }
 
-export { GetCommunnityList, GetDetail, Getcommets };
+async function PostCommunity(writeCommu) {
+	try {
+		const res = await instance.post(`/api/community/posts`, writeCommu);
+		return res.data;
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+export { GetCommunnityList, GetDetail, Getcommets, PostCommunity };

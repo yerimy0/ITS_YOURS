@@ -69,7 +69,7 @@ const getProductInfo = async (req, res) => {
 const insertProduct = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
-		const region = rqe.user.region;
+		const region = req.user.region;
 		const schoolName = req.user.schoolName;
 
 		const { name, imgUrls, price, author, publisher, condition, description } = req.body;

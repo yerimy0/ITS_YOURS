@@ -53,6 +53,7 @@ const InputTitle = styled.input`
 		color: #ded8e1;
 	}
 `;
+// textarea로 해야함 (띄어쓰기 적용해야 하니까 input은 다 붙어서 나옴)
 
 const InputContent = styled(InputTitle)`
 	display: flex;

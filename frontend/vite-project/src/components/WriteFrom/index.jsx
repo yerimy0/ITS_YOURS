@@ -21,7 +21,7 @@ export let SetRegisterContext = createContext(() => {});
 
 function WriteForm() {
 	const { id } = useParams();
-	console.log(id);
+	// console.log(id);
 	const [register, setRegister] = useState({
 		name: '',
 		price: 0,

@@ -34,7 +34,6 @@ const LoginForm = () => {
 		const res = await loginApi(userId, password);
 		console.log(res);
 		if (res.accessToken) {
-			// 쿠키에 토큰 저장 (쿠키 관련 코드 직접 추가)
 			document.cookie = `authToken=${res.accessToken}; path=/; Secure`;
 			navigate('/');
 		} else {

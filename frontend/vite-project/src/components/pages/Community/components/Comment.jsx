@@ -44,9 +44,10 @@ function CommentSection({ id }) {
 
 	async function activeEnter(e) {
 		if (e.key === 'Enter') {
+			if (newComment.trim() === '') return;
 			await PostComment(newComment, id);
 			setNewComment('');
-			getComments();
+			await getComments();
 		}
 	}
 	return (

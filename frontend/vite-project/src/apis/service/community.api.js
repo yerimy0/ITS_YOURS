@@ -8,6 +8,22 @@ async function GetCommunnityList() {
 		console.log(err);
 	}
 }
+async function UpdateCommunnity(id, writeCommu) {
+	try {
+		const res = await instance.put(`/community/posts/${id}`, writeCommu);
+		return res.data;
+	} catch (err) {
+		console.log(err);
+	}
+}
+async function DeleteCommunnity(id) {
+	try {
+		const res = await instance.delete(`/community/posts/${id}`);
+		return res.data;
+	} catch (err) {
+		console.log(err);
+	}
+}
 
 async function GetDetail(id) {
 	try {
@@ -54,4 +70,13 @@ async function DeleteComment(id, commetId) {
 	}
 }
 
-export { GetCommunnityList, GetDetail, Getcommets, PostCommunity, PostComment, DeleteComment };
+export {
+	GetCommunnityList,
+	UpdateCommunnity,
+	DeleteCommunnity,
+	GetDetail,
+	Getcommets,
+	PostCommunity,
+	PostComment,
+	DeleteComment,
+};

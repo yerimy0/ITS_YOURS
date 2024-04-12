@@ -14,9 +14,15 @@ import {
 import { ListTitle } from '../CommunityList/CommunityStyle';
 import { useNavigate } from 'react-router-dom';
 import DateSlicer from '../../../../utils/dateSlicer';
+import { DeleteCommunnity } from '../../../../apis/service/community.api';
 
 function DetailTopSection({ detail }) {
 	const navigate = useNavigate();
+
+	async function onClickDelete() {
+		await DeleteCommunnity(detail._id);
+		navigate('/community');
+	}
 	const date = DateSlicer(detail.createdAt);
 	return (
 		<DetailTop>
@@ -32,7 +38,7 @@ function DetailTopSection({ detail }) {
 					>
 						수정
 					</Button>
-					<Button>삭제</Button>
+					<Button onClick={onClickDelete}>삭제</Button>
 					<Red>신고하기</Red>
 				</Buttons>
 			</TitleBox>

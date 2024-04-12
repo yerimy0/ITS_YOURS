@@ -4,6 +4,7 @@ const Box = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 30px;
+	margin-bottom: 5%;
 	align-self: stretch;
 	align-items: center;
 `;
@@ -96,6 +97,8 @@ const ListSub = styled.div`
 `;
 
 const ListLeft = styled.div`
+	flex-wrap: wrap;
+	width: 30%;
 	display: flex;
 	flex-direction: column;
 	gap: 8px;

@@ -1,12 +1,15 @@
 const express = require('express');
 const logger = require('morgan');
+const cookieParser = require('cookie-parser');
 
+const insertDataRouter = require('./src/routes/InsertDataRouter');
 const memberRouter = require('./src/routes/MemberRouter');
 const productsRouter = require('./src/routes/ProductsRouter');
 const qnaRouter = require('./src/routes/QnaRouter');
 const postRouter = require('./src/routes/PostRouter');
 const commentRouter = require('./src/routes/CommentRouter');
 const wishRouter = require('./src/routes/WishesRouter');
+const cors = require('cors');
 
 const mongoose = require('mongoose');
 
@@ -20,10 +23,27 @@ mongoose.connection.on('connected', () => {
 
 const app = express();
 
+app.use(cookieParser());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const corsOptions = {
+	origin: 'http://localhost:5173',
+	credentials: true,
+};
+app.use(cors(corsOptions));
 
+app.get('/', (req, res) => {
+	console.log('Hello World');
+	return res.send('GET: Hello World');
+});
+
+app.post('/', (req, res) => {
+	console.log('Hello World');
+	return res.send('POST: Hello World');
+});
+
+app.use('/api/scripts', insertDataRouter);
 app.use('/api/qna', qnaRouter);
 app.use('/api/members', memberRouter);
 app.use('/api/products', productsRouter);

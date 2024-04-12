@@ -14,10 +14,10 @@ const ProductListTitle = styled.h1`
 	align-items: center;
 	justify-content: center;
 	padding: 5px;
-	font-size: 57px;
+	font-size: 36px;
 	font-style: normal;
 	font-weight: 700;
-	line-height: 64px;
+	line-height: 44px;
 	text-align: center;
 	margin: 0;
 `;
@@ -31,7 +31,10 @@ const SearchResultContainer = styled.div`
 
 const SearchResult = styled.p`
 	font-size: 24px;
-	line-height: 28px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 32px;
+	margin-bottom: 20px;
 	margin: 0;
 `;
 

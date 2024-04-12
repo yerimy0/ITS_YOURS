@@ -1,42 +1,48 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import Navigator from './Navigator';
 import { PaginationContainer } from './PaginatorStyle';
 
-export const PagiantorContext = createContext({
+export const PaginatorContext = createContext({
 	currentPage: 0,
 	totalPage: 0,
 	handleClickNav: () => {},
 	handleClickPage: () => {},
 });
 
-const Paginator = ({ totalItems, perPage }) => {
-	const [currentPage, setCurrentPage] = useState(0);
-	const totalPage = Math.ceil(totalItems / perPage);
+const Paginator = ({ totalItems, itemsCountPerPage, currentPage, onChange }) => {
+	const [localCurrentPage, setLocalCurrentPage] = useState(currentPage);
+	const totalPage = Math.ceil(totalItems / itemsCountPerPage);
+
+	useEffect(() => {
+		setLocalCurrentPage(currentPage);
+	}, [currentPage]);
 
 	const handleClickNav = direction => {
-		const newPage = currentPage + direction;
+		const newPage = localCurrentPage + direction;
 		if (newPage >= 0 && newPage < totalPage) {
-			setCurrentPage(newPage);
+			setLocalCurrentPage(newPage);
+			onChange(newPage);
 		}
 	};
 
 	const handleClickPage = page => {
-		setCurrentPage(page);
+		setLocalCurrentPage(page);
+		onChange(page);
 	};
 
 	const contextValue = {
 		totalPage,
-		currentPage,
+		currentPage: localCurrentPage,
 		handleClickNav,
 		handleClickPage,
 	};
 
 	return (
-		<PagiantorContext.Provider value={contextValue}>
+		<PaginatorContext.Provider value={contextValue}>
 			<PaginationContainer>
 				<Navigator />
 			</PaginationContainer>
-		</PagiantorContext.Provider>
+		</PaginatorContext.Provider>
 	);
 };
 

@@ -1,7 +1,7 @@
 const { Products } = require('../models/index');
 
 async function getProductsList() {
-	const productsList = await Products.find({ deletedAt: { $exists: false } });
+	const productsList = await Products.find();
 
 	return productsList;
 }
@@ -38,6 +38,7 @@ async function insertProduct({
 	publisher,
 	condition,
 	region,
+	schoolName,
 	description,
 }) {
 	const newProduct = {
@@ -49,6 +50,7 @@ async function insertProduct({
 		condition: condition,
 		region: region,
 		sellerId: userId,
+		schoolName: schoolName,
 		description: description,
 	};
 

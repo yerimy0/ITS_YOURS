@@ -18,6 +18,10 @@ import MyPage from './pages/Mypage/Mypage.jsx';
 import ProfileEdit from './pages/Mypage/ProfileEdit';
 import ProductDetail from './pages/ProductDetail';
 import SalesHistory from './pages/Mypage/SalesHistory.jsx';
+import Faq from './pages/Mypage/Faq';
+import AskSupportList from './pages/Mypage/AskSupportList';
+import AskSupportWrite from './pages/Mypage/AskSupportWrite';
+import PurchaseHistory from './pages/Mypage/PurchaseHistory.jsx';
 import SignOut from './pages/SignOut/SignOut';
 import Community from './pages/Community/CommunityList';
 import CommunityWrite from './pages/Community/CommunityWrite';
@@ -25,6 +29,7 @@ import CommunityDetail from './pages/Community/CommunityDetail.jsx';
 import { Provider } from 'react-redux';
 import store from './store.js';
 import Chat from './pages/Chat';
+import AdminPage from './pages/Admin/AdminPage.jsx';
 
 const router = createBrowserRouter([
 	{
@@ -38,8 +43,12 @@ const router = createBrowserRouter([
 			{ path: '/*', element: <NotFound /> },
 			{ path: '/mypage/wish', element: <MyPageWish /> },
 			{ path: '/mypage', element: <MyPage /> },
-			{ path: '/product/detail', element: <ProductDetail /> },
+			{ path: '/product/:id', element: <ProductDetail /> },
 			{ path: '/saleshistory', element: <SalesHistory /> },
+			{ path: '/purchasehistory', element: <PurchaseHistory /> },
+			{ path: '/faq', element: <Faq /> },
+			{ path: '/asksupportlist', element: <AskSupportList /> },
+			{ path: '/asksupportwrite', element: <AskSupportWrite /> },
 			{ path: '/signout', element: <SignOut /> },
 			{ path: '/profileedit', element: <ProfileEdit /> },
 			{ path: '/chat', element: <Chat /> },
@@ -53,6 +62,7 @@ const router = createBrowserRouter([
 	{ path: '/findid', element: <FindId /> },
 	{ path: '/findpassword', element: <FindPassword /> },
 	{ path: '/signup', element: <SignUp /> },
+	{ path: '/adminpage', element: <AdminPage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

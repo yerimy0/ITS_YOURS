@@ -5,7 +5,6 @@ import ProductWrap from './ProductStyle';
 function Product() {
 	return (
 		<ProductWrap>
-			<ProductHeader />
 			<ProductsContainer />
 		</ProductWrap>
 	);

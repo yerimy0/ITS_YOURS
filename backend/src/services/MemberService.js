@@ -8,7 +8,17 @@ const bcrypt = require('bcrypt');
  * 작성 시작일 : 2024-04-03
  * 회원가입시 동작되는 DB작업을 모아놓은 service입니다.
  */
-async function signUp(id, password, realName, email, univName, phoneNum, nickName) {
+async function signUp(
+	id,
+	password,
+	realName,
+	email,
+	region,
+	schoolName,
+	phoneNum,
+	nickName,
+	profilePic,
+) {
 	// const isRegedId = await Members.find({ id });
 	// const isRegedEmail = await Members.find({ email });
 	// const isRededPhone = await Members.find({ phoneNum });
@@ -28,9 +38,11 @@ async function signUp(id, password, realName, email, univName, phoneNum, nickNam
 		password: hashedPassword,
 		realName: realName,
 		email: email,
-		univName: univName,
+		region: region,
+		schoolName: schoolName,
 		phoneNum: phoneNum,
 		nickName: nickName,
+		profilePic: profilePic,
 	};
 	//회원 정보 create
 	const member = await Members.create(newMember);
@@ -47,6 +59,8 @@ async function login(id, password) {
 	let isAdmin; // 관리자 회원여부
 	// 회원정보
 	const member = await Members.findOne({ id });
+	if (!member) return null;
+
 	// 사용자 입력 비밀번호 vs 해시화된 비밀번호 교차비교
 	const isPass = await bcrypt.compare(password, member.password);
 	// 회원정보 존재, 로그인 성공
@@ -58,9 +72,9 @@ async function login(id, password) {
 					username: member.realName,
 					id: member.id,
 					nickName: member.nickName,
-					isAdmin: member.isAdmin,
 					profilePic: member.profilePic,
-					univName: member.univName,
+					region: member.region,
+					schoolName: member.schoolName,
 				},
 			},
 			process.env.ACCESS_TOKEN_SECRET,
@@ -85,7 +99,7 @@ async function login(id, password) {
  * 회원정보조회 기능 관련 DB작업이 모여있는 service입니다.
  */
 async function getMember(userId) {
-	const memberInfo = await Members.findOne({ userId });
+	const memberInfo = await Members.findOne({ id: userId });
 	return memberInfo;
 }
 
@@ -97,9 +111,12 @@ async function getMember(userId) {
  */
 async function updateMember(userId, updateData) {
 	try {
-		// MongoDB의 findByIdAndUpdate 메서드를 사용하여 회원 정보 업데이트
-		// { new: true } 옵션을 사용하여 업데이트된 문서 반환
-		const updatedMember = await Member.findByIdAndUpdate(userId, updateData, {
+		const dataWithTimestamp = {
+			...updateData,
+			updatedAt: new Date(Date.now() + 9 * 60 * 60 * 1000),
+		};
+
+		const updatedMember = await Members.findOneAndUpdate({ id: userId }, dataWithTimestamp, {
 			new: true,
 		});
 
@@ -114,4 +131,35 @@ async function updateMember(userId, updateData) {
 	}
 }
 
-module.exports = { signUp, login, getMember, updateMember };
+/**
+ * 회원 탈퇴 service
+ * 작성자 : 유경아
+ * 작성 시작일 : 2024-04-05
+ * 회원 탈퇴 기능 관련 DB작업이 모여있는 service입니다.
+ */
+async function deleteMember(userId) {
+	try {
+		const deletedAt = new Date(Date.now() + 9 * 60 * 60 * 1000);
+
+		// userId를 사용하여 사용자 정보를 먼저 조회
+		const member = await Members.findOne({ id: userId });
+		if (!member) {
+			return null; // 사용자가 존재하지 않는 경우, null 반환
+		}
+
+		// userId를 사용하여 사용자를 찾고, deletedAt 필드를 업데이트함으로써 소프트 삭제 수행
+		const result = await Members.updateOne({ id: userId }, { $set: { deletedAt: deletedAt } });
+
+		// 업데이트된 문서의 수를 확인하여 삭제 성공 여부 판단
+		if (result.nModified === 0) {
+			return null;
+		}
+
+		member.deletedAt = deletedAt;
+		return member;
+	} catch (err) {
+		throw err;
+	}
+}
+
+module.exports = { signUp, login, getMember, updateMember, deleteMember };

@@ -18,9 +18,6 @@ import { useNavigate } from 'react-router-dom';
 function Section3() {
 	const navigate = useNavigate();
 
-	function OnClick() {
-		navigate('/product');
-	}
 	return (
 		<Box3 className="BlueBack">
 			<Title>
@@ -42,7 +39,13 @@ function Section3() {
 				))}
 			</UpdateBooks>
 			<ButtonBox>
-				<Button>더보기</Button>
+				<Button
+					onClick={() => {
+						navigate('/product');
+					}}
+				>
+					더보기
+				</Button>
 			</ButtonBox>
 		</Box3>
 	);

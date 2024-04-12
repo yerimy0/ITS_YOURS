@@ -16,49 +16,65 @@ import {
 	CommentContext,
 	CommentList,
 } from '../CommunityDetail/DetailStyle';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext, createContext } from 'react';
 import { Line } from '../CommunityList/CommunityStyle';
-import { Getcommets } from '../../../../apis/service/community.api';
+import { Getcommets, PostComment, DeleteComment } from '../../../../apis/service/community.api';
 import detailDate from '../../../../utils/writeTime';
-import { PostComment } from '../../../../apis/service/community.api';
+
+const GetCommentsContext = createContext();
 
 function CommentSection({ id }) {
 	const [comments, setComments] = useState(['']);
+	const [length, setLength] = useState(0);
+	const [newComment, setNewComment] = useState('');
+
+	async function getComments() {
+		const res = await Getcommets(id);
+		setComments(res);
+		setLength(res.length);
+	}
+
+	useEffect(() => {
+		getComments();
+	}, [id]);
 
 	function onChange(e) {
-		setComments([...comments], e.target.value);
+		setNewComment(e.target.value);
 	}
 
 	async function activeEnter(e) {
 		if (e.key === 'Enter') {
-			const res = await PostComment(comments, id);
+			await PostComment(newComment, id);
+			setNewComment('');
+			getComments();
 		}
 	}
-	useEffect(() => {
-		async function getComments() {
-			const res = await Getcommets(id);
-			console.log(`댓글 가져오기: ${res}`);
-			// setComments(res.data);
-		}
-		getComments();
-	}, []);
 	return (
-		<CommentsBox>
-			<CommentList>
-				<CommentNum>{`${comments.length}개의 댓글`}</CommentNum>
-				<Comments>
-					{comments.map((comment, i) => (
-						<EachCommet key={`comment-${i}`} comment={comment} />
-					))}
-				</Comments>
-			</CommentList>
-			<CommentInput onChange={onChange} onKeyDown={e => activeEnter(e)} />
-		</CommentsBox>
+		<GetCommentsContext.Provider value={getComments}>
+			<CommentsBox>
+				<CommentList>
+					<CommentNum>{`${length}개의 댓글`}</CommentNum>
+					<Comments>
+						{comments.map((comment, i) => (
+							<EachCommet key={`comment-${i}`} id={id} comment={comment} />
+						))}
+					</Comments>
+				</CommentList>
+				<CommentInput value={newComment} onChange={onChange} onKeyDown={e => activeEnter(e)} />
+			</CommentsBox>
+		</GetCommentsContext.Provider>
 	);
 }
 
-function EachCommet({ comment }) {
+function EachCommet({ comment, id }) {
+	const getComments = useContext(GetCommentsContext);
 	const time = detailDate(comment.createdAt);
+
+	async function onClickDelete(id) {
+		const commentId = comment._id;
+		await DeleteComment(id, commentId);
+		await getComments();
+	}
 	return (
 		<EachComment>
 			<Comment>
@@ -74,7 +90,7 @@ function EachCommet({ comment }) {
 						</CommentContext>
 						<Buttons>
 							<Button>수정</Button>
-							<Button>삭제</Button>
+							<Button onClick={onClickDelete}>삭제</Button>
 						</Buttons>
 					</InnerBottom>
 				</CommentTexts>

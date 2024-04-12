@@ -1,5 +1,6 @@
 import React from 'react';
-import { Greeting, NameBadge, EditButton } from './ProfileStyles';
+import { Greeting, NameBadge } from './ProfileStyles';
+import EditButton from './EditButton';
 
 function ProfileHeader(props) {
 	return (

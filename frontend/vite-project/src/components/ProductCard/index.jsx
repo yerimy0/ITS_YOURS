@@ -16,12 +16,12 @@ function formatPrice(price) {
 	return price.toLocaleString('ko-KR');
 }
 
-function ProductCard({ _id, imgUrls, name, price }) {
+function ProductCard({ _id, imgUrls, name, price, onClick }) {
 	return (
 		<ProductCardWrap productId={_id}>
-			<ProductImage src={imgUrls} alt={name} />
+			<ProductImage onClick={onClick} src={imgUrls} alt={name} />
 			<ProductInfoWrap>
-				<ProductInfo>
+				<ProductInfo onClick={onClick}>
 					<ProductTitle>{name}</ProductTitle>
 					<ProductPrice>
 						<Price>{formatPrice(price)}</Price>

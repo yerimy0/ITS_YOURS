@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  padding: 150px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	padding: 150px;
 `;
 
 export const Logo = styled.img`
@@ -22,7 +22,7 @@ export const Form = styled.form`
 `;
 
 export const Input = styled.input`
-	margin-bottom: 1rem;
+	margin-top: 1rem;
 	padding: 0.7rem;
 	border: 1px solid #009dff;
 	border-radius: 20px;
@@ -31,6 +31,7 @@ export const Input = styled.input`
 
 export const Button = styled.button`
 	padding: 0.7rem;
+	margin-top: 1rem;
 	font-size: 14px;
 	background-color: #009dff;
 	color: white;
@@ -116,11 +117,11 @@ export const ProfileWrapper = styled.div`
 `;
 
 export const ProfileImage = styled.img`
-  width: 120px; 
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  background-color: #009DFF; 
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	object-fit: cover;
+	background-color: #009dff;
 `;
 
 export const IconWrapper = styled.label`
@@ -147,14 +148,20 @@ export const HiddenFileInput = styled.input`
 `;
 
 export const Title = styled.h1`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 30px;
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 64px;
-  text-align: center;
-  margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-bottom: 30px;
+	font-size: 48px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 64px;
+	text-align: center;
+	margin: 0;
+`;
+
+export const ErrorMessage = styled.div`
+	color: #b3261e;
+	font-size: 12px;
+	margin-left: 10px;
 `;

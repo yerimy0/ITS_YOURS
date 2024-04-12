@@ -72,11 +72,15 @@ const insertProduct = async (req, res, next) => {
 		const region = req.user.region;
 		const schoolName = req.user.schoolName;
 
-		const { name, imgUrls, price, author, publisher, condition, description } = req.body;
+		// multer 미들웨어를 통해 업로드된 파일 정보는 req.files에 저장됩니다.
+		// 업로드된 이미지의 경로들을 imgUrls 배열로 구성합니다.
+		const imgUrls = req.files.map(file => file.path);
+
+		const { name, price, author, publisher, condition, description } = req.body;
 		const product = await productsService.insertProduct({
 			userId,
 			name,
-			imgUrls,
+			imgUrls, // multer를 통해 업로드된 이미지 URL 배열
 			price,
 			author,
 			publisher,
@@ -101,12 +105,13 @@ const updateProduct = async (req, res, next) => {
 		const { prodId } = req.query;
 		const prodObjectId = new ObjectId(prodId); // 상품의 _id 값
 
-		// 수정하고자 하는 상품 정보
-		const { name, imgUrls, price, author, publisher, condition, region, description } = req.body;
-		// productsService.updateProduct 함수를 호출하여 상품 정보를 수정
+		const imgUrls = req.files?.map(file => file.path);
+
+		const { name, price, author, publisher, condition, region, description } = req.body;
+		// imgUrls가 존재하면 상품 정보 업데이트에 포함, 그렇지 않으면 기존 값 유지
 		const updatedProduct = await productsService.updateProduct(prodObjectId, {
 			name,
-			imgUrls,
+			...(imgUrls?.length > 0 && { imgUrls }), // 조건부로 imgUrls 포함
 			price,
 			author,
 			publisher,

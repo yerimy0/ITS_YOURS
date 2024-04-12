@@ -48,6 +48,8 @@ async function login(id, password) {
 	let isAdmin; // 관리자 회원여부
 	// 회원정보
 	const member = await Members.findOne({ id });
+	if (!member) return null
+	
 	// 사용자 입력 비밀번호 vs 해시화된 비밀번호 교차비교
 	const isPass = await bcrypt.compare(password, member.password);
 	// 회원정보 존재, 로그인 성공

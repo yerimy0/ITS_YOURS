@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
 
 function Header() {
-	const [isAuth, setIsAuth] = useState(false);
+	const [isAuth, setIsAuth] = useState(true);
 	const [isToggled, setIsToggled] = useState(false);
 
 	function handleClick() {
@@ -34,12 +34,17 @@ function Header() {
 				</RightNav>
 				<LeftNav istoggled={isToggled}>
 					{isAuth ? (
-						<li>
-							<NavLink to="/mypage">너의페이지</NavLink>
-						</li>
+						<>
+							<li>
+								<NavLink to="/mypage">너의페이지</NavLink>
+							</li>
+							<li>
+								<a>로그아웃</a>
+							</li>
+						</>
 					) : (
 						<li>
-							<NavLink to="/login">로그인/회원가입</NavLink>
+							<NavLink to="/login">로그인</NavLink>
 						</li>
 					)}
 					<img src="/light.png" />

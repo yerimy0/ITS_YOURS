@@ -1,34 +1,54 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ModalBackground, ModalContainer, ModalTitle, ModalMessage, ButtonsContainer, ConfirmButton, CancelButton } from './SignOutStyles'
-import { useNavigate } from 'react-router-dom'; 
+import axios from 'axios';
+import {
+	ModalBackground,
+	ModalContainer,
+	ModalTitle,
+	ModalMessage,
+	ButtonsContainer,
+	ConfirmButton,
+	CancelButton,
+} from './SignOutStyles';
+import { useNavigate } from 'react-router-dom';
 
 const SignOutModal = ({ isOpen, onClose }) => {
-  const navigate = useNavigate();
-  if (!isOpen) return null;
+	const navigate = useNavigate();
 
-  const handleSignOut = () => {
-    onClose(); 
-    navigate('/signout');
-  };
+	if (!isOpen) return null;
 
-  return ReactDOM.createPortal(
-    <ModalBackground onClick={onClose}>
-      <ModalContainer onClick={e => e.stopPropagation()}>
-        <ModalTitle>정말 탈퇴하시겠어요?</ModalTitle>
-        <ModalMessage>
-          회원 탈퇴 시 <br />
-          계정은 삭제되며 <br />
-          복구되지 않습니다.
-        </ModalMessage>
-        <ButtonsContainer>
-          <ConfirmButton onClick={onClose}>더 써볼래요</ConfirmButton>
-          <CancelButton onClick={handleSignOut}>떠날래요</CancelButton>
-        </ButtonsContainer>
-      </ModalContainer>
-    </ModalBackground>,
-    document.getElementById('modal-root')
-  );
+	const handleSignOut = async () => {
+		try {
+			await axios.delete('/api/members/me', {
+				headers: {
+					Authorization: `Bearer 여기에_토큰_값`,
+				},
+			}),
+				console.log('회원 탈퇴 성공');
+			onClose();
+			navigate('/signout');
+		} catch (error) {
+			console.log('회원 탈퇴 실패:', error.response);
+		}
+	};
+
+	return ReactDOM.createPortal(
+		<ModalBackground onClick={onClose}>
+			<ModalContainer onClick={e => e.stopPropagation()}>
+				<ModalTitle>정말 탈퇴하시겠어요?</ModalTitle>
+				<ModalMessage>
+					회원 탈퇴 시 <br />
+					계정은 삭제되며 <br />
+					복구되지 않습니다.
+				</ModalMessage>
+				<ButtonsContainer>
+					<ConfirmButton onClick={onClose}>더 써볼래요</ConfirmButton>
+					<CancelButton onClick={handleSignOut}>떠날래요</CancelButton>
+				</ButtonsContainer>
+			</ModalContainer>
+		</ModalBackground>,
+		document.getElementById('modal-root'),
+	);
 };
 
 export default SignOutModal;

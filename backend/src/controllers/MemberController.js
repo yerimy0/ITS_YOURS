@@ -41,6 +41,11 @@ const login = async (req, res, next) => {
 	try {
 		const { id, password } = req.body;
 		const loginResult = await memberService.login(id, password);
+		if (!loginResult) {
+			res.status(404).json({
+				message: '없는 유저입니다'
+			})
+		}
 		if (loginResult === false) {
 			// 로그인 실패 시 처리
 			res.status(401).json({

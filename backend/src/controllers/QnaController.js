@@ -47,23 +47,21 @@ const updateQna = async (req, res, next) => {
 
 // Q&A 삭제
 const deleteQna = async (req, res, next) => {
-	const id = req.decoded.user.id;
-	const title = req.params.title;
-	const content = req.params.content;
-
 	try {
-		const qnaService = new QnaService();
-		const deletedQna = await qnaService.deleteQna(id, title, content);
-		if (deletedQna === 'notFound') {
-			throw new NotFoundError('조회되는 Q&A가 없습니다.');
-		}
-		if (deletedQna === 'notMyQna') {
-			throw new NotFoundError('작성자가 다릅니다.');
+		const { qnaId } = req.params;
+		const qnaObjectId = new ObjectId(qnaId);
+		const deleteQna = await qnaService.deleteQna(qnaObjectId);
+
+		if (!deleteQna) {
+			return res.status(404).send({ message: '문의글을 찾을 수 없습니다.' });
 		}
 
-		res.status(200).json({ message: 'Q&A deleted' });
-	} catch (err) {
-		next(err);
+		res.status(200).send({ message: '문의글이 삭제되었습니다.', deletedPost });
+	} catch (error) {
+		res.status(500).send({
+			message: '문의글 삭제 중 오류가 발생했습니다.',
+			error: error.message,
+		});
 	}
 };
 

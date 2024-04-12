@@ -42,15 +42,20 @@ async function updateQna(qnaId, { content, title }) {
 }
 
 // Q&A 삭제
-async function deleteQna(email, qnaID) {
-	const user = await User.findOne({ email }).select('_id');
-	const qna = await Qna.findById(qnaID);
-	if (!qna) return 'notFound';
-
-	if (qna.user.toString() === user._id.toString()) {
-		return await Qna.findByIdAndDelete(qnaID);
-	} else {
-		return 'notMyQna';
+async function deleteQna(qnaId) {
+	try {
+		const qna = await Qna.findOne({ _id: qnaId });
+		if (qna.deletedAt) {
+			throw new Error('이미 삭제된 문의글입니다');
+		}
+		const deletedAt = Date.now() + 9 * 60 * 60 * 1000;
+		await Qna.findOneAndUpdate({ _id: qnaId }, { deletedAt: deletedAt });
+		if (!deleteQna) {
+			throw new Error('문의글을 찾을 수 없습니다.');
+		}
+		return { message: '문의글이 삭제되었습니다.', deleteQna };
+	} catch (error) {
+		throw error;
 	}
 }
 

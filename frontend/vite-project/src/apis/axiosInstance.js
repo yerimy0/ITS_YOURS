@@ -1,10 +1,15 @@
 import axios, { HttpStatusCode, isAxiosError } from 'axios';
+const authToken = document.cookie
+	.split('; ')
+	.find(row => row.startsWith('authToken='))
+	.split('=')[1];
 
 const instance = axios.create({
 	withCredentials: true,
 	baseURL: '/api',
 	headers: {
 		'Content-Type': 'application/json',
+		Authorization: authToken ? `Bearer ${authToken}` : '',
 	},
 });
 

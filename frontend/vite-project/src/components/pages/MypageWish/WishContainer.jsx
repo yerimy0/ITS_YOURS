@@ -17,7 +17,7 @@ function WishContainer() {
 	useEffect(() => {
 		const fetchUserWishList = async () => {
 			try {
-				const res = await instance.get('/api/wishes/');
+				const res = await instance.get('/wishes/');
 				setUserWishList(res.data);
 				setTotalItems(res.data.length);
 			} catch (error) {

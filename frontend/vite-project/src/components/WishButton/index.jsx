@@ -1,89 +1,82 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import WishBtn from './WishButtonStyle';
 import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io';
-import instance from '../../apis/axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import instance from '../../apis/axiosInstance';
 
-function WishButton({ userId, productId }) {
+function WishButton({ productId }) {
 	const [isWishAdd, setIsWishAdd] = useState(false);
 	const navigate = useNavigate();
 
-	// 찜 목록에 상품을 추가하는 API 호출 함수
-	const callAddWishAPI = async () => {
-		try {
-			// 요청 본문에 userId와 productId를 포함하여 POST 요청을 보냅니다.
-			const res = await instance.post(`/api/wishes/toggle`, {
-				userId: userId,
-				productId: productId,
-			});
+	// 사용자가 상품을 찜했는지 확인
+	useEffect(() => {
+		const fetchWishStatus = async () => {
+			// const userId = 이거 어케 처리하지
+			// 로그인하지 않은 상태라면 로그인 페이지로 이동
+			if (!userId) {
+				navigate('/login');
+				return;
+			}
 
-			// 요청이 성공했을 때
-			if (res.status === 200) {
-				const data = res.data;
-				if (data.success) {
-					console.log('상품이 찜 목록에 추가되었습니다:', data);
-					return data; // 응답 데이터를 반환
+			try {
+				// API를 통해 사용자의 찜 목록을 조회
+				const res = await instance.get(`/wishes/${userId}`);
+				if (res.status === 200 && Array.isArray(res.data.wishes)) {
+					// 찜 목록에 현재 상품이 있는지 확인
+					const isProductInWishlist = res.data.wishes.some(wish => wish.productId === productId);
+					// 상태 업데이트
+					setIsWishAdd(isProductInWishlist);
 				} else {
-					console.error('찜 목록에 추가하는 중 문제가 발생했습니다:', data);
+					setIsWishAdd(false);
 				}
+			} catch (error) {
+				console.error('API 요청 에러:', error);
+			}
+		};
+
+		fetchWishStatus();
+	}, [productId, navigate]);
+
+	// 찜 버튼 상태 토글 함수
+	const wishCountHandler = async () => {
+		// 로컬 스토리지에서 사용자 ID 가져오기
+		const userId = localStorage.getItem('userId');
+
+		// 로그인하지 않은 상태라면 로그인 페이지로 이동
+		if (!userId) {
+			navigate('/login');
+			return;
+		}
+
+		// 상태 토글
+		const newIsWishAdd = !isWishAdd;
+
+		try {
+			// 찜 목록을 토글하는 API 요청
+			const res = await instance.post('/wishes/toggle', { productId, userId });
+
+			// 요청이 성공하면 상태 업데이트
+			if (res.status === 200) {
+				setIsWishAdd(newIsWishAdd);
 			} else {
-				console.error('찜 목록에 추가하는 중 에러가 발생했습니다:', res);
+				console.error('찜 목록 토글 실패:', res);
 			}
 		} catch (error) {
-			// 요청 중 에러가 발생한 경우
-			console.error('찜 목록에 추가하는 중 에러가 발생했습니다:', error);
+			console.error('API 요청 에러:', error);
 		}
 	};
 
-	// 찜 목록에서 상품을 제거하는 API 호출 함수
-	const callRemoveWishAPI = async () => {
-		try {
-			// 요청 본문에 userId와 productId를 포함하여 POST 요청을 보냅니다.
-			const res = await instance.post(`/api/wishes/toggle`, {
-				userId: userId,
-				productId: productId,
-			});
+	// 아이콘 렌더링
+	const WishIcon = isWishAdd ? (
+		<IoIosHeart size="24" color="#FECCBE" />
+	) : (
+		<IoIosHeartEmpty size="24" />
+	);
 
-			// 요청이 성공했을 때
-			if (res.status === 200) {
-				const data = res.data;
-				if (data.success) {
-					console.log('상품이 찜 목록에서 제거되었습니다:', data);
-					return data; // 응답 데이터를 반환
-				} else {
-					console.error('찜 목록에서 제거하는 중 문제가 발생했습니다:', data);
-				}
-			} else {
-				console.error('찜 목록에서 제거하는 중 에러가 발생했습니다:', res);
-			}
-		} catch (error) {
-			console.error('찜 목록에서 제거하는 중 에러가 발생했습니다:', error);
-		}
-	};
-
-	// 찜 버튼을 토글하는 함수
-	const toggleWishAdd = async () => {
-		if (isWishAdd) {
-			// 찜 버튼이 활성화된 상태라면, 찜 목록에서 제거
-			const response = await callRemoveWishAPI();
-			if (response) {
-				setIsWishAdd(false);
-			}
-		} else {
-			// 찜 버튼이 비활성화된 상태라면, 찜 목록에 추가
-			const response = await callAddWishAPI();
-			if (response) {
-				setIsWishAdd(true);
-			}
-		}
-	};
-
-	// 찜 아이콘을 조건에 따라 반환
-	const WishIcon = useMemo(() => {
-		return isWishAdd ? <IoIosHeart size="24" color="#FECCBE" /> : <IoIosHeartEmpty size="24" />;
-	}, [isWishAdd]);
-
-	return <WishBtn onClick={toggleWishAdd}>{WishIcon}</WishBtn>;
+	return (
+		// 찜 버튼 클릭 시 `wishCountHandler` 함수 실행
+		<WishBtn onClick={wishCountHandler}>{WishIcon}</WishBtn>
+	);
 }
 
 export default WishButton;

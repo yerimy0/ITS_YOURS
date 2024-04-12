@@ -16,9 +16,9 @@ function formatPrice(price) {
 	return price.toLocaleString('ko-KR');
 }
 
-function ProductCard({ _id, imgUrls, name, price, onClick }) {
+function ProductCard({ productId, imgUrls, name, price, onClick }) {
 	return (
-		<ProductCardWrap productId={_id}>
+		<ProductCardWrap productId={productId}>
 			<ProductImage onClick={onClick} src={imgUrls} alt={name} />
 			<ProductInfoWrap>
 				<ProductInfo onClick={onClick}>
@@ -29,7 +29,7 @@ function ProductCard({ _id, imgUrls, name, price, onClick }) {
 					</ProductPrice>
 				</ProductInfo>
 				<ProductButton>
-					<WishButton />
+					<WishButton productId={productId} />
 				</ProductButton>
 			</ProductInfoWrap>
 		</ProductCardWrap>

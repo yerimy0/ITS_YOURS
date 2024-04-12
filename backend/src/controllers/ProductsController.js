@@ -1,31 +1,14 @@
 const productsService = require('../services/ProductsService');
 const ObjectId = require('mongodb').ObjectId;
-const axios = require('axios');
 
-async function getProductsList(req, res) {
+const getProductsList = async (req, res) => {
 	try {
-		// 필터 조건과 정렬 옵션을 객체로 구성
-		const filterOptions = {
-			sortOption: {},
-			region: req.query.region,
-			univName: req.query.univName,
-		};
-
-		// 정렬 옵션 설정
-		const filter = req.query.filter;
-		if (filter === 'latest') {
-			filterOptions.sortOption = { createdAt: -1 };
-		} else if (filter === 'cheapest') {
-			filterOptions.sortOption = { price: 1 };
-		}
-
-		// 서비스 함수 호출
-		const result = await productsService.getProductsList(filterOptions);
+		const result = await productsService.getProductsList();
 		res.status(200).json(result);
 	} catch (err) {
 		res.status(400).json({ message: 'failed' });
 	}
-}
+};
 
 //상품 검색
 const searchProduct = async (req, res, next) => {

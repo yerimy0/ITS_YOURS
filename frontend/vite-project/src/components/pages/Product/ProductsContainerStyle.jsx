@@ -11,10 +11,10 @@ const ProductsWrap = styled.section`
 const Products = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	align-items: self-start;
+	align-items: center;
 	align-content: center;
 	gap: 50px;
-	justify-content: flex-start;
+	justify-content: space-around;
 	margin: 60px 0 30px 0;
 `;
 

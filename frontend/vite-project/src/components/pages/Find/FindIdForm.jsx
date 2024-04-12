@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
 import Modal from '../../Users/Modal';
+import { findUserId } from '../../../apis/service/findid.api';
 
 const FindIdForm = () => {
 	const navigate = useNavigate();
@@ -30,7 +31,7 @@ const FindIdForm = () => {
 		}
 	};
 
-	const handleSubmit = async event => {
+	const handleSubmit = event => {
 		event.preventDefault();
 		if (!name.trim() || !email.trim() || nameError || emailError) {
 			setModalMessage('이름과 이메일을 모두 입력해주세요.');
@@ -39,7 +40,7 @@ const FindIdForm = () => {
 			return;
 		}
 
-		navigate(`/showid?email=${encodeURIComponent(email)}`);
+		findUserId(name, email, setModalMessage, setIsModalOpen, navigate);
 	};
 
 	return (

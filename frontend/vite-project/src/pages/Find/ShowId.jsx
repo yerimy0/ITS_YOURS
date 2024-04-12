@@ -12,10 +12,10 @@ const ShowId = () => {
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
 	const email = queryParams.get('email');
-	const navigate = useNavigate(); // 네비게이션 함수 생성
+	const navigate = useNavigate();
 
 	const handleLogin = () => {
-		navigate('/login'); // 로그인 페이지로 이동
+		navigate('/login');
 	};
 
 	return (

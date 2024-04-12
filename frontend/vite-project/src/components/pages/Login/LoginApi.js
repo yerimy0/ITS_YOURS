@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import instance from '../../../apis/axiosInstance';
 
 const loginApi = async (userId, password) => {

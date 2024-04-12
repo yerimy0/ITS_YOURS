@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 export const PageContainer = styled.div`
-	padding: 100px 300px;
+	padding: 100px 50px;
+	max-width: 800px;
+	margin: 0 auto;
 `;
 
 export const Greeting = styled.h1`
@@ -16,7 +18,7 @@ export const NameBadge = styled.div`
 	font-size: 70px;
 `;
 
-export const EditButton = styled.div`
+export const EditButtonStyle = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;

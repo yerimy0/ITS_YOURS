@@ -1,5 +1,7 @@
 const { Router } = require('express');
 const validateToken = require('../middlewares/ValidateToken');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 const {
 	getProductsList,
@@ -20,10 +22,12 @@ router.get('/:prodId', getProduct);
 router.get('/', getProductInfo);
 router.get('/myTradedProducts/:buyerId', validateToken, myTradedProducts);
 
-//상품 등록
-router.post('/', validateToken, insertProduct);
-//상품 정보 수정
-router.put('/', updateProduct);
+// 상품 등록
+router.post('/', validateToken, upload.array('imgUrls', 3), insertProduct);
+
+// 상품 수정
+router.put('/', validateToken, upload.array('imgUrls', 3), updateProduct);
+
 //상품 삭제
 router.delete('/', deleteProduct);
 

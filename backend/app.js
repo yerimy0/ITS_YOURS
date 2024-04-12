@@ -1,6 +1,6 @@
 const express = require('express');
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
+const upload = require('./src/config/MulterConfig');
 
 const insertDataRouter = require('./src/routes/InsertDataRouter');
 const memberRouter = require('./src/routes/MemberRouter');
@@ -9,6 +9,7 @@ const qnaRouter = require('./src/routes/QnaRouter');
 const postRouter = require('./src/routes/PostRouter');
 const commentRouter = require('./src/routes/CommentRouter');
 const wishRouter = require('./src/routes/WishesRouter');
+const categoriesRouter = require('./src/routes/CategoryRouter');
 const cors = require('cors');
 
 const mongoose = require('mongoose');
@@ -23,7 +24,6 @@ mongoose.connection.on('connected', () => {
 
 const app = express();
 
-app.use(cookieParser());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -50,5 +50,6 @@ app.use('/api/products', productsRouter);
 app.use('/api/community', postRouter);
 app.use('/api/community', commentRouter);
 app.use('/api/wishes', wishRouter);
+app.use('/api/categories', categoriesRouter);
 
 module.exports = app;

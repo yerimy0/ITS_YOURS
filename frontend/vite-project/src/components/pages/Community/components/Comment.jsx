@@ -16,49 +16,91 @@ import {
 	CommentContext,
 	CommentList,
 } from '../CommunityDetail/DetailStyle';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext, createContext } from 'react';
 import { Line } from '../CommunityList/CommunityStyle';
-import { Getcommets } from '../../../../apis/service/community.api';
+import {
+	Getcommets,
+	PostComment,
+	DeleteComment,
+	UpdateComment,
+} from '../../../../apis/service/community.api';
 import detailDate from '../../../../utils/writeTime';
-import { PostComment } from '../../../../apis/service/community.api';
+
+const GetCommentsContext = createContext();
 
 function CommentSection({ id }) {
-	const [comments, setComments] = useState(['']);
+	const [comments, setComments] = useState([]);
+	const [length, setLength] = useState(0);
+	const [newComment, setNewComment] = useState('');
 
-	function onChange(e) {
-		setComments([...comments], e.target.value);
-	}
-
-	async function activeEnter(e) {
-		if (e.key === 'Enter') {
-			const res = await PostComment(comments, id);
-		}
-	}
 	useEffect(() => {
-		async function getComments() {
-			const res = await Getcommets(id);
-			console.log(`댓글 가져오기: ${res}`);
-			// setComments(res.data);
-		}
 		getComments();
-	}, []);
+	}, [id]);
+
+	const getComments = async () => {
+		const res = await Getcommets(id);
+		setComments(res);
+		setLength(res.length);
+	};
+
+	const onChange = e => {
+		setNewComment(e.target.value);
+	};
+
+	const activeEnter = async e => {
+		if (e.key === 'Enter') {
+			if (newComment.trim() === '') return;
+			await postComment();
+		}
+	};
+
+	const postComment = async () => {
+		await PostComment(newComment, id);
+		setNewComment('');
+		await getComments();
+	};
+
 	return (
-		<CommentsBox>
-			<CommentList>
-				<CommentNum>{`${comments.length}개의 댓글`}</CommentNum>
-				<Comments>
-					{comments.map((comment, i) => (
-						<EachCommet key={`comment-${i}`} comment={comment} />
-					))}
-				</Comments>
-			</CommentList>
-			<CommentInput onChange={onChange} onKeyDown={e => activeEnter(e)} />
-		</CommentsBox>
+		<GetCommentsContext.Provider value={getComments}>
+			<CommentsBox>
+				<CommentList>
+					<CommentNum>{`${length}개의 댓글`}</CommentNum>
+					<Comments>
+						{comments.map((comment, i) => (
+							<Each key={`comment-${i}`} comment={comment} id={id} />
+						))}
+					</Comments>
+				</CommentList>
+				<CommentInput value={newComment} onChange={onChange} onKeyDown={activeEnter} />
+			</CommentsBox>
+		</GetCommentsContext.Provider>
 	);
 }
 
-function EachCommet({ comment }) {
+function Each({ comment, id }) {
+	const getComments = useContext(GetCommentsContext);
+	const [isEditing, setIsEditing] = useState(false);
+	const [updatedComment, setUpdatedComment] = useState(comment.content);
+
 	const time = detailDate(comment.createdAt);
+
+	const onClickDelete = async () => {
+		const commentId = comment._id;
+		await DeleteComment(id, commentId);
+		await getComments();
+	};
+
+	const onClickUpdate = async () => {
+		const commentId = comment._id;
+		await UpdateComment(updatedComment, id, commentId);
+		await getComments();
+		setIsEditing(false);
+	};
+
+	const handleEdit = () => {
+		setIsEditing(true);
+	};
+
 	return (
 		<EachComment>
 			<Comment>
@@ -69,12 +111,23 @@ function EachCommet({ comment }) {
 						<Date>{time}</Date>
 					</InnerTop>
 					<InnerBottom>
-						<CommentContext>
-							<p>{comment.content}</p>
-						</CommentContext>
+						{isEditing ? (
+							<CommentInput
+								value={updatedComment}
+								onChange={e => setUpdatedComment(e.target.value)}
+							/>
+						) : (
+							<CommentContext>
+								<p>{comment.content}</p>
+							</CommentContext>
+						)}
 						<Buttons>
-							<Button>수정</Button>
-							<Button>삭제</Button>
+							{isEditing ? (
+								<Button onClick={onClickUpdate}>확인</Button>
+							) : (
+								<Button onClick={handleEdit}>수정</Button>
+							)}
+							<Button onClick={onClickDelete}>삭제</Button>
 						</Buttons>
 					</InnerBottom>
 				</CommentTexts>

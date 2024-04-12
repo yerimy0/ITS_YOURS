@@ -19,7 +19,6 @@ function Faq() {
 			<FAQTitle title="원하는 답변을 얻지 못하셨나요?" subtitle={subtitleText} />
 			<ButtonWrapper>
 				{' '}
-				{/* ButtonWrapper로 버튼을 감쌈 */}
 				<Button>1:1 문의하기</Button>
 			</ButtonWrapper>
 		</>

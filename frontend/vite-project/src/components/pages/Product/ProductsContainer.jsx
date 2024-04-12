@@ -47,6 +47,7 @@ function ProductsContainer() {
 		console.log('currentPage has changed to:', currentPage);
 	}, [currentPage]);
 	const handleSearchResults = results => {
+		// 검색 결과를 처리할 때 페이지를 다시 초기화
 		setDisplayProducts(results);
 		setTotalItems(results.length);
 		setCurrentPage(0);

@@ -1,9 +1,9 @@
-import axios from 'axios';
+// import axios from 'axios';
 import instance from '../../../apis/axiosInstance';
 
 const loginApi = async (userId, password) => {
 	try {
-		const response = await axios.post('/api/api/members/login', { id: userId, password });
+		const response = await instance.post('/api/members/login', { id: userId, password });
 		// const response = await instance.post('/')
 		// const response = await axios.post('http://localhost:4000')
 		// console.log(res.data)

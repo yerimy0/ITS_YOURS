@@ -6,9 +6,7 @@ const ProductCardWrap = styled.div`
 	height: 360px;
 	flex-direction: column;
 	align-items: flex-start;
-	&:hover {
-		cursor: pointer;
-	}
+	cursor: pointer;
 `;
 
 const ProductImage = styled.img`

@@ -4,8 +4,10 @@ import { Box, WriteForm, InputBox, InputTitle, InputContent } from './WriteStyle
 import { Button } from '../CommunityList/CommunityStyle';
 import { ProductImg, ButtonUpload } from '../../../WriteFrom/WriteFormStyle';
 import { PostCommunity } from '../../../../apis/service/community.api';
+import { useNavigate } from 'react-router-dom';
 
 function CommuWrite() {
+	const navigate = useNavigate();
 	const [imgUrl, setImgUrl] = useState('');
 	const [writeCommu, setWriteCommu] = useState({
 		title: '',
@@ -40,6 +42,7 @@ function CommuWrite() {
 	const handleSubmit = () => {
 		async function Post() {
 			await PostCommunity(writeCommu);
+			navigate('/community');
 		}
 		Post();
 	};

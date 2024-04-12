@@ -1,9 +1,8 @@
-// import axios from 'axios';
 import instance from '../../../apis/axiosInstance';
 
 const loginApi = async (userId, password) => {
 	try {
-		const response = await instance.post('/api/members/login', { id: userId, password });
+		const response = await instance.post('/members/login', { id: userId, password });
 		console.log(response);
 		const { accessToken } = response.data;
 		return { accessToken, error: null };

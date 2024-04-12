@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
+import instance from '../../../apis/axiosInstance';
 import {
 	ModalBackground,
 	ModalContainer,
@@ -19,12 +19,8 @@ const SignOutModal = ({ isOpen, onClose }) => {
 
 	const handleSignOut = async () => {
 		try {
-			await axios.delete('/api/members/me', {
-				headers: {
-					Authorization: `Bearer 여기에_토큰_값`,
-				},
-			}),
-				console.log('회원 탈퇴 성공');
+			await instance.delete('/api/members/me');
+			console.log('회원 탈퇴 성공');
 			onClose();
 			navigate('/signout');
 		} catch (error) {

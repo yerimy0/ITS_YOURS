@@ -1,42 +1,68 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DynamicForm from '../../Users/DynamicForm';
+import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
 import Modal from '../../Users/Modal';
-import sendDataToServer from '../../Users/sendDataToServer';
 
 const FindIdForm = () => {
 	const navigate = useNavigate();
 	const [name, setName] = useState('');
+	const [nameError, setNameError] = useState('');
 	const [email, setEmail] = useState('');
+	const [emailError, setEmailError] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
 
+	const handleNameBlur = () => {
+		if (!name.trim()) {
+			setNameError('이름을 입력해주세요.');
+		} else {
+			setNameError('');
+		}
+	};
+
+	const handleEmailBlur = () => {
+		if (!email.trim()) {
+			setEmailError('이메일을 입력해주세요.');
+		} else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+			setEmailError('유효하지 않은 이메일 형식입니다.');
+		} else {
+			setEmailError('');
+		}
+	};
+
 	const handleSubmit = async event => {
 		event.preventDefault();
-
-		const isEmailSent = await sendDataToServer('http://example.com/api/send-id', { name, email });
-		setIsModalOpen(true);
-		if (isEmailSent) {
-			setModalMessage(`입력하신 이메일 주소로 아이디를 보냈습니다.\n이메일을 확인해주세요.`);
-			setTimeout(() => {
-				setIsModalOpen(false);
-				navigate('/login');
-			}, 3000);
-		} else {
-			setModalMessage('해당 정보를 가진 사용자를 찾을 수 없습니다.\n다시 확인해주세요.');
+		if (!name.trim() || !email.trim() || nameError || emailError) {
+			setModalMessage('이름과 이메일을 모두 입력해주세요.');
+			setIsModalOpen(true);
+			setTimeout(() => setIsModalOpen(false), 3000);
+			return;
 		}
+
+		navigate(`/showid?email=${encodeURIComponent(email)}`);
 	};
 
 	return (
 		<>
-			<DynamicForm
-				inputPlaceholder1="이름을 입력해주세요"
-				inputPlaceholder2="이메일을 입력해주세요"
-				buttonText="아이디 찾기"
-				onSubmit={handleSubmit}
-				setInput1={setName}
-				setInput2={setEmail}
-			/>
+			<Form onSubmit={handleSubmit}>
+				<Input
+					type="text"
+					placeholder="이름을 입력해주세요"
+					value={name}
+					onChange={e => setName(e.target.value)}
+					onBlur={handleNameBlur}
+				/>
+				{nameError && <ErrorMessage>{nameError}</ErrorMessage>}
+				<Input
+					type="text"
+					placeholder="이메일을 입력해주세요"
+					value={email}
+					onChange={e => setEmail(e.target.value)}
+					onBlur={handleEmailBlur}
+				/>
+				{emailError && <ErrorMessage>{emailError}</ErrorMessage>}
+				<Button type="submit">아이디 찾기</Button>
+			</Form>
 			{isModalOpen && (
 				<Modal isOpen={isModalOpen} message={modalMessage} onClose={() => setIsModalOpen(false)} />
 			)}

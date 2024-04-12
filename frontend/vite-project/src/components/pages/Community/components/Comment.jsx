@@ -20,13 +20,25 @@ import { useState, useEffect } from 'react';
 import { Line } from '../CommunityList/CommunityStyle';
 import { Getcommets } from '../../../../apis/service/community.api';
 import detailDate from '../../../../utils/writeTime';
+import { PostComment } from '../../../../apis/service/community.api';
 
 function CommentSection({ id }) {
-	const [comments, setComments] = useState([]);
+	const [comments, setComments] = useState(['']);
+
+	function onChange(e) {
+		setComments([...comments], e.target.value);
+	}
+
+	async function activeEnter(e) {
+		if (e.key === 'Enter') {
+			const res = await PostComment(comments, id);
+		}
+	}
 	useEffect(() => {
 		async function getComments() {
 			const res = await Getcommets(id);
-			setComments(res);
+			console.log(`댓글 가져오기: ${res}`);
+			// setComments(res.data);
 		}
 		getComments();
 	}, []);
@@ -40,7 +52,7 @@ function CommentSection({ id }) {
 					))}
 				</Comments>
 			</CommentList>
-			<CommentInput />
+			<CommentInput onChange={onChange} onKeyDown={e => activeEnter(e)} />
 		</CommentsBox>
 	);
 }

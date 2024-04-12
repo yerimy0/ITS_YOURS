@@ -26,8 +26,12 @@ const MembersSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	region: {
+		type: String,
+		require: true,
+	},
 	// 회원 대학명
-	univName: {
+	schoolName: {
 		type: String,
 		required: true,
 	},

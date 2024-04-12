@@ -8,7 +8,17 @@ const bcrypt = require('bcrypt');
  * 작성 시작일 : 2024-04-03
  * 회원가입시 동작되는 DB작업을 모아놓은 service입니다.
  */
-async function signUp(id, password, realName, email, univName, phoneNum, nickName, profilePic) {
+async function signUp(
+	id,
+	password,
+	realName,
+	email,
+	region,
+	schoolName,
+	phoneNum,
+	nickName,
+	profilePic,
+) {
 	// const isRegedId = await Members.find({ id });
 	// const isRegedEmail = await Members.find({ email });
 	// const isRededPhone = await Members.find({ phoneNum });
@@ -28,7 +38,8 @@ async function signUp(id, password, realName, email, univName, phoneNum, nickNam
 		password: hashedPassword,
 		realName: realName,
 		email: email,
-		univName: univName,
+		region: region,
+		schoolName: schoolName,
 		phoneNum: phoneNum,
 		nickName: nickName,
 		profilePic: profilePic,
@@ -48,8 +59,8 @@ async function login(id, password) {
 	let isAdmin; // 관리자 회원여부
 	// 회원정보
 	const member = await Members.findOne({ id });
-	if (!member) return null
-	
+	if (!member) return null;
+
 	// 사용자 입력 비밀번호 vs 해시화된 비밀번호 교차비교
 	const isPass = await bcrypt.compare(password, member.password);
 	// 회원정보 존재, 로그인 성공
@@ -61,9 +72,9 @@ async function login(id, password) {
 					username: member.realName,
 					id: member.id,
 					nickName: member.nickName,
-					isAdmin: member.isAdmin,
 					profilePic: member.profilePic,
-					univName: member.univName,
+					region: member.region,
+					schoolName: member.schoolName,
 				},
 			},
 			process.env.ACCESS_TOKEN_SECRET,

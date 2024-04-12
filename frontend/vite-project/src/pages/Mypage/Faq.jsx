@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import FAQTitle from '../../components/pages/Mypage/Faq/FaqTitle';
 import FaqList from '../../components/pages/Mypage/Faq/FaqList';
 import { ButtonWrapper, Button } from '../../components/pages/Mypage/Faq/FaqStyles';
+import { useNavigate } from 'react-router-dom';
+import { fetchMyPageData } from '../../apis/service/MyPageMenuApi';
 
 const inquiries = [
 	{ id: 1, question: '질문 1', answer: '답변 1' },
@@ -9,17 +11,32 @@ const inquiries = [
 ];
 
 function Faq() {
+	const navigate = useNavigate();
 	const subtitleText =
 		'1:1 문의하기를 통해 더 자세히 물어봐 주세요.\n상담 운영 시간 : 평일 10:00 ~ 18:00 (점심시간 12:00~13:00)';
+	const [userData, setUserData] = useState({}); // 사용자 전체 데이터를 저장할 상태
+
+	useEffect(() => {
+		const loadData = async () => {
+			try {
+				const myPageData = await fetchMyPageData();
+				setUserData(myPageData); // API로부터 받은 사용자 전체 데이터를 상태에 저장
+			} catch (error) {
+				console.error('Failed to fetch user data:', error);
+				setUserData({ nickName: 'Guest' }); // 실패 시 기본 닉네임 설정
+			}
+		};
+
+		loadData();
+	}, []);
 
 	return (
 		<>
-			<FAQTitle user="임예림" />
+			<FAQTitle user={userData.nickName} />
 			<FaqList inquiries={inquiries} />
 			<FAQTitle title="원하는 답변을 얻지 못하셨나요?" subtitle={subtitleText} />
 			<ButtonWrapper>
-				{' '}
-				<Button>1:1 문의하기</Button>
+				<Button onClick={() => navigate('/asksupportlist')}>1:1 문의하기</Button>
 			</ButtonWrapper>
 		</>
 	);

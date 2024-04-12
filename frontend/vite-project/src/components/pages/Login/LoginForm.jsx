@@ -31,14 +31,18 @@ const LoginForm = () => {
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		const res = await loginApi(userId, password);
-		console.log(res);
-		if (res.accessToken) {
-			document.cookie = `authToken=${res.accessToken}; path=/; Secure`;
-			navigate('/');
-		} else {
+		try {
+			const res = await loginApi(userId, password);
+			console.log(res);
+			if (res.accessToken) {
+				document.cookie = `authToken=${res.accessToken}; path=/; Secure`;
+				navigate('/');
+			} else {
+				throw new Error('아이디 또는 비밀번호가 맞지 않습니다.\n다시 확인해주세요.');
+			}
+		} catch (err) {
 			setIsModalOpen(true);
-			setModalMessage(error || '아이디 또는 비밀번호가 맞지 않습니다.\n다시 확인해주세요.');
+			setModalMessage(err.message);
 			setTimeout(() => setIsModalOpen(false), 3000);
 		}
 	};

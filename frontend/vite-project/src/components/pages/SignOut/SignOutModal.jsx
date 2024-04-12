@@ -19,7 +19,7 @@ const SignOutModal = ({ isOpen, onClose }) => {
 
 	const handleSignOut = async () => {
 		try {
-			await instance.delete('/api/members/me');
+			await instance.delete('/members/me');
 			console.log('회원 탈퇴 성공');
 			onClose();
 			navigate('/signout');

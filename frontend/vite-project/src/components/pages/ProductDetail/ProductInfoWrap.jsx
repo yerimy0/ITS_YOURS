@@ -8,7 +8,7 @@ function formatPrice(price) {
 	return price.toLocaleString('ko-KR');
 }
 
-function ProductInfoWrap({ name, price }) {
+function ProductInfoWrap({ productId, name, price }) {
 	return (
 		<>
 			<ProductInfo>
@@ -18,7 +18,7 @@ function ProductInfoWrap({ name, price }) {
 						<Price>{formatPrice(price)}</Price>
 						<PriceWon>원</PriceWon>
 					</PriceContainer>
-					<WishButton />
+					<WishButton productId={productId} />
 				</Div>
 			</ProductInfo>
 		</>

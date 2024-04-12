@@ -13,6 +13,9 @@ import {
 } from './ProductCardStyle';
 
 function formatPrice(price) {
+	if (price === null || price === undefined) {
+		return ''; // 가격이 없을 때 빈 문자열을 반환
+	}
 	return price.toLocaleString('ko-KR');
 }
 

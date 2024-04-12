@@ -11,19 +11,15 @@ function WishButton({ productId }) {
 	// 사용자가 상품을 찜했는지 확인
 	useEffect(() => {
 		const fetchWishStatus = async () => {
-			// const userId = 이거 어케 처리하지
-			// 로그인하지 않은 상태라면 로그인 페이지로 이동
-			if (!userId) {
-				navigate('/login');
-				return;
-			}
-
 			try {
 				// API를 통해 사용자의 찜 목록을 조회
-				const res = await instance.get(`/wishes/${userId}`);
-				if (res.status === 200 && Array.isArray(res.data.wishes)) {
+				// 유저아이디 가져와야되는데 어케 가져와야 할지 몰라서 일단 그냥 데이터 넣어둠
+				const res = await instance.get(`/wishes/realTest123`);
+
+				if (res.status === 200 && Array.isArray(res.data)) {
 					// 찜 목록에 현재 상품이 있는지 확인
-					const isProductInWishlist = res.data.wishes.some(wish => wish.productId === productId);
+					const isProductInWishlist = res.data.some(wish => wish.productId._id === productId);
+
 					// 상태 업데이트
 					setIsWishAdd(isProductInWishlist);
 				} else {
@@ -39,10 +35,7 @@ function WishButton({ productId }) {
 
 	// 찜 버튼 상태 토글 함수
 	const wishCountHandler = async () => {
-		// 로컬 스토리지에서 사용자 ID 가져오기
-		const userId = localStorage.getItem('userId');
-
-		// 로그인하지 않은 상태라면 로그인 페이지로 이동
+		// 사용자가 로그인하지 않은 상태라면 로그인 페이지로 이동
 		if (!userId) {
 			navigate('/login');
 			return;

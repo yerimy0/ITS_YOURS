@@ -10,6 +10,7 @@ import Login from './pages/Login/Login';
 import SignUp from './pages/Signup/Signup';
 import FindId from './pages/Find/FindId';
 import FindPassword from './pages/Find/FindPassword';
+import ShowId from './pages/Find/ShowId';
 import ProductWrite from './pages/ProductWrite';
 import Product from './pages/Product';
 import NotFound from './components/pages/NotFound';
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
 			{ path: '/asksupportlist', element: <AskSupportList /> },
 			{ path: '/asksupportwrite', element: <AskSupportWrite /> },
 			{ path: '/signout', element: <SignOut /> },
+			{ path: '/showid', element: <ShowId /> },
 			{ path: '/profileedit', element: <ProfileEdit /> },
 			{ path: '/chat', element: <Chat /> },
 			{ path: '/community', element: <Community /> },

@@ -23,16 +23,17 @@ function WriteForm() {
 	const { id } = useParams();
 	console.log(id);
 	const [register, setRegister] = useState({
-		prodName: '',
-		prodPrice: 0,
-		prodAuth: '',
-		prodPub: '',
-		prodStatus: '',
-		prodDisc: '',
-		uploadImgUrls: ['', '', ''],
+		name: '',
+		price: 0,
+		author: '',
+		publisher: '',
+		condition: '',
+		description: '',
+		imgUrls: ['', '', ''],
+		region: '동대문구',
 	});
 
-	const { prodName, prodPrice, prodAuth, prodPub, prodStatus, prodDisc, uploadImgUrls } = register;
+	const { name, price, author, publisher, condition, description, imgUrls, region } = register;
 
 	useEffect(() => {
 		const dbReq = indexedDB.open('tempSave', 1);
@@ -64,7 +65,7 @@ function WriteForm() {
 	function handleImageChange(newUrls) {
 		setRegister({
 			...register,
-			uploadImgUrls: newUrls,
+			imgUrls: newUrls,
 		});
 	}
 
@@ -114,15 +115,20 @@ function WriteForm() {
 						<hr />
 					</Line>
 					<MainContent>
-						<InputImg onImageChange={handleImageChange} value={uploadImgUrls} />
-						<Section label={'도서명'} onChange={onChange} value={prodName} name="prodName" />
-						<Section label={'판매가'} onChange={onChange} value={prodPrice} name="prodPrice" />
+						<InputImg onImageChange={handleImageChange} value={imgUrls} />
+						<Section label={'도서명'} onChange={onChange} value={name} name="name" />
+						<Section label={'판매가'} onChange={onChange} value={price} name="price" />
 						<ProductTwoInput>
-							<Section2 label={'출판사'} onChange={onChange} value={prodPub} name="prodPub" />
-							<Section2 label={'저자'} onChange={onChange} value={prodAuth} name="prodAuth" />
+							<Section2 label={'출판사'} onChange={onChange} value={publisher} name="publisher" />
+							<Section2 label={'저자'} onChange={onChange} value={author} name="author" />
 						</ProductTwoInput>
-						<Section3 label={'상품 설명'} onChange={onChange} value={prodDisc} name="prodDisc" />
-						<Section4 value={prodStatus} />
+						<Section3
+							label={'상품 설명'}
+							onChange={onChange}
+							value={description}
+							name="description"
+						/>
+						<Section4 value={condition} />
 					</MainContent>
 					<RegButtons>
 						<BigButton className="Button" onClick={tempSave}>

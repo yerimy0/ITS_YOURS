@@ -22,7 +22,9 @@ const DynamicForm = ({
 			placeholder={inputPlaceholder2}
 			onChange={e => setInput2(e.target.value)}
 		/>
-		<Button type="submit">{buttonText}</Button>
+		<Button type="submit" onSubmit={onSubmit}>
+			{buttonText}
+		</Button>
 	</Form>
 );
 

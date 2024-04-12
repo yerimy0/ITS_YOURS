@@ -81,7 +81,7 @@ function Section4({ value }) {
 	function onButtonClick(e) {
 		const { value } = e.target;
 		setActive(value);
-		setRegister({ ...register, prodStatus: value });
+		setRegister({ ...register, condition: value });
 	}
 
 	return (

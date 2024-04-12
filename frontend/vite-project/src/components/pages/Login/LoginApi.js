@@ -1,10 +1,9 @@
-import axios from 'axios'
-import instance from '../../../apis/axiosInstance'
+import axios from 'axios';
+import instance from '../../../apis/axiosInstance';
 
-
-export const loginApi = async (userId, password) => {
+const loginApi = async (userId, password) => {
 	try {
-		const response = await axios.post('http://localhost:4000')
+		const response = await axios.post('/api/api/members/login', { id: userId, password });
 		// const response = await instance.post('/')
 		// const response = await axios.post('http://localhost:4000')
 		// console.log(res.data)
@@ -15,10 +14,12 @@ export const loginApi = async (userId, password) => {
 		// 	password,
 		// });
 		console.log(response.data);
-		const { token } = response.data;
-		return { token, error: null };
+		const { accessToken } = response.data;
+		return { accessToken, error: null };
 	} catch (error) {
 		console.error('로그인 실패:', error);
 		return { token: null, error: error.response.data };
 	}
 };
+
+export { loginApi };

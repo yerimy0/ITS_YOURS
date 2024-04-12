@@ -1,10 +1,9 @@
-import axios from 'axios'
-import instance from '../../../apis/axiosInstance'
-
+import axios from 'axios';
+import instance from '../../../apis/axiosInstance';
 
 export const loginApi = async (userId, password) => {
 	try {
-		const response = await axios.post('http://localhost:4000')
+		const response = await axios.post('http://localhost:4000');
 		// const response = await instance.post('/')
 		// const response = await axios.post('http://localhost:4000')
 		// console.log(res.data)

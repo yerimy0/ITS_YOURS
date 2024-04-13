@@ -4,7 +4,7 @@ import Modal from '../../Users/Modal';
 import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
 import { findPassword } from '../../../apis/service/FindPasswordApi';
 
-const FindPasswordForm = () => {
+function FindPasswordForm() {
 	const navigate = useNavigate();
 	const [userId, setUserId] = useState('');
 	const [userIdError, setUserIdError] = useState('');
@@ -13,15 +13,15 @@ const FindPasswordForm = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
 
-	const handleUserIdBlur = () => {
+	function handleUserIdBlur() {
 		if (!userId.trim()) {
 			setUserIdError('아이디를 입력해주세요.');
 		} else {
 			setUserIdError('');
 		}
-	};
+	}
 
-	const handleEmailBlur = () => {
+	function handleEmailBlur() {
 		if (!email.trim()) {
 			setEmailError('이메일을 입력해주세요.');
 		} else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -29,9 +29,9 @@ const FindPasswordForm = () => {
 		} else {
 			setEmailError('');
 		}
-	};
+	}
 
-	const handleSubmit = event => {
+	function handleSubmit(event) {
 		event.preventDefault();
 		if (!userId.trim() || userIdError || !email.trim() || emailError) {
 			setModalMessage('아이디와 이메일을 정확하게 입력해주세요.');
@@ -40,7 +40,7 @@ const FindPasswordForm = () => {
 			return;
 		}
 		findPassword(userId, email, setModalMessage, setIsModalOpen, navigate);
-	};
+	}
 
 	return (
 		<>
@@ -68,6 +68,6 @@ const FindPasswordForm = () => {
 			)}
 		</>
 	);
-};
+}
 
 export default FindPasswordForm;

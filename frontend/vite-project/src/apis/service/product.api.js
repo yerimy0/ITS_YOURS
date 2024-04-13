@@ -19,9 +19,13 @@ async function GetDetail(id) {
 	}
 }
 
-async function UpdateRegister(id, newContent) {
+async function UpdateRegister(prodId, newContent) {
 	try {
-		const res = await instance.put(`/products/${id}`, newContent);
+		const res = await instance.put(`/products`, newContent, {
+			params: {
+				prodId,
+			},
+		});
 		return res;
 	} catch (err) {
 		console.log(err.message);

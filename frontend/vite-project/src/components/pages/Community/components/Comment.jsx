@@ -84,22 +84,32 @@ function Each({ comment, id }) {
 
 	const time = detailDate(comment.createdAt);
 
-	const onClickDelete = async () => {
+	async function onClickDelete() {
 		const commentId = comment._id;
 		await DeleteComment(id, commentId);
 		await getComments();
-	};
+	}
 
-	const onClickUpdate = async () => {
+	async function onClickUpdate() {
 		const commentId = comment._id;
 		await UpdateComment(updatedComment, id, commentId);
 		await getComments();
 		setIsEditing(false);
-	};
+	}
 
-	const handleEdit = () => {
+	async function activeEnter(e) {
+		if (e.key === 'Enter') {
+			if (updatedComment.trim() === '') return;
+			const commentId = comment._id;
+			await UpdateComment(updatedComment, id, commentId);
+			await getComments();
+			setIsEditing(false);
+		}
+	}
+
+	async function handleEdit() {
 		setIsEditing(true);
-	};
+	}
 
 	return (
 		<EachComment>
@@ -114,6 +124,7 @@ function Each({ comment, id }) {
 						{isEditing ? (
 							<CommentInput
 								value={updatedComment}
+								onKeyDown={activeEnter}
 								onChange={e => setUpdatedComment(e.target.value)}
 							/>
 						) : (

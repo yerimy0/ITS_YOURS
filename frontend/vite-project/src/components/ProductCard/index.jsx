@@ -1,34 +1,42 @@
-import WishButton from "../WishButton";
+import React from 'react';
+import WishButton from '../WishButton';
 import {
-  ProductCardWrap,
-  ProductImage,
-  ProductInfoWrap,
-  ProductInfo,
-  ProductTitle,
-  ProductPrice,
-  Price,
-  PriceWon,
-  ProductButton,
-} from "./ProductCardStyle";
+	ProductCardWrap,
+	ProductImage,
+	ProductInfoWrap,
+	ProductInfo,
+	ProductTitle,
+	ProductPrice,
+	Price,
+	PriceWon,
+	ProductButton,
+} from './ProductCardStyle';
 
-function ProductCard() {
-  return (
-    <ProductCardWrap>
-      <ProductImage src="/book_cover.jpg" alt="" />
-      <ProductInfoWrap>
-        <ProductInfo>
-          <ProductTitle>공예란 무엇인가</ProductTitle>
-          <ProductPrice>
-            <Price>27,000</Price>
-            <PriceWon>원</PriceWon>
-          </ProductPrice>
-        </ProductInfo>
-        <ProductButton>
-          <WishButton />
-        </ProductButton>
-      </ProductInfoWrap>
-    </ProductCardWrap>
-  );
+function formatPrice(price) {
+	if (price === null || price === undefined) {
+		return ''; // 가격이 없을 때 빈 문자열을 반환
+	}
+	return price.toLocaleString('ko-KR');
+}
+
+function ProductCard({ productId, imgUrls, name, price, onClick }) {
+	return (
+		<ProductCardWrap productId={productId}>
+			<ProductImage onClick={onClick} src={imgUrls} alt={name} />
+			<ProductInfoWrap>
+				<ProductInfo onClick={onClick}>
+					<ProductTitle>{name}</ProductTitle>
+					<ProductPrice>
+						<Price>{formatPrice(price)}</Price>
+						<PriceWon>원</PriceWon>
+					</ProductPrice>
+				</ProductInfo>
+				<ProductButton>
+					<WishButton productId={productId} />
+				</ProductButton>
+			</ProductInfoWrap>
+		</ProductCardWrap>
+	);
 }
 
 export default ProductCard;

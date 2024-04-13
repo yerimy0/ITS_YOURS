@@ -11,10 +11,13 @@ import {
 	Img,
 	BookInfo,
 } from '../HomeStyle';
-import { books } from './data'; // 데이터 파일을 가져올 때 변수명을 'bookData'로 변경
+import { books } from './data';
+import { schools } from './data';
+import { useNavigate } from 'react-router-dom';
 
 function Section3() {
-	const schools = ['school1.png', 'school2.png', 'school3.png', 'school4.png', 'school5.png'];
+	const navigate = useNavigate();
+
 	return (
 		<Box3 className="BlueBack">
 			<Title>
@@ -23,20 +26,26 @@ function Section3() {
 			</Title>
 			<SchoolBox>
 				{schools.map((school, i) => (
-					<Icon key={i} src={`/${school}`} alt={`${school}`} />
+					<Icon key={`List-school-${i}`} src={`./${school}`} alt={`${school}`} />
 				))}
 			</SchoolBox>
 			<UpdateBooks>
 				{books.map((book, i) => (
 					<div key={i}>
-						<Img src={`${book.image}`} alt={`${book.name}`} />
+						<Img src={`./${book.image}`} alt={`${book.name}`} />
 						<BookInfo>{book.name}</BookInfo>
 						<BookInfo>{book.price}</BookInfo>
 					</div>
 				))}
 			</UpdateBooks>
 			<ButtonBox>
-				<Button>더보기</Button>
+				<Button
+					onClick={() => {
+						navigate('/product');
+					}}
+				>
+					더보기
+				</Button>
 			</ButtonBox>
 		</Box3>
 	);

@@ -1,21 +1,49 @@
-import { UpdateTitle, Box2, Container, Border, Title } from '../HomeStyle';
-
-function Section4() {
+import {
+	Box2,
+	Slogan,
+	Title,
+	TitleName,
+	Line,
+	PRCOntainer,
+	PRContent,
+	EachInfo,
+	SmallIcon,
+	SmallTitle,
+	CountNum,
+	Unit,
+} from '../HomeStyle';
+import { infos } from './data';
+import useCountUp from '../../../../hooks/CountingUp';
+function Section5() {
 	return (
 		<Box2>
-			<UpdateTitle>이제너해's 추천 도서</UpdateTitle>
-			<div className="BookShelf">
-				<Container>
-					<Title>
-						<div>인공지능을 위한 머신러닝과 딥러닝</div>
-						<div></div>
-					</Title>
-				</Container>
-				<Border src="./border.png" />
-				<Container></Container>
-			</div>
+			<Title>
+				<TitleName>IN 서울, JOIN 이제너해</TitleName>
+				<Slogan>선배, 후배, 동기 우리학교부터 옆학교까지 이 전공책 이제너해</Slogan>
+			</Title>
+			<PRCOntainer>
+				<PRContent>
+					{infos.map((info, i) => (
+						<EachInfo key={`List-info-${i}`}>
+							<SmallIcon src={`/${info.image}`} />
+							<SmallTitle>{info.content}</SmallTitle>
+							<Unit>
+								<CountUp end={info.num} />
+								<p>{info.end}</p>
+							</Unit>
+						</EachInfo>
+					))}
+				</PRContent>
+			</PRCOntainer>
+			<Line>
+				<hr />
+			</Line>
 		</Box2>
 	);
 }
 
-export default Section4;
+function CountUp({ end }) {
+	const count = useCountUp(end);
+	return <CountNum>{count}</CountNum>;
+}
+export default Section5;

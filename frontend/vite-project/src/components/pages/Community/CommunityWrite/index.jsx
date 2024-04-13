@@ -1,6 +1,14 @@
 import React, { useState, useRef } from 'react';
 import CommuHeader from '../components/CommuHeader';
-import { Box, WriteForm, InputBox, InputTitle, InputContent } from './WriteStyle';
+import {
+	Box,
+	WriteForm,
+	InputBox,
+	InputTitle,
+	InputContent,
+	AlertMessage,
+	Img,
+} from './WriteStyle';
 import { Button } from '../CommunityList/CommunityStyle';
 import { ProductImg, ButtonUpload } from '../../../WriteFrom/WriteFormStyle';
 import { PostCommunity } from '../../../../apis/service/community.api';
@@ -9,6 +17,8 @@ import { useNavigate } from 'react-router-dom';
 function CommuWrite() {
 	const navigate = useNavigate();
 	const [imgUrl, setImgUrl] = useState('');
+	const [isBlanked, setIsBlanked] = useState(false);
+
 	const [writeCommu, setWriteCommu] = useState({
 		title: '',
 		content: '',
@@ -18,6 +28,7 @@ function CommuWrite() {
 	const fileInputRef = useRef(null);
 
 	const handleInputChange = e => {
+		setIsBlanked(false);
 		const { name, value } = e.target;
 		setWriteCommu({ ...writeCommu, [name]: value });
 	};
@@ -44,7 +55,11 @@ function CommuWrite() {
 			await PostCommunity(writeCommu);
 			navigate('/community');
 		}
-		Post();
+		if (writeCommu.title !== '' && writeCommu.content !== '') {
+			Post();
+		} else {
+			setIsBlanked(true);
+		}
 	};
 
 	return (
@@ -58,6 +73,7 @@ function CommuWrite() {
 						value={writeCommu.title}
 						onChange={handleInputChange}
 					/>
+					{isBlanked && <AlertMessage>제목과 내용을 모두 입력해주세요 :)</AlertMessage>}
 					<InputContent
 						placeholder="글 내용을 입력해주세요"
 						name="content"
@@ -66,7 +82,7 @@ function CommuWrite() {
 					/>
 					<div className="InputPics">
 						<ButtonUpload onClick={handleClick}>
-							{imgUrl ? <img src={imgUrl} alt="Uploaded Image" /> : ' 📸 Upload a file'}
+							{imgUrl ? <Img src={imgUrl} alt="Uploaded Image" /> : ' 📸 Upload a file'}
 						</ButtonUpload>
 						<input
 							type="file"
@@ -76,9 +92,7 @@ function CommuWrite() {
 						/>
 					</div>
 				</InputBox>
-				<div className="Button">
-					<Button onClick={handleSubmit}>등록하기</Button>
-				</div>
+				<Button onClick={handleSubmit}>등록하기</Button>
 			</WriteForm>
 		</Box>
 	);

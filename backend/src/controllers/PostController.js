@@ -10,15 +10,15 @@ const createPost = async (req, res, next) => {
 	try {
 		const nickName = req.user.nickName;
 		const profilePic = req.user.profilePic;
-		const univName = req.user.univName;
-
+		const schoolName = req.user.schoolName;
+		console.log(schoolName);
 		const { title, content, photos } = req.body;
 		const post = await PostService.createPost(
 			title,
 			content,
 			nickName,
 			profilePic,
-			univName,
+			schoolName,
 			photos,
 		);
 

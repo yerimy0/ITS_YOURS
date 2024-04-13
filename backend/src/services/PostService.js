@@ -6,13 +6,13 @@ const { Posts, Comments } = require('../models');
  * 작성 시작일 : 2024-04-05
  * 커뮤니티 글 작성시 동작되는 DB작업을 모아놓은 service입니다.
  */
-async function createPost(title, content, nickName, profilePic, univName, photos) {
+async function createPost(title, content, nickName, profilePic, schoolName, photos) {
 	const newPostData = {
 		title: title,
 		content: content,
 		nickName: nickName,
 		profilePic: profilePic,
-		univName: univName,
+		schoolName: schoolName,
 		photos: photos,
 	};
 	console.log(newPostData);

@@ -24,7 +24,7 @@ const PostsSchema = new Schema({
 	profilePic: {
 		type: String,
 	},
-	univName: {
+	schoolName: {
 		type: String,
 	},
 	// 게시글 등록일

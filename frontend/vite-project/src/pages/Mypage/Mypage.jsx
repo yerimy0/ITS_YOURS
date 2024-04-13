@@ -25,8 +25,8 @@ function MyPage() {
 				const data = await fetchMyPageData();
 				setUserData({
 					userName: data.realName,
-					likes: data.likes,
-					bookmarks: data.bookmarks,
+					likes: data.likeCount,
+					bookmarks: data.wishesCount,
 					profilePictureUrl: data.profilePic,
 				});
 			} catch (error) {

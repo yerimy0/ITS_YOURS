@@ -1,5 +1,7 @@
 const { access } = require('fs');
 const memberService = require('../services/MemberService');
+const wishesService = require('../services/WishesService');
+const { log } = require('console');
 
 /**
  * 회원가입 controller
@@ -83,7 +85,6 @@ const login = async (req, res, next) => {
 const getMember = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
-		console.log(userId);
 		const memberInfo = await memberService.getMember(userId);
 
 		if (!memberInfo) {

@@ -1,4 +1,4 @@
-const { Members } = require('../models/index');
+const { Members, Wishes } = require('../models/index');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -100,7 +100,16 @@ async function login(id, password) {
  */
 async function getMember(userId) {
 	const memberInfo = await Members.findOne({ id: userId });
-	return memberInfo;
+	const wishesCount = await Wishes.countDocuments({ userId: userId }); // 찜한 상품의 개수 조회
+
+	if (memberInfo) {
+		return {
+			...memberInfo.toObject(), // Mongoose 문서 객체를 일반 객체로 변환
+			wishesCount, // 찜한 상품 개수 추가
+		};
+	} else {
+		return null; // 회원 정보가 없을 경우 null 반환
+	}
 }
 
 /**

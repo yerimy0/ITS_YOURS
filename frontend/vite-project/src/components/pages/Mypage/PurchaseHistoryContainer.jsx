@@ -1,29 +1,46 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PurchaseHistoryCard from '../../MypageHistoryCard/PurchaseHistoryCard';
+import instance from '../../../apis/axiosInstance';
 
 const PurchaseHistoryContainer = () => {
 	const [purchaseList, setPurchaseList] = useState([]);
+	const { id } = useParams(); // useParams를 사용하여 buyerid 가져오기
 
 	useEffect(() => {
-		async function fetchPurchaseList() {
+		const fetchPurchaseList = async () => {
 			try {
-				const response = await fetch('https://api.example.com/purchases');
-				const data = await response.json();
-				setPurchaseList(data);
+				if (id) {
+					// buyerid 존재 여부 확인
+					const url = `/products/myTradedProducts/${id}`;
+					const res = await instance.get(url);
+					console.log(res);
+					setPurchaseList(res.data.data);
+				} else {
+					console.log('buyerId가 제공되지 않았습니다');
+				}
 			} catch (error) {
 				console.error('구매목록을 가져오는데 실패했습니다.', error);
 			}
-		}
+		};
 
 		fetchPurchaseList();
-	}, []);
+	}, [id]);
 
 	return (
 		<PurchaseHistoryWrap>
 			{purchaseList.map(purchase => (
-				<ForPurchaseList key={purchase.id}>
-					<PurchaseHistoryCard purchase={purchase} />
+				<ForPurchaseList>
+					<PurchaseHistoryCard
+						_id={purchase._id}
+						imgUrls={purchase.imgUrls}
+						price={purchase.price}
+						sellerId={purchase.sellerId}
+						name={purchase.name} // 추가된 정보
+						buyDate={purchase.buyDate} // 추가된 정보
+						type={purchase.type} // 추가된 정보
+					/>
 				</ForPurchaseList>
 			))}
 		</PurchaseHistoryWrap>

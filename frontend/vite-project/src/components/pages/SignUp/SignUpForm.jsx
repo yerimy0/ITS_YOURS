@@ -29,11 +29,14 @@ const SignUpForm = () => {
 	const handleSubmit = async event => {
 		event.preventDefault();
 		const formData = new FormData();
-		formData.append('userId', userId);
+		formData.append('id', userId);
 		formData.append('password', password);
-		formData.append('nickname', nickname);
+		formData.append('realName', name);
+		formData.append('email', email);
+		formData.append('schoolName', university);
+		formData.append('nickName', nickname);
 		if (profileImage) {
-			formData.append('profileImage', profileImage);
+			formData.append('profilePic', profileImage);
 		}
 
 		const { data, error } = await signUpApi(formData);

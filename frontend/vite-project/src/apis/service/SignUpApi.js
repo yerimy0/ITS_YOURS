@@ -1,12 +1,8 @@
-import instance from '../axiosInstance';
+import instance from '../../apis/axiosInstance';
 
 const signUpApi = async formData => {
 	try {
-		const response = await instance.post('/members/signUp', formData, {
-			headers: {
-				'Content-Type': 'multipart/form-data',
-			},
-		});
+		const response = await instance.post('/members/signUp', formData);
 		console.log('회원가입 성공:', response.data);
 		return { data: response.data, error: null };
 	} catch (error) {

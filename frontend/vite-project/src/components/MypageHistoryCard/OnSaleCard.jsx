@@ -1,24 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../Modal';
 
 const OnSaleCard = ({ itemId, onDelete, onEdit }) => {
-	const [itemData, setItemData] = useState(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	useEffect(() => {
-		const fetchItemData = async () => {
-			try {
-				const response = await fetch(`https://api.example.com/items/${itemId}`);
-				const data = await response.json();
-				setItemData(data);
-			} catch (error) {
-				console.error('item 데이터를 가져오는데 실패했습니다.', error);
-			}
-		};
-
-		fetchItemData();
-	}, [itemId]);
 
 	const openDeleteModal = () => {
 		setIsModalOpen(true);

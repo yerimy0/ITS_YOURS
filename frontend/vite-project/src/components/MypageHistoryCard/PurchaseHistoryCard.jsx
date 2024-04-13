@@ -1,74 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Modal from '../Modal';
 
-const PurchaseHistoryCard = ({ itemId, onDelete }) => {
-	const [itemData, setItemData] = useState(null);
-	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	useEffect(() => {
-		const fetchItemData = async () => {
-			try {
-				const response = await fetch(`https://api.example.com/items/${itemId}`);
-				const data = await response.json();
-				setItemData(data);
-			} catch (error) {
-				console.error('item 데이터를 가져오는데 실패했습니다.', error);
-			}
-		};
-
-		fetchItemData();
-	}, [itemId]);
-
-	const openDeleteModal = () => {
-		setIsModalOpen(true);
-	};
-
-	const closeDeleteModal = () => {
-		setIsModalOpen(false);
-	};
-
-	const handleDelete = () => {
-		console.log('삭제처리', itemId);
-		onDelete(itemId);
-		closeDeleteModal(false);
-	};
-
+function PurchaseHistoryCard({ _id, imgUrls, price, sellerId, name, buyDate, type }) {
 	return (
 		<>
-			{itemData ? (
-				<PurchaseCardWrap>
-					<ImageBox>
-						<ForPurchaseListImage src={itemData.image} alt="" />
-					</ImageBox>
-					<PurchaseListTitle>
-						{itemData.title}
-						<PurchaseListPrice>
-							<PurchaseListPriceNum>{itemData.price}</PurchaseListPriceNum>
-							<PurchaseListWon>원</PurchaseListWon>
-						</PurchaseListPrice>
-						<PurchaseListSeller>{itemData.seller}</PurchaseListSeller>
-					</PurchaseListTitle>
-					<PurchaseListBtnBox>
-						<DeleteBtnBox>
-							<DeleteBtn onClick={openDeleteModal}>삭제</DeleteBtn>
-						</DeleteBtnBox>
-					</PurchaseListBtnBox>
-				</PurchaseCardWrap>
-			) : (
-				<div>데이터 로딩중...</div>
-			)}
-			<Modal
-				isOpen={isModalOpen}
-				onClose={closeDeleteModal}
-				title="정말 삭제하시겠습니까?"
-				content="삭제된 데이터는 복구할 수 없습니다."
-				confirmText="확인"
-				onConfirm={handleDelete}
-			/>
+			<PurchaseCardWrap>
+				<ImageBox>
+					<ForPurchaseListImage src={imgUrls} alt="" />
+				</ImageBox>
+				<PurchaseListTitle>
+					{name}
+					<PurchaseListPrice>
+						<PurchaseListPriceNum>{price}</PurchaseListPriceNum>
+						<PurchaseListWon>원</PurchaseListWon>
+					</PurchaseListPrice>
+					<PurchaseListSeller>{sellerId}</PurchaseListSeller>
+				</PurchaseListTitle>
+			</PurchaseCardWrap>
 		</>
 	);
-};
+}
 export default PurchaseHistoryCard;
 
 const PurchaseCardWrap = styled.div`

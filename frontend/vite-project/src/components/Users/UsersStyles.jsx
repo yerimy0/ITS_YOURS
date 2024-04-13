@@ -33,6 +33,7 @@ export const Button = styled.button`
 	padding: 0.7rem;
 	margin-top: 1rem;
 	font-size: 14px;
+	width: 400px;
 	background-color: #009dff;
 	color: white;
 	border: none;
@@ -169,36 +170,51 @@ export const ErrorMessage = styled.div`
 export const InlineGroup = styled.div`
 	display: flex;
 	align-items: stretch; // 자식 요소가 컨테이너 높이에 맞게 늘어나도록 설정
+	width: 400px; // 입력 필드와 동일한 너비 설정
 `;
 
-export const StyledInput = styled(Input)`
+export const StyledInput = styled.input`
 	flex-grow: 1; // 가능한 모든 공간을 차지하도록 설정
+	padding: 0.7rem;
 	margin-right: 0.5rem; // 오른쪽에 버튼을 위한 공간 제공
-	// 입력 필드의 높이와 패딩을 조정하여 버튼과 동일하게 설정
-	padding: 0.7rem 1rem; // 패딩을 버튼과 동일하게 설정
+	margin-top: 1rem;
+	border: 1px solid #009dff;
+	border-radius: 20px;
+	color: #79747e;
 `;
 
-export const SmallButton = styled(Button)`
-	padding: 0.7rem 1rem; // 버튼 내부 패딩 설정
-	height: 40px; // 입력 필드와 동일한 높이로 설정
-	white-space: nowrap; // 텍스트가 줄바꿈 없이 한 줄로 표시
-	flex-shrink: 0; // 크기 축소 방지
+export const SmallButton = styled.button`
+	padding: 0.7rem; // 버튼 내부 패딩 설정
+	margin-top: 1rem;
+	background-color: #009dff;
+	color: white;
+	border: none;
+	border-radius: 20px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #002d7a;
+	}
 `;
 
 export const InputWithIcon = styled.div`
 	position: relative;
 	display: flex;
 	align-items: center;
+	width: 400px; // 모든 입력창과 동일한 너비 설정
 `;
 
 export const InputIcon = styled.img`
 	position: absolute;
 	right: 10px;
+	top: 50%; // 중앙 정렬을 위해 top을 50%로 설정
+	transform: translateY(-10%); // 아이콘의 높이의 반만큼 위로 올려 정확한 중앙 정렬
 	width: 20px;
 	height: 20px;
 	cursor: pointer;
 `;
 
 export const SearchInput = styled(Input)`
-	padding-right: 40px; // 아이콘에 의해 가려지는 텍스트를 방지
+	padding-right: 40px; // 아이콘 공간을 고려한 패딩
+	width: 100%; // 부모 컨테이너의 폭을 전체적으로 사용
 `;

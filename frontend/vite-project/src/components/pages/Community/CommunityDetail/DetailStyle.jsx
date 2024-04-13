@@ -117,11 +117,10 @@ const CommentList = styled(CommentsBox)`
 
 const CommentInput = styled.input`
 	display: flex;
-	height: 51px;
+	height: 35px;
 	padding: 8px;
 	justify-content: center;
 	align-items: center;
-	gap: 8px;
 	align-self: stretch;
 	border-radius: 20px;
 	border: 1px solid #888;
@@ -170,7 +169,7 @@ const InnerTop = styled.div`
 	align-self: stretch;
 `;
 const InnerBottom = styled(InnerTop)`
-	height: 28px;
+	height: 50px;
 	justify-content: space-between;
 `;
 

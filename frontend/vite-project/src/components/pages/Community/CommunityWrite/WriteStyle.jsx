@@ -33,7 +33,7 @@ const InputBox = styled.div`
 	align-items: flex-start;
 	align-content: flex-start;
 	align-self: stretch;
-	gap: 30px;
+	gap: 15px;
 	flex-wrap: wrap;
 	flex-direction: column;
 `;
@@ -45,7 +45,7 @@ const InputTitle = styled.input`
 	border-radius: 10px;
 	border: 1px solid #ded8e1;
 	font-family: SUIT;
-	font-size: 18px;
+	font-size: 15px;
 	font-style: normal;
 	font-weight: 400;
 	line-height: normal;
@@ -53,13 +53,32 @@ const InputTitle = styled.input`
 		color: #ded8e1;
 	}
 `;
-// textarea로 해야함 (띄어쓰기 적용해야 하니까 input은 다 붙어서 나옴)
 
-const InputContent = styled(InputTitle)`
+const InputContent = styled.textarea`
+	color: #000;
 	display: flex;
-	height: 400px;
-	align-items: flex-start;
-	gap: 10px;
+	height: 200px;
+	border-radius: 10px;
+	border: 1px solid #ded8e1;
+	font-family: SUIT;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 400;
 	align-self: stretch;
+	&placeholder {
+		color: #ded8e1;
+		text-align: center;
+	}
 `;
-export { Box, WriteForm, InputBox, InputTitle, InputContent };
+
+const AlertMessage = styled.div`
+	font-family: SUIT;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 400;
+`;
+
+const Img = styled.img`
+	width: 50%;
+`;
+export { Box, WriteForm, InputBox, InputTitle, InputContent, AlertMessage, Img };

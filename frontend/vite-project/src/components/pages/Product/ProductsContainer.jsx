@@ -43,9 +43,6 @@ function ProductsContainer() {
 		}
 	};
 
-	useEffect(() => {
-		console.log('currentPage has changed to:', currentPage);
-	}, [currentPage]);
 	const handleSearchResults = results => {
 		// 검색 결과를 처리할 때 페이지를 다시 초기화
 		setDisplayProducts(results);
@@ -66,7 +63,6 @@ function ProductsContainer() {
 
 	const handleFilterChange = filters => {
 		setCurrentPage(0);
-		// 예시: 필터링된 결과를 setDisplayProducts로 설정합니다.
 		// setDisplayProducts(filteredResults);
 	};
 

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { WishsWrap, WishTitle, Wishs } from './WishStyle';
 import ProductCard from '../../ProductCard';
 import Paginator from '../../Paginator';
 import { useNavigate } from 'react-router-dom';
 import instance from '../../../apis/axiosInstance';
+import UserIdContext from '../../../context/UserIdContext';
 
 function WishContainer() {
 	const navigate = useNavigate();
@@ -11,12 +12,12 @@ function WishContainer() {
 	const itemsPerPage = 20;
 	const [currentPage, setCurrentPage] = useState(0);
 	const [totalItems, setTotalItems] = useState(0);
+	const { id } = useContext(UserIdContext);
 
-	// 유저 아이디 어떻게 가지고와야할지 몰라서 일단 그냥 넣어놨음
 	useEffect(() => {
 		const fetchUserWishList = async () => {
 			try {
-				const res = await instance.get('/wishes/realTest123');
+				const res = await instance.get(`/wishes/${id}`);
 				const wishData = res.data;
 				setUserWishList(wishData);
 				setTotalItems(wishData.length);

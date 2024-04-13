@@ -6,6 +6,8 @@ const {
 	getMember,
 	updateMember,
 	deleteMember,
+	findId,
+	resetPassword,
 } = require('../controllers/MemberController');
 const validateToken = require('../middlewares/ValidateToken');
 
@@ -20,5 +22,10 @@ router.get('/me', validateToken, getMember);
 router.put('/me', validateToken, updateMember);
 // 회원정보 수정
 router.delete('/me', validateToken, deleteMember);
+
+// 아이디 찾기
+router.post('/findId', findId);
+// 비밀번호 찾기
+router.post('/findPassword', resetPassword);
 
 module.exports = router;

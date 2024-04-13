@@ -43,6 +43,7 @@ const MembersSchema = new Schema({
 	// 좋아요갯수
 	likeCount: {
 		type: Number,
+		default: 0,
 	},
 	// 나빠요 갯수
 	dislikeCount: {

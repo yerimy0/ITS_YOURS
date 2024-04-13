@@ -11,8 +11,7 @@ const { log } = require('console');
  */
 const signUp = async (req, res, next) => {
 	try {
-		const { id, password, realName, email, region, schoolName, phoneNum, nickName, profilePic } =
-			req.body;
+		const { id, password, realName, email, region, schoolName, nickName, profilePic } = req.body;
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
 			id,
@@ -21,7 +20,6 @@ const signUp = async (req, res, next) => {
 			email,
 			region,
 			schoolName,
-			phoneNum,
 			nickName,
 			profilePic,
 		);

@@ -18,6 +18,14 @@ async function GetDetail(id) {
 		console.log(err.message);
 	}
 }
+async function GetBookInfo(name) {
+	try {
+		const res = await instance.get(`/products/searchBook/${name}`);
+		return res.data.data;
+	} catch (err) {
+		console.log(err.message);
+	}
+}
 
 async function UpdateRegister(prodId, newContent) {
 	try {
@@ -32,4 +40,4 @@ async function UpdateRegister(prodId, newContent) {
 	}
 }
 
-export { Register, GetDetail, UpdateRegister };
+export { Register, GetDetail, UpdateRegister, GetBookInfo };

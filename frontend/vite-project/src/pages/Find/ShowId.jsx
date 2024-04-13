@@ -8,7 +8,7 @@ import {
 	LoginButton,
 } from '../../components/pages/Find/ShowIdStyles';
 
-const ShowId = () => {
+function ShowId() {
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
 	const email = queryParams.get('email');
@@ -32,6 +32,6 @@ const ShowId = () => {
 			</InfoBox>
 		</Container>
 	);
-};
+}
 
 export default ShowId;

@@ -38,17 +38,13 @@ const getProduct = async (req, res) => {
 	}
 };
 
-//상품등록-상품 상세정보 알라딘 api로 가져오기
 const getProductInfo = async (req, res) => {
 	try {
-		const { name } = req.body;
-		//알라딘 상품검색 API 연동
-		const apiUrl = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=${process.env.TTBKey}
-			&Query=${name}&QueryType=Title&MaxResults=100&start=1
-			&SearchTarget=Book&output=js&Version=20131101`;
+		const { name } = req.params;
+
+		const apiUrl = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=${process.env.TTBKey}&Query=${name}&QueryType=Title&MaxResults=100&start=1&SearchTarget=Book&output=js&Version=20131101`;
 
 		const response = await axios.get(apiUrl);
-
 		const productData = response.data.item;
 
 		const productDatas = productData.map(item => ({
@@ -59,8 +55,6 @@ const getProductInfo = async (req, res) => {
 		}));
 
 		res.status(200).json({ data: productDatas, message: '상품등록-상품정보 검색 성공' });
-
-		return productDatas;
 	} catch (err) {
 		res.status(400).json({ err });
 	}

@@ -4,7 +4,7 @@ import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
 import Modal from '../../Users/Modal';
 import { findUserId } from '../../../apis/service/FindIdApi';
 
-const FindIdForm = () => {
+function FindIdForm() {
 	const navigate = useNavigate();
 	const [name, setName] = useState('');
 	const [nameError, setNameError] = useState('');
@@ -13,15 +13,15 @@ const FindIdForm = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
 
-	const handleNameBlur = () => {
+	function handleNameBlur() {
 		if (!name.trim()) {
 			setNameError('이름을 입력해주세요.');
 		} else {
 			setNameError('');
 		}
-	};
+	}
 
-	const handleEmailBlur = () => {
+	function handleEmailBlur() {
 		if (!email.trim()) {
 			setEmailError('이메일을 입력해주세요.');
 		} else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -29,9 +29,9 @@ const FindIdForm = () => {
 		} else {
 			setEmailError('');
 		}
-	};
+	}
 
-	const handleSubmit = event => {
+	function handleSubmit(event) {
 		event.preventDefault();
 		if (!name.trim() || !email.trim() || nameError || emailError) {
 			setModalMessage('이름과 이메일을 모두 입력해주세요.');
@@ -41,7 +41,7 @@ const FindIdForm = () => {
 		}
 
 		findUserId(name, email, setModalMessage, setIsModalOpen, navigate);
-	};
+	}
 
 	return (
 		<>
@@ -69,6 +69,6 @@ const FindIdForm = () => {
 			)}
 		</>
 	);
-};
+}
 
 export default FindIdForm;

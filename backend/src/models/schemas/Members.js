@@ -35,11 +35,6 @@ const MembersSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	// 회원 전화번호
-	phoneNum: {
-		type: String,
-		required: true,
-	},
 	// 좋아요갯수
 	likeCount: {
 		type: Number,

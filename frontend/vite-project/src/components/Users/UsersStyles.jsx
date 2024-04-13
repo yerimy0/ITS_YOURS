@@ -33,6 +33,7 @@ export const Button = styled.button`
 	padding: 0.7rem;
 	margin-top: 1rem;
 	font-size: 14px;
+	width: 400px;
 	background-color: #009dff;
 	color: white;
 	border: none;
@@ -164,4 +165,56 @@ export const ErrorMessage = styled.div`
 	color: #b3261e;
 	font-size: 12px;
 	margin-left: 10px;
+`;
+
+export const InlineGroup = styled.div`
+	display: flex;
+	align-items: stretch; 
+	width: 400px; 
+`;
+
+export const StyledInput = styled.input`
+	flex-grow: 1;
+	padding: 0.7rem;
+	margin-right: 0.5rem; 
+	margin-top: 1rem;
+	border: 1px solid #009dff;
+	border-radius: 20px;
+	color: #79747e;
+`;
+
+export const SmallButton = styled.button`
+	padding: 0.7rem;
+	margin-top: 1rem;
+	background-color: #009dff;
+	color: white;
+	border: none;
+	border-radius: 20px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #002d7a;
+	}
+`;
+
+export const InputWithIcon = styled.div`
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 400px;
+`;
+
+export const InputIcon = styled.img`
+	position: absolute;
+	right: 10px;
+	top: 50%; 
+	transform: translateY(-10%);
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+`;
+
+export const SearchInput = styled(Input)`
+	padding-right: 40px;
+	width: 100%; 
 `;

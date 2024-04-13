@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	max-width: 800px;
-	margin: 0 auto; // 가운데 정렬
+	margin: 0 auto;
 `;
 
 export const InquiryList = styled.ul`

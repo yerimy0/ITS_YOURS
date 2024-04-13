@@ -6,18 +6,20 @@ import ToggleContentButton from './ToggleContentButton';
 import InquiryStatus from './InquiryStatus';
 
 function InquiryItem({ inquiry, toggleContent, deleteInquiry }) {
-	const { id, title, content, status, show } = inquiry;
+	function handleDelete(inquiryId) {
+		axios
+			.delete(`/api/qna/${inquiryId}`)
+			.then(() => {
+				deleteInquiry(inquiryId);
+				alert('문의가 성공적으로 삭제되었습니다.');
+			})
+			.catch(error => {
+				console.error('Failed to delete the inquiry:', error);
+				alert('문의 삭제에 실패했습니다.');
+			});
+	}
 
-	const handleDelete = async inquiryId => {
-		try {
-			await axios.delete(`/api/qna/${inquiryId}`);
-			deleteInquiry(inquiryId); // 상태 업데이트 또는 부모 컴포넌트에서 처리
-			alert('문의가 성공적으로 삭제되었습니다.');
-		} catch (error) {
-			console.error('Failed to delete the inquiry:', error);
-			alert('문의 삭제에 실패했습니다.');
-		}
-	};
+	const { id, title, content, status, show } = inquiry;
 
 	return (
 		<StyledInquiryItem>

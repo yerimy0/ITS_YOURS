@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { StyledFaqItem } from './FaqStyles';
 
-const FaqItem = ({ question, answer }) => {
+function FaqItem({ question, answer }) {
 	const [isOpen, setIsOpen] = useState(false);
 
-	const toggle = () => setIsOpen(!isOpen);
+	function toggle() {
+		setIsOpen(!isOpen);
+	}
 
 	return (
 		<StyledFaqItem className="faq-item">
@@ -17,5 +19,6 @@ const FaqItem = ({ question, answer }) => {
 			{isOpen && <div className="faq-answer">{answer}</div>}
 		</StyledFaqItem>
 	);
-};
+}
+
 export default FaqItem;

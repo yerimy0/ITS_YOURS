@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 
-const WishWrap = styled.section`
+const WishsWrap = styled.section`
+	display: flex;
 	max-width: 1200px;
 	width: 100%;
-	display: flex;
+	margin: 0 auto;
 	flex-direction: column;
 	gap: 30px;
 	align-items: center;
 `;
+
 const WishTitle = styled.h1`
 	display: flex;
 	align-items: center;
@@ -21,12 +23,15 @@ const WishTitle = styled.h1`
 	margin: 0;
 `;
 
-const WishFilterWrap = styled.div`
-	max-width: 1200px;
-	width: 100%;
+const Wishs = styled.div`
 	display: flex;
-	justify-content: space-between;
+	flex-wrap: wrap;
 	align-items: center;
+	align-content: center;
+	gap: 50px;
+	width: 100%;
+	justify-content: flex-start;
+	margin: 60px 0 30px 0;
 `;
 
-export { WishWrap, WishTitle, WishFilterWrap };
+export { WishsWrap, WishTitle, Wishs };

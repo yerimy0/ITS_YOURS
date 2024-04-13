@@ -1,12 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import CommuHeader from '../components/CommuHeader';
-import { Box, WriteForm, InputBox, InputTitle, InputContent } from './WriteStyle';
+import { Box, WriteForm, InputBox, InputTitle, InputContent } from '../CommunityWrite/WriteStyle';
 import { Button } from '../CommunityList/CommunityStyle';
 import { ProductImg, ButtonUpload } from '../../../WriteFrom/WriteFormStyle';
-import { PostCommunity } from '../../../../apis/service/community.api';
+import { UpdateCommunnity, GetDetail } from '../../../../apis/service/community.api';
 import { useNavigate } from 'react-router-dom';
 
-function CommuWrite() {
+function CommuEddit({ id }) {
 	const navigate = useNavigate();
 	const [imgUrl, setImgUrl] = useState('');
 	const [writeCommu, setWriteCommu] = useState({
@@ -14,6 +14,15 @@ function CommuWrite() {
 		content: '',
 		photos: '/commu_default_pic.png',
 	});
+
+	useEffect(() => {
+		async function getInfo() {
+			const res = await GetDetail(id);
+			setWriteCommu({ title: res.title, content: res.content, photos: res.photos });
+			setImgUrl(res.photos);
+		}
+		getInfo();
+	}, []);
 
 	const fileInputRef = useRef(null);
 
@@ -40,11 +49,11 @@ function CommuWrite() {
 	};
 
 	const handleSubmit = () => {
-		async function Post() {
-			await PostCommunity(writeCommu);
+		async function update() {
+			await UpdateCommunnity(id, writeCommu);
 			navigate('/community');
 		}
-		Post();
+		update();
 	};
 
 	return (
@@ -84,4 +93,4 @@ function CommuWrite() {
 	);
 }
 
-export default CommuWrite;
+export default CommuEddit;

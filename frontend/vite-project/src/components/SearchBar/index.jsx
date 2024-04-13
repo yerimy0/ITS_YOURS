@@ -52,7 +52,7 @@ function SearchBar({ onSearchResults }) {
 	// 검색 함수
 	const searchBooks = async () => {
 		try {
-			const res = await instance.get(`/api/products/search?name=${searchValue}`);
+			const res = await instance.get(`/products/search?name=${searchValue}`);
 			onSearchResults(res.data.data); // 검색 결과를 콜백 함수에 전달
 			console.log('검색어:', searchValue);
 			console.log('검색 결과:', res.data);

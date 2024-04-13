@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
 	RegisterBox,
 	Title,
@@ -20,6 +20,7 @@ export let RegisterContext = createContext();
 export let SetRegisterContext = createContext(() => {});
 
 function WriteForm() {
+	const navigate = useNavigate();
 	const { id } = useParams();
 	// console.log(id);
 	const [register, setRegister] = useState({
@@ -139,6 +140,7 @@ function WriteForm() {
 								className="Button"
 								onClick={() => {
 									Register(register);
+									navigate('/product');
 								}}
 							>
 								등록하기

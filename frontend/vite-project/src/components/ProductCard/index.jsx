@@ -13,12 +13,15 @@ import {
 } from './ProductCardStyle';
 
 function formatPrice(price) {
+	if (price === null || price === undefined) {
+		return ''; // 가격이 없을 때 빈 문자열을 반환
+	}
 	return price.toLocaleString('ko-KR');
 }
 
-function ProductCard({ _id, imgUrls, name, price, onClick }) {
+function ProductCard({ productId, imgUrls, name, price, onClick }) {
 	return (
-		<ProductCardWrap productId={_id}>
+		<ProductCardWrap productId={productId}>
 			<ProductImage onClick={onClick} src={imgUrls} alt={name} />
 			<ProductInfoWrap>
 				<ProductInfo onClick={onClick}>
@@ -29,7 +32,7 @@ function ProductCard({ _id, imgUrls, name, price, onClick }) {
 					</ProductPrice>
 				</ProductInfo>
 				<ProductButton>
-					<WishButton />
+					<WishButton productId={productId} />
 				</ProductButton>
 			</ProductInfoWrap>
 		</ProductCardWrap>

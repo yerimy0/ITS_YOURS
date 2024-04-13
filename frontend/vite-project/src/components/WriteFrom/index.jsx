@@ -66,6 +66,11 @@ function WriteForm() {
 		});
 	}
 
+	async function Upload() {
+		await Register(register);
+		navigate('/product');
+	}
+
 	function handleImageChange(newUrls) {
 		setRegister({
 			...register,
@@ -142,8 +147,7 @@ function WriteForm() {
 							className="Button"
 							onClick={() => {
 								if (isValid) {
-									Register(register);
-									navigate('/product');
+									Upload();
 								} else {
 									alert('모든 필수 항목을 입력해주세요!');
 								}

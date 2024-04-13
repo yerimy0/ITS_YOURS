@@ -14,16 +14,16 @@ function Faq() {
 	const navigate = useNavigate();
 	const subtitleText =
 		'1:1 문의하기를 통해 더 자세히 물어봐 주세요.\n상담 운영 시간 : 평일 10:00 ~ 18:00 (점심시간 12:00~13:00)';
-	const [userData, setUserData] = useState({}); // 사용자 전체 데이터를 저장할 상태
+	const [userData, setUserData] = useState({});
 
 	useEffect(() => {
 		const loadData = async () => {
 			try {
 				const myPageData = await fetchMyPageData();
-				setUserData(myPageData); // API로부터 받은 사용자 전체 데이터를 상태에 저장
+				setUserData(myPageData);
 			} catch (error) {
 				console.error('Failed to fetch user data:', error);
-				setUserData({ nickName: 'Guest' }); // 실패 시 기본 닉네임 설정
+				setUserData({ nickName: 'Guest' });
 			}
 		};
 

@@ -17,8 +17,8 @@ const ModalContent = styled.div`
 	background-color: white;
 	padding: 20px;
 	border-radius: 10px;
-	max-height: 80%; // 최대 높이 설정
-	overflow-y: auto; // 내용이 넘치면 스크롤 생성
+	max-height: 80%;
+	overflow-y: auto;
 `;
 
 const ModalButton = styled.button`

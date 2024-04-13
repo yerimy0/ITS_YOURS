@@ -7,7 +7,7 @@ import EmailVerificationForm from './EmailVerificationForm';
 import UniversitySearchForm from './UniversitySearchForm';
 import { Button } from '../../../components/Users/UsersStyles';
 
-const SignUpForm = () => {
+function SignUpForm() {
 	const [profileImage, setProfileImage] = useState(null);
 	const [userId, setUserId] = useState('');
 	const [password, setPassword] = useState('');
@@ -88,6 +88,6 @@ const SignUpForm = () => {
 			</Button>
 		</>
 	);
-};
+}
 
 export default SignUpForm;

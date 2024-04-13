@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // useNavigate 훅 임포트
+import { useNavigate } from 'react-router-dom'; 
 import { Title } from '../../components/Users/UsersStyles';
 import InquiryList from '../../components/pages/Mypage/AskSupportList/InquiryList';
 import {
@@ -20,7 +20,7 @@ function AskSupportList() {
 			})),
 	]);
 
-	const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수 생성
+	const navigate = useNavigate(); 
 
 	function toggleContent(id) {
 		const updatedInquiries = inquiries.map(inquiry =>
@@ -35,7 +35,7 @@ function AskSupportList() {
 	}
 
 	function handleInquiryClick() {
-		navigate('/asksupportwrite'); // navigate 함수를 사용하여 /asksupportwrite 경로로 이동
+		navigate('/asksupportwrite'); 
 	}
 
 	return (

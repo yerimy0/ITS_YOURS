@@ -1,5 +1,6 @@
 const productsService = require('../services/ProductsService');
 const ObjectId = require('mongodb').ObjectId;
+const axios = require('axios');
 
 const getProductsList = async (req, res) => {
 	try {
@@ -61,7 +62,7 @@ const getProductInfo = async (req, res) => {
 
 		return productDatas;
 	} catch (err) {
-		next(err);
+		res.status(400).json({ err });
 	}
 };
 
@@ -72,11 +73,14 @@ const insertProduct = async (req, res, next) => {
 		const region = req.user.region;
 		const schoolName = req.user.schoolName;
 
+		if (!userId) {
+			throw new Error('로그인이 필요한 서비스입니다.');
+		}
 		// multer 미들웨어를 통해 업로드된 파일 정보는 req.files에 저장됩니다.
 		// 업로드된 이미지의 경로들을 imgUrls 배열로 구성합니다.
-		const imgUrls = req.files.map(file => file.path);
+		//const imgUrls = req.files.map(file => file.path);
 
-		const { name, price, author, publisher, condition, description } = req.body;
+		const { name, imgUrls, price, author, publisher, condition, description } = req.body;
 		const product = await productsService.insertProduct({
 			userId,
 			name,
@@ -105,9 +109,22 @@ const updateProduct = async (req, res, next) => {
 		const { prodId } = req.query;
 		const prodObjectId = new ObjectId(prodId); // 상품의 _id 값
 
+		// 상품 정보 조회
+		const product = await productsService.getProductInfo(prodObjectId);
+
+		// 현재 로그인한 사용자의 ID
+		const userId = req.user.id;
+
+		// 상품을 올린 사용자와 현재 로그인한 사용자가 다른 경우
+		if (product.sellerId.toString() !== userId) {
+			return res.status(403).json({
+				message: '상품을 올린 사용자만이 수정할 수 있습니다.',
+			});
+		}
+
 		const imgUrls = req.files?.map(file => file.path);
 
-		const { name, price, author, publisher, condition, region, description } = req.body;
+		const { name, price, author, publisher, condition, description } = req.body;
 		// imgUrls가 존재하면 상품 정보 업데이트에 포함, 그렇지 않으면 기존 값 유지
 		const updatedProduct = await productsService.updateProduct(prodObjectId, {
 			name,
@@ -134,6 +151,20 @@ const deleteProduct = async (req, res, next) => {
 	try {
 		const { prodId } = req.query;
 		const prodObjectId = new ObjectId(prodId); // 상품의 _id 값
+
+		// 상품 정보 조회
+		const product = await productsService.getProductInfo(prodObjectId);
+
+		// 현재 로그인한 사용자의 ID
+		const userId = req.user.id;
+
+		// 상품을 올린 사용자와 현재 로그인한 사용자가 다른 경우
+		if (product.sellerId.toString() !== userId) {
+			return res.status(403).json({
+				message: '상품을 올린 사용자만이 삭제할 수 있습니다.',
+			});
+		}
+
 		const deletedProduct = await productsService.deleteProduct(prodObjectId);
 
 		res.status(200).json({
@@ -148,7 +179,6 @@ const deleteProduct = async (req, res, next) => {
 // 구매내역 조회
 const myTradedProducts = async (req, res) => {
 	const buyerId = req.user.id;
-	console.log(buyerId);
 
 	try {
 		const tradedProducts = await productsService.tradedProductsByBuyerId(buyerId);

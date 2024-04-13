@@ -12,12 +12,12 @@ import {
 } from './SignOutStyles';
 import { useNavigate } from 'react-router-dom';
 
-const SignOutModal = ({ isOpen, onClose }) => {
+function SignOutModal({ isOpen, onClose }) {
 	const navigate = useNavigate();
 
 	if (!isOpen) return null;
 
-	const handleSignOut = async () => {
+	async function handleSignOut() {
 		try {
 			await instance.delete('/members/me');
 			console.log('회원 탈퇴 성공');
@@ -26,7 +26,7 @@ const SignOutModal = ({ isOpen, onClose }) => {
 		} catch (error) {
 			console.log('회원 탈퇴 실패:', error.response);
 		}
-	};
+	}
 
 	return ReactDOM.createPortal(
 		<ModalBackground onClick={onClose}>
@@ -45,6 +45,6 @@ const SignOutModal = ({ isOpen, onClose }) => {
 		</ModalBackground>,
 		document.getElementById('modal-root'),
 	);
-};
+}
 
 export default SignOutModal;

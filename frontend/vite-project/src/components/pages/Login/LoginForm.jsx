@@ -2,10 +2,10 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
 import Modal from '../../Users/Modal';
-import { loginApi } from './LoginApi';
+import { loginApi } from '../../../apis/service/LoginApi';
 import UserIdContext from '../../../context/UserIdContext';
 
-const LoginForm = () => {
+function LoginForm() {
 	const navigate = useNavigate();
 	const [userId, setUserId] = useState('');
 	const [userIdError, setUserIdError] = useState('');
@@ -15,23 +15,23 @@ const LoginForm = () => {
 	const [modalMessage, setModalMessage] = useState('');
 	const { setId } = useContext(UserIdContext);
 
-	const handleUserIdBlur = () => {
+	function handleUserIdBlur() {
 		if (!userId.trim()) {
 			setUserIdError('아이디를 입력해주세요.');
 		} else {
 			setUserIdError('');
 		}
-	};
+	}
 
-	const handlePasswordBlur = () => {
+	function handlePasswordBlur() {
 		if (!password) {
 			setPasswordError('비밀번호를 입력해주세요.');
 		} else {
 			setPasswordError('');
 		}
-	};
+	}
 
-	const handleSubmit = async event => {
+	async function handleSubmit(event) {
 		event.preventDefault();
 		try {
 			const res = await loginApi(userId, password);
@@ -48,7 +48,7 @@ const LoginForm = () => {
 			setModalMessage(err.message);
 			setTimeout(() => setIsModalOpen(false), 3000);
 		}
-	};
+	}
 
 	return (
 		<>
@@ -76,6 +76,6 @@ const LoginForm = () => {
 			)}
 		</>
 	);
-};
+}
 
 export default LoginForm;

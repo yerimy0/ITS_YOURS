@@ -1,50 +1,93 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import ProfileForm from '../../Users/ProfileForm';
-import ProfileImageUploader from '../../Users/ProfileImageUploader';
+import UniversityModal from './UniversityModal';
+import ProfileImageUploader from '../../../components/Users/ProfileImageUploader';
+import { signUpApi } from '../../../apis/service/SignUpApi';
+import ProfileForm from './ProfileForm';
+import EmailVerificationForm from './EmailVerificationForm';
+import UniversitySearchForm from './UniversitySearchForm';
+import { Button } from '../../../components/Users/UsersStyles';
 
-const SignUpForm = () => {
+function SignUpForm() {
 	const [profileImage, setProfileImage] = useState(null);
 	const [userId, setUserId] = useState('');
 	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
+	const [name, setName] = useState('');
+	const [email, setEmail] = useState('');
+	const [emailVerificationCode, setEmailVerificationCode] = useState('');
+	const [nickname, setNickname] = useState('');
+	const [university, setUniversity] = useState('');
+	const [isModalOpen, setModalOpen] = useState(false);
+
+	const handleOpenModal = () => setModalOpen(true);
+	const handleCloseModal = () => setModalOpen(false);
+	const handleSelectUniversity = selectedUniversity => {
+		setUniversity(selectedUniversity);
+		handleCloseModal();
+	};
 
 	const handleSubmit = async event => {
 		event.preventDefault();
 		const formData = new FormData();
-		formData.append('userId', userId);
+		formData.append('id', userId);
 		formData.append('password', password);
+		formData.append('realName', name);
+		formData.append('email', email);
+		formData.append('schoolName', university);
+		formData.append('nickName', nickname);
 		if (profileImage) {
-			formData.append('profileImage', profileImage);
+			formData.append('profilePic', profileImage);
 		}
 
-		try {
-			// 서버에 회원가입 요청을 보내는 코드를 여기에 추가하세요.
-			const response = await axios.post('/api/members/signUp', formData, {
-				headers: {
-					'Content-Type': 'multipart/form-data',
-				},
-			});
-			// 응답 처리 로직
-			console.log('회원가입 성공:', response.data);
-		} catch (error) {
-			// 에러 처리 로직
+		const { data, error } = await signUpApi(formData);
+		if (error) {
 			console.error('회원가입 실패:', error);
+		} else {
+			console.log('회원가입 성공:', data);
 		}
+	};
+
+	const handleVerifyEmail = async () => {
+		// 이메일 인증 로직 구현 예정
 	};
 
 	return (
 		<>
+			<UniversityModal
+				isOpen={isModalOpen}
+				onClose={handleCloseModal}
+				onSelectUniversity={handleSelectUniversity}
+			/>
 			<ProfileImageUploader onImageSelected={setProfileImage} />
 			<ProfileForm
-				inputPlaceholder1="아이디를 입력하세요"
-				inputPlaceholder2="비밀번호를 입력하세요"
-				buttonText="회원가입하기"
-				onSubmit={handleSubmit}
-				setInput1={setUserId}
-				setInput2={setPassword}
+				userId={userId}
+				setUserId={setUserId}
+				password={password}
+				setPassword={setPassword}
+				confirmPassword={confirmPassword}
+				setConfirmPassword={setConfirmPassword}
+				name={name}
+				setName={setName}
+				nickname={nickname}
+				setNickname={setNickname}
 			/>
+			<EmailVerificationForm
+				email={email}
+				setEmail={setEmail}
+				emailVerificationCode={emailVerificationCode}
+				setEmailVerificationCode={setEmailVerificationCode}
+				onVerifyEmail={handleVerifyEmail}
+			/>
+			<UniversitySearchForm
+				university={university}
+				setUniversity={setUniversity}
+				onSearchUniversity={handleOpenModal}
+			/>
+			<Button type="submit" onClick={handleSubmit}>
+				회원가입하기
+			</Button>
 		</>
 	);
-};
+}
 
 export default SignUpForm;

@@ -9,22 +9,22 @@ export const Title = styled.h1`
 	font-size: 48px;
 	font-weight: 700;
 	line-height: 64px;
-	max-width: 800px; // 리스트와 동일한 최대 너비 설정
-	margin: 0 auto; // 가운데 정렬
-	width: 100%; // 전체 너비를 사용
+	max-width: 800px;
+	margin: 0 auto; 
+	width: 100%;
 `;
 
 export const SubTitle = styled.div`
-	margin-top: 10px; // 타이틀과 부제목 사이 간격
+	margin-top: 10px; 
 	font-size: 1.2rem;
 	font-weight: 500;
-	white-space: pre-line; // 줄바꿈 처리
+	white-space: pre-line;
 	line-height: 1.5;
 `;
 
 export const UserName = styled.span`
-	display: block; // 줄바꿈 효과
-	font-weight: bold; // 사용자 이름을 강조 (선택 사항)
+	display: block; 
+	font-weight: bold; 
 `;
 
 export const StyledFaqList = styled.div`
@@ -38,7 +38,6 @@ export const StyledFaqList = styled.div`
 	}
 `;
 
-// StyledFaqItem 스타일
 export const StyledFaqItem = styled.div`
 	.faq-question {
 		display: flex;
@@ -51,12 +50,12 @@ export const StyledFaqItem = styled.div`
 	.faq-answer {
 		margin-top: 10px;
 		font-size: 1rem;
-		padding-left: 20px; // 왼쪽 패딩으로 정렬 맞춤
+		padding-left: 20px; 
 	}
 
 	.toggle-answer {
-		background: none; // 배경색 제거
-		border: none; // 테두리 제거
+		background: none; 
+		border: none;
 		cursor: pointer;
 	}
 
@@ -75,7 +74,7 @@ export const ButtonWrapper = styled.div`
 
 export const Button = styled.button`
 	padding: 10px 20px;
-	background-color: white; // 예시 색상
+	background-color: white; 
 	border: 1px solid #009dff;
 	color: #009dff;
 	font-size: 16px;

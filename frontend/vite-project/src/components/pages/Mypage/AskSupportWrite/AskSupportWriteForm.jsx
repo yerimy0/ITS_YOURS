@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form } from './AskSupportWriteStyles';
 import { InputField } from './InputField';
 import { ErrorMessage } from './ErrorMessage';
 import { SubmitButton } from './SubmitButton';
+import { submitInquiry } from '../../../../apis/service/AskSupportApi';
 
 function AskSupportWriteForm() {
 	const [title, setTitle] = useState('');
@@ -16,10 +16,12 @@ function AskSupportWriteForm() {
 		e.preventDefault();
 		setError('');
 
-		axios
-			.post('/api/qna', { title, content })
+		submitInquiry(title, content)
 			.then(() => navigate('/asksupportlist'))
-			.catch(() => setError('문제가 발생했습니다. 다시 시도해 주세요.'));
+			.catch(error => {
+				console.error('문제가 발생했습니다:', error);
+				setError('문제가 발생했습니다. 다시 시도해 주세요.');
+			});
 	}
 
 	return (

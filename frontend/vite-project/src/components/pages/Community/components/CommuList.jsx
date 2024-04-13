@@ -26,6 +26,7 @@ function CommuList() {
 	useEffect(() => {
 		async function GetData() {
 			const datas = await GetCommunnityList();
+			console.log(datas);
 			setCommunityLists(datas);
 		}
 		GetData();
@@ -65,7 +66,7 @@ function ListOne({ commu }) {
 				<ListTitle>{commu.title}</ListTitle>
 				<ListSub>{commu.content}</ListSub>
 				<LeftBottom>
-					<ListSub>{commu.univName}</ListSub>
+					<ListSub>{commu.schoolName}</ListSub>
 					<ListSub>{time}</ListSub>
 				</LeftBottom>
 			</ListLeft>

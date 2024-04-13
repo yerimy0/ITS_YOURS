@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
 import Modal from '../../Users/Modal';
 import { loginApi } from '../../../apis/service/LoginApi';
+import UserIdContext from '../../../context/UserIdContext';
 
 function LoginForm() {
 	const navigate = useNavigate();
@@ -12,6 +13,7 @@ function LoginForm() {
 	const [passwordError, setPasswordError] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
+	const { setId } = useContext(UserIdContext);
 
 	function handleUserIdBlur() {
 		if (!userId.trim()) {
@@ -36,6 +38,7 @@ function LoginForm() {
 			console.log(res);
 			if (res.accessToken) {
 				document.cookie = `authToken=${res.accessToken}; path=/; Secure`;
+				setId(userId);
 				navigate('/');
 			} else {
 				throw new Error('아이디 또는 비밀번호가 맞지 않습니다.\n다시 확인해주세요.');

@@ -8,19 +8,19 @@ import {
 	RegButtons,
 	MainContent,
 	ProductTwoInput,
-	SmallButton,
 	BigButton,
-} from './WriteFormStyle';
-import InputImg from './components/InputImg';
-import { Section, Section2, Section3, Section4 } from './components/Section';
+} from '../WriteFrom/WriteFormStyle';
+import InputImg from '../WriteFrom/components/InputImg';
+import { Section, Section2, Section3, Section4 } from '../WriteFrom/components/Section';
 import { useEffect, useState, createContext } from 'react';
-import { Register } from '../../apis/service/product.api';
+import { GetDetail, UpdateRegister } from '../../apis/service/product.api';
 
 export let RegisterContext = createContext();
 export let SetRegisterContext = createContext(() => {});
 
-function WriteForm() {
+function EditForm() {
 	const navigate = useNavigate();
+	const { id } = useParams();
 	const [isValid, setIsValid] = useState(false);
 	const [register, setRegister] = useState({
 		name: '',
@@ -35,28 +35,32 @@ function WriteForm() {
 	const { name, price, author, publisher, condition, description, imgUrls } = register;
 
 	useEffect(() => {
+		async function GetContent() {
+			const res = await GetDetail(id);
+			console.log(res);
+			setRegister({
+				name: res.name,
+				price: res.price,
+				author: res.author,
+				publisher: res.publisher,
+				condition: res.condition,
+				description: res.description,
+				imgUrls: res.imgUrls,
+			});
+		}
+		GetContent();
+	}, []);
+
+	useEffect(() => {
 		const isFilled = Object.values(register).every(value => value !== '');
 		setIsValid(isFilled);
 	}, [register]);
 
-	useEffect(() => {
-		const dbReq = indexedDB.open('tempSave', 1);
-		dbReq.addEventListener('success', function (e) {
-			const db = e.target.result;
-
-			const transaction = db.transaction(['product'], 'readwrite');
-			const store = transaction.objectStore('product');
-			const request = store.getAll();
-
-			request.onsuccess = function (e) {
-				const savedData = e.target.result;
-				if (savedData.length > 0) {
-					const latestData = savedData[0];
-					setRegister(latestData);
-				}
-			};
-		});
-	}, []);
+	async function Eddit() {
+		const res = await UpdateRegister(id, register);
+		console.log(res);
+		navigate('/product');
+	}
 
 	function onChange(e) {
 		const { value, name } = e.target;
@@ -73,46 +77,12 @@ function WriteForm() {
 		});
 	}
 
-	function tempSave() {
-		const dbReq = indexedDB.open('tempSave', 1);
-		let db;
-		dbReq.addEventListener('success', function (e) {
-			db = e.target.result;
-
-			const transaction = db.transaction(['product'], 'readwrite');
-			const store = transaction.objectStore('product');
-			const request = store.put(register);
-
-			request.onsuccess = function () {
-				console.log('임시 저장되었습니다.');
-			};
-
-			request.onerror = function () {
-				console.log('임시 저장에 실패했습니다.');
-			};
-		});
-		dbReq.addEventListener('error', function (e) {
-			const error = e.target.error;
-			console.log('error', error.name);
-		});
-		dbReq.addEventListener('upgradeneeded', function (e) {
-			db = e.target.result;
-			let oldVersion = e.oldVersion;
-			if (oldVersion < 1) {
-				const productStore = db.createObjectStore('product', {
-					keyPath: 'id',
-					autoIncrement: true,
-				});
-			}
-		});
-	}
-
 	return (
 		<SetRegisterContext.Provider value={setRegister}>
 			<RegisterContext.Provider value={register}>
 				<RegisterBox>
 					<Title>
-						<TopTitle>상품 등록</TopTitle>
+						<TopTitle>상품 수정</TopTitle>
 						<RedStar>*필수 항목</RedStar>
 					</Title>
 					<Line>
@@ -135,21 +105,17 @@ function WriteForm() {
 						<Section4 value={condition} />
 					</MainContent>
 					<RegButtons>
-						<BigButton className="Button" onClick={tempSave}>
-							임시저장
-						</BigButton>{' '}
 						<BigButton
 							className="Button"
 							onClick={() => {
 								if (isValid) {
-									Register(register);
-									navigate('/product');
+									Eddit();
 								} else {
 									alert('모든 필수 항목을 입력해주세요!');
 								}
 							}}
 						>
-							등록하기
+							수정하기
 						</BigButton>
 					</RegButtons>
 				</RegisterBox>
@@ -158,4 +124,4 @@ function WriteForm() {
 	);
 }
 
-export default WriteForm;
+export default EditForm;

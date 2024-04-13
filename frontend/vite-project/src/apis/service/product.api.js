@@ -1,17 +1,31 @@
 import axios from 'axios';
 import instance from '../axiosInstance';
 
-export async function Register(register) {
+async function Register(register) {
 	try {
-		// 쿠키에서 authToken 값을 가져옵니다.
-		// const authToken = document.cookie
-		// 	.split('; ')
-		// 	.find(row => row.startsWith('authToken='))
-		// 	.split('=')[1];
-
-		const writing = await instance.post('/products', register);
-		console.log(writing);
+		await instance.post('/products', register);
+		return;
 	} catch (err) {
 		console.log(err.message);
 	}
 }
+
+async function GetDetail(id) {
+	try {
+		const res = await instance.get(`/products/${id}`);
+		return res.data;
+	} catch (err) {
+		console.log(err.message);
+	}
+}
+
+async function UpdateRegister(id, newContent) {
+	try {
+		const res = await instance.put(`/products/${id}`, newContent);
+		return res;
+	} catch (err) {
+		console.log(err.message);
+	}
+}
+
+export { Register, GetDetail, UpdateRegister };

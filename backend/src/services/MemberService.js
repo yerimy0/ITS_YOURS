@@ -1,6 +1,8 @@
 const { Members, Wishes } = require('../models/index');
+const { sendCustomEmail } = require('../utils/Mailer');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 /**
  * 회원가입 service
@@ -171,4 +173,50 @@ async function deleteMember(userId) {
 	}
 }
 
-module.exports = { signUp, login, getMember, updateMember, deleteMember };
+// 아이디 찾기
+async function findIdByNameAndEmail(realName, email) {
+	const member = await Members.findOne({ realName: realName, email: email });
+	if (!member) {
+		throw new Error('해당하는 사용자가 없습니다.');
+	}
+	return member.id;
+}
+
+// 비밀번호 찾기
+// 랜덤한 비밀번호 생성!!!!
+function generateTempPassword(length) {
+	return crypto
+		.randomBytes(Math.ceil(length / 2))
+		.toString('hex') // 바이트를 hex 문자열로 변환
+		.slice(0, length); // 원하는 길이로 문자열을 자릅니다
+}
+
+async function resetPasswordAndSendEmail(id, email) {
+	const member = await Members.findOne({ id: id, email: email });
+	if (!member) {
+		throw new Error('해당하는 사용자가 없습니다.');
+	}
+
+	const tempPassword = generateTempPassword(10); // 예를 들어, 길이가 10인 임시 비밀번호 생성
+	const hashedPassword = await bcrypt.hash(tempPassword, 10);
+
+	await Members.updateOne({ id: id }, { password: hashedPassword });
+
+	await sendCustomEmail({
+		to: email,
+		subject: '[이제너해] 임시 비밀번호 발급 안내',
+		newPassword: tempPassword, // 랜덤하게 생성된 임시 비밀번호를 전달
+	});
+
+	return true;
+}
+
+module.exports = {
+	signUp,
+	login,
+	getMember,
+	updateMember,
+	deleteMember,
+	findIdByNameAndEmail,
+	resetPasswordAndSendEmail,
+};

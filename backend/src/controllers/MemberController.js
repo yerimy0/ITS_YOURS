@@ -138,4 +138,25 @@ const deleteMember = async (req, res) => {
 	}
 };
 
-module.exports = { signUp, login, getMember, updateMember, deleteMember };
+// 아이디 찾기
+async function findId(req, res) {
+	try {
+		const { realName, email } = req.body;
+		const userId = await memberService.findIdByNameAndEmail(realName, email);
+		res.json({ message: '사용자의 아이디를 찾았습니다.', userId });
+	} catch (error) {
+		res.status(400).json({ success: false, message: error.message });
+	}
+}
+
+async function resetPassword(req, res) {
+	try {
+		const { id, email } = req.body;
+		await memberService.resetPasswordAndSendEmail(id, email);
+		res.json({ message: '임시 비밀번호가 이메일로 전송되었습니다.' });
+	} catch (error) {
+		res.status(400).json({ success: false, message: error.message });
+	}
+}
+
+module.exports = { signUp, login, getMember, updateMember, deleteMember, findId, resetPassword };

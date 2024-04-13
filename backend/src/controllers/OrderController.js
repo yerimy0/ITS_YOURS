@@ -1,4 +1,4 @@
-const OrderService = require("../services/OrderService");
+const OrderService = require('../services/OrderService');
 
 /**
  * 주문 정보 조회 controller
@@ -15,12 +15,10 @@ const getOrderInfo = async (req, res, next) => {
     const order = await orderService.getOrderInfo(buyerId);
 
     if (!order) {
-      return res
-        .status(404)
-        .json({ data: null, message: "주문 내역을 찾을 수 없습니다." });
+      return res.status(404).json({ data: null, message: '주문 내역을 찾을 수 없습니다.' });
     }
 
-    res.status(200).json({ data: order, message: "주문 내역 조회 성공!!!!!" });
+    res.status(200).json({ data: order, message: '주문 내역 조회 성공!!!!!' });
   } catch (err) {
     next(err);
   }

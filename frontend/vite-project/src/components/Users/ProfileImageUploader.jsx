@@ -7,7 +7,7 @@ import {
 	IconImage,
 } from './UsersStyles';
 
-const ProfileImageUploader = ({ onImageSelected }) => {
+function ProfileImageUploader({ onImageSelected }) {
 	const [preview, setPreview] = useState('/logoCharacter.png');
 
 	const handleImageChange = event => {
@@ -32,6 +32,6 @@ const ProfileImageUploader = ({ onImageSelected }) => {
 			</IconWrapper>
 		</ProfileWrapper>
 	);
-};
+}
 
 export default ProfileImageUploader;

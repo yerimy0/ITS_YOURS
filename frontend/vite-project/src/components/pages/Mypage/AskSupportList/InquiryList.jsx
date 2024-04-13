@@ -10,7 +10,7 @@ function InquiryList({ toggleContent, deleteInquiry }) {
 		const fetchInquiries = async () => {
 			try {
 				const response = await axios.get('/api/qna');
-				setInquiries(response.data); // 서버로부터 받은 데이터로 상태 업데이트
+				setInquiries(response.data);
 			} catch (error) {
 				console.error('Failed to fetch inquiries:', error);
 			}

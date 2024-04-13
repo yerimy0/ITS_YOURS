@@ -1,19 +1,24 @@
-import { Box, Sentence, RedStar, Label, Input, StateButtons, SmallButton } from '../WriteFormStyle';
+import {
+	Box,
+	Sentence,
+	RedStar,
+	Label,
+	Input,
+	StateButtons,
+	SmallButton,
+	InputContent,
+} from '../WriteFormStyle';
 import { useState, useContext, useEffect } from 'react';
 import { SetRegisterContext, RegisterContext } from '../index';
 import instance from '../../../apis/axiosInstance';
 
 function Section({ label, onChange, value, name }) {
-	// const [keyWord, setKeyWord] = useState(''); //검색값
+	const [keyWord, setKeyWord] = useState('');
 
-	// function handleInputChange(e) {
-	// 	setKeyWord(e.target.value);
-	// }
-
-	// async function handleSearch() {
-	// 	const res = instance.get(`/api/products/search=${value}`);
-	// 	console.log(res);
-	// }
+	async function handleSearch() {
+		const res = instance.get(`/products/search=${value}`);
+		console.log(res);
+	}
 
 	return (
 		<Box>
@@ -28,7 +33,11 @@ function Section({ label, onChange, value, name }) {
 				value={value}
 				name={name}
 			/>
-			{label == '도서명' && <SmallButton className="Button">도서검색</SmallButton>}
+			{label == '도서명' && (
+				<SmallButton className="Button" onClick={handleSearch}>
+					도서검색
+				</SmallButton>
+			)}
 		</Box>
 	);
 }
@@ -58,8 +67,7 @@ function Section3({ label, onChange, value, name }) {
 				<RedStar>*</RedStar>
 				<Label>{label}</Label>
 			</Sentence>
-			<Input
-				className="Large"
+			<InputContent
 				placeholder={label + '을 입력해주세요'}
 				onChange={onChange}
 				value={value}
@@ -72,14 +80,12 @@ function Section3({ label, onChange, value, name }) {
 function Section4({ value }) {
 	const [active, setActive] = useState(value);
 
-	useEffect(() => {
-		setActive(value);
-	});
 	const register = useContext(RegisterContext);
 	const setRegister = useContext(SetRegisterContext);
 
 	function onButtonClick(e) {
 		const { value } = e.target;
+		console.log(value);
 		setActive(value);
 		setRegister({ ...register, condition: value });
 	}
@@ -91,16 +97,16 @@ function Section4({ value }) {
 				<Label>상품 상태</Label>
 			</Sentence>
 			<StateButtons onClickCapture={onButtonClick}>
-				<SmallButton className={`Button ${active === '새상품' ? 'active' : ''}`} value="새상품">
+				<SmallButton className={`Button ${active == '새상품' ? 'active' : ''}`} value="새상품">
 					새상품
 				</SmallButton>
 				<SmallButton
-					className={`Button ${active === '거의 새것' ? 'active' : ''}`}
+					className={`Button ${active == '거의 새것' ? 'active' : ''}`}
 					value="거의 새것"
 				>
 					거의 새것
 				</SmallButton>
-				<SmallButton className={`Button ${active === '중고' ? 'active' : ''}`} value="중고">
+				<SmallButton className={`Button ${active == '중고' ? 'active' : ''}`} value="중고">
 					중고
 				</SmallButton>
 			</StateButtons>

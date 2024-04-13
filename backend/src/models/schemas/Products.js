@@ -68,6 +68,7 @@ const ProductsSchema = new Schema({
 	// 거래 완료여부
 	isCompleted: {
 		type: Boolean,
+		default: false,
 	},
 	// 상품 등록일자
 	createdAt: {

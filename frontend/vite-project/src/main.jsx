@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { UserProvider } from './context/UserIdContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 
@@ -70,7 +71,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		{/* <Provider store={store}> */}
-		<RouterProvider router={router} />
-		{/* </Provider> */}
+		<UserProvider>
+			<RouterProvider router={router} />
+			{/* </Provider> */}
+		</UserProvider>
 	</React.StrictMode>,
 );

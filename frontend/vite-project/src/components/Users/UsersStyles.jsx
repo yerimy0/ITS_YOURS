@@ -165,3 +165,40 @@ export const ErrorMessage = styled.div`
 	font-size: 12px;
 	margin-left: 10px;
 `;
+
+export const InlineGroup = styled.div`
+	display: flex;
+	align-items: stretch; // 자식 요소가 컨테이너 높이에 맞게 늘어나도록 설정
+`;
+
+export const StyledInput = styled(Input)`
+	flex-grow: 1; // 가능한 모든 공간을 차지하도록 설정
+	margin-right: 0.5rem; // 오른쪽에 버튼을 위한 공간 제공
+	// 입력 필드의 높이와 패딩을 조정하여 버튼과 동일하게 설정
+	padding: 0.7rem 1rem; // 패딩을 버튼과 동일하게 설정
+`;
+
+export const SmallButton = styled(Button)`
+	padding: 0.7rem 1rem; // 버튼 내부 패딩 설정
+	height: 40px; // 입력 필드와 동일한 높이로 설정
+	white-space: nowrap; // 텍스트가 줄바꿈 없이 한 줄로 표시
+	flex-shrink: 0; // 크기 축소 방지
+`;
+
+export const InputWithIcon = styled.div`
+	position: relative;
+	display: flex;
+	align-items: center;
+`;
+
+export const InputIcon = styled.img`
+	position: absolute;
+	right: 10px;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+`;
+
+export const SearchInput = styled(Input)`
+	padding-right: 40px; // 아이콘에 의해 가려지는 텍스트를 방지
+`;

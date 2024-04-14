@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-	InlineGroup,
-	StyledInput,
-	SmallButton,
-	ErrorMessage,
-} from '../../../components/Users/UsersStyles';
+import { InlineGroup, StyledInput, SmallButton, ErrorMessage } from './UsersStyles';
 
 function EmailVerificationForm({
 	email,

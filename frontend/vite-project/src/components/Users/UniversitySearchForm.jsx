@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputWithIcon, SearchInput, InputIcon } from '../../../components/Users/UsersStyles';
+import { InputWithIcon, SearchInput, InputIcon } from './UsersStyles';
 
 function UniversitySearchForm({ university, setUniversity, onSearchUniversity }) {
 	return (

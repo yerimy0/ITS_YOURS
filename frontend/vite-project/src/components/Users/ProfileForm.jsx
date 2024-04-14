@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, ErrorMessage } from '../../../components/Users/UsersStyles';
+import { Form, Input, ErrorMessage } from './UsersStyles';
 
 function ProfileForm({
 	userId,

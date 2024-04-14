@@ -1,5 +1,10 @@
 import React from 'react';
-import { InlineGroup, StyledInput, SmallButton } from '../../../components/Users/UsersStyles';
+import {
+	InlineGroup,
+	StyledInput,
+	SmallButton,
+	ErrorMessage,
+} from '../../../components/Users/UsersStyles';
 
 function EmailVerificationForm({
 	email,
@@ -7,6 +12,8 @@ function EmailVerificationForm({
 	emailVerificationCode,
 	setEmailVerificationCode,
 	onVerifyEmail,
+	emailError,
+	handleBlurEmail,
 }) {
 	return (
 		<>
@@ -16,11 +23,13 @@ function EmailVerificationForm({
 					placeholder="*이메일을 입력해주세요"
 					value={email}
 					onChange={e => setEmail(e.target.value)}
+					onBlur={handleBlurEmail}
 				/>
 				<SmallButton type="button" onClick={() => onVerifyEmail(email)}>
 					인증요청
 				</SmallButton>
 			</InlineGroup>
+			{emailError && <ErrorMessage>{emailError}</ErrorMessage>}
 			<InlineGroup>
 				<StyledInput
 					type="text"

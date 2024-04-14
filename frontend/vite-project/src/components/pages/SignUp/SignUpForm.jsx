@@ -6,18 +6,37 @@ import ProfileForm from './ProfileForm';
 import EmailVerificationForm from './EmailVerificationForm';
 import UniversitySearchForm from './UniversitySearchForm';
 import { Button } from '../../../components/Users/UsersStyles';
+import {
+	validateUserId,
+	validatePassword,
+	validateConfirmPassword,
+	validateName,
+	validateEmail,
+} from './ValidationService';
 
 function SignUpForm() {
 	const [profileImage, setProfileImage] = useState(null);
 	const [userId, setUserId] = useState('');
+	const [userIdError, setUserIdError] = useState('');
 	const [password, setPassword] = useState('');
+	const [passwordError, setPasswordError] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
+	const [confirmPasswordError, setConfirmPasswordError] = useState('');
 	const [name, setName] = useState('');
+	const [nameError, setNameError] = useState('');
 	const [email, setEmail] = useState('');
+	const [emailError, setEmailError] = useState('');
 	const [emailVerificationCode, setEmailVerificationCode] = useState('');
 	const [nickname, setNickname] = useState('');
 	const [university, setUniversity] = useState('');
 	const [isModalOpen, setModalOpen] = useState(false);
+
+	const handleBlurUserId = () => setUserIdError(validateUserId(userId));
+	const handleBlurPassword = () => setPasswordError(validatePassword(password, confirmPassword));
+	const handleBlurConfirmPassword = () =>
+		setConfirmPasswordError(validateConfirmPassword(password, confirmPassword));
+	const handleBlurName = () => setNameError(validateName(name));
+	const handleBlurEmail = () => setEmailError(validateEmail(email));
 
 	const handleOpenModal = () => setModalOpen(true);
 	const handleCloseModal = () => setModalOpen(false);
@@ -28,27 +47,25 @@ function SignUpForm() {
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		const formData = new FormData();
-		formData.append('id', userId);
-		formData.append('password', password);
-		formData.append('realName', name);
-		formData.append('email', email);
-		formData.append('schoolName', university);
-		formData.append('nickName', nickname);
-		if (profileImage) {
-			formData.append('profilePic', profileImage);
-		}
+		if (!userIdError && !passwordError && !confirmPasswordError && !nameError && !emailError) {
+			const formData = new FormData();
+			formData.append('id', userId);
+			formData.append('password', password);
+			formData.append('realName', name);
+			formData.append('email', email);
+			formData.append('schoolName', university);
+			formData.append('nickName', nickname);
+			if (profileImage) {
+				formData.append('profilePic', profileImage);
+			}
 
-		const { data, error } = await signUpApi(formData);
-		if (error) {
-			console.error('회원가입 실패:', error);
-		} else {
-			console.log('회원가입 성공:', data);
+			const { data, error } = await signUpApi(formData);
+			if (error) {
+				console.error('회원가입 실패:', error);
+			} else {
+				console.log('회원가입 성공:', data);
+			}
 		}
-	};
-
-	const handleVerifyEmail = async () => {
-		// 이메일 인증 로직 구현 예정
 	};
 
 	return (
@@ -70,13 +87,22 @@ function SignUpForm() {
 				setName={setName}
 				nickname={nickname}
 				setNickname={setNickname}
+				userIdError={userIdError}
+				passwordError={passwordError}
+				confirmPasswordError={confirmPasswordError}
+				nameError={nameError}
+				handleBlurUserId={handleBlurUserId}
+				handleBlurPassword={handleBlurPassword}
+				handleBlurConfirmPassword={handleBlurConfirmPassword}
+				handleBlurName={handleBlurName}
 			/>
 			<EmailVerificationForm
 				email={email}
 				setEmail={setEmail}
 				emailVerificationCode={emailVerificationCode}
 				setEmailVerificationCode={setEmailVerificationCode}
-				onVerifyEmail={handleVerifyEmail}
+				emailError={emailError}
+				handleBlurEmail={handleBlurEmail}
 			/>
 			<UniversitySearchForm
 				university={university}

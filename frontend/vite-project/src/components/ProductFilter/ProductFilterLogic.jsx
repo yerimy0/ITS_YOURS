@@ -9,44 +9,86 @@ import {
 } from './ProductFilterStyle';
 import instance from '../../apis/axiosInstance';
 
-function ProductFilterLogic({ onApplyFilter, onCloseFilter }) {
+function ProductFilterLogic({
+	onApplyFilter,
+	onCloseFilter,
+	selectedLocation,
+	selectedUniversity,
+}) {
 	const [locations, setLocations] = useState([]);
-	const [selectedLocation, setSelectedLocation] = useState('');
+	const [currentLocation, setCurrentLocation] = useState(selectedLocation);
+	const [currentUniversity, setCurrentUniversity] = useState(selectedUniversity);
 	const [universities, setUniversities] = useState([]);
-	const [selectedUniversity, setSelectedUniversity] = useState('');
 
-	// 컴포넌트가 마운트될 때 지역 데이터 호출
+	// 컴포넌트가 마운트될 떄 지역 데이터 호출
 	useEffect(() => {
 		fetchLocations();
 	}, []);
 
-	// 지역 데이터
+	// 컴포넌트가 마운트될 때 선택된 지역과 대학교 초기화
+	useEffect(() => {
+		setCurrentLocation(selectedLocation);
+		setCurrentUniversity(selectedUniversity);
+	}, [selectedLocation, selectedUniversity]);
+
 	const fetchLocations = async () => {
 		try {
-			const res = await instance.get('/api/category');
-			console.log(res.data);
-			setLocations(res.data);
+			const res = await instance.get('/categories');
+			const data = res.data.data;
+
+			// 오름차순 정렬
+			if (Array.isArray(data)) {
+				const sortedLocations = data.sort((a, b) => a.region.localeCompare(b.region));
+				setLocations(sortedLocations);
+
+				if (currentLocation) {
+					const selectedLocationData = sortedLocations.find(
+						location => location.region === currentLocation,
+					);
+					if (selectedLocationData) {
+						setUniversities(['전체', ...selectedLocationData.universities]);
+					}
+				}
+			}
 		} catch (err) {
 			console.error('지역 데이터를 가져오는 중 오류가 발생했습니다.', err);
 		}
 	};
 
-	// 지역을 선택했을 때 호출
+	// 지역 선택했을 떄 호출
 	const handleLocationSelect = locationId => {
-		setSelectedLocation(locationId);
-		const selectedLocationData = locations.find(location => location._id === locationId);
-		setUniversities(selectedLocationData.universities);
-		setSelectedUniversity('');
+		const locationData = locations.find(location => location._id === locationId);
+		if (locationData) {
+			setCurrentLocation(locationId);
+			setUniversities(['전체', ...locationData.universities]);
+		}
+		setCurrentUniversity('전체');
 	};
 
-	// 대학교를 선택했을 때 호출
+	// 대학교 선택했을 때 호출
 	const handleUniversitySelect = university => {
-		setSelectedUniversity(prevUniversity => (prevUniversity === university ? '' : university));
+		setCurrentUniversity(prevUniversity => (prevUniversity === university ? '전체' : university));
+		if (university !== '전체') {
+			const locationData = locations.find(location => location.universities.includes(university));
+			if (locationData) {
+				setCurrentLocation(locationData.region);
+			}
+		}
 	};
 
-	// 필터 적용
 	const handleApplyFilter = () => {
-		onApplyFilter(selectedLocation, selectedUniversity);
+		const selectedLocationName = locations.find(
+			location => location.region === currentLocation,
+		)?.region;
+
+		onApplyFilter(selectedLocationName, currentUniversity);
+		onCloseFilter();
+	};
+
+	const handleResetFilter = () => {
+		setCurrentLocation('');
+		setCurrentUniversity('');
+		onApplyFilter('', '');
 		onCloseFilter();
 	};
 
@@ -57,7 +99,7 @@ function ProductFilterLogic({ onApplyFilter, onCloseFilter }) {
 					{locations.map(location => (
 						<LocationItem
 							key={location._id}
-							className={selectedLocation === location._id ? 'selected' : ''}
+							className={currentLocation === location.region ? 'selected' : ''}
 							onClick={() => handleLocationSelect(location._id)}
 						>
 							{location.region}
@@ -68,7 +110,7 @@ function ProductFilterLogic({ onApplyFilter, onCloseFilter }) {
 					{universities.map(university => (
 						<LocationItem
 							key={university}
-							className={selectedUniversity === university ? 'selected' : ''}
+							className={currentUniversity === university ? 'selected' : ''}
 							onClick={() => handleUniversitySelect(university)}
 						>
 							{university}
@@ -77,7 +119,7 @@ function ProductFilterLogic({ onApplyFilter, onCloseFilter }) {
 				</UniversityList>
 			</FilterList>
 			<Buttons>
-				<FilterInButton color="#009DFF" backgroundColor="#fff" onClick={onCloseFilter}>
+				<FilterInButton color="#009DFF" backgroundColor="#fff" onClick={handleResetFilter}>
 					초기화
 				</FilterInButton>
 				<FilterInButton color="#fff" backgroundColor="#009DFF" onClick={handleApplyFilter}>

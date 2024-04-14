@@ -1,7 +1,4 @@
-const { access } = require('fs');
 const memberService = require('../services/MemberService');
-const wishesService = require('../services/WishesService');
-const { log } = require('console');
 
 /**
  * 회원가입 controller
@@ -56,12 +53,6 @@ const login = async (req, res, next) => {
 		} else {
 			// 로그인 성공 시 처리
 			const { accessToken, isAdmin } = loginResult;
-
-			// accessToken을 쿠키로 설정
-			// res.cookie('accessToken', accessToken, {
-			// 	// httpOnly: true, // JavaScript를 통한 접근 방지
-			// 	maxAge: 14 * 24 * 60 * 60 * 1000, // 쿠키 유효기간 설정 (14일)
-			// });
 
 			res.status(200).json({
 				isAdmin: isAdmin, // 관리자 여부
@@ -135,5 +126,59 @@ const deleteMember = async (req, res) => {
 		return res.status(500).json({ message: '회원 정보 삭제 중 오류가 발생했습니다' });
 	}
 };
+
+/**
+ * 카카오 로그인 controller
+ * 작성자 : 이정은
+ * 작성 시작일: 2024-04-14
+ * 카카오 로그인 서비스 구현을 위한 컨트롤러입니다.
+ */
+const kakaoAuth = async (req, res) => {
+	try {
+		const body = {
+			grant_type: 'authorization_code',
+			client_id: process.env.KAKAO_REST_KEY,
+			redirect_uri: 'http://localhost:4000/api/auth/kakao',
+			code: req.body.code, // 클라이언트로부터 전달받은 code 사용
+		};
+
+		const tokenResponse = await axios.post(
+			'https://kauth.kakao.com/oauth/token',
+			new URLSearchParams(body), // body를 URLSearchParams 객체로 변환
+			{
+				headers: {
+					'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+				},
+			},
+		);
+
+		const accessToken = tokenResponse.data.access_token;
+
+		const kakaoUserResponse = await axios.post('https://kapi.kakao.com/v2/user/me', null, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+
+		// 클라이언트에 사용자 정보 반환
+		res.json({
+			id: kakaoUserResponse.data.id,
+			email: kakaoUserResponse.data.kakao_account.email,
+			nickname: kakaoUserResponse.data.properties.nickname,
+		});
+	} catch (error) {
+		console.error(error);
+		// 오류 응답
+		res.status(500).json({ message: 'Internal Server Error' });
+	}
+};
+
+/**
+ * 네이버 로그인 controller
+ * 작성자 : 이정은
+ * 작성 시작일: 2024-04-14
+ * 네이버 로그인 서비스 구현을 위한 컨트롤러입니다.
+ */
+const naverLogin = async (req, res) => {};
 
 module.exports = { signUp, login, getMember, updateMember, deleteMember };

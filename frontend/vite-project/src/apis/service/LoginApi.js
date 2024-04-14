@@ -1,4 +1,4 @@
-import instance from '../../../apis/axiosInstance';
+import instance from '../axiosInstance';
 
 const loginApi = async (userId, password) => {
 	try {

@@ -4,7 +4,7 @@ const RegisterBox = styled.div`
 	left: 263px;
 	display: flex;
 	align-items: flex-start;
-	width: 1090px;
+	width: auto;
 	padding: 70px 30px;
 	flex-direction: column;
 	justify-content: center;
@@ -103,6 +103,14 @@ const Input = styled.input`
 		if (className === 'Large') return '175px';
 		else return '35px';
 	}};
+`;
+const InputContent = styled.textarea`
+	border-radius: 20px;
+	border: 1px solid #888;
+	background: #fff;
+	padding: 8px;
+	width: 838px;
+	height: 175px;
 `;
 
 const Label = styled.span`
@@ -208,4 +216,5 @@ export {
 	Img,
 	ProductImg,
 	ButtonUpload,
+	InputContent,
 };

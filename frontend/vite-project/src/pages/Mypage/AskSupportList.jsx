@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import { Title } from '../../components/Users/UsersStyles';
 import InquiryList from '../../components/pages/Mypage/AskSupportList/InquiryList';
 import {
@@ -19,6 +20,8 @@ function AskSupportList() {
 			})),
 	]);
 
+	const navigate = useNavigate(); 
+
 	function toggleContent(id) {
 		const updatedInquiries = inquiries.map(inquiry =>
 			inquiry.id === id ? { ...inquiry, show: !inquiry.show } : inquiry,
@@ -31,6 +34,10 @@ function AskSupportList() {
 		setInquiries(updatedInquiries);
 	}
 
+	function handleInquiryClick() {
+		navigate('/asksupportwrite'); 
+	}
+
 	return (
 		<Container>
 			<Title>1:1문의내역</Title>
@@ -39,7 +46,7 @@ function AskSupportList() {
 				toggleContent={toggleContent}
 				deleteInquiry={deleteInquiry}
 			/>
-			<InquiryButton>1:1문의하기</InquiryButton>
+			<InquiryButton onClick={handleInquiryClick}>1:1문의하기</InquiryButton>
 		</Container>
 	);
 }

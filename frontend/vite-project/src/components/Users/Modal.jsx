@@ -1,9 +1,8 @@
-// Modal.jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ModalBackground, ModalContainer, ModalMessage, CloseButton } from './ModalStyles';
 
-const Modal = ({ isOpen, message, onClose }) => {
+function Modal({ isOpen, message, onClose }) {
 	if (!isOpen) return null;
 
 	return ReactDOM.createPortal(
@@ -15,6 +14,6 @@ const Modal = ({ isOpen, message, onClose }) => {
 		</ModalBackground>,
 		document.getElementById('modal-root'),
 	);
-};
+}
 
 export default Modal;

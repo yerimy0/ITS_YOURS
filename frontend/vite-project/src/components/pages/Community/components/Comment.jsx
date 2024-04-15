@@ -35,7 +35,7 @@ function CommentSection({ id }) {
 
 	useEffect(() => {
 		getComments();
-	}, [id]);
+	}, []);
 
 	async function getComments() {
 		const res = await Getcommets(id);
@@ -50,15 +50,9 @@ function CommentSection({ id }) {
 	async function activeEnter(e) {
 		if (e.key === 'Enter') {
 			if (newComment.trim() === '') return;
-			await postComment();
-		}
-	}
-
-	async function postComment() {
-		if (newComment.trim() !== '') {
 			await PostComment(newComment, id);
 			setNewComment('');
-			getComments();
+			await getComments();
 		}
 	}
 

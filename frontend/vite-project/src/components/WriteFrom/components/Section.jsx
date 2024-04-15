@@ -20,6 +20,7 @@ function Section({ label, onChange, value, name }) {
 	const [books, setBooks] = useState([]);
 	const [buttonValid, setButtonValid] = useState(false);
 	const [listOut, setlistOut] = useState(true);
+	const [onlyNumError, setOnlyNumError] = useState(false);
 	const [selectBook, setSelectBook] = useState({
 		title: '',
 		author: '',
@@ -56,6 +57,8 @@ function Section({ label, onChange, value, name }) {
 		setButtonValid(value !== '');
 	}, [value]);
 
+	const isSalePriceValid = isNaN(value);
+
 	return (
 		<Box>
 			<Sentence>
@@ -69,6 +72,7 @@ function Section({ label, onChange, value, name }) {
 				value={value}
 				name={name}
 			/>
+			{isSalePriceValid && label == '판매가' && <RedStar>판매가는 숫자로만 입력해주세요.</RedStar>}
 			{id == undefined && label == '도서명' && (
 				<>
 					<SmallButton className="Button" onClick={handleSearch} disabled={!buttonValid}>

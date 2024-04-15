@@ -1,9 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import VitePluginHtmlEnv from 'vite-plugin-html-env';
 
 export default defineConfig({
 	// Vite에서 사용할 플러그인 목록
-	plugins: [react()],
+	plugins: [
+		react(),
+		VitePluginHtmlEnv(), // env 내용 html에 뿌려주기
+		VitePluginHtmlEnv({ handler: () => ({ compiler: true }) }),
+	],
 	// Vite 개발 서버 설정 정의
 	server: {
 		// Proxy 설정

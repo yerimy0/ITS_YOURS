@@ -12,8 +12,15 @@ const ProductCardWrap = styled.div`
 const ProductImage = styled.img`
 	display: flex;
 	width: 170px;
+	object-fit: cover;
 	height: 254px;
 	align-items: flex-start;
+	margin: 0 0 20px 0;
+
+	// &:hover {
+	// 	transform: rotateX(30deg);
+	// 	transform: rotateY(30deg);
+	// }
 `;
 
 const ProductInfoWrap = styled.div`

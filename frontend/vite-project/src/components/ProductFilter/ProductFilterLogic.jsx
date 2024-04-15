@@ -92,8 +92,8 @@ function ProductFilterLogic({
 
 	return (
 		<>
-			<FilterList>
-				<LocationList>
+			<FilterList className="filterlist">
+				<LocationList className="locationlist">
 					{locations.map(location => (
 						<LocationItem
 							key={location._id}
@@ -104,7 +104,7 @@ function ProductFilterLogic({
 						</LocationItem>
 					))}
 				</LocationList>
-				<UniversityList>
+				<UniversityList className="universitylist">
 					{universities.map(university => (
 						<LocationItem
 							key={university}
@@ -116,8 +116,13 @@ function ProductFilterLogic({
 					))}
 				</UniversityList>
 			</FilterList>
-			<Buttons>
-				<FilterInButton color="#009DFF" backgroundColor="#fff" onClick={handleResetFilter}>
+			<Buttons className="buttons">
+				<FilterInButton
+					className="but1"
+					color="#009DFF"
+					backgroundColor="#fff"
+					onClick={handleResetFilter}
+				>
 					초기화
 				</FilterInButton>
 				<FilterInButton color="#fff" backgroundColor="#009DFF" onClick={handleApplyFilter}>

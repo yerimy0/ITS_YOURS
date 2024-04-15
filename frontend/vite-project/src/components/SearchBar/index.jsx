@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CgSearch } from 'react-icons/cg';
+// import { CgSearch } from 'react-icons/cg';
 import {
 	SearchWrap,
 	SearchInputBox,
@@ -52,7 +52,7 @@ function SearchBar({ onSearchResults }) {
 
 	return (
 		<SearchWrap>
-			<SearchInputBox>
+			<SearchInputBox className="product_search_bar">
 				<SearchInput
 					type="text"
 					onChange={handleChange}
@@ -61,6 +61,7 @@ function SearchBar({ onSearchResults }) {
 					onBlur={handleBlur}
 					onKeyDown={handleKeyDown}
 					value={searchValue}
+					className="product"
 				/>
 				{searchValue && (
 					<ClearButton onClick={handleClearInput}>
@@ -68,7 +69,8 @@ function SearchBar({ onSearchResults }) {
 					</ClearButton>
 				)}
 				<SearchButton onClick={handleSearch}>
-					<CgSearch size="30" />
+					<img src="/search_btn.png" alt="검색버튼" />
+					{/* <CgSearch size="30" /> */}
 				</SearchButton>
 			</SearchInputBox>
 		</SearchWrap>

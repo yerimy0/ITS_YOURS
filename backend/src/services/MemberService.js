@@ -49,6 +49,8 @@ async function login(id, password) {
 				user: {
 					username: member.realName,
 					id: member.id,
+					nickName: member.nickName,
+					profilePic: member.profilePic,
 					isAdmin: member.isAdmin,
 				},
 			},

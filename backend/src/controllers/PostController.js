@@ -1,4 +1,12 @@
 const PostService = require('../services/PostService');
+const {
+	NotFoundError,
+	BadRequestError,
+	InternalServerError,
+	ConflictError,
+	ForbiddenError,
+	UnauthorizedError,
+} = require('../config/customError');
 
 /**
  * 커뮤니티 게시글 작성 controller
@@ -11,8 +19,15 @@ const createPost = async (req, res, next) => {
 		const nickName = req.user.nickName;
 		const profilePic = req.user.profilePic;
 		const schoolName = req.user.schoolName;
-		console.log(schoolName);
+
 		const { title, content, photos } = req.body;
+
+		if (!nickName) {
+			throw new BadRequestError('로그인 후 이용해주세요.');
+		}
+		if (!title || !content) {
+			throw new BadRequestError('필수 내용을 모두 입력해주세요.');
+		}
 		const post = await PostService.createPost(
 			title,
 			content,
@@ -23,7 +38,7 @@ const createPost = async (req, res, next) => {
 		);
 
 		if (!post) {
-			throw new Error('서버 오류 입니다.');
+			throw new InternalServerError('서버 오류 입니다.');
 		}
 		return res.status(200).json(post);
 	} catch (err) {
@@ -58,7 +73,7 @@ const getPostDetails = async (req, res, next) => {
 		const post = await PostService.getPostDetails(postId);
 
 		if (!post) {
-			return res.status(404).json({ message: 'Post not found' });
+			throw new NotFoundError('게시글이 없습니다.');
 		}
 
 		res.status(200).json(post);
@@ -85,7 +100,7 @@ const updatePost = async (req, res, next) => {
 			photos,
 		});
 		if (!updatedPost) {
-			return res.status(404).json({ message: 'post not found' });
+			throw new NotFoundError('게시글이 없습니다.');
 		}
 		res.status(200).json(updatedPost);
 	} catch (err) {
@@ -105,7 +120,7 @@ const deletePost = async (req, res, next) => {
 		const deletedPost = await PostService.deletePost(postId);
 
 		if (!deletedPost) {
-			return res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
+			throw new NotFoundError('게시글이 없습니다.');
 		}
 
 		// 삭제 성공 응답
@@ -113,11 +128,8 @@ const deletePost = async (req, res, next) => {
 			message: deletedPost.message, // 성공 메시지를 서비스로부터 받아온 메시지로 설정
 			data: deletedPost.deletedPost, // deletedPost 객체를 data 속성에 할당
 		});
-	} catch (error) {
-		res.status(500).json({
-			message: '게시글 삭제 중 오류가 발생했습니다.',
-			error: error.message,
-		});
+	} catch (err) {
+		next(err);
 	}
 };
 

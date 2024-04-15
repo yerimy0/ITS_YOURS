@@ -89,13 +89,13 @@ function ProductFilterLogic({
 		<>
 			<FilterList>
 				<LocationList>
-					{locations.map(location => (
+					{universities.map(university => (
 						<LocationItem
-							key={location._id}
-							className={currentLocation === location.region ? 'selected' : ''}
-							onClick={() => handleLocationSelect(location._id)}
+							key={university._id}
+							className={currentUniversity === university ? 'selected' : ''}
+							onClick={() => handleUniversitySelect(university)}
 						>
-							{location.region}
+							{university.name}
 						</LocationItem>
 					))}
 				</LocationList>

@@ -37,28 +37,30 @@ function CommentSection({ id }) {
 		getComments();
 	}, [id]);
 
-	const getComments = async () => {
+	async function getComments() {
 		const res = await Getcommets(id);
 		setComments(res);
 		setLength(res.length);
-	};
+	}
 
-	const onChange = e => {
+	async function onChange(e) {
 		setNewComment(e.target.value);
-	};
+	}
 
-	const activeEnter = async e => {
+	async function activeEnter(e) {
 		if (e.key === 'Enter') {
 			if (newComment.trim() === '') return;
 			await postComment();
 		}
-	};
+	}
 
-	const postComment = async () => {
-		await PostComment(newComment, id);
-		setNewComment('');
-		await getComments();
-	};
+	async function postComment() {
+		if (newComment.trim() !== '') {
+			await PostComment(newComment, id);
+			setNewComment('');
+			getComments();
+		}
+	}
 
 	return (
 		<GetCommentsContext.Provider value={getComments}>
@@ -87,13 +89,14 @@ function Each({ comment, id }) {
 	async function onClickDelete() {
 		const commentId = comment._id;
 		await DeleteComment(id, commentId);
-		await getComments();
+		getComments();
 	}
 
 	async function onClickUpdate() {
+		if (updatedComment.trim() === '') return;
 		const commentId = comment._id;
 		await UpdateComment(updatedComment, id, commentId);
-		await getComments();
+		getComments();
 		setIsEditing(false);
 	}
 
@@ -102,7 +105,7 @@ function Each({ comment, id }) {
 			if (updatedComment.trim() === '') return;
 			const commentId = comment._id;
 			await UpdateComment(updatedComment, id, commentId);
-			await getComments();
+			getComments();
 			setIsEditing(false);
 		}
 	}

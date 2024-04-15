@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import UniversityModal from '../../Users/UniversityModal';
+import UniversityModal from '../../Users/University/UniversityModal';
 import ProfileImageUploader from '../../../components/Users/ProfileImageUploader';
 import { signUpApi } from '../../../apis/service/SignUpApi';
 import ProfileForm from '../../Users/ProfileForm';
 import EmailVerificationForm from '../../Users/EmailVerificationForm';
-import UniversitySearchForm from '../../Users/UniversitySearchForm';
+import UniversitySearchForm from '../../Users/University/UniversitySearchForm';
 import { Button } from '../../../components/Users/UsersStyles';
 import {
 	validateUserId,

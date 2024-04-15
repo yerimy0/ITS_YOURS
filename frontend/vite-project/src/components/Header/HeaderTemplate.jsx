@@ -1,12 +1,20 @@
 import { NavLink } from 'react-router-dom';
 import { RightNav, LeftNav, HeaderMain, Nav, NavWrap } from './HeaderSytle';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { useLocation } from 'react-router-dom';
+import UserIdContext from '../../context/UserIdContext';
 
 function Header() {
 	const [isAuth, setIsAuth] = useState(false);
 	const [isToggled, setIsToggled] = useState(false);
+	const { id } = useContext(UserIdContext);
+
+	useEffect(() => {
+		console.log(id);
+		if (id == '') setIsAuth(false);
+		else setIsAuth(true);
+	}, []);
 
 	function handleClick() {
 		setIsToggled(!isToggled);
@@ -57,10 +65,26 @@ function Header() {
 					)}
 					<img src="/light.png" />
 				</LeftNav>
+				<div>
+					<RxHamburgerMenu className="HambergerBtn" onClick={handleClick} />
+				</div>
 			</Nav>
-			<div className="HambergerBtn" onClick={handleClick}>
-				<RxHamburgerMenu />
-			</div>
+			{isToggled && (
+				<div className="ToggleBox">
+					<div>
+						<NavLink to="/product">도서거래</NavLink>
+					</div>
+					<div>
+						<NavLink to="/community">커뮤니티</NavLink>
+					</div>
+					<div>
+						<NavLink to="/chat">채팅하기</NavLink>
+					</div>
+					<div>
+						<NavLink to="/mypage">내책판매</NavLink>
+					</div>
+				</div>
+			)}
 		</HeaderMain>
 	);
 }

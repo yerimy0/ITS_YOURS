@@ -1,11 +1,19 @@
 import { NavLink } from 'react-router-dom';
 import { RightNav, LeftNav, HeaderMain, Nav } from './HeaderSytle';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
+import UserIdContext from '../../context/UserIdContext';
 
 function Header() {
+	const { id } = useContext(UserIdContext);
 	const [isAuth, setIsAuth] = useState(false);
 	const [isToggled, setIsToggled] = useState(false);
+
+	useEffect(() => {
+		console.log(id);
+		if (id == ' ') setIsAuth(false);
+		else setIsAuth(true);
+	}, []);
 
 	function handleClick() {
 		setIsToggled(!isToggled);

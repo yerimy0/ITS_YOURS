@@ -4,12 +4,14 @@ import { Form } from './AskSupportWriteStyles';
 import { InputField } from './InputField';
 import { ErrorMessage } from './ErrorMessage';
 import { SubmitButton } from './SubmitButton';
-import { submitInquiry } from '../../../../apis/service/AskSupportApi';
+import { submitInquiry } from '../../../../apis/service/AskSupportApi'; // 이 줄을 확인하거나 추가
+import Modal from '../../../Users/Modal';
 
 function AskSupportWriteForm() {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const [error, setError] = useState('');
+	const [isModalOpen, setModalOpen] = useState(false);
 	const navigate = useNavigate();
 
 	function handleSubmit(e) {
@@ -17,11 +19,18 @@ function AskSupportWriteForm() {
 		setError('');
 
 		submitInquiry(title, content)
-			.then(() => navigate('/asksupportlist'))
+			.then(() => {
+				setModalOpen(true);
+			})
 			.catch(error => {
 				console.error('문제가 발생했습니다:', error);
 				setError('문제가 발생했습니다. 다시 시도해 주세요.');
 			});
+	}
+
+	function handleModalClose() {
+		setModalOpen(false);
+		navigate('/asksupportlist');
 	}
 
 	return (
@@ -40,6 +49,7 @@ function AskSupportWriteForm() {
 			/>
 			<SubmitButton>등록하기</SubmitButton>
 			{error && <ErrorMessage message={error} />}
+			<Modal isOpen={isModalOpen} message="글 작성이 완료되었습니다." onClose={handleModalClose} />
 		</Form>
 	);
 }

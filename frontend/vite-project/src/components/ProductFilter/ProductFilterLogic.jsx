@@ -20,11 +20,6 @@ function ProductFilterLogic({
 	const [currentUniversity, setCurrentUniversity] = useState(selectedUniversity);
 	const [universities, setUniversities] = useState([]);
 
-	// // 컴포넌트가 마운트될 떄 지역 데이터 호출
-	// useEffect(() => {
-	// 	fetchLocations();
-	// }, []);
-
 	// 컴포넌트가 마운트될 때 선택된 지역과 대학교 초기화
 	useEffect(() => {
 		setCurrentLocation(selectedLocation);
@@ -94,13 +89,13 @@ function ProductFilterLogic({
 		<>
 			<FilterList>
 				<LocationList>
-					{locations.map(location => (
+					{universities.map(university => (
 						<LocationItem
-							key={location._id}
-							className={currentLocation === location.region ? 'selected' : ''}
-							onClick={() => handleLocationSelect(location._id)}
+							key={university._id}
+							className={currentUniversity === university ? 'selected' : ''}
+							onClick={() => handleUniversitySelect(university)}
 						>
-							{location.region}
+							{university.name}
 						</LocationItem>
 					))}
 				</LocationList>

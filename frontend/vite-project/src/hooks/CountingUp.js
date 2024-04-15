@@ -1,19 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 function easeOutExpo(t) {
 	return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
 }
+
 function useCountUp(end, start = 0, duration = 2000) {
 	const [count, setCount] = useState(start);
-	const frameRate = 1000 / 60;
-	const totalFrame = Math.round(duration / frameRate);
+	let startTime = null;
+	let requestId = null;
 
-	useEffect(() => {
-		let currentNumber = start;
-		let startTime = null;
-		let requestId = null;
-
-		const updateCount = timestamp => {
+	const updateCount = useCallback(
+		timestamp => {
 			if (!startTime) startTime = timestamp;
 			const elapsedTime = timestamp - startTime;
 
@@ -24,23 +21,27 @@ function useCountUp(end, start = 0, duration = 2000) {
 			} else {
 				setCount(end);
 			}
-		};
+		},
+		[start, end, duration],
+	);
 
-		const handleScroll = () => {
-			const scrollY = window.scrollY || window.pageYOffset;
-			if (scrollY >= 2900) {
-				startTime = null;
-				if (!requestId) {
-					requestId = requestAnimationFrame(updateCount);
-				}
-			} else {
-				if (requestId) {
-					cancelAnimationFrame(requestId);
-					requestId = null;
-				}
+	const handleScroll = useCallback(() => {
+		const scrollY = window.scrollY || window.pageYOffset;
+		if (scrollY >= 2000) {
+			if (!startTime) startTime = performance.now();
+			if (!requestId) {
+				requestId = requestAnimationFrame(updateCount);
 			}
-		};
+		} else {
+			if (requestId) {
+				cancelAnimationFrame(requestId);
+				requestId = null;
+			}
+			startTime = null;
+		}
+	}, [updateCount]);
 
+	useEffect(() => {
 		window.addEventListener('scroll', handleScroll);
 
 		return () => {
@@ -49,7 +50,7 @@ function useCountUp(end, start = 0, duration = 2000) {
 				cancelAnimationFrame(requestId);
 			}
 		};
-	}, [end, duration, start]);
+	}, []);
 
 	return count;
 }

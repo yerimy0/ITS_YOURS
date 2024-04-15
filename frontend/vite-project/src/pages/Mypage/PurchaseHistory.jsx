@@ -1,21 +1,21 @@
-import styled from "styled-components";
-import SalesHistoryHeader from "../../components/pages/Mypage/SalesHistoryHeader";
-import SalesHistoryContainer from "../../components/pages/Mypage/SalesHistoryContainer";
+import styled from 'styled-components';
+import PurchaseHistoryHeader from '../../components/pages/Mypage/PurchaseHistoryHeader';
+import PurchaseHistoryContainer from '../../components/pages/Mypage/PurchaseHistoryContainer';
 
-function SalesHistory() {
-  return (
-    <SalesHistoryWrap>
-      <SalesHistoryHeader />
-      <SalesHistoryContainer />
-    </SalesHistoryWrap>
-  );
+function PurchaseHistory() {
+	return (
+		<PurchaseHistoryWrap>
+			<PurchaseHistoryHeader />
+			<PurchaseHistoryContainer />
+		</PurchaseHistoryWrap>
+	);
 }
 
-export default SalesHistoryCompleted;
+export default PurchaseHistory;
 
-const SalesHistoryWrap = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+const PurchaseHistoryWrap = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 `;

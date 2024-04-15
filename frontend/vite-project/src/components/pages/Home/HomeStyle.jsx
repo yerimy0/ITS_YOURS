@@ -3,13 +3,13 @@ import styled from 'styled-components';
 const Box1 = styled.section`
 	background-image: url('/background.png');
 	background-size: contain;
-	width: 100%;
-	height: 728px;
+	width: auto;
+	height: auto;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
 	align-content: center;
-	row-gap: 200px;
+	row-gap: 20px;
 	flex-wrap: wrap;
 `;
 
@@ -99,6 +99,8 @@ const Button = styled.button`
 const Img = styled.img`
 	background: lightgray 50% / cover no-repeat;
 	box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.25);
+	width: 203px;
+	height: 238px;
 `;
 
 const SchoolBox = styled.div`
@@ -127,26 +129,6 @@ const BookInfo = styled.div`
 	font-style: normal;
 	font-weight: 400;
 	line-height: normal;
-`;
-
-const Container = styled.div`
-	display: flex;
-	padding: 50px;
-	width: 1016px;
-	height: 190px;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 8px;
-	align-self: stretch;
-	border-radius: 15px 15px 0px 0px;
-	background: #f2f2f2;
-`;
-
-const Border = styled.img`
-	position: absolute;
-	width: 1175px;
-	left: 15%;
 `;
 
 const Line = styled.div`
@@ -225,8 +207,6 @@ export {
 	Icon,
 	Box3,
 	BookInfo,
-	Container,
-	Border,
 	Line,
 	PRCOntainer,
 	PRContent,

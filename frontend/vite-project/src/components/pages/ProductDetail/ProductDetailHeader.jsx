@@ -39,6 +39,9 @@ function ProductDetailHeader() {
 		loadProductData();
 	}, [id]);
 
+	console.log(product);
+	console.log(product.sellerId);
+
 	return (
 		<ProductDetail>
 			<BookCover>
@@ -46,7 +49,7 @@ function ProductDetailHeader() {
 			</BookCover>
 			<ProductContent>
 				<SalesInfo>
-					<SellerProfileWrap sellerId={product.sellerId} />
+					{product.sellerId && <SellerProfileWrap id={product.sellerId} />}
 					<ProductInfoWrap productId={product._id} name={product.name} price={product.price} />
 				</SalesInfo>
 				<BookContainer>

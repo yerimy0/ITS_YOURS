@@ -17,7 +17,6 @@ import { useEffect, useState, createContext } from 'react';
 import { Register } from '../../apis/service/product.api';
 
 export let RegisterContext = createContext();
-export let SetRegisterContext = createContext(() => {});
 
 function WriteForm() {
 	const navigate = useNavigate();
@@ -113,52 +112,50 @@ function WriteForm() {
 	}
 
 	return (
-		<SetRegisterContext.Provider value={setRegister}>
-			<RegisterContext.Provider value={register}>
-				<RegisterBox>
-					<Title>
-						<TopTitle>상품 등록</TopTitle>
-						<RedStar>*필수 항목</RedStar>
-					</Title>
-					<Line>
-						<hr />
-					</Line>
-					<MainContent>
-						<InputImg onImageChange={handleImageChange} value={imgUrls} />
-						<Section label={'도서명'} onChange={onChange} value={name} name="name" />
-						<Section label={'판매가'} onChange={onChange} value={price} name="price" />
-						<ProductTwoInput>
-							<Section2 label={'출판사'} onChange={onChange} value={publisher} name="publisher" />
-							<Section2 label={'저자'} onChange={onChange} value={author} name="author" />
-						</ProductTwoInput>
-						<Section3
-							label={'상품 설명'}
-							onChange={onChange}
-							value={description}
-							name="description"
-						/>
-						<Section4 value={condition} />
-					</MainContent>
-					<RegButtons>
-						<BigButton className="Button" onClick={tempSave}>
-							임시저장
-						</BigButton>{' '}
-						<BigButton
-							className="Button"
-							onClick={() => {
-								if (isValid) {
-									Upload();
-								} else {
-									alert('모든 필수 항목을 입력해주세요!');
-								}
-							}}
-						>
-							등록하기
-						</BigButton>
-					</RegButtons>
-				</RegisterBox>
-			</RegisterContext.Provider>
-		</SetRegisterContext.Provider>
+		<RegisterContext.Provider value={(setRegister, register)}>
+			<RegisterBox>
+				<Title>
+					<TopTitle>상품 등록</TopTitle>
+					<RedStar>*필수 항목</RedStar>
+				</Title>
+				<Line>
+					<hr />
+				</Line>
+				<MainContent>
+					<InputImg onImageChange={handleImageChange} value={imgUrls} />
+					<Section label={'도서명'} onChange={onChange} value={name} name="name" />
+					<Section label={'판매가'} onChange={onChange} value={price} name="price" />
+					<ProductTwoInput>
+						<Section2 label={'출판사'} onChange={onChange} value={publisher} name="publisher" />
+						<Section2 label={'저자'} onChange={onChange} value={author} name="author" />
+					</ProductTwoInput>
+					<Section3
+						label={'상품 설명'}
+						onChange={onChange}
+						value={description}
+						name="description"
+					/>
+					<Section4 value={condition} />
+				</MainContent>
+				<RegButtons>
+					<BigButton className="Button" onClick={tempSave}>
+						임시저장
+					</BigButton>{' '}
+					<BigButton
+						className="Button"
+						onClick={() => {
+							if (isValid) {
+								Upload();
+							} else {
+								alert('모든 필수 항목을 입력해주세요!');
+							}
+						}}
+					>
+						등록하기
+					</BigButton>
+				</RegButtons>
+			</RegisterBox>
+		</RegisterContext.Provider>
 	);
 }
 

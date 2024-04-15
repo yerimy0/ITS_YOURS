@@ -58,7 +58,7 @@ async function deleteQna(qnaId) {
 
 // 내 Q&A 조회
 async function getMyQna(nickname) {
-	const myQna = await Qna.find({ nickname: nickname });
+	const myQna = await Qna.find({ nickname: nickname, deletedAt: { $exists: false } });
 
 	return myQna;
 }

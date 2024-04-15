@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import WishBtn from './WishButtonStyle';
 import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
-import instance from '../../apis/axiosInstance';
 import UserIdContext from '../../context/UserIdContext';
+import { fetchUserWishList, toggleWishlist } from '../../apis/service/WishApi';
 
 // WishButton 컴포넌트
 function WishButton({ productId }) {
@@ -13,51 +13,38 @@ function WishButton({ productId }) {
 
 	// 사용자가 상품을 찜했는지 확인
 	useEffect(() => {
-		const fetchWishStatus = async () => {
+		const fetchStatus = async () => {
 			if (!id) {
 				return; // 로그인하지 않은 상태라면 함수 종료
 			}
 
 			try {
-				// API를 통해 사용자의 찜 목록을 조회
-				const res = await instance.get(`/wishes/${id}`);
-
-				if (res.status === 200 && Array.isArray(res.data)) {
-					// 찜 목록에 현재 상품이 있는지 확인
-					const isProductInWishlist = res.data.some(wish => wish.productId._id === productId);
-					// 상태 업데이트
-					setIsWishAdd(isProductInWishlist);
-				} else {
-					setIsWishAdd(false);
-				}
+				const wishData = await fetchUserWishList(id);
+				const isProductInWishlist = wishData.some(wish => wish.productId._id === productId);
+				setIsWishAdd(isProductInWishlist);
 			} catch (error) {
-				console.error('API 요청 에러:', error);
+				console.error('Error fetching wish status:', error);
 			}
 		};
 
-		fetchWishStatus();
+		fetchStatus();
 	}, [productId, id]);
 
 	// 찜 버튼 상태 토글 함수
 	const wishCountHandler = async () => {
 		if (!id) {
-			// 사용자가 로그인하지 않은 상태라면 로그인 페이지로 이동
-			navigate('/login');
+			navigate('/login'); // 사용자가 로그인하지 않은 상태라면 로그인 페이지로 이동
 			return;
 		}
 
-		// 상태 토글
 		const newIsWishAdd = !isWishAdd;
 
 		try {
-			// 찜 목록을 토글하는 API 요청
-			const res = await instance.post('/wishes/toggle', { productId });
-
-			// 요청이 성공하면 상태 업데이트
+			const res = await toggleWishlist(productId);
 			if (res.status === 200) {
 				setIsWishAdd(newIsWishAdd);
 			} else {
-				console.error('찜 목록 토글 실패:', res);
+				console.error('Error toggling wishlist:', res);
 			}
 		} catch (error) {
 			console.error('API 요청 에러:', error);
@@ -71,10 +58,7 @@ function WishButton({ productId }) {
 		<IoIosHeartEmpty size="24" />
 	);
 
-	return (
-		// 찜 버튼 클릭 시 `wishCountHandler` 함수 실행
-		<WishBtn onClick={wishCountHandler}>{WishIcon}</WishBtn>
-	);
+	return <WishBtn onClick={wishCountHandler}>{WishIcon}</WishBtn>;
 }
 
 export default WishButton;

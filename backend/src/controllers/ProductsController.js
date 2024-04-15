@@ -74,7 +74,8 @@ const insertProduct = async (req, res, next) => {
 		// 업로드된 이미지의 경로들을 imgUrls 배열로 구성합니다.
 		//const imgUrls = req.files.map(file => file.path);
 
-		const { name, imgUrls, price, author, publisher, condition, description } = req.body;
+		const { name, imgUrls, price, author, publisher, condition, description, longitude, latitude } =
+			req.body;
 		const product = await productsService.insertProduct({
 			userId,
 			name,
@@ -83,6 +84,8 @@ const insertProduct = async (req, res, next) => {
 			author,
 			publisher,
 			condition,
+			longitude,
+			latitude,
 			region,
 			schoolName,
 			description,

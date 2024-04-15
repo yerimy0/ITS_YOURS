@@ -10,9 +10,10 @@ function Header() {
 	const [isToggled, setIsToggled] = useState(false);
 
 	useEffect(() => {
-		if (id !== ' ') setIsAuth(true);
-		else setIsAuth(false);
-	}, [id]);
+		console.log(id);
+		if (id == ' ') setIsAuth(false);
+		else setIsAuth(true);
+	}, []);
 
 	function handleClick() {
 		setIsToggled(!isToggled);

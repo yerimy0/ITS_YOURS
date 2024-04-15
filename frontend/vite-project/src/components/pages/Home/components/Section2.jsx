@@ -25,7 +25,7 @@ function Section2() {
 					<UpdateTitle>방금 올라온 도서</UpdateTitle>
 					<UpdateBooks>
 						{pics.map((pic, i) => (
-							<Img key={`List-item-${i}`} src={`./${pic}`} alt={`Book ${i}`} />
+							<Img className="sec2_img" key={`List-item-${i}`} src={`./${pic}`} alt={`Book ${i}`} />
 						))}
 					</UpdateBooks>
 					<ButtonBox>

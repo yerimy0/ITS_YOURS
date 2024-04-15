@@ -126,9 +126,7 @@ async function tradedProductsByBuyerId(buyerId) {
 
 // 판매내역 조회
 async function tradedProductsBySellerId(sellerId) {
-	const tradedProducts = await Products.find({ sellerId, deletedAt: { $exists: false } }).select(
-		'name imgUrls price isCompleted',
-	);
+	const tradedProducts = await Products.find({ sellerId, deletedAt: { $exists: false } });
 	return tradedProducts;
 }
 

@@ -27,13 +27,13 @@ function CommuWrite() {
 
 	const fileInputRef = useRef(null);
 
-	const handleInputChange = e => {
+	function handleInputChange(e) {
 		setIsBlanked(false);
 		const { name, value } = e.target;
 		setWriteCommu({ ...writeCommu, [name]: value });
-	};
+	}
 
-	const handleImageChange = e => {
+	function handleImageChange(e) {
 		const file = e.target.files[0];
 		const reader = new FileReader();
 		reader.onload = () => {
@@ -44,13 +44,13 @@ function CommuWrite() {
 		if (file) {
 			reader.readAsDataURL(file);
 		}
-	};
+	}
 
-	const handleClick = () => {
+	function handleClick() {
 		fileInputRef.current.click();
-	};
+	}
 
-	const handleSubmit = () => {
+	function handleSubmit() {
 		async function Post() {
 			await PostCommunity(writeCommu);
 			navigate('/community');
@@ -60,7 +60,7 @@ function CommuWrite() {
 		} else {
 			setIsBlanked(true);
 		}
-	};
+	}
 
 	return (
 		<Box>

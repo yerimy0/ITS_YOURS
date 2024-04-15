@@ -12,6 +12,7 @@ function ShowId() {
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
 	const email = queryParams.get('email');
+	const userId = queryParams.get('userId');
 	const navigate = useNavigate();
 
 	const handleLogin = () => {

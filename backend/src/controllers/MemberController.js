@@ -122,7 +122,7 @@ const getMember = async (req, res, next) => {
  */
 const getSellerInfo = async (req, res, next) => {
 	try {
-		const { sellerId } = req.params;
+		const { sellerId } = req.body;
 		const sellerInfo = await memberService.getSellerInfo(sellerId);
 
 		if (!sellerInfo) {

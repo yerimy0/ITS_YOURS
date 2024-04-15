@@ -1,9 +1,10 @@
 import instance from '../axiosInstance';
 
-async function fetchSellerDataById(sellerId) {
+async function fetchSellerDataById(id) {
 	try {
-		const res = await instance.get(`/members/${sellerId}`);
+		const res = await instance.get(`/members/${id}`);
 		if (res.status === 200) {
+			console.log('jsonData::' + JSON.stringify(res.data));
 			return res.data;
 		}
 	} catch (err) {

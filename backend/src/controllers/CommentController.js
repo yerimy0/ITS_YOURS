@@ -1,4 +1,12 @@
 const CommentService = require('../services/CommentService');
+const {
+	NotFoundError,
+	BadRequestError,
+	InternalServerError,
+	ConflictError,
+	ForbiddenError,
+	UnauthorizedError,
+} = require('../config/customError');
 
 /**
  * 커뮤니티 댓글 작성 service
@@ -13,6 +21,12 @@ const createComment = async (req, res, next) => {
 		const profilePic = req.user.profilePic;
 		const { content } = req.body;
 
+		if (!nickName) {
+			throw new BadRequestError('로그인 후 이용해주세요.');
+		}
+		if(!content) {
+			throw new BadRequestError('필수 내용을 입력 후 등록해주세요.');
+		}
 		const newComment = await CommentService.createComment(postId, content, nickName, profilePic);
 
 		res.status(200).json(newComment);
@@ -30,7 +44,6 @@ const createComment = async (req, res, next) => {
 const getComment = async (req, res, next) => {
 	try {
 		const { postId } = req.params;
-		console.log(req.params);
 		const getComment = await CommentService.getComment(postId);
 
 		res.status(200).json(getComment);
@@ -53,7 +66,7 @@ const updateComment = async (req, res, next) => {
 		const updateResult = await CommentService.updateComment(commentId, content);
 
 		if (!updateComment) {
-			return res.status(400).json({ message: '댓글을 찾을 수 없습니다.' });
+			throw new BadRequestError('댓글을 찾을 수 없습니다.');
 		}
 		res.status(200).json(updateResult);
 	} catch (err) {
@@ -74,7 +87,7 @@ const deleteComment = async (req, res) => {
 		const deleteComment = await CommentService.deleteComment(commentId);
 
 		if (!deleteComment) {
-			return res.status(400).json({ message: '댓글을 찾을 수 없습니다' });
+			throw new BadRequestError('댓글을 찾을 수 없습니다.');
 		}
 		res.status(200).json({ message: '댓글이 성공적으로 삭제되었습니다.', deleteComment });
 	} catch (err) {

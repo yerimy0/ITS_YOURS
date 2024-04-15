@@ -1,7 +1,7 @@
 import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { InquiryItem as StyledInquiryItem, Content, ActionContainer } from './AskSupportListStyles';
 import DeleteButton from './DeleteButton';
-import { useNavigate } from 'react-router-dom';
 import ToggleContentButton from './ToggleContentButton';
 import InquiryStatus from './InquiryStatus';
 import { deleteInquiry } from '../../../../apis/service/AskSupportApi';
@@ -21,14 +21,14 @@ function InquiryItem({ inquiry, toggleContent, deleteInquiryFromList }) {
 			await deleteInquiry(_id);
 			alert('문의가 성공적으로 삭제되었습니다.');
 			deleteInquiryFromList(_id);
-			navigate('/inquiry-list');
+			navigate('/asksupportlist');
 		} catch (error) {
 			console.error('Failed to delete the inquiry:', error);
 			alert('문의 삭제에 실패했습니다.');
 		}
 	}
 
-	const { _id, title, content, status, show } = inquiry;
+	const { title, content, status, show } = inquiry;
 
 	return (
 		<StyledInquiryItem>

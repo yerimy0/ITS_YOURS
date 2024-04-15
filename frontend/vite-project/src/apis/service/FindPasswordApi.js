@@ -1,8 +1,8 @@
 import instance from '../axiosInstance';
 
-const findPassword = async (userId, email, setModalMessage, setIsModalOpen, navigate) => {
+const findPassword = async (id, email, setModalMessage, setIsModalOpen, navigate) => {
 	try {
-		await instance.post('/members/findPassword', { id: userId, email });
+		await instance.post('/members/findPassword', { id: id, email });
 		setModalMessage('비밀번호를 이메일로 보냈습니다.\n이메일을 확인해주세요.');
 		setIsModalOpen(true);
 		setTimeout(() => {

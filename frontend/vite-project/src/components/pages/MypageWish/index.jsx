@@ -3,7 +3,7 @@ import { WishsWrap, WishTitle, Wishs } from './WishStyle';
 import ProductCard from '../../ProductCard';
 import Paginator from '../../Paginator';
 import { useNavigate } from 'react-router-dom';
-import instance from '../../../apis/axiosInstance';
+import { fetchUserWishList } from '../../../apis/service/WishApi';
 import UserIdContext from '../../../context/UserIdContext';
 
 function WishContainer() {
@@ -14,20 +14,25 @@ function WishContainer() {
 	const [totalItems, setTotalItems] = useState(0);
 	const { id } = useContext(UserIdContext);
 
+	// 사용자의 찜 목록을 가져오는 useEffect
 	useEffect(() => {
-		const fetchUserWishList = async () => {
+		const loadUserWishList = async () => {
+			if (!id) {
+				return; // 로그인하지 않은 상태라면 함수 종료
+			}
 			try {
-				const res = await instance.get(`/wishes/${id}`);
-				const wishData = res.data;
+				const wishData = await fetchUserWishList(id);
 				setUserWishList(wishData);
 				setTotalItems(wishData.length);
 			} catch (error) {
 				console.error('위시 상품 데이터를 불러오는 중 에러 발생:', error);
 			}
 		};
-		fetchUserWishList();
-	}, []);
 
+		loadUserWishList();
+	}, [id]);
+
+	// 페이지네이션 로직
 	const startIndex = currentPage * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
 	const userWishListToShow = userWishList.slice(startIndex, endIndex);

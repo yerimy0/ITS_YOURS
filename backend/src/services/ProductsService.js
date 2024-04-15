@@ -124,6 +124,34 @@ async function tradedProductsByBuyerId(buyerId) {
 	return tradedProducts;
 }
 
+// 판매내역 조회
+async function tradedProductsBySellerId(sellerId) {
+	const tradedProducts = await Products.find({ sellerId, deletedAt: { $exists: false } }).select(
+		'name imgUrls price isCompleted',
+	);
+	return tradedProducts;
+}
+
+// 판매내역 삭제
+async function deleteSalesHis(sellerId, prodId) {
+	try {
+		const salesHistory = await Products.findOne({ sellerId });
+		if (salesHistory.deletedAt) {
+			throw new Error('이미 삭제된 판매내역입니다');
+		}
+		await Products.findOneAndUpdate(
+			{ _id: prodId },
+			{ deletedAt: Date.now() + 9 * 60 * 60 * 1000 },
+		);
+		if (!deleteSalesHis) {
+			throw new Error('판매내역을 찾을 수 없습니다.');
+		}
+		return { message: '판매내역이 삭제되었습니다.', deleteSalesHis };
+	} catch (error) {
+		throw error;
+	}
+}
+
 module.exports = {
 	getProductsList,
 	searchProduct,
@@ -132,4 +160,6 @@ module.exports = {
 	updateProduct,
 	deleteProduct,
 	tradedProductsByBuyerId,
+	tradedProductsBySellerId,
+	deleteSalesHis,
 };

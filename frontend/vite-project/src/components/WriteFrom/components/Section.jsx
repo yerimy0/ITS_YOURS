@@ -10,13 +10,12 @@ import {
 } from '../WriteFormStyle';
 import { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { SetRegisterContext, RegisterContext } from '../index';
+import { RegisterContext } from '../index';
 import { GetBookInfo } from '../../../apis/service/product.api';
 
 function Section({ label, onChange, value, name }) {
 	const { id } = useParams();
-	const register = useContext(RegisterContext);
-	const setRegister = useContext(SetRegisterContext);
+	const setRegister = useContext(RegisterContext);
 
 	const [books, setBooks] = useState([]);
 	const [buttonValid, setButtonValid] = useState(false);
@@ -125,9 +124,8 @@ function Section3({ label, onChange, value, name }) {
 
 function Section4({ value }) {
 	const [active, setActive] = useState(value);
-
+	const setRegister = useContext(RegisterContext);
 	const register = useContext(RegisterContext);
-	const setRegister = useContext(SetRegisterContext);
 
 	useEffect(() => {
 		setActive(value);
@@ -135,11 +133,9 @@ function Section4({ value }) {
 
 	function onButtonClick(e) {
 		const { value } = e.target;
-		console.log(value);
 		setActive(value);
 		setRegister({ ...register, condition: value });
 	}
-
 	return (
 		<Box>
 			<Sentence>

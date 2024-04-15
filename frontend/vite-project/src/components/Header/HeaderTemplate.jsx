@@ -13,7 +13,7 @@ function Header() {
 		console.log(id);
 		if (id == ' ') setIsAuth(false);
 		else setIsAuth(true);
-	}, []);
+	}, [id]);
 
 	function handleClick() {
 		setIsToggled(!isToggled);

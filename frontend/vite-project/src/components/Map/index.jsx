@@ -1,12 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { useParams } from 'react-router-dom';
+import { GetDetail } from '../../apis/service/product.api';
 
 function KaKao() {
+	const { id } = useParams();
+	const [sellerLat, setSellerLat] = useState(0);
+	const [sellerLng, setSellerLng] = useState(0);
+	async function GetSellerLoc() {
+		try {
+			const { latitude, longitude } = await GetDetail(id);
+			setSellerLat(latitude);
+			setSellerLng(longitude);
+		} catch (error) {
+			console.error('상품 데이터를 불러오는 중 에러 발생:', error);
+		}
+	}
+	useEffect(() => {
+		GetSellerLoc();
+	}, []);
+
 	const [location, setLoacation] = useState(null);
-	const [center, setCenter] = useState({
-		lat: 0,
-		lng: 0,
-	});
 
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
@@ -23,9 +37,9 @@ function KaKao() {
 	}
 
 	function getCenter() {
-		if (!location) return { lat: 37.592808823439, lng: 127.0530259112 }; // 기본 위치 설정
+		if (!location) return { lat: sellerLat, lng: sellerLng }; // 기본 위치 설정
 
-		const marker1 = { lat: 37.592808823439, lng: 127.0530259112 };
+		const marker1 = { lat: sellerLat, lng: sellerLng };
 		const marker2 = { lat: location.latitude, lng: location.longitude };
 
 		const centerLat = (marker1.lat + marker2.lat) / 2;
@@ -38,12 +52,13 @@ function KaKao() {
 		<Map
 			center={getCenter()} // 지도의 중심 좌표
 			style={{ width: '1000px', height: '400px' }} // 지도 크기
-			level={7}
+			level={9}
 		>
 			{location && (
 				<>
-					<MapMarker position={{ lat: 37.592808823439, lng: 127.0530259112 }} />
-					<MapMarker position={{ lat: location.latitude, lng: location.longitude }} />
+					<MapMarker position={{ lat: sellerLat, lng: sellerLng }} /> {/* 판매자거리 */}
+					<MapMarker position={{ lat: location.latitude, lng: location.longitude }} />{' '}
+					{/* 내거리 */}
 				</>
 			)}
 		</Map>

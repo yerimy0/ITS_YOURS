@@ -165,7 +165,18 @@ export const ErrorMessage = styled.div`
 	color: #b3261e;
 	font-size: 12px;
 	margin-left: 10px;
-	text-align: left; /* 에러 메시지를 왼쪽 정렬 */
+`;
+
+export const EmailErrorMessage = styled.div`
+	color: #b3261e;
+	font-size: 12px;
+	margin-right: 220px;
+`;
+
+export const VerificationErrorMessage = styled.div`
+	color: #b3261e;
+	font-size: 12px;
+	margin-right: 270px;
 `;
 
 export const InlineGroup = styled.div`

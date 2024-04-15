@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { InputWithIcon, SearchInput, InputIcon, ErrorMessage } from '../UsersStyles';
+import { InputWithIcon, SearchInput, InputIcon, VerificationErrorMessage } from '../UsersStyles';
 import UniversityModal from './UniversityModal';
 import { validateUniversity } from '../ValidationService';
 
@@ -38,7 +38,7 @@ function UniversitySearchForm({ university, setUniversity }) {
 				/>
 				<InputIcon src="/ReadingGlasses.svg" alt="Search" onClick={handleInputClick} />
 			</InputWithIcon>
-			{universityError && <ErrorMessage>{universityError}</ErrorMessage>}
+			{universityError && <VerificationErrorMessage>{universityError}</VerificationErrorMessage>}
 			{isModalOpen && (
 				<UniversityModal
 					isOpen={isModalOpen}

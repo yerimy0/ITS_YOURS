@@ -39,7 +39,7 @@ const router = createBrowserRouter([
 			{ path: '/mypage/wish', element: <MyPageWish /> },
 			{ path: '/mypage', element: <MyPage /> },
 			{ path: '/product/:id', element: <ProductDetail /> },
-			{ path: '/saleshistory', element: <SalesHistory /> },
+			{ path: '/saleshistory/:id', element: <SalesHistory /> },
 			{ path: '/purchasehistory/:id', element: <PurchaseHistory /> },
 			{ path: '/faq', element: <Faq /> },
 			{ path: '/asksupportlist', element: <AskSupportList /> },

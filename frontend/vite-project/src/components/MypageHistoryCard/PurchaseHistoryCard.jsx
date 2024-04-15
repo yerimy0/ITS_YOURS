@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function PurchaseHistoryCard({ _id, imgUrls, price, sellerId, name, buyDate, type }) {
+function PurchaseHistoryCard({ imgUrls, price, sellerId, name, buyDate }) {
 	return (
 		<>
 			<PurchaseCardWrap>

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Modal from '../Modal';
 
-const OnSaleCard = ({ itemId, onDelete, onEdit }) => {
+function OnSaleCard({ imgUrls, price, name, sellDate, like, chat, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const openDeleteModal = () => {
 		setIsModalOpen(true);
@@ -13,48 +15,45 @@ const OnSaleCard = ({ itemId, onDelete, onEdit }) => {
 		setIsModalOpen(false);
 	};
 
-	const handleDelete = () => {
-		onDelete(itemId);
+	const handleConfirmDelete = () => {
+		onDelete();
 		closeDeleteModal();
 	};
 
 	return (
 		<>
-			{itemData ? (
-				<ProductCardWrap>
-					<ImageBox>
-						<ForSalesListImage src={itemData.image} alt={itemData.title} />
-					</ImageBox>
-					<SalesInfo>
-						<Title>{itemData.title}</Title>
-						<Price>{`${itemData.price}원`}</Price>
-						<Stats>
-							<Icon src="heart.svg" alt="Wish" />
-							<Status>{itemData.like}</Status>
-							<Icon src="chat_bubble_oval.svg" alt="Chat" />
-							<Status>{itemData.chat}</Status>
-						</Stats>
-						<Date>{itemData.Date}</Date>
-					</SalesInfo>
-					<ButtonBox>
-						<EdditBtn onClick={() => onEdit(itemId)}>수정</EdditBtn>
-						<DeleteBtn onClick={openDeleteModal}>삭제</DeleteBtn>
-					</ButtonBox>
-				</ProductCardWrap>
-			) : (
-				<div>데이터 로딩중...</div>
-			)}
+			<ProductCardWrap>
+				<ImageBox>
+					<ForSalesListImage src={imgUrls} alt="" />
+				</ImageBox>
+				<SalesInfo>
+					<Title>{name}</Title>
+					<Price>{price}</Price>
+					<Won>원</Won>
+					<Stats>
+						<Icon src="heart.svg" alt="Wish" />
+						<Status>{like}</Status>
+						<Icon src="chat_bubble_oval.svg" alt="Chat" />
+						<Status>{chat}</Status>
+					</Stats>
+					<Date>{sellDate}</Date>
+				</SalesInfo>
+				<ButtonBox>
+					<EdditBtn onClick={() => navigate(`/product/edit/${id}`)}>수정</EdditBtn>
+					<DeleteBtn onClick={openDeleteModal}>삭제</DeleteBtn>
+				</ButtonBox>
+			</ProductCardWrap>
 			<Modal
 				isOpen={isModalOpen}
 				onClose={closeDeleteModal}
 				title="정말 삭제하시겠습니까?"
 				content="삭제된 데이터는 복구할 수 없습니다."
 				confirmText="확인"
-				onConfirm={handleDelete}
+				onConfirm={handleConfirmDelete}
 			/>
 		</>
 	);
-};
+}
 
 export default OnSaleCard;
 
@@ -92,6 +91,18 @@ const Price = styled.span`
 	font-size: 24px;
 	font-weight: 700;
 	font-family: SUIT;
+`;
+
+const Won = styled.div`
+	color: var(--M3-black, #000);
+	font-family: SUIT;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 24px;
+	display: inline-block;
+	margin: 0px;
+	flex-direction: column-reverse;
 `;
 
 const Stats = styled.div`

@@ -89,26 +89,28 @@ function ProductFilterLogic({
 		<>
 			<FilterList>
 				<LocationList>
-					{universities.map(university => (
+					{locations.map(location => (
 						<LocationItem
-							key={university._id}
-							className={currentUniversity === university ? 'selected' : ''}
-							onClick={() => handleUniversitySelect(university)}
+							key={location._id}
+							className={currentLocation === location.region ? 'selected' : ''}
+							onClick={() => handleLocationSelect(location._id)}
 						>
-							{university.name}
+							{location.region}
 						</LocationItem>
 					))}
 				</LocationList>
 				<UniversityList>
-					{universities.map(university => (
-						<LocationItem
-							key={university}
-							className={currentUniversity === university ? 'selected' : ''}
-							onClick={() => handleUniversitySelect(university)}
-						>
-							{university}
-						</LocationItem>
-					))}
+					<UniversityList>
+						{universities.map(university => (
+							<LocationItem
+								key={university._id} // 대학의 고유한 ID를 key로 사용
+								className={currentUniversity === university.name ? 'selected' : ''}
+								onClick={() => handleUniversitySelect(university.name)} // 대학 이름을 전달
+							>
+								{university.name}
+							</LocationItem>
+						))}
+					</UniversityList>
 				</UniversityList>
 			</FilterList>
 			<Buttons>

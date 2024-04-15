@@ -141,10 +141,14 @@ input,
 button,
 textarea,
 select {
-	font-family: 'Pretendard', sans-serif;
+	font-family: 'SUIT', sans-serif;
 	outline: none;
 }
-.clear {
+
+::-webkit-scrollbar {
+	display: none;
+}
+/* .clear {
 	clear: both;
 }
 .fl {
@@ -152,7 +156,7 @@ select {
 }
 .fr {
 	float: right;
-}
+} */
 
 @font-face {
 	font-family: 'SUIT';
@@ -232,7 +236,20 @@ select {
 		url('https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Heavy.ttf') format('truetype');
 	font-display: swap;
 }
-
+@font-face {
+	font-family: 'DOSPilgiMedium';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/DOSPilgiMedium.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'PyeongChangPeace-Bold';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
 /*사파리 버튼 초기화*/
 input[type='text'],
 input[type='password'],
@@ -250,3 +267,5 @@ textarea {
 	width: 100%;
 	display: block;
 }
+
+/* =================== 공통 */

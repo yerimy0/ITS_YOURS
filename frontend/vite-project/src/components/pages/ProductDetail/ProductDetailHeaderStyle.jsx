@@ -9,7 +9,6 @@ const ProductDetail = styled.section`
 	gap: 55px;
 	flex-wrap: wrap;
 	justify-content: center;
-	border-bottom: 2px solid #000;
 `;
 
 const BookCover = styled.div`
@@ -25,6 +24,7 @@ const BookImg = styled.img`
 	height: 450px;
 	max-width: 450px;
 	max-height: 450px;
+	object-fit: cover;
 `;
 
 const ProductContent = styled.div`
@@ -44,8 +44,8 @@ const SalesInfo = styled.div`
 	align-items: flex-start;
 	gap: 15px;
 	margin-right: auto;
-	padding-bottom: 10px;
-	border-bottom: 1px solid #000;
+	padding-bottom: 30px;
+	border-bottom: 1px solid #ddd;
 `;
 
 const BookContainer = styled.div`

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import UniversityModal from '../../Users/UniversityModal';
+import UniversityModal from '../../Users/University/UniversityModal';
 import ProfileImageUploader from '../../../components/Users/ProfileImageUploader';
 import { signUpApi } from '../../../apis/service/SignUpApi';
 import ProfileForm from '../../Users/ProfileForm';
 import EmailVerificationForm from '../../Users/EmailVerificationForm';
-import UniversitySearchForm from '../../Users/UniversitySearchForm';
+import UniversitySearchForm from '../../Users/University/UniversitySearchForm';
 import { Button } from '../../../components/Users/UsersStyles';
 import {
 	validateUserId,
@@ -12,6 +12,8 @@ import {
 	validateConfirmPassword,
 	validateName,
 	validateEmail,
+	validateNickname,
+	validateUniversity,
 } from '../../Users/ValidationService';
 
 function SignUpForm() {
@@ -28,26 +30,48 @@ function SignUpForm() {
 	const [emailError, setEmailError] = useState('');
 	const [emailVerificationCode, setEmailVerificationCode] = useState('');
 	const [nickname, setNickname] = useState('');
+	const [nicknameError, setNicknameError] = useState('');
 	const [university, setUniversity] = useState('');
+	const [universityError, setUniversityError] = useState('');
 	const [isModalOpen, setModalOpen] = useState(false);
 
 	const handleBlurUserId = () => setUserIdError(validateUserId(userId));
-	const handleBlurPassword = () => setPasswordError(validatePassword(password, confirmPassword));
+	const handleBlurPassword = () => setPasswordError(validatePassword(password));
 	const handleBlurConfirmPassword = () =>
 		setConfirmPasswordError(validateConfirmPassword(password, confirmPassword));
 	const handleBlurName = () => setNameError(validateName(name));
 	const handleBlurEmail = () => setEmailError(validateEmail(email));
+	const handleBlurNickname = () => setNicknameError(validateNickname(nickname));
 
-	const handleOpenModal = () => setModalOpen(true);
-	const handleCloseModal = () => setModalOpen(false);
 	const handleSelectUniversity = selectedUniversity => {
 		setUniversity(selectedUniversity);
+		setUniversityError(validateUniversity(selectedUniversity));
 		handleCloseModal();
 	};
 
+	const handleOpenModal = () => setModalOpen(true);
+	const handleCloseModal = () => setModalOpen(false);
+
 	const handleSubmit = async event => {
 		event.preventDefault();
-		if (!userIdError && !passwordError && !confirmPasswordError && !nameError && !emailError) {
+		// Validate all fields before submitting
+		handleBlurUserId();
+		handleBlurPassword();
+		handleBlurConfirmPassword();
+		handleBlurName();
+		handleBlurEmail();
+		handleBlurNickname();
+		handleSelectUniversity(university); // This might not be necessary here, re-validate on modal selection
+
+		if (
+			!userIdError &&
+			!passwordError &&
+			!confirmPasswordError &&
+			!nameError &&
+			!emailError &&
+			!nicknameError &&
+			!universityError
+		) {
 			const formData = new FormData();
 			formData.append('id', userId);
 			formData.append('password', password);
@@ -65,6 +89,16 @@ function SignUpForm() {
 			} else {
 				console.log('회원가입 성공:', data);
 			}
+		} else {
+			console.error('Validation errors:', {
+				userIdError,
+				passwordError,
+				confirmPasswordError,
+				nameError,
+				emailError,
+				nicknameError,
+				universityError,
+			});
 		}
 	};
 
@@ -91,10 +125,12 @@ function SignUpForm() {
 				passwordError={passwordError}
 				confirmPasswordError={confirmPasswordError}
 				nameError={nameError}
+				nicknameError={nicknameError}
 				handleBlurUserId={handleBlurUserId}
 				handleBlurPassword={handleBlurPassword}
 				handleBlurConfirmPassword={handleBlurConfirmPassword}
 				handleBlurName={handleBlurName}
+				handleBlurNickname={handleBlurNickname}
 			/>
 			<EmailVerificationForm
 				email={email}
@@ -107,6 +143,7 @@ function SignUpForm() {
 			<UniversitySearchForm
 				university={university}
 				setUniversity={setUniversity}
+				universityError={universityError}
 				onSearchUniversity={handleOpenModal}
 			/>
 			<Button type="submit" onClick={handleSubmit}>

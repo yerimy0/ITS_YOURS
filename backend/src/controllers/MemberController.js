@@ -86,6 +86,20 @@ const getMember = async (req, res, next) => {
 	}
 };
 
+const getSellerInfo = async (req, res, next) => {
+	try {
+		const { sellerId } = req.params;
+		const sellerInfo = await memberService.getSellerInfo(sellerId);
+
+		if (!sellerInfo) {
+			return res.status(400).json({ data: null, message: '사용자 정보를 찾을 수 없습니다.' });
+		}
+		res.status(200).json(sellerInfo);
+	} catch (err) {
+		next(err);
+	}
+};
+
 /**
  * 회원 정보수정 controller
  * 작성자 : 유경아
@@ -148,4 +162,13 @@ async function resetPassword(req, res) {
 	}
 }
 
-module.exports = { signUp, login, getMember, updateMember, deleteMember, findId, resetPassword };
+module.exports = {
+	signUp,
+	login,
+	getMember,
+	getSellerInfo,
+	updateMember,
+	deleteMember,
+	findId,
+	resetPassword,
+};

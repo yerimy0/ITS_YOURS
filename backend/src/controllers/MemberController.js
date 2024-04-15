@@ -127,58 +127,25 @@ const deleteMember = async (req, res) => {
 	}
 };
 
-/**
- * 카카오 로그인 controller
- * 작성자 : 이정은
- * 작성 시작일: 2024-04-14
- * 카카오 로그인 서비스 구현을 위한 컨트롤러입니다.
- */
-const kakaoAuth = async (req, res) => {
+// 아이디 찾기
+async function findId(req, res) {
 	try {
-		const body = {
-			grant_type: 'authorization_code',
-			client_id: process.env.KAKAO_REST_KEY,
-			redirect_uri: 'http://localhost:4000/api/auth/kakao',
-			code: req.body.code, // 클라이언트로부터 전달받은 code 사용
-		};
-
-		const tokenResponse = await axios.post(
-			'https://kauth.kakao.com/oauth/token',
-			new URLSearchParams(body), // body를 URLSearchParams 객체로 변환
-			{
-				headers: {
-					'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-				},
-			},
-		);
-
-		const accessToken = tokenResponse.data.access_token;
-
-		const kakaoUserResponse = await axios.post('https://kapi.kakao.com/v2/user/me', null, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-		});
-
-		// 클라이언트에 사용자 정보 반환
-		res.json({
-			id: kakaoUserResponse.data.id,
-			email: kakaoUserResponse.data.kakao_account.email,
-			nickname: kakaoUserResponse.data.properties.nickname,
-		});
+		const { realName, email } = req.body;
+		const userId = await memberService.findIdByNameAndEmail(realName, email);
+		res.json({ message: '사용자의 아이디를 찾았습니다.', userId });
 	} catch (error) {
-		console.error(error);
-		// 오류 응답
-		res.status(500).json({ message: 'Internal Server Error' });
+		res.status(400).json({ success: false, message: error.message });
 	}
-};
+}
 
-/**
- * 네이버 로그인 controller
- * 작성자 : 이정은
- * 작성 시작일: 2024-04-14
- * 네이버 로그인 서비스 구현을 위한 컨트롤러입니다.
- */
-const naverLogin = async (req, res) => {};
+async function resetPassword(req, res) {
+	try {
+		const { id, email } = req.body;
+		await memberService.resetPasswordAndSendEmail(id, email);
+		res.json({ message: '임시 비밀번호가 이메일로 전송되었습니다.' });
+	} catch (error) {
+		res.status(400).json({ success: false, message: error.message });
+	}
+}
 
-module.exports = { signUp, login, getMember, updateMember, deleteMember };
+module.exports = { signUp, login, getMember, updateMember, deleteMember, findId, resetPassword };

@@ -40,6 +40,8 @@ async function insertProduct({
 	region,
 	schoolName,
 	description,
+	longitude,
+	latitude,
 }) {
 	const newProduct = {
 		name: name,
@@ -52,6 +54,8 @@ async function insertProduct({
 		sellerId: userId,
 		schoolName: schoolName,
 		description: description,
+		longitude: longitude,
+		latitude: latitude,
 	};
 
 	const product = await Products.create(newProduct);

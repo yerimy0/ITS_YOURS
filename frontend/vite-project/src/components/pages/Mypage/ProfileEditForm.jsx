@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { fetchMyPageData, updateMyPageData } from '../../../apis/service/ProfileEdit';
 import ProfileImageUploader from '../../Users/ProfileImageUploader';
 import { Form, Input, Button } from '../../Users/UsersStyles';
 
@@ -9,9 +9,26 @@ function ProfileEditForm({ userInfo }) {
 	const [password, setPassword] = useState('');
 	const [name, setName] = useState(userInfo?.name || '');
 	const [email, setEmail] = useState(userInfo?.email || '');
-	const [phone, setPhone] = useState(userInfo?.phone || '');
 	const [university, setUniversity] = useState(userInfo?.university || '');
 	const [nickname, setNickname] = useState(userInfo?.nickname || '');
+
+	useEffect(() => {
+		const loadProfileData = async () => {
+			try {
+				const data = await fetchMyPageData();
+				setUserId(data.id);
+				setName(data.realName);
+				setEmail(data.email);
+				setUniversity(data.univName);
+				setNickname(data.nickName);
+				setProfileImage(data.profilePic);
+			} catch (error) {
+				console.error('프로필 정보 로딩 실패:', error);
+			}
+		};
+
+		loadProfileData();
+	}, []);
 
 	const handleSubmit = async event => {
 		event.preventDefault();
@@ -22,7 +39,6 @@ function ProfileEditForm({ userInfo }) {
 		}
 		formData.append('name', name);
 		formData.append('email', email);
-		formData.append('phone', phone);
 		formData.append('university', university);
 		formData.append('nickname', nickname);
 
@@ -31,15 +47,10 @@ function ProfileEditForm({ userInfo }) {
 		}
 
 		try {
-			const response = await axios({
-				method: 'put',
-				url: '/api/members/me',
-				data: formData,
-				headers: { 'Content-Type': 'multipart/form-data' },
-			});
-			console.log(response.data);
+			const response = await updateMyPageData(formData);
+			console.log('Profile Update:', response);
 		} catch (error) {
-			console.error(error);
+			console.error('프로필 업데이트 오류:', error);
 		}
 	};
 
@@ -49,34 +60,28 @@ function ProfileEditForm({ userInfo }) {
 			<Form onSubmit={handleSubmit}>
 				<Input
 					type="text"
-					placeholder="아이디"
+					placeholder="아이디를 입력하세요"
 					value={userId}
 					onChange={e => setUserId(e.target.value)}
 					disabled
 				/>
 				<Input
 					type="password"
-					placeholder="비밀번호 (변경할 경우만 입력)"
+					placeholder="비밀번호를 입력하세요"
 					value={password}
 					onChange={e => setPassword(e.target.value)}
 				/>
 				<Input
 					type="text"
-					placeholder="이름"
+					placeholder="이름을 입력하세요"
 					value={name}
 					onChange={e => setName(e.target.value)}
 				/>
 				<Input
 					type="email"
-					placeholder="이메일"
+					placeholder="이메일을 입력하세요"
 					value={email}
 					onChange={e => setEmail(e.target.value)}
-				/>
-				<Input
-					type="tel"
-					placeholder="전화번호"
-					value={phone}
-					onChange={e => setPhone(e.target.value)}
 				/>
 				<Input
 					type="text"

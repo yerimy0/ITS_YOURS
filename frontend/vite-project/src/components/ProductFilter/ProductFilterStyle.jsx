@@ -55,9 +55,11 @@ const FilterButton = styled.button`
 `;
 
 const FilterContent = styled.div`
+	margin: 10px;
+	justify-content: center;
 	background: #888;
 	border-radius: 20px;
-	padding: 0 10px;
+	padding: 0 30px;
 	position: absolute;
 	top: calc(100% + 5px);
 	left: 0;

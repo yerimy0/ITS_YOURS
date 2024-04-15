@@ -1,7 +1,4 @@
-const { access } = require('fs');
 const memberService = require('../services/MemberService');
-const wishesService = require('../services/WishesService');
-const { log } = require('console');
 
 /**
  * 회원가입 controller
@@ -57,12 +54,6 @@ const login = async (req, res, next) => {
 			// 로그인 성공 시 처리
 			const { accessToken, isAdmin } = loginResult;
 
-			// accessToken을 쿠키로 설정
-			// res.cookie('accessToken', accessToken, {
-			// 	// httpOnly: true, // JavaScript를 통한 접근 방지
-			// 	maxAge: 14 * 24 * 60 * 60 * 1000, // 쿠키 유효기간 설정 (14일)
-			// });
-
 			res.status(200).json({
 				isAdmin: isAdmin, // 관리자 여부
 				message: '로그인에 성공했습니다!',
@@ -90,6 +81,20 @@ const getMember = async (req, res, next) => {
 		}
 		// 사용자 정보 조회 성공 응답
 		res.status(200).json(memberInfo);
+	} catch (err) {
+		next(err);
+	}
+};
+
+const getSellerInfo = async (req, res, next) => {
+	try {
+		const { sellerId } = req.params;
+		const sellerInfo = await memberService.getSellerInfo(sellerId);
+
+		if (!sellerInfo) {
+			return res.status(400).json({ data: null, message: '사용자 정보를 찾을 수 없습니다.' });
+		}
+		res.status(200).json(sellerInfo);
 	} catch (err) {
 		next(err);
 	}
@@ -157,4 +162,13 @@ async function resetPassword(req, res) {
 	}
 }
 
-module.exports = { signUp, login, getMember, updateMember, deleteMember, findId, resetPassword };
+module.exports = {
+	signUp,
+	login,
+	getMember,
+	getSellerInfo,
+	updateMember,
+	deleteMember,
+	findId,
+	resetPassword,
+};

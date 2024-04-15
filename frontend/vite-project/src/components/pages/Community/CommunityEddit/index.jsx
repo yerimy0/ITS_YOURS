@@ -35,13 +35,13 @@ function CommuEddit({ id }) {
 
 	const fileInputRef = useRef(null);
 
-	const handleInputChange = e => {
+	function handleInputChange(e) {
 		setIsBlanked(false);
 		const { name, value } = e.target;
 		setWriteCommu({ ...writeCommu, [name]: value });
-	};
+	}
 
-	const handleImageChange = e => {
+	function handleImageChange(e) {
 		const file = e.target.files[0];
 		const reader = new FileReader();
 		reader.onload = () => {
@@ -52,13 +52,13 @@ function CommuEddit({ id }) {
 		if (file) {
 			reader.readAsDataURL(file);
 		}
-	};
+	}
 
-	const handleClick = () => {
+	function handleClick() {
 		fileInputRef.current.click();
-	};
+	}
 
-	const handleSubmit = () => {
+	function handleSubmit() {
 		async function update() {
 			await UpdateCommunnity(id, writeCommu);
 			navigate('/community');
@@ -68,7 +68,7 @@ function CommuEddit({ id }) {
 		} else {
 			setIsBlanked(true);
 		}
-	};
+	}
 
 	return (
 		<Box>

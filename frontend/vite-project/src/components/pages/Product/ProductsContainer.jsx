@@ -8,9 +8,9 @@ import {
 	Searchrecommendation,
 } from './ProductsContainerStyle';
 import Paginator from '../../Paginator';
-import instance from '../../../apis/axiosInstance';
 import ProductHeader from './ProductHeader';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { fetchDefaultProducts } from '../../../apis/service/product.api';
 
 function ProductsContainer() {
 	const navigate = useNavigate();
@@ -27,24 +27,22 @@ function ProductsContainer() {
 		if (location.state && location.state.searchResults) {
 			handleSearchResults(location.state.searchResults);
 		} else {
-			fetchDefaultProducts();
+			loadDefaultProducts();
 		}
 	}, [location.state]);
 
-	const fetchDefaultProducts = async () => {
+	const loadDefaultProducts = async () => {
 		try {
-			const res = await instance.get('/products/list');
-			const productsData = res.data;
+			const productsData = await fetchDefaultProducts();
 			setProducts(productsData);
 			setDisplayProducts(productsData);
 			setTotalItems(productsData.length);
 		} catch (error) {
-			console.error('상품 데이터를 불러오는 중 에러 발생:', error);
+			console.error('Error loading default products:', error);
 		}
 	};
 
 	const handleSearchResults = results => {
-		// 검색 결과를 처리할 때 페이지를 다시 초기화
 		setDisplayProducts(results);
 		setTotalItems(results.length);
 		setCurrentPage(0);
@@ -61,9 +59,17 @@ function ProductsContainer() {
 		setCurrentPage(0);
 	};
 
-	const handleFilterChange = filters => {
+	const handleFilterChange = (selectedLocation, selectedUniversity) => {
+		const filteredProducts = products.filter(product => {
+			const isLocationMatch = selectedLocation ? product.region === selectedLocation : true;
+			const isUniversityMatch = selectedUniversity
+				? selectedUniversity === '전체' || product.schoolName === selectedUniversity
+				: true;
+			return isLocationMatch && isUniversityMatch;
+		});
+		setDisplayProducts(filteredProducts);
+		setTotalItems(filteredProducts.length);
 		setCurrentPage(0);
-		// setDisplayProducts(filteredResults);
 	};
 
 	const startIndex = currentPage * itemsPerPage;
@@ -91,15 +97,19 @@ function ProductsContainer() {
 					<NoProductsMessageWrap>
 						<NoProductsMessage>검색 결과가 없습니다.</NoProductsMessage>
 						<Searchrecommendation>
-							- 단어의 철자가 정확한지 확인해 보세요 <br />
-							- 보다 일반적인 검색어로 다시 검색해 보세요 <br />
-							- 검색어의 띄어쓰기를 다르게 해보세요 <br />- 유해/금지어가 아닌지 확인해 주세요
+							- 단어의 철자가 정확한지 확인해 보세요
+							<br />
+							- 보다 일반적인 검색어로 다시 검색해 보세요
+							<br />
+							- 검색어의 띄어쓰기를 다르게 해보세요
+							<br />- 유해/금지어가 아닌지 확인해 주세요
 						</Searchrecommendation>
 					</NoProductsMessageWrap>
 				) : (
 					<Products>
 						{productsToShow.map(product => (
 							<ProductCard
+								key={product._id}
 								productId={product._id}
 								imgUrls={product.imgUrls}
 								name={product.name}

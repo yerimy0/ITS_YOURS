@@ -1,7 +1,7 @@
 import React from 'react';
 import { Wrapper } from '../../components/Users/UsersStyles';
 import LoginForm from '../../components/pages/Login/LoginForm';
-import SocialLoginOptions from '../../components/pages/Login/SocialLoginOptions';
+// import SocialLoginOptions from '../../components/pages/Login/SocialLoginOptions';
 import AdditionalOptions from '../../components/Users/AdditionalOptions';
 import LogoLink from '../../components/Users/LogoLink';
 
@@ -17,7 +17,7 @@ function Login() {
 					{ label: '회원가입', path: '/signup' },
 				]}
 			/>
-			<SocialLoginOptions />
+			{/* <SocialLoginOptions /> */}
 		</Wrapper>
 	);
 }

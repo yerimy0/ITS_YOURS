@@ -91,6 +91,13 @@ async function getMember(userId) {
 	}
 }
 
+async function getSellerInfo(sellerId) {
+	const sellerInfo = await Members.findOne({ id: sellerId }).select(
+		'name profilePic nickName region schoolName',
+	);
+	return sellerInfo;
+}
+
 /**
  * 회원 정보 수정 service
  * 작성자 : 유경아
@@ -192,6 +199,7 @@ module.exports = {
 	signUp,
 	login,
 	getMember,
+	getSellerInfo,
 	updateMember,
 	deleteMember,
 	findIdByNameAndEmail,

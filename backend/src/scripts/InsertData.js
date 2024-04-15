@@ -14,7 +14,9 @@ async function getRandomUniversity() {
 	const randomIndex2 = Math.floor(Math.random() * selectedCategory.universities.length);
 	return {
 		region: selectedCategory.region,
-		schoolName: selectedCategory.universities[randomIndex2],
+		schoolName: selectedCategory.universities[randomIndex2].name,
+		latitude: selectedCategory.universities[randomIndex2].latitude, // 대학 정문의 위도 반환
+		longitude: selectedCategory.universities[randomIndex2].longitude, // 대학 정문의 경도 반환
 	};
 }
 
@@ -27,7 +29,7 @@ const insertProductsData = async (req, res) => {
 		const data = response.data.item;
 
 		// condition과 description 예시 배열
-		const conditions = ['새 책', '좋음', '보통', '낡음'];
+		const conditions = ['새상품', '거의 새것', '중고'];
 		const descriptions = [
 			'이 책은 거의 새 책과 같은 상태입니다.',
 			'책에 약간의 사용 흔적이 있습니다.',
@@ -39,7 +41,7 @@ const insertProductsData = async (req, res) => {
 		const newData = await Promise.all(
 			data.map(async item => {
 				const sellerId = await getRandomId();
-				const { region, schoolName } = await getRandomUniversity();
+				const { region, schoolName, latitude, longitude } = await getRandomUniversity();
 
 				return {
 					name: item.title,
@@ -50,6 +52,8 @@ const insertProductsData = async (req, res) => {
 					sellerId,
 					region,
 					schoolName,
+					latitude, // 대학 정문의 위도 추가
+					longitude, // 대학 정문의 경도 추가
 					condition: conditions[Math.floor(Math.random() * conditions.length)],
 					description: descriptions[Math.floor(Math.random() * descriptions.length)],
 				};
@@ -67,35 +71,45 @@ const insertProductsData = async (req, res) => {
 //카테고리 데이터 추가
 const insertCategoryData = async (req, res) => {
 	try {
-		const url = `http://openapi.seoul.go.kr:8088/${process.env.KEY}/json/SebcCollegeInfoKor/1/100/`;
-		const { data } = await axios.get(url);
+		const seoulApiUrl = `http://openapi.seoul.go.kr:8088/${process.env.KEY}/json/SebcCollegeInfoKor/1/100/`;
+		const { data: seoulData } = await axios.get(seoulApiUrl);
 
-		const resData = data.SebcCollegeInfoKor.row;
-		// 조건에 맞는 데이터만 필터링합니다.
+		const resData = seoulData.SebcCollegeInfoKor.row;
 		const filteredData = resData.filter(
 			row => row.CATE1_NAME === '일반대학' && row.STATE !== '폐교',
 		);
-		// 각 지역구별로 대학 이름들을 묶습니다.
-		const regionsWithUnis = filteredData.reduce((acc, curr) => {
-			(acc[curr.H_KOR_GU] = acc[curr.H_KOR_GU] || []).push(curr.NAME_KOR);
-			return acc;
-		}, {});
 
-		// 데이터베이스에 저장
-		for (const [region, universities] of Object.entries(regionsWithUnis)) {
-			let category = await Category.findOne({ region: region });
+		for (const uni of filteredData) {
+			const kakaoApiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(
+				uni.NAME_KOR,
+			)}`;
+			const { data: kakaoData } = await axios.get(kakaoApiUrl, {
+				headers: {
+					Authorization: `KakaoAK ${process.env.KAKAO_REST_API_KEY}`,
+				},
+			});
+			if (kakaoData.documents.length > 0) {
+				const { x: longitude, y: latitude } = kakaoData.documents[0]; // 첫 번째 검색 결과 사용
+				const region = uni.H_KOR_GU;
+				const university = {
+					name: uni.NAME_KOR,
+					latitude: parseFloat(latitude),
+					longitude: parseFloat(longitude),
+				};
 
-			if (category) {
-				// 이미 존재하는 지역구라면, 대학 이름들을 업데이트합니다.
-				category.universities = [...new Set([...category.universities, ...universities])]; // 중복 제거
-				await category.save();
-			} else {
-				// 새로운 지역구라면, 새로운 문서를 생성합니다.
-				category = new Category({ region, universities });
-				await category.save();
+				let category = await Category.findOne({ region: region });
+
+				if (category) {
+					category.universities.push(university);
+					await category.save();
+				} else {
+					category = new Category({ region, universities: [university] });
+					await category.save();
+				}
 			}
 		}
-		res.status(200).json({ data: regionsWithUnis, message: '카테고리 추가 성공' });
+
+		res.status(200).json({ message: '카테고리 추가 성공' });
 	} catch (err) {
 		console.error(err.message);
 		res.status(500).send('서버 에러');

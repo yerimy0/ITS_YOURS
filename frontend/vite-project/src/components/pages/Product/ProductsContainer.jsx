@@ -8,9 +8,9 @@ import {
 	Searchrecommendation,
 } from './ProductsContainerStyle';
 import Paginator from '../../Paginator';
-import instance from '../../../apis/axiosInstance';
 import ProductHeader from './ProductHeader';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { fetchDefaultProducts } from '../../../apis/service/product.api';
 
 function ProductsContainer() {
 	const navigate = useNavigate();
@@ -27,19 +27,18 @@ function ProductsContainer() {
 		if (location.state && location.state.searchResults) {
 			handleSearchResults(location.state.searchResults);
 		} else {
-			fetchDefaultProducts();
+			loadDefaultProducts();
 		}
 	}, [location.state]);
 
-	const fetchDefaultProducts = async () => {
+	const loadDefaultProducts = async () => {
 		try {
-			const res = await instance.get('/products/list');
-			const productsData = res.data;
+			const productsData = await fetchDefaultProducts();
 			setProducts(productsData);
 			setDisplayProducts(productsData);
 			setTotalItems(productsData.length);
 		} catch (error) {
-			console.error('상품 데이터를 불러오는 중 에러 발생:', error);
+			console.error('Error loading default products:', error);
 		}
 	};
 

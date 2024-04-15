@@ -70,8 +70,6 @@ const Title = styled.div`
 
 const RedStar = styled.span`
 	color: #b3261e;
-
-	text-align: center;
 	font-family: SUIT;
 	font-size: 16px;
 	font-style: normal;

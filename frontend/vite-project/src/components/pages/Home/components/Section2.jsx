@@ -19,17 +19,19 @@ function Section2() {
 	}
 	return (
 		<Box2>
-			<SearchBar onSearchResults={handleSearchResults} />
-			<div className="UpdateSection">
-				<UpdateTitle>방금 올라온 도서</UpdateTitle>
-				<UpdateBooks>
-					{pics.map((pic, i) => (
-						<Img key={`List-item-${i}`} src={`./${pic}`} alt={`Book ${i}`} />
-					))}
-				</UpdateBooks>
-				<ButtonBox>
-					<Button onClick={OnClick}>더보기</Button>
-				</ButtonBox>
+			<div className="container">
+				<SearchBar onSearchResults={handleSearchResults} />
+				<div className="UpdateSection">
+					<UpdateTitle>방금 올라온 도서</UpdateTitle>
+					<UpdateBooks>
+						{pics.map((pic, i) => (
+							<Img className="sec2_img" key={`List-item-${i}`} src={`./${pic}`} alt={`Book ${i}`} />
+						))}
+					</UpdateBooks>
+					<ButtonBox>
+						<Button onClick={OnClick}>더보기</Button>
+					</ButtonBox>
+				</div>
 			</div>
 		</Box2>
 	);

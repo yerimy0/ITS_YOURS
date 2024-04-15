@@ -1,5 +1,6 @@
 import { LocationDistance, Title, Content } from './LocationDistanceStyle';
 import KaKao from '../../Map';
+
 function LocationDistanceWrap() {
 	return (
 		<>

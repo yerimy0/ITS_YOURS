@@ -74,7 +74,8 @@ const insertProduct = async (req, res, next) => {
 		// 업로드된 이미지의 경로들을 imgUrls 배열로 구성합니다.
 		//const imgUrls = req.files.map(file => file.path);
 
-		const { name, imgUrls, price, author, publisher, condition, description } = req.body;
+		const { name, imgUrls, price, author, publisher, condition, description, longitude, latitude } =
+			req.body;
 		const product = await productsService.insertProduct({
 			userId,
 			name,
@@ -83,6 +84,8 @@ const insertProduct = async (req, res, next) => {
 			author,
 			publisher,
 			condition,
+			longitude,
+			latitude,
 			region,
 			schoolName,
 			description,
@@ -184,6 +187,40 @@ const myTradedProducts = async (req, res) => {
 	}
 };
 
+// 판매내역 조회
+const mySalesHistory = async (req, res) => {
+	const sellerId = req.user.id;
+
+	try {
+		const mySalesHistory = await productsService.tradedProductsBySellerId(sellerId);
+
+		return res.status(200).json({ message: '판매내역 조회 성공', data: mySalesHistory });
+	} catch (error) {
+		return res.status(500).json({ message: '판매내역 조회중 오류가 발생했습니다.' });
+	}
+};
+
+// 판매내역 삭제
+const deleteSalesHis = async (req, res) => {
+	try {
+		const { prodId } = req.params;
+		const prodObjectId = new ObjectId(prodId);
+		const sellerId = req.user.id;
+		const deleteSalesHis = await productsService.deleteSalesHis(sellerId, prodObjectId);
+
+		if (!deleteSalesHis) {
+			return res.status(404).send({ message: '판매내역을 찾을 수 없습니다.' });
+		}
+
+		res.status(200).send({ message: '판매내역이 삭제되었습니다.', deleteSalesHis });
+	} catch (error) {
+		res.status(500).send({
+			message: '판매내역 삭제 중 오류가 발생했습니다.',
+			error: error.message,
+		});
+	}
+};
+
 module.exports = {
 	getProductsList,
 	searchProduct,
@@ -193,4 +230,6 @@ module.exports = {
 	updateProduct,
 	deleteProduct,
 	myTradedProducts,
+	mySalesHistory,
+	deleteSalesHis,
 };

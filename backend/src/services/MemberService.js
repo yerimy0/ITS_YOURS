@@ -35,7 +35,6 @@ async function signUp(id, password, realName, email, region, schoolName, nickNam
  * 로그인 기능 관련 DB작업이 모여있는 service입니다.
  */
 async function login(id, password) {
-	let isAdmin; // 관리자 회원여부
 	// 회원정보
 	const member = await Members.findOne({ id });
 	if (!member) return null;
@@ -50,20 +49,14 @@ async function login(id, password) {
 				user: {
 					username: member.realName,
 					id: member.id,
-					nickName: member.nickName,
-					profilePic: member.profilePic,
-					region: member.region,
-					schoolName: member.schoolName,
+					isAdmin: member.isAdmin,
 				},
 			},
 			process.env.ACCESS_TOKEN_SECRET,
 			{ expiresIn: '14d' }, // 토큰 유효기간
 		);
-
-		isAdmin = member.isAdmin; // 관리자 회원여부
-
 		// 액세스 토큰 & 관리자 회원여부 반환
-		return { accessToken, isAdmin }; // 객체로 반환
+		return { accessToken }; // 객체로 반환
 	}
 	// 로그인 실패
 	else {
@@ -91,32 +84,43 @@ async function getMember(userId) {
 	}
 }
 
+async function getSellerInfo(sellerId) {
+	const sellerInfo = await Members.findOne({ id: sellerId }).select(
+		'id name profilePic nickName region schoolName',
+	);
+	return sellerInfo;
+}
+
 /**
  * 회원 정보 수정 service
  * 작성자 : 유경아
  * 작성 시작일 : 2024-04-05
  * 회원정보수정 기능 관련 DB작업이 모여있는 service입니다.
  */
-async function updateMember(userId, updateData) {
-	try {
-		const dataWithTimestamp = {
-			...updateData,
-			updatedAt: new Date(Date.now() + 9 * 60 * 60 * 1000),
-		};
-
-		const updatedMember = await Members.findOneAndUpdate({ id: userId }, dataWithTimestamp, {
-			new: true,
-		});
-
-		if (!updatedMember) {
-			// 업데이트할 회원을 찾을 수 없는 경우, 에러 발생
-			throw new Error('회원을 찾을 수 없습니다.');
-		}
-
-		return updatedMember; // 업데이트된 회원 정보 반환
-	} catch (error) {
-		throw error; // 에러는 컨트롤러에서 핸들링
-	}
+async function updateMember(
+	userId,
+	password,
+	realName,
+	email,
+	region,
+	schoolName,
+	nickName,
+	profilePic,
+) {
+	const memberInfo = await Members.findOneAndUpdate(
+		{ id: userId },
+		{
+			password: password,
+			realName: realName,
+			email: email,
+			region: region,
+			schoolName: schoolName,
+			nickName: nickName,
+			profilePic: profilePic,
+			updatedAt: Date.now() + 9 * 60 * 60 * 1000,
+		},
+	);
+	return memberInfo;
 }
 
 /**
@@ -126,28 +130,12 @@ async function updateMember(userId, updateData) {
  * 회원 탈퇴 기능 관련 DB작업이 모여있는 service입니다.
  */
 async function deleteMember(userId) {
-	try {
-		const deletedAt = new Date(Date.now() + 9 * 60 * 60 * 1000);
-
-		// userId를 사용하여 사용자 정보를 먼저 조회
-		const member = await Members.findOne({ id: userId });
-		if (!member) {
-			return null; // 사용자가 존재하지 않는 경우, null 반환
-		}
-
-		// userId를 사용하여 사용자를 찾고, deletedAt 필드를 업데이트함으로써 소프트 삭제 수행
-		const result = await Members.updateOne({ id: userId }, { $set: { deletedAt: deletedAt } });
-
-		// 업데이트된 문서의 수를 확인하여 삭제 성공 여부 판단
-		if (result.nModified === 0) {
-			return null;
-		}
-
-		member.deletedAt = deletedAt;
-		return member;
-	} catch (err) {
-		throw err;
-	}
+	// userId를 사용하여 사용자를 찾고, deletedAt 필드를 업데이트함으로써 소프트 삭제 수행
+	const result = await Members.findOneAndUpdate(
+		{ id: userId },
+		{ deletedAt: Date.now() + 9 * 60 * 60 * 1000 },
+	);
+	return result;
 }
 
 // 아이디 찾기
@@ -192,6 +180,7 @@ module.exports = {
 	signUp,
 	login,
 	getMember,
+	getSellerInfo,
 	updateMember,
 	deleteMember,
 	findIdByNameAndEmail,

@@ -33,7 +33,7 @@ function Section3() {
 				<UpdateBooks>
 					{books.map((book, i) => (
 						<div key={i}>
-							<Img src={`./${book.image}`} alt={`${book.name}`} />
+							<Img className="sec3_img" src={`./${book.image}`} alt={`${book.name}`} />
 							<BookInfo>{book.name}</BookInfo>
 							<BookInfo>{book.price}</BookInfo>
 						</div>

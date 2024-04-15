@@ -20,7 +20,7 @@ router.post('/login', login);
 // 회원정보 조회
 router.get('/me', validateToken, getMember);
 //판매자 정보 조회
-router.get('/:sellerId', getSellerInfo);
+router.get('/sellerInfo', getSellerInfo);
 // 회원정보 수정
 router.put('/me', validateToken, updateMember);
 // 회원정보 수정

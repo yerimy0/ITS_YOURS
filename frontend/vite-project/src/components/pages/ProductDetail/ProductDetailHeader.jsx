@@ -15,19 +15,19 @@ import BookInfoWrap from './BookInfoWrap';
 import ProductInfoWrap from './ProductInfoWrap';
 import SellerProfileWrap from './SellerProfileWrap';
 import { useParams } from 'react-router-dom';
-import instance from '../../../apis/axiosInstance';
+import { GetDetail } from '../../../apis/service/product.api';
 
 function ProductDetailHeader() {
 	const { id } = useParams();
 	const [product, setProduct] = useState([]);
 
 	useEffect(() => {
-		const fetchProduct = async () => {
+		const loadProductData = async () => {
 			if (id) {
 				// 상품 ID가 존재할 때만 데이터를 가져옵니다.
 				try {
-					const res = await instance.get(`/products/${id}`);
-					setProduct(res.data);
+					const productData = await GetDetail(id);
+					setProduct(productData);
 				} catch (error) {
 					console.error('상품 데이터를 불러오는 중 에러 발생:', error);
 				}
@@ -35,8 +35,9 @@ function ProductDetailHeader() {
 				console.error('올바르지 않은 상품 ID:', id);
 			}
 		};
-		fetchProduct();
+		loadProductData();
 	}, [id]);
+
 	return (
 		<ProductDetail>
 			<BookCover>

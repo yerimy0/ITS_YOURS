@@ -8,8 +8,18 @@ const CategorySchema = new Schema({
 	},
 	universities: [
 		{
-			type: String, // 대학 이름들을 담는 배열
-			required: true,
+			name: {
+				type: String, // 대학 이름
+				required: true,
+			},
+			latitude: {
+				type: Number, // 대학 정문의 위도
+				required: true,
+			},
+			longitude: {
+				type: Number, // 대학 정문의 경도
+				required: true,
+			},
 		},
 	],
 });

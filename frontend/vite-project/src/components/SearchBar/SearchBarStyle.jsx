@@ -14,6 +14,7 @@ const SearchWrap = styled.div`
 const SearchInputBox = styled.div`
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	width: 70%;
 	margin: 0 auto;
 	position: relative;
@@ -36,13 +37,10 @@ const ClearButton = styled.button`
 `;
 
 const SearchButton = styled.button`
-	display: block;
-	background: transparent;
-	border: 0;
-	position: absolute;
-	top: 52%;
-	right: 15px;
-	transform: translateY(-50%);
+	img {
+		width: 25px;
+		height: 25px;
+	}
 `;
 
 export { SearchWrap, SearchInputBox, SearchInput, ClearButton, SearchButton };

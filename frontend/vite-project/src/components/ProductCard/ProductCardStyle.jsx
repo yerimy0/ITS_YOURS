@@ -7,13 +7,19 @@ const ProductCardWrap = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	cursor: pointer;
+	margin: 0 0 20px;
 `;
 
 const ProductImage = styled.img`
 	display: flex;
 	width: 170px;
+	object-fit: cover;
 	height: 254px;
 	align-items: flex-start;
+
+	&:hover {
+		// transform: skewX(1deg);
+	}
 `;
 
 const ProductInfoWrap = styled.div`
@@ -51,7 +57,7 @@ const ProductPrice = styled.div`
 const Price = styled.p`
 	font-size: 22px;
 	line-height: 28px;
-	font-weight: 700;
+	font-weight: 500;
 	font-style: normal;
 	margin: 0;
 `;

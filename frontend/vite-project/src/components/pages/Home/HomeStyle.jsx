@@ -117,7 +117,28 @@ const UpdateBooks = styled.div`
 
 	div {
 		display: block;
-		max-width: 225px;
+		margin-top: 30px;
+		// max-width: 225px;
+	}
+
+	.sec2_img {
+		width: 172px;
+		height: 252px;
+		object-fit: cover;
+		// background-color: #000;
+		box-shadow:
+			0 10px 20px rgba(0, 0, 0, 0.19),
+			0 6px 6px rgba(0, 0, 0, 0.23);
+	}
+
+	.sec3_img {
+		width: 172px;
+		height: 252px;
+		object-fit: cover;
+		// background-color: #000;
+		box-shadow:
+			0 10px 20px rgba(0, 0, 0, 0.19),
+			0 6px 6px rgba(0, 0, 0, 0.23);
 	}
 `;
 

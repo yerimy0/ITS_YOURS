@@ -1,7 +1,4 @@
-const { access } = require('fs');
 const memberService = require('../services/MemberService');
-const wishesService = require('../services/WishesService');
-const { log } = require('console');
 
 /**
  * 회원가입 controller
@@ -56,12 +53,6 @@ const login = async (req, res, next) => {
 		} else {
 			// 로그인 성공 시 처리
 			const { accessToken, isAdmin } = loginResult;
-
-			// accessToken을 쿠키로 설정
-			// res.cookie('accessToken', accessToken, {
-			// 	// httpOnly: true, // JavaScript를 통한 접근 방지
-			// 	maxAge: 14 * 24 * 60 * 60 * 1000, // 쿠키 유효기간 설정 (14일)
-			// });
 
 			res.status(200).json({
 				isAdmin: isAdmin, // 관리자 여부

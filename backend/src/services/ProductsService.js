@@ -40,6 +40,8 @@ async function insertProduct({
 	region,
 	schoolName,
 	description,
+	longitude,
+	latitude,
 }) {
 	const newProduct = {
 		name: name,
@@ -52,6 +54,8 @@ async function insertProduct({
 		sellerId: userId,
 		schoolName: schoolName,
 		description: description,
+		longitude: longitude,
+		latitude: latitude,
 	};
 
 	const product = await Products.create(newProduct);
@@ -122,9 +126,7 @@ async function tradedProductsByBuyerId(buyerId) {
 
 // 판매내역 조회
 async function tradedProductsBySellerId(sellerId) {
-	const tradedProducts = await Products.find({ sellerId, deletedAt: { $exists: false } }).select(
-		'name imgUrls price isCompleted',
-	);
+	const tradedProducts = await Products.find({ sellerId, deletedAt: { $exists: false } });
 	return tradedProducts;
 }
 

@@ -7,13 +7,14 @@ const ProductInfo = styled.div`
 	justify-content: center;
 `;
 const Title = styled.p`
+	width: 98%;
 	display: flex;
 	align-items: center;
 	font-size: 28px;
 	font-style: normal;
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 36px;
-	margin: 0;
+	margin: 10px 0 40px 0;
 `;
 const PriceContainer = styled.div`
 	width: 100%;
@@ -29,16 +30,16 @@ const Div = styled.div`
 `;
 
 const Price = styled.p`
-	font-size: 32px;
+	font-size: 26px;
 	font-style: normal;
 	font-weight: 700;
 	line-height: 40px;
 	margin: 0;
 `;
 const PriceWon = styled.p`
-	font-size: 32px;
+	font-size: 24px;
 	font-style: normal;
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 40px;
 	margin: 0;
 `;

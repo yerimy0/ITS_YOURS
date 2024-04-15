@@ -269,22 +269,3 @@ textarea {
 }
 
 /* =================== 공통 */
-.filterlist {
-}
-.locationlist {
-}
-.universitylist {
-}
-.buttons {
-}
-.but1 {
-}
-.but2 {
-	border: 1px solid #009dff;
-	background: #009dff;
-	border-radius: 20px;
-	width: 20%;
-	padding: 10px 0;
-	font-size: 16px;
-	color: #fff;
-}

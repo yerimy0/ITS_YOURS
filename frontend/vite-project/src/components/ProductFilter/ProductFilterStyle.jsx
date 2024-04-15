@@ -91,7 +91,7 @@ const LocationItem = styled.li`
 	font-weight: 500;
 	padding: 15px 0;
 	cursor: pointer;
-	border-bottom: 1px solid #ddd;
+	// border-bottom: 1px solid #ddd;
 	border-right: 1px solid #ddd;
 
 	&:last-child {

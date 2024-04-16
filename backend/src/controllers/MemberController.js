@@ -29,8 +29,11 @@ const signUp = async (req, res, next) => {
 		if (!id || !password || !realName || !email || !region || !schoolName || !nickName) {
 			throw new BadRequestError('필수 정보를 모두 입력하세요.');
 		}
-		if (isRegisteredId || isRegisteredEmail) {
-			throw new ConflictError('이미 가입된 회원입니다.');
+		if (isRegisteredId) {
+			throw new ConflictError('이미 사용중인 아이디입니다.');
+		}
+		if (isRegisteredEmail) {
+			throw new ConflictError('이미 사용중인 이메일입니다.');
 		}
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(

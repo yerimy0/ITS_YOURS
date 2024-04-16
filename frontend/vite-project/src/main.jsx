@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { RouterProvider } from 'react-router-dom';
 import { UserProvider } from './context/UserIdContext';
+import { createContext } from 'react';
 import router from './routes/router.jsx';
 import { Provider } from 'react-redux';
 import store from './store.js';

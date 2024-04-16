@@ -24,7 +24,7 @@ function MyPage() {
 			try {
 				const data = await fetchMyPageData();
 				setUserData({
-					userName: data.realName,
+					userName: data.nickName,
 					likes: data.likeCount,
 					bookmarks: data.wishesCount,
 					profilePictureUrl: data.profilePic,
@@ -52,6 +52,5 @@ function MyPage() {
 		</PageContainer>
 	);
 }
-//주석 임시 추가
 
 export default MyPage;

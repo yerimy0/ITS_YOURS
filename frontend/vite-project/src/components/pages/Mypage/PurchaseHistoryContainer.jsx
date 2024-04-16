@@ -31,15 +31,13 @@ const PurchaseHistoryContainer = () => {
 	return (
 		<PurchaseHistoryWrap>
 			{purchaseList.map(purchase => (
-				<ForPurchaseList>
+				<ForPurchaseList key={purchase._id}>
 					<PurchaseHistoryCard
-						_id={purchase._id}
 						imgUrls={purchase.imgUrls}
 						price={purchase.price}
 						sellerId={purchase.sellerId}
 						name={purchase.name} // 추가된 정보
 						buyDate={purchase.buyDate} // 추가된 정보
-						type={purchase.type} // 추가된 정보
 					/>
 				</ForPurchaseList>
 			))}

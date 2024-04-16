@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Modal from '../Modal';
+import DateSlicer from '../../utils/dateSlicer';
 
-function OnSaleCard({ imgUrls, price, name, sellDate, like, chat, onDelete }) {
+function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, chat, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 
@@ -28,18 +29,24 @@ function OnSaleCard({ imgUrls, price, name, sellDate, like, chat, onDelete }) {
 				</ImageBox>
 				<SalesInfo>
 					<Title>{name}</Title>
-					<Price>{price}</Price>
-					<Won>원</Won>
+					<PriceWrapper>
+						<Price>{Number(price).toLocaleString()}</Price>
+						<Won>원</Won>
+					</PriceWrapper>
 					<Stats>
-						<Icon src="heart.svg" alt="Wish" />
-						<Status>{like}</Status>
-						<Icon src="chat_bubble_oval.svg" alt="Chat" />
+						<Icon src="../../../heart.svg" alt="Wish" />
+						<Status>{wishescount}</Status>
+						<Icon src="../../../chat_bubble_oval.svg" alt="Chat" />
 						<Status>{chat}</Status>
 					</Stats>
-					<Date>{sellDate}</Date>
+					<Date>{DateSlicer(createdAt)}</Date>
 				</SalesInfo>
 				<ButtonBox>
-					<EdditBtn onClick={() => navigate(`/product/edit/${id}`)}>수정</EdditBtn>
+					<EditBtn
+						onClick={() => navigate(`/product/edit/${id}`, { state: { from: 'saleshistory' } })}
+					>
+						수정
+					</EditBtn>
 					<DeleteBtn onClick={openDeleteModal}>삭제</DeleteBtn>
 				</ButtonBox>
 			</ProductCardWrap>
@@ -81,13 +88,18 @@ const SalesInfo = styled.div`
 	flex-direction: column;
 `;
 
-const Title = styled.h2`
+const Title = styled.div`
 	font-size: 20px;
 	font-weight: 300;
 	font-family: SUIT;
 `;
 
-const Price = styled.span`
+const PriceWrapper = styled.div`
+	display: flex;
+	align-items: baseline;
+`;
+
+const Price = styled.div`
 	font-size: 24px;
 	font-weight: 700;
 	font-family: SUIT;
@@ -97,12 +109,10 @@ const Won = styled.div`
 	color: var(--M3-black, #000);
 	font-family: SUIT;
 	font-size: 16px;
-	font-style: normal;
 	font-weight: 500;
 	line-height: 24px;
-	display: inline-block;
-	margin: 0px;
-	flex-direction: column-reverse;
+	margin-top: 5px;
+	margin-left: 5px;
 `;
 
 const Stats = styled.div`
@@ -131,7 +141,7 @@ const ButtonBox = styled.div`
 	padding-top: 50px;
 `;
 
-const EdditBtn = styled.button`
+const EditBtn = styled.button`
 	border-radius: 20px;
 	border: 1px solid #009dff;
 	background: #fff;

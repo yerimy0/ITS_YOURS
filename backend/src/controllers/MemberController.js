@@ -222,8 +222,8 @@ async function findId(req, res) {
 async function resetPassword(req, res) {
 	try {
 		const { id, email } = req.body;
-		await memberService.resetPasswordAndSendEmail(id, email);
-		res.json({ message: '임시 비밀번호가 이메일로 전송되었습니다.' });
+		const reset = await memberService.resetPassword(id, email);
+		res.json({ message: '임시 비밀번호가 이메일로 전송되었습니다.', reset });
 	} catch (error) {
 		throw new BadRequestError(error.message);
 	}

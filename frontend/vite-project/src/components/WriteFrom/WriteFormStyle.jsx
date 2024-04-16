@@ -194,6 +194,44 @@ const ButtonUpload = styled.button`
 	background-color: #fff;
 `;
 
+const SearchContainer = styled.div`
+	max-height: 200px;
+	overflow-y: auto;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+`;
+
+const SearchtItem = styled.div`
+	cursor: pointer;
+	margin-bottom: 5px;
+	padding: 5px;
+	background-color: #f9f9f9;
+	border-radius: 3px;
+
+	&:hover {
+		background-color: #eaeaea;
+	}
+
+	hr {
+		margin: 5px 0;
+		border: 0;
+		border-top: 1px solid #ccc;
+	}
+`;
+
+const CloseButton = styled.button`
+	position: absolute;
+	background-color: transparent;
+	font-size: 20px;
+	cursor: pointer;
+	transition: font-size 0.2s;
+
+	&:hover {
+		color: grey;
+		font-size: 24px;
+	}
+`;
 export {
 	RegisterBox,
 	Box,
@@ -215,4 +253,7 @@ export {
 	ProductImg,
 	ButtonUpload,
 	InputContent,
+	SearchContainer,
+	SearchtItem,
+	CloseButton,
 };

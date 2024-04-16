@@ -16,7 +16,7 @@ import { Section, Section2, Section3, Section4 } from './components/Section';
 import { useEffect, useState, createContext } from 'react';
 import { Register } from '../../apis/service/product.api';
 
-export let RegisterContext = createContext();
+export const RegisterContext = createContext();
 
 function WriteForm() {
 	const navigate = useNavigate();
@@ -112,7 +112,7 @@ function WriteForm() {
 	}
 
 	return (
-		<RegisterContext.Provider value={(setRegister, register)}>
+		<RegisterContext.Provider value={{ setRegister, register }}>
 			<RegisterBox>
 				<Title>
 					<TopTitle>상품 등록</TopTitle>

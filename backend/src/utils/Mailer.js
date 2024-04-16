@@ -48,20 +48,9 @@ async function sendPasswordEmail(email, verificationCode) {
 	await sendCustomEmail({
 		to: email,
 		subject: '[이제너해] 인증번호 안내',
-		templateName: 'VerificationCodeEmailForm',
+		templateName: 'FindPwEmailForm',
 		replacements: {
 			verificationCode: verificationCode, // 인증번호를 치환할 위치
-		},
-	});
-}
-
-async function sendSignupVerificationEmail(email, verificationLink) {
-	await sendCustomEmail({
-		to: email,
-		subject: '[이제너해] 회원가입 이메일 인증',
-		templateName: 'SignupVerificationEmailForm',
-		replacements: {
-			verificationLink: verificationLink, // 인증 링크를 치환할 위치
 		},
 	});
 }
@@ -76,9 +65,21 @@ async function sendQnAReplyEmail(email, answer) {
 		},
 	});
 }
+
+async function sendVerifyEmail(email, verificationCode) {
+	await sendCustomEmail({
+		to: email,
+		subject: '[이제너해] 회원가입 이메일 인증코드입니다.',
+		templateName: 'SignUpEmailForm',
+		replacements: {
+			verificationCode: verificationCode, // 답변을 치환할 위치
+		},
+	});
+}
+
 module.exports = {
 	sendCustomEmail,
 	sendPasswordEmail,
-	sendSignupVerificationEmail,
 	sendQnAReplyEmail,
+	sendVerifyEmail,
 };

@@ -7,8 +7,8 @@ import {
 	IconImage,
 } from './UsersStyles';
 
-function ProfileImageUploader({ onImageSelected }) {
-	const [preview, setPreview] = useState('/logoCharacter.png');
+function ProfileImageUploader({ onImageSelected, initialPreview }) {
+	const [preview, setPreview] = useState(initialPreview || '/defaultProfileImage.png');
 
 	const handleImageChange = event => {
 		const file = event.target.files[0];

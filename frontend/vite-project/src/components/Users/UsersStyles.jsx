@@ -26,7 +26,14 @@ export const Input = styled.input`
 	padding: 0.7rem;
 	border: 1px solid #009dff;
 	border-radius: 20px;
-	color: #79747e;
+	color: #000; // 입력 글씨 색상을 검정색으로 설정
+
+	&::placeholder {
+		color: #79747e; // placeholder 글씨 색상을 회색으로 설정
+	}
+	&:disabled {
+		background-color: #f3f4f6; // 비활성화 상태의 배경색도 설정할 수 있습니다.
+	}
 `;
 
 export const Button = styled.button`
@@ -192,7 +199,11 @@ export const StyledInput = styled.input`
 	margin-top: 1rem;
 	border: 1px solid #009dff;
 	border-radius: 20px;
-	color: #79747e;
+	color: #000; // 입력하는 글씨의 색상을 검정색으로 설정
+
+	&::placeholder {
+		color: #79747e; // placeholder의 글씨 색상을 회색으로 설정
+	}
 `;
 
 export const SmallButton = styled.button`

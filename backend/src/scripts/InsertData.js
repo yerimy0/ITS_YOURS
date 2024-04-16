@@ -24,7 +24,7 @@ async function getRandomUniversity() {
 const insertProductsData = async (req, res) => {
 	try {
 		const response = await axios.get(
-			`https://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=${process.env.TTBKey}&QueryType=ItemNewAll&MaxResults=60&start=1&SearchTarget=Book&CategoryId=8257&output=js&Version=20131101`,
+			`https://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=${process.env.TTBKey}&QueryType=ItemNewAll&MaxResults=300&start=1&SearchTarget=Book&CategoryId=8257&output=js&Version=20131101`,
 		);
 		const data = response.data.item;
 

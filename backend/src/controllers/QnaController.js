@@ -12,9 +12,10 @@ const createQna = async (req, res, next) => {
 	try {
 		const id = req.user.id;
 		const nickname = await qnaService.getNickName(id);
+		const email = await qnaService.getEmail(id); // 이메일 정보 가져오기
 
 		const { title, content } = req.body;
-		const result = await qnaService.createQna(title, content, nickname);
+		const result = await qnaService.createQna(title, content, nickname, email);
 
 		if (!id) {
 			throw new BadRequestError('로그인 후 이용해주세요.');
@@ -124,4 +125,18 @@ const getMyQna = async (req, res, next) => {
 	}
 };
 
-module.exports = { createQna, updateQna, getAllQna, deleteQna, getMyQna };
+// Q&A 답변 처리 + 이메일 전송
+const answerQna = async (req, res) => {
+	const { qnaId } = req.params; // URL에서 qnaId 추출
+	const { answer } = req.body; // 요청 본문에서 답변 내용 추출
+
+	try {
+		// 답변 저장 및 이메일 전송
+		const result = await qnaService.answerQna(qnaId, answer);
+		res.status(200).json(result);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
+
+module.exports = { createQna, updateQna, getAllQna, deleteQna, getMyQna, answerQna };

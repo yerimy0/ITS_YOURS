@@ -229,6 +229,20 @@ async function resetPassword(req, res) {
 	}
 }
 
+// 이메일 인증코드
+async function sendVerifiyEmail(req, res) {
+	try {
+		const { email } = req.body;
+		if (!email) {
+			throw new BadRequestError('이메일을 입력해주세요');
+		}
+		await memberService.sendVerifiyEmail(email);
+		res.json({ message: '인증코드가 이메일로 전송되었습니다.' });
+	} catch (error) {
+		throw new BadRequestError(error.message);
+	}
+}
+
 module.exports = {
 	signUp,
 	login,
@@ -238,4 +252,5 @@ module.exports = {
 	deleteMember,
 	findId,
 	resetPassword,
+	sendVerifiyEmail,
 };

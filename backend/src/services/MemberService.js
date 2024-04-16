@@ -178,6 +178,19 @@ async function resetPasswordAndSendEmail(id, email) {
 	return true;
 }
 
+async function sendVerifiyEmail(email) {
+	const verifyCode = generateTempPassword(4);
+	console.log(verifyCode);
+	await sendCustomEmail({
+		to: email,
+		subject: '[이제너해] 회원가입 인증코드입니다',
+		templateName: 'SignUpEmailForm',
+		newPassword: verifyCode, // 랜덤하게 생성된 인증코드를 전달
+	});
+
+	return true;
+}
+
 module.exports = {
 	signUp,
 	login,
@@ -187,4 +200,5 @@ module.exports = {
 	deleteMember,
 	findIdByNameAndEmail,
 	resetPasswordAndSendEmail,
+	sendVerifiyEmail,
 };

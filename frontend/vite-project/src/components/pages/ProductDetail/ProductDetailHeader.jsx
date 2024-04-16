@@ -39,8 +39,6 @@ function ProductDetailHeader() {
 		loadProductData();
 	}, [id]);
 
-	console.log(product);
-
 	return (
 		<ProductDetail>
 			<BookCover>{product.imgUrls && <BookImgSlider images={product.imgUrls} />}</BookCover>

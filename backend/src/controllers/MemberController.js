@@ -18,7 +18,8 @@ const {
  */
 const signUp = async (req, res, next) => {
 	try {
-		const { id, password, realName, email, schoolName, nickName, profilePic } = req.body;
+		const { id, password, realName, email, schoolName, nickName } = req.body;
+		let profilePic = req.file ? req.file.path : ''; // 파일 경로 저장
 
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 

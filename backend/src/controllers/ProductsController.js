@@ -213,7 +213,7 @@ const mySalesHistory = async (req, res, next) => {
 	try {
 		const sellerId = req.user.id;
 
-		if (!buyerId) {
+		if (!sellerId) {
 			throw new ForbiddenError('로그인이 필요한 서비스입니다.');
 		}
 		const mySalesHistory = await productsService.tradedProductsBySellerId(sellerId);

@@ -106,35 +106,35 @@ function ProfileEditForm({ userInfo }) {
 			/>
 			<ProfileImageUploader onImageSelected={setProfileImage} profileImage={profileImage} />
 			<Form onSubmit={handleSubmit}>
-				<Input type="text" placeholder="아이디" value={userId} disabled />
+				<Input type="text" value={userId} disabled />
 				<Input
 					type="password"
-					placeholder="비밀번호를 입력하세요"
+					placeholder="*비밀번호를 입력해주세요"
 					value={password}
 					onChange={e => setPassword(e.target.value)}
 				/>
 				{errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
 				<Input
 					type="password"
-					placeholder="비밀번호 확인"
+					placeholder="*비밀번호를 다시 입력해주세요"
 					value={confirmPassword}
 					onChange={e => setConfirmPassword(e.target.value)}
 				/>
 				{errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
 				<Input
 					type="text"
-					placeholder="닉네임"
-					value={nickname}
-					onChange={e => setNickname(e.target.value)}
-				/>
-				{errors.nickname && <ErrorMessage>{errors.nickname}</ErrorMessage>}
-				<Input
-					type="text"
-					placeholder="이름을 입력하세요"
+					placeholder="*이름을 입력해주세요"
 					value={name}
 					onChange={e => setName(e.target.value)}
 				/>
 				{errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+				<Input
+					type="text"
+					placeholder="*닉네임을 입력해주세요"
+					value={nickname}
+					onChange={e => setNickname(e.target.value)}
+				/>
+				{errors.nickname && <ErrorMessage>{errors.nickname}</ErrorMessage>}
 				<EmailVerificationForm
 					email={email}
 					setEmail={setEmail}

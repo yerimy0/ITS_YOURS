@@ -1,4 +1,14 @@
 const memberService = require('../services/MemberService');
+const categoryService = require('../services/CategoryService');
+
+const {
+	NotFoundError,
+	BadRequestError,
+	InternalServerError,
+	ConflictError,
+	ForbiddenError,
+	UnauthorizedError,
+} = require('../config/customError');
 
 /**
  * 회원가입 controller
@@ -8,7 +18,20 @@ const memberService = require('../services/MemberService');
  */
 const signUp = async (req, res, next) => {
 	try {
-		const { id, password, realName, email, region, schoolName, nickName, profilePic } = req.body;
+		const { id, password, realName, email, schoolName, nickName, profilePic } = req.body;
+
+		let region = await categoryService.getRegionBySchoolName(schoolName);
+
+		if (!id || !password || !realName || !email || !region || !schoolName || !nickName) {
+			throw new BadRequestError('필수 정보를 모두 입력하세요.');
+		}
+
+		const isRegisterd = await memberService.getMember(id);
+
+		if (isRegisterd) {
+			throw new ConflictError('이미 가입된 회원입니다.');
+		}
+
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
 			id,
@@ -22,7 +45,7 @@ const signUp = async (req, res, next) => {
 		);
 		//통신 실패
 		if (!member) {
-			throw new Error('서버 오류 입니다.');
+			throw new InternalServerError('서버 오류 입니다.');
 		}
 		//통신 성공
 		res.status(200).json({ data: member, message: '회원 가입 성공' });
@@ -40,31 +63,31 @@ const signUp = async (req, res, next) => {
 const login = async (req, res, next) => {
 	try {
 		const { id, password } = req.body;
+		if (!id || !password) {
+			throw new BadRequestError('아이디와 패스워드가 모두 필요합니다.');
+		}
+		const isRegistered = await memberService.getMember(id);
+
+		if (!isRegistered) {
+			throw new NotFoundError('가입 정보가 없습니다.');
+		}
+		if (isRegistered.deletedAt) {
+			throw new BadRequestError('이미 탈퇴한 회원입니다.');
+		}
+
 		const loginResult = await memberService.login(id, password);
 		if (!loginResult) {
-			res.status(404).json({
-				message: '없는 유저입니다',
-			});
-		} else if (loginResult === false) {
-			// 로그인 실패 시 처리
-			res.status(401).json({
-				message: '로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.',
-			});
-		} else {
-			// 로그인 성공 시 처리
-			const { accessToken, isAdmin } = loginResult;
-
-			res.status(200).json({
-				isAdmin: isAdmin, // 관리자 여부
-				message: '로그인에 성공했습니다!',
-				accessToken: accessToken,
-			});
+			throw new ForbiddenError('아이디 또는 비밀번호를 잘못 입력하셨습니다.');
 		}
-	} catch (error) {
-		next(error);
+		const { accessToken } = loginResult;
+		res.status(200).json({
+			accessToken: accessToken,
+			message: '로그인에 성공했습니다!',
+		});
+	} catch (err) {
+		next(err);
 	}
 };
-
 /**
  * 회원정보 조회 controller
  * 작성자 : 유경아
@@ -74,10 +97,15 @@ const login = async (req, res, next) => {
 const getMember = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
+
+		if (!userId) {
+			throw new UnauthorizedError('로그인이 필요한 서비스입니다.');
+		}
+
 		const memberInfo = await memberService.getMember(userId);
 
-		if (!memberInfo) {
-			return res.status(404).json({ data: null, message: '사용자 정보를 찾을 수 없습니다.' });
+		if (!memberInfo || memberInfo.deletedAt) {
+			throw new NotFoundError('사용자 정보를 찾을 수 없습니다.');
 		}
 		// 사용자 정보 조회 성공 응답
 		res.status(200).json(memberInfo);
@@ -86,13 +114,19 @@ const getMember = async (req, res, next) => {
 	}
 };
 
+/**
+ * 상품글 > 판매자 정보 조회 API
+ * 작성자: 이정은
+ * 작성 시작일 : 2024-04-15
+ * 상품글의 sellerId 로 판매자의 정보를 조회해오는 API입니다.
+ */
 const getSellerInfo = async (req, res, next) => {
 	try {
-		const { sellerId } = req.params;
+		const { sellerId } = req.body;
 		const sellerInfo = await memberService.getSellerInfo(sellerId);
 
 		if (!sellerInfo) {
-			return res.status(400).json({ data: null, message: '사용자 정보를 찾을 수 없습니다.' });
+			throw new BadRequestError('사용자 정보를 찾을 수 없습니다.');
 		}
 		res.status(200).json(sellerInfo);
 	} catch (err) {
@@ -106,16 +140,44 @@ const getSellerInfo = async (req, res, next) => {
  * 작성 시작일 : 2024-04-08
  * 회원 정보수정에 필요한 동작들을 모아놓은 controller입니다.
  */
-const updateMember = async (req, res) => {
+const updateMember = async (req, res, next) => {
 	try {
-		// 현재 로그인한 사용자의 ID를 인증 시스템에서 가져옵니다.
-		// 예시에서는 req.user.id를 사용한다고 가정합니다.
 		const userId = req.user.id;
-		const updatedMember = await memberService.updateMember(userId, req.body);
+		const { password, realName, email, schoolName, nickName, profilePic } = req.body;
 
-		res.json(updatedMember);
-	} catch (error) {
-		res.status(500).json({ message: error.message });
+		let region = await categoryService.getRegionBySchoolName(schoolName);
+
+		const chkDeleted = await memberService.getMember(userId);
+
+		if (!userId) {
+			throw new BadRequestError('로그인이 필요한 서비스입니다.');
+		}
+
+		if (!password || !realName || !email || !region || !schoolName || !nickName) {
+			throw new BadRequestError('필수 정보를 모두 입력하세요.');
+		}
+
+		if (chkDeleted.deletedAt) {
+			throw new BadRequestError('이미 탈퇴한 회원의 정보는 수정할 수 없습니다.');
+		}
+
+		const memberInfo = await memberService.updateMember(
+			userId,
+			password,
+			realName,
+			email,
+			region,
+			schoolName,
+			nickName,
+			profilePic,
+		);
+
+		res.status(200).json({
+			message: '회원정보수정 성공',
+			data: memberInfo,
+		});
+	} catch (err) {
+		next(err);
 	}
 };
 
@@ -125,19 +187,23 @@ const updateMember = async (req, res) => {
  * 작성 시작일 : 2024-04-08
  * 회원 정보 삭제에 필요한 동작들을 모아놓은 controller입니다.
  */
-const deleteMember = async (req, res) => {
+const deleteMember = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
-		const deleteMember = await memberService.deleteMember(userId);
 
-		if (!deleteMember) {
-			return res.status(400).json({ message: '회원 정보를 찾을 수 없습니다.', deleteMember });
+		if (!userId) {
+			throw new UnauthorizedError('로그인이 필요한 서비스입니다.');
 		}
 
+		const memberInfo = await memberService.getMember(userId);
+		if (memberInfo.deletedAt) {
+			throw new BadRequestError('이미 탈퇴한 회원입니다.');
+		}
+
+		const deleteMember = await memberService.deleteMember(userId);
 		return res.status(200).json(deleteMember);
 	} catch (err) {
-		console.log(err);
-		return res.status(500).json({ message: '회원 정보 삭제 중 오류가 발생했습니다' });
+		next(err);
 	}
 };
 
@@ -148,7 +214,7 @@ async function findId(req, res) {
 		const userId = await memberService.findIdByNameAndEmail(realName, email);
 		res.json({ message: '사용자의 아이디를 찾았습니다.', userId });
 	} catch (error) {
-		res.status(400).json({ success: false, message: error.message });
+		throw new BadRequestError(error.message);
 	}
 }
 
@@ -158,7 +224,7 @@ async function resetPassword(req, res) {
 		await memberService.resetPasswordAndSendEmail(id, email);
 		res.json({ message: '임시 비밀번호가 이메일로 전송되었습니다.' });
 	} catch (error) {
-		res.status(400).json({ success: false, message: error.message });
+		throw new BadRequestError(error.message);
 	}
 }
 

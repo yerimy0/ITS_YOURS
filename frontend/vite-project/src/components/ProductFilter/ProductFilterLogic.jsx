@@ -20,11 +20,6 @@ function ProductFilterLogic({
 	const [currentUniversity, setCurrentUniversity] = useState(selectedUniversity);
 	const [universities, setUniversities] = useState([]);
 
-	// // 컴포넌트가 마운트될 떄 지역 데이터 호출
-	// useEffect(() => {
-	// 	fetchLocations();
-	// }, []);
-
 	// 컴포넌트가 마운트될 때 선택된 지역과 대학교 초기화
 	useEffect(() => {
 		setCurrentLocation(selectedLocation);
@@ -92,8 +87,8 @@ function ProductFilterLogic({
 
 	return (
 		<>
-			<FilterList>
-				<LocationList>
+			<FilterList className="filterlist">
+				<LocationList className="locationlist">
 					{locations.map(location => (
 						<LocationItem
 							key={location._id}
@@ -104,20 +99,26 @@ function ProductFilterLogic({
 						</LocationItem>
 					))}
 				</LocationList>
-				<UniversityList>
+
+				<UniversityList className="universitylist">
 					{universities.map(university => (
 						<LocationItem
-							key={university}
-							className={currentUniversity === university ? 'selected' : ''}
-							onClick={() => handleUniversitySelect(university)}
+							key={university._id} // 대학의 고유한 ID를 key로 사용
+							className={currentUniversity === university.name ? 'selected' : ''}
+							onClick={() => handleUniversitySelect(university.name)} // 대학 이름을 전달
 						>
-							{university}
+							{university.name}
 						</LocationItem>
 					))}
 				</UniversityList>
 			</FilterList>
-			<Buttons>
-				<FilterInButton color="#009DFF" backgroundColor="#fff" onClick={handleResetFilter}>
+			<Buttons className="buttons">
+				<FilterInButton
+					className="but1"
+					color="#009DFF"
+					backgroundColor="#fff"
+					onClick={handleResetFilter}
+				>
 					초기화
 				</FilterInButton>
 				<FilterInButton color="#fff" backgroundColor="#009DFF" onClick={handleApplyFilter}>

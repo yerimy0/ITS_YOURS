@@ -16,6 +16,7 @@ import ProductInfoWrap from './ProductInfoWrap';
 import SellerProfileWrap from './SellerProfileWrap';
 import { useParams } from 'react-router-dom';
 import { GetDetail } from '../../../apis/service/product.api';
+import ProductDetailContainer from './ProductDetailContainer';
 
 function ProductDetailHeader() {
 	const { id } = useParams();
@@ -38,6 +39,9 @@ function ProductDetailHeader() {
 		loadProductData();
 	}, [id]);
 
+	console.log(product);
+	console.log(product.sellerId);
+
 	return (
 		<ProductDetail>
 			<BookCover>
@@ -45,7 +49,7 @@ function ProductDetailHeader() {
 			</BookCover>
 			<ProductContent>
 				<SalesInfo>
-					<SellerProfileWrap sellerId={product.sellerId} />
+					{product.sellerId && <SellerProfileWrap id={product.sellerId} />}
 					<ProductInfoWrap productId={product._id} name={product.name} price={product.price} />
 				</SalesInfo>
 				<BookContainer>
@@ -61,6 +65,7 @@ function ProductDetailHeader() {
 				<Title>상품 정보</Title>
 				<ProductInfoText>{product.description}</ProductInfoText>
 			</ProductInfoTextWrap>
+			<ProductDetailContainer product={product} />
 		</ProductDetail>
 	);
 }

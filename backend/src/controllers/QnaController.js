@@ -1,15 +1,23 @@
 const qnaService = require('../services/QnaService');
 const ObjectId = require('mongodb').ObjectId;
+const {
+	NotFoundError,
+	BadRequestError,
+	InternalServerError,
+	UnauthorizedError,
+} = require('../config/customError');
 
 // Q&A 작성
 const createQna = async (req, res, next) => {
 	try {
-		const nickname = req.user.nickName;
+		const id = req.user.id;
+		const nickname = await qnaService.getNickName(id);
+
 		const { title, content } = req.body;
 		const result = await qnaService.createQna(title, content, nickname);
 
-		if (!result) {
-			throw new Error('Q&A를 쓸 권한이 없습니다.');
+		if (!id) {
+			throw new BadRequestError('로그인 후 이용해주세요.');
 		}
 		return res.status(200).json(result);
 	} catch (err) {
@@ -19,11 +27,12 @@ const createQna = async (req, res, next) => {
 
 //모든 Q&A 조회
 const getAllQna = async (req, res, next) => {
-	//const isAdmin = req.user.isAdmin;
-	if (!isAdmin) {
-		throw new Error('권한이 없습니다.');
-	}
 	try {
+		const isAdmin = req.user.isAdmin;
+
+		if (!isAdmin) {
+			throw new UnauthorizedError('권한이 없습니다.');
+		}
 		const qna = await qnaService.getAllQna();
 		res.status(200).json(qna);
 	} catch (err) {
@@ -34,12 +43,32 @@ const getAllQna = async (req, res, next) => {
 // Q&A 수정
 const updateQna = async (req, res, next) => {
 	try {
+		const id = req.user.id;
+		const nickname = await qnaService.getNickName(id);
+
 		const { qnaId } = req.query;
 		const qnaObjectId = new ObjectId(qnaId);
 		const { title, content } = req.body;
+
+		const chkDeleted = await qnaService.getOneQna(qnaId);
+
+		if (!id) {
+			throw new BadRequestError('로그인 후 이용해주세요.');
+		}
+		if (nickname !== chkDeleted.nickname) {
+			throw new UnauthorizedError('권한이 없습니다.');
+		}
+		if (chkDeleted.deletedAt) {
+			throw new BadRequestError('이미 삭제된 QnA는 수정할 수 없습니다.');
+		}
+		if (!title || !content) {
+			throw new BadRequestError('필수 정보를 모두 입력해주세요.');
+		}
+
 		const updatedQna = await qnaService.updateQna(qnaObjectId, { title, content });
+
 		if (!updatedQna) {
-			return res.status(400).json({ message: 'Qna not found' });
+			throw new InternalServerError('업데이트 중 오류가 발생했습니다.');
 		}
 		res.status(200).json(updatedQna);
 	} catch (err) {
@@ -50,30 +79,44 @@ const updateQna = async (req, res, next) => {
 // Q&A 삭제
 const deleteQna = async (req, res, next) => {
 	try {
+		const id = req.user.id;
+		const nickname = await qnaService.getNickName(id);
+
 		const { qnaId } = req.query;
 		const qnaObjectId = new ObjectId(qnaId);
+
+		const chkDeleted = await qnaService.getOneQna(qnaId);
+
+		if (!id) {
+			throw new BadRequestError('로그인 후 이용해주세요.');
+		}
+		if (nickname !== chkDeleted.nickname) {
+			throw new UnauthorizedError('권한이 없습니다.');
+		}
+		if (chkDeleted.deletedAt) {
+			throw new BadRequestError('이미 삭제된 QnA입니다.');
+		}
 		const deleteQna = await qnaService.deleteQna(qnaObjectId);
 
 		if (!deleteQna) {
-			return res.status(404).send({ message: '문의글을 찾을 수 없습니다.' });
+			throw new NotFoundError('QnA를 찾을 수 없습니다.');
 		}
 
 		res.status(200).send({ message: '문의글이 삭제되었습니다.', deleteQna });
-	} catch (error) {
-		res.status(500).send({
-			message: '문의글 삭제 중 오류가 발생했습니다.',
-			error: error.message,
-		});
+	} catch (err) {
+		next(err);
 	}
 };
 
 // 내 Q&A 조회
 const getMyQna = async (req, res, next) => {
 	try {
-		const nickname = req.user.nickName;
+		const id = req.user.id;
+		const nickname = await qnaService.getNickName(id);
+
 		const qna = await qnaService.getMyQna(nickname);
 		if (!qna) {
-			throw new Error('조회되는 Q&A가 없습니다!');
+			throw new NotFoundError('조회되는 Q&A가 없습니다!');
 		}
 		res.status(200).json({ data: qna, message: 'Q&A조회 성공' });
 	} catch (err) {

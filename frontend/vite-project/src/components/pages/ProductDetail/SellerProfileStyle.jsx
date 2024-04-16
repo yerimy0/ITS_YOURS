@@ -26,9 +26,9 @@ const Div = styled.div`
 const NickName = styled.p`
 	display: flex;
 	align-items: center;
-	font-size: 22px;
+	font-size: 20px;
 	font-style: normal;
-	font-weight: 700;
+	font-weight: 500;
 	line-height: 28px;
 	margin: 0;
 `;
@@ -41,6 +41,7 @@ const Category = styled.p`
 	font-weight: 400;
 	line-height: 24px;
 	margin: 0;
+	color: #444;
 `;
 
 export { SellerProfile, Profile, ProfileImg, Div, NickName, Category };

@@ -40,6 +40,6 @@ router.post('/', validateToken, upload.array('imgUrls', 3), insertProduct);
 router.put('/', validateToken, upload.array('imgUrls', 3), updateProduct);
 
 //상품 삭제
-router.delete('/', deleteProduct);
+router.delete('/', validateToken, deleteProduct);
 
 module.exports = router;

@@ -11,11 +11,33 @@ import {
 	CountNum,
 	Unit,
 } from '../HomeStyle';
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { infos } from './data';
 import useCountUp from '../../../../hooks/CountingUp';
+import { fetchDefaultProducts } from '../../../../apis/service/product.api';
 
 function Section5() {
+	const [bookInfo, setBookInfo] = useState({
+		image: 'sub_users.png',
+		content: '거래중인 도서수',
+		num: 152,
+		end: '권',
+	});
+
+	// 현재 거래중인 도서 권수 업데이트
+	useEffect(() => {
+		async function booksquantity() {
+			const quantity = await fetchDefaultProducts();
+			setBookInfo({
+				image: 'sub_users.png',
+				content: '거래중인 도서수',
+				num: `${quantity.length}`,
+				end: '권',
+			});
+			infos.push(bookInfo);
+		}
+		booksquantity();
+	}, []);
 	return (
 		<Box4>
 			<Title className="sec4_title">

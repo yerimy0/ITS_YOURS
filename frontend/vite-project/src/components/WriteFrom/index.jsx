@@ -10,6 +10,7 @@ import {
 	ProductTwoInput,
 	SmallButton,
 	BigButton,
+	Alert,
 } from './WriteFormStyle';
 import InputImg from './components/InputImg';
 import { Section, Section2, Section3, Section4 } from './components/Section';
@@ -84,6 +85,7 @@ function WriteForm() {
 			db = e.target.result;
 
 			const transaction = db.transaction(['product'], 'readwrite');
+
 			const store = transaction.objectStore('product');
 			const request = store.put(register);
 
@@ -91,13 +93,19 @@ function WriteForm() {
 				console.log('임시 저장되었습니다.');
 			};
 
-			request.onerror = function () {
-				console.log('임시 저장에 실패했습니다.');
+			request.onerror = function (e) {
+				console.error('Request error:', e.target.error);
+				if (e.target.error instanceof DOMException && e.target.error.name == 'NotFoundError') {
+					alert('임시저장에 실패했습니다 쿠키를 지우고 다시 시도하세요.');
+				}
 			};
 		});
 		dbReq.addEventListener('error', function (e) {
 			const error = e.target.error;
 			console.log('error', error.name);
+			if (error instanceof DOMException && error.name == 'Uncaught DOMException') {
+				alert('임시저장에 실패했습니다. 쿠키를 지우고 다시 시도하세요.');
+			}
 		});
 		dbReq.addEventListener('upgradeneeded', function (e) {
 			db = e.target.result;
@@ -154,6 +162,11 @@ function WriteForm() {
 						등록하기
 					</BigButton>
 				</RegButtons>
+				<Alert>
+					* 시크릿 브라우징 모드와 같은 환경 등에서는 임시저장 기능을 사용할 수 없습니다. 환경을
+					확인해주십시오! <br />
+					또한, 임시저장이 되지 않는 경우, 쿠키를 지우고 다시 시도하세요!
+				</Alert>
 			</RegisterBox>
 		</RegisterContext.Provider>
 	);

@@ -5,6 +5,9 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import { useLocation } from 'react-router-dom';
 import UserIdContext from '../../context/UserIdContext';
 
+// ================= 토글박스 뜨면 스크롤 안되도록 막기
+// ================= 토글박스안에 메인로고 이미지 클릭하면 홈으로 이동할수있도록 link 컴포넌트 사용!
+// ================= 토글박스안에 커뮤니티 아이콘만 좀 어색해보여서 변경하면 더 좋을듯해요!
 function Header() {
 	const [isAuth, setIsAuth] = useState(false);
 	const [isToggled, setIsToggled] = useState(false);
@@ -20,6 +23,18 @@ function Header() {
 		setIsToggled(!isToggled);
 	}
 
+	// 박스 바깥 영역 클릭시 토글 상태 변경
+	function handleOutsideClick(e) {
+		if (isToggled && e.target.className === 'ham_background') {
+			setIsToggled(false);
+		}
+	}
+
+	// 닫기 버튼 클릭시 토글 상태 변경
+	function handleCloseClick() {
+		setIsToggled(false);
+	}
+
 	const location = useLocation();
 	const isMainPage = location.pathname === '/';
 
@@ -28,7 +43,7 @@ function Header() {
 			{/* RIGHT 부분을 NavWrap안에 감싸서 다시 넣어놨어요! */}
 			<NavWrap>
 				<NavLink to="/">
-					<img src="/main_logo.png" />
+					<img className="main_logo" src="/main_logo.png" />
 				</NavLink>
 				<RightNav istoggled={isToggled}>
 					<li>
@@ -65,23 +80,48 @@ function Header() {
 					)}
 					<img src="/light.png" />
 				</LeftNav>
-				<div>
-					<RxHamburgerMenu className="HambergerBtn" onClick={handleClick} />
+				<div className="ham_wrap">
+					<img src="/ham_btn.png" className="ham_img " alt="햄버거 버튼" onClick={handleClick} />
+					{/* <RxHamburgerMenu className="" onClick={handleClick} /> */}
 				</div>
 			</Nav>
+			{isToggled && <div className="ham_background" onClick={handleOutsideClick}></div>}
 			{isToggled && (
 				<div className="ToggleBox">
-					<div>
-						<NavLink to="/product">도서거래</NavLink>
+					<button className="close_btn" onClick={handleCloseClick}>
+						<img src="/close_btn.png" alt="" />
+					</button>
+					<div className="img_wrap">
+						<img className="img1" src="/logoCharacter.png" alt="" />
+						<img className="img2" src="/main_logo.png" alt="" />
 					</div>
-					<div>
-						<NavLink to="/community">커뮤니티</NavLink>
+					<h2>
+						즐거운 쇼핑생활! <br />
+						<span>이제너해</span>가 함께 합니다!
+					</h2>
+					<div className="li">
+						<NavLink to="/product" className="ham_a">
+							<img src="/i1.png" className="li_i" alt="" />
+							도서거래
+						</NavLink>
 					</div>
-					<div>
-						<NavLink to="/chat">채팅하기</NavLink>
+					<div className="li">
+						<NavLink to="/community" className="ham_a">
+							<img src="/i2.png" className="li_i" alt="" />
+							커뮤니티
+						</NavLink>
 					</div>
-					<div>
-						<NavLink to="/mypage">내책판매</NavLink>
+					<div className="li">
+						<NavLink to="/chat" className="ham_a">
+							<img src="/i3.png" className="li_i" alt="" />
+							채팅하기
+						</NavLink>
+					</div>
+					<div className="li">
+						<NavLink to="/mypage" className="ham_a">
+							<img src="/i4.png" className="li_i" alt="" />
+							내책판매
+						</NavLink>
 					</div>
 				</div>
 			)}

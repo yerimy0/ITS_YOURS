@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import InquiryItem from './InquiryItem';
-import { InquiryList as StyledInquiryList, EmptyMessage } from './AskSupportListStyles'; // EmptyMessage 스타일도 함께 가져오기
+import { InquiryList as StyledInquiryList, EmptyMessage } from './AskSupportListStyles';
 import { fetchInquiries } from '../../../../apis/service/AskSupportApi';
 
 function InquiryList() {

@@ -35,12 +35,13 @@ function ProfileEditForm({ userInfo }) {
 	const fetchProfileData = async () => {
 		try {
 			const data = await fetchMyPageData();
+			console.log(data);
 			setUserId(data.id);
 			setName(data.realName);
 			setEmail(data.email);
-			setUniversity(data.univName);
+			setUniversity(data.schoolName);
 			setNickname(data.nickName);
-			setProfileImage(data.profilePic);
+			setProfileImage(data.profilePic); // 프로필 이미지 데이터를 설정합니다.
 		} catch (error) {
 			console.error('프로필 정보 로딩 실패:', error);
 		}
@@ -103,37 +104,37 @@ function ProfileEditForm({ userInfo }) {
 				onClose={handleCloseModal}
 				onSelectUniversity={handleSelectUniversity}
 			/>
-			<ProfileImageUploader onImageSelected={setProfileImage} />
+			<ProfileImageUploader onImageSelected={setProfileImage} profileImage={profileImage} />
 			<Form onSubmit={handleSubmit}>
-				<Input type="text" placeholder="아이디" value={userId} disabled />
+				<Input type="text" value={userId} disabled />
 				<Input
 					type="password"
-					placeholder="비밀번호를 입력하세요"
+					placeholder="*비밀번호를 입력해주세요"
 					value={password}
 					onChange={e => setPassword(e.target.value)}
 				/>
 				{errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
 				<Input
 					type="password"
-					placeholder="비밀번호 확인"
+					placeholder="*비밀번호를 다시 입력해주세요"
 					value={confirmPassword}
 					onChange={e => setConfirmPassword(e.target.value)}
 				/>
 				{errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
 				<Input
 					type="text"
-					placeholder="닉네임"
-					value={nickname}
-					onChange={e => setNickname(e.target.value)}
-				/>
-				{errors.nickname && <ErrorMessage>{errors.nickname}</ErrorMessage>}
-				<Input
-					type="text"
-					placeholder="이름을 입력하세요"
+					placeholder="*이름을 입력해주세요"
 					value={name}
 					onChange={e => setName(e.target.value)}
 				/>
 				{errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+				<Input
+					type="text"
+					placeholder="*닉네임을 입력해주세요"
+					value={nickname}
+					onChange={e => setNickname(e.target.value)}
+				/>
+				{errors.nickname && <ErrorMessage>{errors.nickname}</ErrorMessage>}
 				<EmailVerificationForm
 					email={email}
 					setEmail={setEmail}

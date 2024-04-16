@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
 	ProfileWrap,
 	Profile,
@@ -11,9 +12,15 @@ import {
 } from './ChatListProfileStyle';
 
 function ChatListProfile() {
+	const [isActive, setIsActive] = useState(false);
+
+	function handleClick() {
+		setIsActive(!isActive);
+	}
+
 	return (
 		<>
-			<ProfileWrap>
+			<ProfileWrap className={isActive ? 'active' : ''} onClick={handleClick}>
 				<Profile>
 					<ProfileImg src="/profile.jpg" />
 				</Profile>
@@ -23,7 +30,9 @@ function ChatListProfile() {
 						<Notification />
 					</Wrap>
 					<Wrap>
-						<BookName>데일 카네기의 인간관계론</BookName>
+						<BookName>
+							데일 카네기의 인ㄹㅇㄴㄴㄴㄹㅇㄹㄴㄹㄴㅇㄴㄴㄹㄹㄴㅇㅇㄹㄴㅇㄹㄴㄹ간관계론
+						</BookName>
 						<SendTime>1시간 전</SendTime>
 					</Wrap>
 				</ProfileInfo>

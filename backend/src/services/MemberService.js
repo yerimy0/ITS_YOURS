@@ -1,5 +1,5 @@
 const { Members, Wishes } = require('../models/index');
-const { sendCustomEmail } = require('../utils/Mailer');
+const { sendPasswordEmail, sendVerifyEmail } = require('../utils/Mailer');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
@@ -35,7 +35,6 @@ async function signUp(id, password, realName, email, region, schoolName, nickNam
  * 로그인 기능 관련 DB작업이 모여있는 service입니다.
  */
 async function login(id, password) {
-	let isAdmin; // 관리자 회원여부
 	// 회원정보
 	const member = await Members.findOne({ id });
 	if (!member) return null;
@@ -52,18 +51,14 @@ async function login(id, password) {
 					id: member.id,
 					nickName: member.nickName,
 					profilePic: member.profilePic,
-					region: member.region,
-					schoolName: member.schoolName,
+					isAdmin: member.isAdmin,
 				},
 			},
 			process.env.ACCESS_TOKEN_SECRET,
 			{ expiresIn: '14d' }, // 토큰 유효기간
 		);
-
-		isAdmin = member.isAdmin; // 관리자 회원여부
-
 		// 액세스 토큰 & 관리자 회원여부 반환
-		return { accessToken, isAdmin }; // 객체로 반환
+		return { accessToken }; // 객체로 반환
 	}
 	// 로그인 실패
 	else {
@@ -91,9 +86,9 @@ async function getMember(userId) {
 	}
 }
 
-async function getSellerInfo(sellerId) {
-	const sellerInfo = await Members.findOne({ id: sellerId }).select(
-		'name profilePic nickName region schoolName',
+async function getSellerInfo(id) {
+	const sellerInfo = await Members.findOne({ id: id }).select(
+		'id name profilePic nickName region schoolName',
 	);
 	return sellerInfo;
 }
@@ -104,26 +99,30 @@ async function getSellerInfo(sellerId) {
  * 작성 시작일 : 2024-04-05
  * 회원정보수정 기능 관련 DB작업이 모여있는 service입니다.
  */
-async function updateMember(userId, updateData) {
-	try {
-		const dataWithTimestamp = {
-			...updateData,
-			updatedAt: new Date(Date.now() + 9 * 60 * 60 * 1000),
-		};
-
-		const updatedMember = await Members.findOneAndUpdate({ id: userId }, dataWithTimestamp, {
-			new: true,
-		});
-
-		if (!updatedMember) {
-			// 업데이트할 회원을 찾을 수 없는 경우, 에러 발생
-			throw new Error('회원을 찾을 수 없습니다.');
-		}
-
-		return updatedMember; // 업데이트된 회원 정보 반환
-	} catch (error) {
-		throw error; // 에러는 컨트롤러에서 핸들링
-	}
+async function updateMember(
+	userId,
+	password,
+	realName,
+	email,
+	region,
+	schoolName,
+	nickName,
+	profilePic,
+) {
+	const memberInfo = await Members.findOneAndUpdate(
+		{ id: userId },
+		{
+			password: password,
+			realName: realName,
+			email: email,
+			region: region,
+			schoolName: schoolName,
+			nickName: nickName,
+			profilePic: profilePic,
+			updatedAt: Date.now() + 9 * 60 * 60 * 1000,
+		},
+	);
+	return memberInfo;
 }
 
 /**
@@ -133,28 +132,12 @@ async function updateMember(userId, updateData) {
  * 회원 탈퇴 기능 관련 DB작업이 모여있는 service입니다.
  */
 async function deleteMember(userId) {
-	try {
-		const deletedAt = new Date(Date.now() + 9 * 60 * 60 * 1000);
-
-		// userId를 사용하여 사용자 정보를 먼저 조회
-		const member = await Members.findOne({ id: userId });
-		if (!member) {
-			return null; // 사용자가 존재하지 않는 경우, null 반환
-		}
-
-		// userId를 사용하여 사용자를 찾고, deletedAt 필드를 업데이트함으로써 소프트 삭제 수행
-		const result = await Members.updateOne({ id: userId }, { $set: { deletedAt: deletedAt } });
-
-		// 업데이트된 문서의 수를 확인하여 삭제 성공 여부 판단
-		if (result.nModified === 0) {
-			return null;
-		}
-
-		member.deletedAt = deletedAt;
-		return member;
-	} catch (err) {
-		throw err;
-	}
+	// userId를 사용하여 사용자를 찾고, deletedAt 필드를 업데이트함으로써 소프트 삭제 수행
+	const result = await Members.findOneAndUpdate(
+		{ id: userId },
+		{ deletedAt: Date.now() + 9 * 60 * 60 * 1000 },
+	);
+	return result;
 }
 
 // 아이디 찾기
@@ -175,24 +158,27 @@ function generateTempPassword(length) {
 		.slice(0, length); // 원하는 길이로 문자열을 자릅니다
 }
 
-async function resetPasswordAndSendEmail(id, email) {
+async function resetPassword(id, email) {
 	const member = await Members.findOne({ id: id, email: email });
 	if (!member) {
 		throw new Error('해당하는 사용자가 없습니다.');
 	}
 
-	const tempPassword = generateTempPassword(10); // 예를 들어, 길이가 10인 임시 비밀번호 생성
-	const hashedPassword = await bcrypt.hash(tempPassword, 10);
+	const verificationCode = generateTempPassword(10); // 예를 들어, 길이가 10인 인증번호 생성
+	const hashedPassword = await bcrypt.hash(verificationCode, 10);
 
-	await Members.updateOne({ id: id }, { password: hashedPassword });
+	const updatePassword = await Members.updateOne({ id: id }, { password: hashedPassword });
 
-	await sendCustomEmail({
-		to: email,
-		subject: '[이제너해] 임시 비밀번호 발급 안내',
-		newPassword: tempPassword, // 랜덤하게 생성된 임시 비밀번호를 전달
-	});
+	await sendPasswordEmail(email, verificationCode); // 수정된 부분
 
-	return true;
+	return { updatePassword }; // 'emailResult'는 정의되지 않았으므로 이 부분도 확인 필요
+}
+
+async function sendEmailVerification(email) {
+	const verificationCode = generateTempPassword(4);
+	await sendVerifyEmail(email, verificationCode);
+
+	return verificationCode; // 수정된 부분
 }
 
 module.exports = {
@@ -203,5 +189,6 @@ module.exports = {
 	updateMember,
 	deleteMember,
 	findIdByNameAndEmail,
-	resetPasswordAndSendEmail,
+	resetPassword,
+	sendEmailVerification,
 };

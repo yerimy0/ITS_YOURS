@@ -6,9 +6,11 @@ import ChatRoom from '../../components/pages/Chat/ChatRoom';
 function Chat() {
 	return (
 		<ChatWrap>
-			<ChatList />
-			{/* <DefaultChatRoom /> */}
-			<ChatRoom />
+			<div className="chat_inner">
+				<ChatList />
+				{/* <DefaultChatRoom /> */}
+				<ChatRoom />
+			</div>
 		</ChatWrap>
 	);
 }

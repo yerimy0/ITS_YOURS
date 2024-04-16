@@ -1,8 +1,8 @@
 import instance from '../axiosInstance';
 
-async function fetchSellerDataById(sellerId) {
+async function fetchSellerDataById(id) {
 	try {
-		const res = await instance.get(`/members/${sellerId}`);
+		const res = await instance.get(`/members/sellerInfo?id=${id}`);
 		if (res.status === 200) {
 			return res.data;
 		}

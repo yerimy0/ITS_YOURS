@@ -194,6 +194,10 @@ const Icon = styled.img`
 	flex-direction: column;
 	align-items: center;
 	gap: 9px;
+	&:hover {
+		transform: scale(1.1);
+		transition: transform 0.3s ease;
+	}
 `;
 
 const BookInfo = styled.div`

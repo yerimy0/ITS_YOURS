@@ -23,8 +23,6 @@ function RecommendedProductsWrap({ product }) {
 		}
 	}, [product]);
 
-	console.log(recommendedProducts);
-
 	const handleProductClick = productId => {
 		navigate(`/product/${productId}`);
 		// 페이지를 이동한 후에 스크롤을 맨 위로 이동

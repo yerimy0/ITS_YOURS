@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { SellerProfile, Profile, ProfileImg, Div, NickName, Category } from './SellerProfileStyle';
 import { fetchSellerDataById } from '../../../apis/service/SellerApi';
 
-function SellerProfileWrap({ sellerId }) {
+function SellerProfileWrap({ id }) {
 	const [sellerData, setSellerData] = useState([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const sellerData = await fetchSellerDataById(sellerId);
+				const sellerData = await fetchSellerDataById(id);
 				setSellerData(sellerData);
 			} catch (err) {
 				console.error('셀러 데이터를 불러오는 중 에러 발생:', err);
 			}
 		};
 		fetchData();
-	}, [sellerId]);
+	}, [id]);
 
 	return (
 		<SellerProfile>

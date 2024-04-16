@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import InquiryItem from './InquiryItem';
-import { InquiryList as StyledInquiryList } from './AskSupportListStyles';
+import { InquiryList as StyledInquiryList, EmptyMessage } from './AskSupportListStyles'; // EmptyMessage 스타일도 함께 가져오기
 import { fetchInquiries } from '../../../../apis/service/AskSupportApi';
 
 function InquiryList() {
@@ -39,14 +39,18 @@ function InquiryList() {
 
 	return (
 		<StyledInquiryList>
-			{inquiries.map(inquiry => (
-				<InquiryItem
-					key={inquiry._id}
-					inquiry={inquiry}
-					toggleContent={toggleContent}
-					deleteInquiryFromList={deleteInquiryFromList}
-				/>
-			))}
+			{inquiries.length > 0 ? (
+				inquiries.map(inquiry => (
+					<InquiryItem
+						key={inquiry._id}
+						inquiry={inquiry}
+						toggleContent={toggleContent}
+						deleteInquiryFromList={deleteInquiryFromList}
+					/>
+				))
+			) : (
+				<EmptyMessage>문의 내역이 없습니다</EmptyMessage>
+			)}
 		</StyledInquiryList>
 	);
 }

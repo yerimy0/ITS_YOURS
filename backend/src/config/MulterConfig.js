@@ -5,7 +5,7 @@ const fs = require('fs'); // 파일 시스템 모듈 불러오기
 // 파일 저장을 위한 storage 정의
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		const uploadPath = path.join(__dirname, './uploads');
+		const uploadPath = path.join(__dirname, '../uploads');
 		// uploads 폴더가 있는지 확인하고, 없으면 생성
 		if (!fs.existsSync(uploadPath)) {
 			fs.mkdirSync(uploadPath, { recursive: true });

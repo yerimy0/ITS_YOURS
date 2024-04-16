@@ -46,6 +46,9 @@ function Section2() {
 								key={`List-item-${i}`}
 								src={`${book.imgUrls}`}
 								alt={`Book ${i}`}
+								onClick={() => {
+									navigate(`/product/${book._id}`);
+								}}
 							/>
 						))}
 					</UpdateBooks>

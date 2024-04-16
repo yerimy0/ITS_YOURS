@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Modal from '../Modal';
+import DateSlicer from '../../utils/dateSlicer';
 
-const OnSaleCard = ({ itemId, onDelete, onEdit }) => {
+function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, chat, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const openDeleteModal = () => {
 		setIsModalOpen(true);
@@ -13,48 +16,51 @@ const OnSaleCard = ({ itemId, onDelete, onEdit }) => {
 		setIsModalOpen(false);
 	};
 
-	const handleDelete = () => {
-		onDelete(itemId);
+	const handleConfirmDelete = () => {
+		onDelete();
 		closeDeleteModal();
 	};
 
 	return (
 		<>
-			{itemData ? (
-				<ProductCardWrap>
-					<ImageBox>
-						<ForSalesListImage src={itemData.image} alt={itemData.title} />
-					</ImageBox>
-					<SalesInfo>
-						<Title>{itemData.title}</Title>
-						<Price>{`${itemData.price}원`}</Price>
-						<Stats>
-							<Icon src="heart.svg" alt="Wish" />
-							<Status>{itemData.like}</Status>
-							<Icon src="chat_bubble_oval.svg" alt="Chat" />
-							<Status>{itemData.chat}</Status>
-						</Stats>
-						<Date>{itemData.Date}</Date>
-					</SalesInfo>
-					<ButtonBox>
-						<EdditBtn onClick={() => onEdit(itemId)}>수정</EdditBtn>
-						<DeleteBtn onClick={openDeleteModal}>삭제</DeleteBtn>
-					</ButtonBox>
-				</ProductCardWrap>
-			) : (
-				<div>데이터 로딩중...</div>
-			)}
+			<ProductCardWrap>
+				<ImageBox>
+					<ForSalesListImage src={imgUrls} alt="" />
+				</ImageBox>
+				<SalesInfo>
+					<Title>{name}</Title>
+					<PriceWrapper>
+						<Price>{Number(price).toLocaleString()}</Price>
+						<Won>원</Won>
+					</PriceWrapper>
+					<Stats>
+						<Icon src="../../../heart.svg" alt="Wish" />
+						<Status>{wishescount}</Status>
+						<Icon src="../../../chat_bubble_oval.svg" alt="Chat" />
+						<Status>{chat}</Status>
+					</Stats>
+					<Date>{DateSlicer(createdAt)}</Date>
+				</SalesInfo>
+				<ButtonBox>
+					<EditBtn
+						onClick={() => navigate(`/product/edit/${id}`, { state: { from: 'saleshistory' } })}
+					>
+						수정
+					</EditBtn>
+					<DeleteBtn onClick={openDeleteModal}>삭제</DeleteBtn>
+				</ButtonBox>
+			</ProductCardWrap>
 			<Modal
 				isOpen={isModalOpen}
 				onClose={closeDeleteModal}
 				title="정말 삭제하시겠습니까?"
 				content="삭제된 데이터는 복구할 수 없습니다."
 				confirmText="확인"
-				onConfirm={handleDelete}
+				onConfirm={handleConfirmDelete}
 			/>
 		</>
 	);
-};
+}
 
 export default OnSaleCard;
 
@@ -82,16 +88,31 @@ const SalesInfo = styled.div`
 	flex-direction: column;
 `;
 
-const Title = styled.h2`
+const Title = styled.div`
 	font-size: 20px;
 	font-weight: 300;
 	font-family: SUIT;
 `;
 
-const Price = styled.span`
+const PriceWrapper = styled.div`
+	display: flex;
+	align-items: baseline;
+`;
+
+const Price = styled.div`
 	font-size: 24px;
 	font-weight: 700;
 	font-family: SUIT;
+`;
+
+const Won = styled.div`
+	color: var(--M3-black, #000);
+	font-family: SUIT;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+	margin-top: 5px;
+	margin-left: 5px;
 `;
 
 const Stats = styled.div`
@@ -120,7 +141,7 @@ const ButtonBox = styled.div`
 	padding-top: 50px;
 `;
 
-const EdditBtn = styled.button`
+const EditBtn = styled.button`
 	border-radius: 20px;
 	border: 1px solid #009dff;
 	background: #fff;

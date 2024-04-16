@@ -123,8 +123,8 @@ const getMember = async (req, res, next) => {
  */
 const getSellerInfo = async (req, res, next) => {
 	try {
-		const { sellerId } = req.body;
-		const sellerInfo = await memberService.getSellerInfo(sellerId);
+		const { id } = req.query;
+		const sellerInfo = await memberService.getSellerInfo(id);
 
 		if (!sellerInfo) {
 			throw new BadRequestError('사용자 정보를 찾을 수 없습니다.');

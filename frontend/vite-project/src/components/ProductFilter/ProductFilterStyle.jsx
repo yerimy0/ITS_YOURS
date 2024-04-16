@@ -7,7 +7,7 @@ const Alignments = styled.div`
 	gap: 10px;
 `;
 
-const Bilnd = styled.span`
+const Blind = styled.span`
 	height: 1px;
 	margin: -1px;
 	overflow: hidden;
@@ -65,7 +65,7 @@ const FilterContent = styled.div`
 		opacity 0.3s;
 `;
 
-const LocationList = styled.ul`
+const RegionList = styled.ul`
 	width: 100%;
 	width: 100%;
 	text-align: center;
@@ -80,7 +80,7 @@ const UniversityList = styled.ul`
 	overflow-y: scroll;
 `;
 
-const LocationItem = styled.li`
+const Item = styled.li`
 	&:hover {
 		color: #009dff;
 	}
@@ -134,14 +134,14 @@ const FilterInButton = styled.button`
 
 export {
 	Alignments,
-	Bilnd,
+	Blind,
 	Alignment,
 	Filter,
 	FilterButton,
 	FilterContent,
-	LocationList,
+	RegionList,
 	UniversityList,
-	LocationItem,
+	Item,
 	FilterList,
 	Buttons,
 	FilterInButton,

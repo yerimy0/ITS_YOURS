@@ -16,7 +16,6 @@ function SellerProfileWrap({ id }) {
 		};
 		fetchData();
 	}, [id]);
-	console.log(id);
 
 	return (
 		<SellerProfile>

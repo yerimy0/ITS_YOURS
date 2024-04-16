@@ -1,6 +1,6 @@
 import instance from '../axiosInstance';
 
-export async function fetchLocations() {
+export async function fetchRegions() {
 	try {
 		const res = await instance.get('/categories');
 		return res.data.data;

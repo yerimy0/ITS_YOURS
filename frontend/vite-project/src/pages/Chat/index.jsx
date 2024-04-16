@@ -5,7 +5,7 @@ import ChatRoom from '../../components/pages/Chat/ChatRoom';
 
 function Chat() {
 	return (
-		<ChatWrap className="chatwrap">
+		<ChatWrap>
 			<div className="chat_inner">
 				<ChatList />
 				{/* <DefaultChatRoom /> */}

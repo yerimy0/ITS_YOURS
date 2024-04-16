@@ -222,8 +222,22 @@ async function findId(req, res) {
 async function resetPassword(req, res) {
 	try {
 		const { id, email } = req.body;
-		await memberService.resetPasswordAndSendEmail(id, email);
-		res.json({ message: '임시 비밀번호가 이메일로 전송되었습니다.' });
+		const reset = await memberService.resetPassword(id, email);
+		res.json({ message: '임시 비밀번호가 이메일로 전송되었습니다.', reset });
+	} catch (error) {
+		throw new BadRequestError(error.message);
+	}
+}
+
+// 이메일 인증코드
+async function sendVerifyEmail(req, res) {
+	try {
+		const { email } = req.body;
+		if (!email) {
+			throw new BadRequestError('이메일을 입력해주세요');
+		}
+		await memberService.sendEmailVerification(email);
+		res.json({ message: '인증코드가 이메일로 전송되었습니다.' });
 	} catch (error) {
 		throw new BadRequestError(error.message);
 	}
@@ -238,4 +252,5 @@ module.exports = {
 	deleteMember,
 	findId,
 	resetPassword,
+	sendVerifyEmail,
 };

@@ -35,6 +35,12 @@ const QnaSchema = new Schema({
 	updatedAt: {
 		type: Date,
 	},
+	// 이메일 추가
+	email: { type: String },
+	// qna 답변
+	answer: {
+		type: String,
+	},
 	// Q&A 답변여부
 	isCompleted: {
 		type: Boolean,

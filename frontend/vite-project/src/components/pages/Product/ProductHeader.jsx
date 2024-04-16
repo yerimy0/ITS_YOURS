@@ -28,7 +28,7 @@ function ProductHeader({ onSortChange, onFilterChange, onSearchResults, totalIte
 				<SearchBar onSearchResults={onSearchResults} className="product_search_bar" />
 				<SearchResultContainer>
 					<SearchResult className="find_num">{totalItems}</SearchResult>
-					<SearchResult>개의 도서를 찾았어요.</SearchResult>
+					<SearchResult>개의 도서가 있어요.</SearchResult>
 				</SearchResultContainer>
 				<ProductFilterWrap>
 					<ProductFilter onSortChange={onSortChange} onFilterChange={onFilterChange} />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { WishsWrap, WishTitle, Wishs } from './WishStyle';
+import { WishsWrap, WishTitle, NoWishText, Wishs } from './WishStyle';
 import ProductCard from '../../ProductCard';
 import Paginator from '../../Paginator';
 import { useNavigate } from 'react-router-dom';
@@ -49,30 +49,37 @@ function WishContainer() {
 		<>
 			<WishsWrap>
 				<WishTitle>찜목록</WishTitle>
-				<Wishs>
-					{userWishListToShow.map(wishItem => {
-						if (!wishItem.productId) {
-							return null;
-						}
-						return (
-							<ProductCard
-								key={wishItem.productId._id}
-								productId={wishItem.productId._id}
-								imgUrls={wishItem.productId.imgUrls}
-								name={wishItem.productId.name}
-								price={wishItem.productId.price}
-								onClick={() => handleProductClick(wishItem.productId._id)}
-							/>
-						);
-					})}
-				</Wishs>
+				{userWishListToShow.length === 0 ? ( // 찜한 상품이 없을 때
+					<NoWishText>찜한 상품이 없습니다.</NoWishText>
+				) : (
+					// 찜한 상품이 있을 때
+					<Wishs>
+						{userWishListToShow.map(wishItem => {
+							if (!wishItem.productId) {
+								return null;
+							}
+							return (
+								<ProductCard
+									key={wishItem.productId._id}
+									productId={wishItem.productId._id}
+									imgUrls={wishItem.productId.imgUrls}
+									name={wishItem.productId.name}
+									price={wishItem.productId.price}
+									onClick={() => handleProductClick(wishItem.productId._id)}
+								/>
+							);
+						})}
+					</Wishs>
+				)}
 			</WishsWrap>
-			<Paginator
-				currentPage={currentPage}
-				totalItems={totalItems}
-				itemsCountPerPage={itemsPerPage}
-				onChange={handlePageChange}
-			/>
+			{userWishListToShow.length !== 0 && ( // 찜한 상품이 있을 때만 페이지네이션 표시
+				<Paginator
+					currentPage={currentPage}
+					totalItems={totalItems}
+					itemsCountPerPage={itemsPerPage}
+					onChange={handlePageChange}
+				/>
+			)}
 		</>
 	);
 }

@@ -47,7 +47,7 @@ app.post('/', (req, res) => {
 
 app.use('/api/scripts', insertDataRouter);
 app.use('/api/qna', qnaRouter);
-app.use('/api/members', memberRouter);
+app.use('/api/members', upload.single('profilePic'), memberRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/community', postRouter);
 app.use('/api/community', commentRouter);

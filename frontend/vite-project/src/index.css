@@ -148,15 +148,6 @@ select {
 ::-webkit-scrollbar {
 	display: none;
 }
-/* .clear {
-	clear: both;
-}
-.fl {
-	float: left;
-}
-.fr {
-	float: right;
-} */
 
 @font-face {
 	font-family: 'SUIT';
@@ -250,6 +241,14 @@ select {
 	font-weight: 700;
 	font-style: normal;
 }
+@font-face {
+	font-family: 'MoiraiOne-Regular';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_JAMO@1.0/MoiraiOne-Regular.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
 /*사파리 버튼 초기화*/
 input[type='text'],
 input[type='password'],
@@ -268,4 +267,25 @@ textarea {
 	display: block;
 }
 
+input {
+	border-radius: 20px !important;
+}
 /* =================== 공통 */
+
+.chatwrap {
+}
+
+.sendtextwrap {
+}
+
+.SendTime {
+}
+.SendText {
+}
+
+.replytextwrap {
+}
+.replytext {
+}
+.replytime {
+}

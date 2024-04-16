@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { InquiryItem as StyledInquiryItem, Content, ActionContainer } from './AskSupportListStyles';
 import DeleteButton from './DeleteButton';
 import ToggleContentButton from './ToggleContentButton';
@@ -8,9 +8,9 @@ import { deleteInquiry } from '../../../../apis/service/AskSupportApi';
 
 function InquiryItem({ inquiry, toggleContent, deleteInquiryFromList }) {
 	const navigate = useNavigate();
+	const { _id, title, content, status, show } = inquiry;
 
 	async function handleDelete() {
-		const { _id } = inquiry;
 		if (!_id) {
 			console.error('Error: The inquiry ID is undefined or invalid.');
 			alert('문의 삭제에 실패했습니다. 유효하지 않은 문의 ID입니다.');
@@ -27,8 +27,6 @@ function InquiryItem({ inquiry, toggleContent, deleteInquiryFromList }) {
 			alert('문의 삭제에 실패했습니다.');
 		}
 	}
-
-	const { title, content, status, show } = inquiry;
 
 	return (
 		<StyledInquiryItem>

@@ -57,24 +57,23 @@ function ListOne({ commu }) {
 	const time = detailDate(commu.createdAt);
 	return (
 		<ListOfOne
-			className="listone"
 			onClick={() => {
 				navigate(`/community/${commu._id}`);
 			}}
 		>
-			<ListLeft className="listleft">
-				<ListTitle className="listtitle">{commu.title}</ListTitle>
-				<ListSub className="listsub">{commu.content}</ListSub>
-				<LeftBottom className="listbottom">
-					<ListSub className="listsub">{commu.schoolName}</ListSub>
-					<ListSub className="listsub">{time}</ListSub>
+			<ListLeft>
+				<ListTitle>{commu.title}</ListTitle>
+				<ListSub>{commu.content}</ListSub>
+				<LeftBottom>
+					<ListSub>{commu.schoolName}</ListSub>
+					<ListSub>{time}</ListSub>
 				</LeftBottom>
 			</ListLeft>
-			<ListRight className="listright">
-				<Comment className="comment">
+			<ListRight>
+				<Comment>
 					<img className="comment_icon" src="/comment_i.png" alt="" />
 					{/* <FaComments /> */}
-					<ListSub className="listsub">{commu.commentCounts}</ListSub>
+					<ListSub>{commu.commentCounts}</ListSub>
 				</Comment>
 				<Img className="comm_list_img" src={commu.photos}></Img>
 			</ListRight>

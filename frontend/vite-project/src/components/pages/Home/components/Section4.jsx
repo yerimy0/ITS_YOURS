@@ -11,8 +11,10 @@ import {
 	CountNum,
 	Unit,
 } from '../HomeStyle';
+import React from 'react';
 import { infos } from './data';
 import useCountUp from '../../../../hooks/CountingUp';
+
 function Section5() {
 	return (
 		<Box4>

@@ -11,7 +11,6 @@ import {
 	Img,
 	BookInfo,
 } from '../HomeStyle';
-import { books } from './data';
 import { schools } from './data';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -62,6 +61,7 @@ function Section3() {
 							key={`book-shools-${i}`}
 							onClick={() => {
 								navigate(`/product/${book._id}`);
+								window.scrollTo(0, 0);
 							}}
 						>
 							<Img className="sec3_img" src={`${book.imgUrls[0]}`} alt={`${book.name}`} />

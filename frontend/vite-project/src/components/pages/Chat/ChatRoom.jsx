@@ -40,47 +40,43 @@ function ChatRoom() {
 	};
 
 	return (
-		<ChatRoomWrap className="chatroomwrap">
-			<ChatSction className="chatsction">
+		<ChatRoomWrap>
+			<ChatSction>
 				<ChatRoomHeader />
-				<ChatContainer className="chatcontainer">
-					<ChatDate className="chatdate">2024. 3. 28</ChatDate>
-					<ChatWrap className="chatwrap">
-						<SendTextWrap className="sendtextwrap">
-							<SendTime className="sendtime">오후 7:50</SendTime>
-							<SendText className="sendtext">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-							</SendText>
+				<ChatContainer>
+					<ChatDate>2024. 3. 28</ChatDate>
+					<ChatWrap>
+						<SendTextWrap>
+							<SendTime>오후 7:50</SendTime>
+							<SendText>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</SendText>
 						</SendTextWrap>
-						<ReplyTextWrap className="replytextwrap">
-							<ReplyText className="replytext">
+						<ReplyTextWrap>
+							<ReplyText>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 								incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
 								exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 							</ReplyText>
-							<ReplyTime className="replytime">오후 12:50</ReplyTime>
+							<ReplyTime>오후 12:50</ReplyTime>
 						</ReplyTextWrap>
-						<SendTextWrap className="sendtextwrap">
-							<SendTime className="sendtime">오후 7:50</SendTime>
-							<SendText className="sendtext">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-							</SendText>
+						<SendTextWrap>
+							<SendTime>오후 7:50</SendTime>
+							<SendText>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</SendText>
 						</SendTextWrap>
-						<ReplyTextWrap className="replytextwrap">
-							<ReplyText className="replytext">
+						<ReplyTextWrap>
+							<ReplyText>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 								incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
 								exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 							</ReplyText>
-							<ReplyTime className="replytime">오후 12:50</ReplyTime>
+							<ReplyTime>오후 12:50</ReplyTime>
 						</ReplyTextWrap>
-						<ReplyTextWrap className="replytextwrap">
-							<ReplyText className="replytext">
+						<ReplyTextWrap>
+							<ReplyText>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 								incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
 								exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 							</ReplyText>
-							<ReplyTime className="replytime">오후 12:50</ReplyTime>
+							<ReplyTime>오후 12:50</ReplyTime>
 						</ReplyTextWrap>
 					</ChatWrap>
 				</ChatContainer>

@@ -23,6 +23,11 @@ const WishTitle = styled.h1`
 	margin: 0;
 `;
 
+const NoWishText = styled.h3`
+	text-align: center;
+	margin: 0;
+`;
+
 const Wishs = styled.div`
 	display: flex;
 	flex-wrap: wrap;
@@ -34,4 +39,4 @@ const Wishs = styled.div`
 	margin: 60px 0 30px 0;
 `;
 
-export { WishsWrap, WishTitle, Wishs };
+export { WishsWrap, WishTitle, NoWishText, Wishs };

@@ -1,6 +1,5 @@
 const express = require('express');
 const logger = require('morgan');
-const upload = require('./src/config/MulterConfig');
 
 const insertDataRouter = require('./src/routes/InsertDataRouter');
 const memberRouter = require('./src/routes/MemberRouter');
@@ -47,7 +46,7 @@ app.post('/', (req, res) => {
 
 app.use('/api/scripts', insertDataRouter);
 app.use('/api/qna', qnaRouter);
-app.use('/api/members', upload.single('profilePic'), memberRouter);
+app.use('/api/members', memberRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/community', postRouter);
 app.use('/api/community', commentRouter);

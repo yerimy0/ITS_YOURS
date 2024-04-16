@@ -3,15 +3,15 @@ import InquiryItem from './InquiryItem';
 import { InquiryList as StyledInquiryList } from './AskSupportListStyles';
 import { fetchInquiries } from '../../../../apis/service/AskSupportApi';
 
-function InquiryList({ toggleContent, deleteInquiry }) {
+function InquiryList() {
 	const [inquiries, setInquiries] = useState([]);
 
 	useEffect(() => {
-		const fetchData = async () => {
+		async function fetchData() {
 			try {
 				const response = await fetchInquiries();
 				if (response && Array.isArray(response.data)) {
-					setInquiries(response.data);
+					setInquiries(response.data.map(inquiry => ({ ...inquiry, show: false })));
 				} else {
 					console.error('반환된 데이터가 배열이 아닙니다:', response);
 					setInquiries([]);
@@ -20,10 +20,22 @@ function InquiryList({ toggleContent, deleteInquiry }) {
 				console.error('문의사항을 가져오는데 실패했습니다:', error);
 				setInquiries([]);
 			}
-		};
+		}
 
 		fetchData();
 	}, []);
+
+	const toggleContent = id => {
+		setInquiries(currentInquiries =>
+			currentInquiries.map(inquiry =>
+				inquiry._id === id ? { ...inquiry, show: !inquiry.show } : inquiry,
+			),
+		);
+	};
+
+	const deleteInquiryFromList = id => {
+		setInquiries(currentInquiries => currentInquiries.filter(inquiry => inquiry._id !== id));
+	};
 
 	return (
 		<StyledInquiryList>
@@ -32,7 +44,7 @@ function InquiryList({ toggleContent, deleteInquiry }) {
 					key={inquiry._id}
 					inquiry={inquiry}
 					toggleContent={toggleContent}
-					deleteInquiry={deleteInquiry}
+					deleteInquiryFromList={deleteInquiryFromList}
 				/>
 			))}
 		</StyledInquiryList>

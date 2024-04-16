@@ -41,7 +41,7 @@ const SendTime = styled.p`
 `;
 
 const SendText = styled.div`
-	width: 70%;
+	max-width: 85%;
 	padding: 20px 20px 20px 25px;
 	border-radius: 50px 0px 20px 50px;
 	background: #009dff;
@@ -59,7 +59,7 @@ const ReplyTextWrap = styled.div`
 `;
 
 const ReplyText = styled.div`
-	width: 70%;
+	max-width: 85%;
 	white-space: pre-line;
 	border-radius: 0px 50px 50px 20px;
 	padding: 20px 20px 20px 25px;

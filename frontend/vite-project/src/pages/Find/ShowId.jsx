@@ -27,7 +27,7 @@ function ShowId() {
 					이메일: <HighlightedText>{email}</HighlightedText>
 				</Message>
 				<Message>
-					아이디: <HighlightedText>아이디를 여기에 표시</HighlightedText>
+					아이디: <HighlightedText>{userId}</HighlightedText>
 				</Message>
 				<LoginButton onClick={handleLogin}>로그인하러 가기</LoginButton>
 			</InfoBox>

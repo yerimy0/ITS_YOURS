@@ -43,10 +43,9 @@ export const validateEmail = email => {
 	}
 	return '';
 };
-
 export const validateNickname = nickname => {
-	if (nickname.length < 2 || nickname.length > 10) {
-		return '닉네임은 2자 이상 10자 이하로 설정해 주세요.';
+	if (nickname.length < 2 || nickname.length > 6) {
+		return '닉네임은 2자 이상 6자 이하로 설정해 주세요.';
 	} else if (/[^a-zA-Z0-9가-힣]/.test(nickname)) {
 		return '닉네임에는 특수 문자를 사용할 수 없습니다.';
 	}

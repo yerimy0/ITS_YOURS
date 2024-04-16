@@ -1,16 +1,9 @@
 import React, { useState, useRef } from 'react';
 import CommuHeader from '../components/CommuHeader';
-import {
-	Box,
-	WriteForm,
-	InputBox,
-	InputTitle,
-	InputContent,
-	AlertMessage,
-	Img,
-} from './WriteStyle';
+import { RedStar } from '../../../WriteFrom/WriteFormStyle';
+import { Box, WriteForm, InputBox, InputTitle, InputContent, Img } from './WriteStyle';
 import { Button } from '../CommunityList/CommunityStyle';
-import { ProductImg, ButtonUpload } from '../../../WriteFrom/WriteFormStyle';
+import { ButtonUpload } from '../../../WriteFrom/WriteFormStyle';
 import { PostCommunity } from '../../../../apis/service/community.api';
 import { useNavigate } from 'react-router-dom';
 
@@ -67,13 +60,13 @@ function CommuWrite() {
 			<CommuHeader />
 			<WriteForm>
 				<InputBox>
+					{isBlanked && <RedStar>제목과 내용을 모두 입력해주세요 :)</RedStar>}
 					<InputTitle
 						placeholder="제목을 입력해주세요"
 						name="title"
 						value={writeCommu.title}
 						onChange={handleInputChange}
 					/>
-					{isBlanked && <AlertMessage>제목과 내용을 모두 입력해주세요 :)</AlertMessage>}
 					<InputContent
 						placeholder="글 내용을 입력해주세요"
 						name="content"
@@ -88,7 +81,7 @@ function CommuWrite() {
 							type="file"
 							ref={fileInputRef}
 							onChange={handleImageChange}
-							style={{ display: 'none' }}
+							style={{ display: 'none', width: '130px' }}
 						/>
 					</div>
 				</InputBox>

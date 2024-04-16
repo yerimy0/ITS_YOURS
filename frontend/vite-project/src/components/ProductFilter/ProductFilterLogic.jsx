@@ -1,44 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import {
-	LocationList,
+	RegionList,
 	UniversityList,
-	LocationItem,
+	Item,
 	FilterList,
 	Buttons,
 	FilterInButton,
 } from './ProductFilterStyle';
-import { fetchLocations } from '../../apis/service/CategoriesApi';
+import { fetchRegions } from '../../apis/service/CategoriesApi';
 
-function ProductFilterLogic({
-	onApplyFilter,
-	onCloseFilter,
-	selectedLocation,
-	selectedUniversity,
-}) {
-	const [locations, setLocations] = useState([]);
-	const [currentLocation, setCurrentLocation] = useState(selectedLocation);
+function ProductFilterLogic({ onApplyFilter, onCloseFilter, selectedRegion, selectedUniversity }) {
+	const [regions, setRegions] = useState([]);
+	const [currentRegion, setCurrentRegion] = useState(selectedRegion);
 	const [currentUniversity, setCurrentUniversity] = useState(selectedUniversity);
 	const [universities, setUniversities] = useState([]);
 
 	// 컴포넌트가 마운트될 때 선택된 지역과 대학교 초기화
 	useEffect(() => {
-		setCurrentLocation(selectedLocation);
+		setCurrentRegion(selectedRegion);
 		setCurrentUniversity(selectedUniversity);
-	}, [selectedLocation, selectedUniversity]);
+	}, [selectedRegion, selectedUniversity]);
 
 	useEffect(() => {
-		fetchLocations()
+		fetchRegions()
 			.then(data => {
 				// 데이터를 이용한 로직
 				if (Array.isArray(data)) {
-					const sortedLocations = data.sort((a, b) => a.region.localeCompare(b.region));
-					setLocations(sortedLocations);
-					if (currentLocation) {
-						const selectedLocationData = sortedLocations.find(
-							location => location.region === currentLocation,
+					const sortedRegions = data.sort((a, b) => a.region.localeCompare(b.region));
+					setRegions(sortedRegions);
+					if (currentRegion) {
+						const selectedRegionData = sortedRegions.find(
+							region => region.region === currentRegion,
 						);
-						if (selectedLocationData) {
-							setUniversities(['전체', ...selectedLocationData.universities]);
+						if (selectedRegionData) {
+							setUniversities(['전체', ...selectedRegionData.universities]);
 						}
 					}
 				}
@@ -46,14 +41,14 @@ function ProductFilterLogic({
 			.catch(err => {
 				console.error('지역 데이터를 가져오는 중 오류가 발생했습니다.', err);
 			});
-	}, [currentLocation]);
+	}, [currentRegion]);
 
-	// 지역 선택했을 떄 호출
-	const handleLocationSelect = locationId => {
-		const locationData = locations.find(location => location._id === locationId);
-		if (locationData) {
-			setCurrentLocation(locationId);
-			setUniversities(['전체', ...locationData.universities]);
+	// 지역 선택했을 때 호출
+	const handleRegionSelect = regionId => {
+		const regionData = regions.find(region => region._id === regionId);
+		if (regionData) {
+			setCurrentRegion(regionData.region);
+			setUniversities(['전체', ...regionData.universities]);
 		}
 		setCurrentUniversity('전체');
 	};
@@ -62,24 +57,22 @@ function ProductFilterLogic({
 	const handleUniversitySelect = university => {
 		setCurrentUniversity(prevUniversity => (prevUniversity === university ? '전체' : university));
 		if (university !== '전체') {
-			const locationData = locations.find(location => location.universities.includes(university));
-			if (locationData) {
-				setCurrentLocation(locationData.region);
+			const regionData = regions.find(region => region.universities.includes(university));
+			if (regionData) {
+				setCurrentRegion(regionData.region);
 			}
 		}
 	};
 
 	const handleApplyFilter = () => {
-		const selectedLocationName = locations.find(
-			location => location.region === currentLocation,
-		)?.region;
+		const selectedRegionName = regions.find(region => region.region === currentRegion)?.region;
 
-		onApplyFilter(selectedLocationName, currentUniversity);
+		onApplyFilter(selectedRegionName, currentUniversity);
 		onCloseFilter();
 	};
 
 	const handleResetFilter = () => {
-		setCurrentLocation('');
+		setCurrentRegion('');
 		setCurrentUniversity('');
 		onApplyFilter('', '');
 		onCloseFilter();
@@ -88,27 +81,27 @@ function ProductFilterLogic({
 	return (
 		<>
 			<FilterList className="filterlist">
-				<LocationList className="locationlist">
-					{locations.map(location => (
-						<LocationItem
-							key={location._id}
-							className={currentLocation === location.region ? 'selected' : ''}
-							onClick={() => handleLocationSelect(location._id)}
+				<RegionList className="regionlist">
+					{regions.map(region => (
+						<Item
+							key={region._id}
+							className={currentRegion === region.region ? 'selected' : ''}
+							onClick={() => handleRegionSelect(region._id)}
 						>
-							{location.region}
-						</LocationItem>
+							{region.region}
+						</Item>
 					))}
-				</LocationList>
+				</RegionList>
 
 				<UniversityList className="universitylist">
 					{universities.map(university => (
-						<LocationItem
+						<Item
 							key={university._id} // 대학의 고유한 ID를 key로 사용
 							className={currentUniversity === university.name ? 'selected' : ''}
 							onClick={() => handleUniversitySelect(university.name)} // 대학 이름을 전달
 						>
 							{university.name}
-						</LocationItem>
+						</Item>
 					))}
 				</UniversityList>
 			</FilterList>

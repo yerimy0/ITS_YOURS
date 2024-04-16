@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				font-family: Arial, Helvetica, sans-serif;
+				color: #333;
+			}
+			form {
+				text-align: center;
+			}
+			.wrap {
+				width: 90%;
+				margin: 0 auto;
+				margin-bottom: 30px;
+			}
+			.top {
+				padding: 20px;
+				width: 100%;
+				border-bottom: 1px solid #eee;
+			}
+			.top .logo {
+				text-align: left;
+				width: 200px;
+			}
+			.top .logo img {
+				width: 100%;
+			}
+			.mid {
+				padding: 50px 0 80px;
+			}
+			.mid h2 {
+				font-size: 30px;
+				margin-bottom: 20px;
+			}
+			.mid p {
+				font-size: 18px;
+				margin-bottom: 40px;
+			}
+			.mid .mid_bottom h3 {
+				padding: 40px;
+				border: 1px solid #eee;
+				width: 50%;
+				margin: 0 auto;
+				text-align: center;
+				border-radius: 10px;
+				font-size: 18px;
+				font-weight: 500;
+				white-space: pre-line;
+				text-align: left;
+			}
+			.bottom {
+				width: 50%;
+				margin: 0 auto;
+			}
+			.bottom a {
+				display: block;
+				text-decoration: none;
+				color: #fff;
+				background: #009dff;
+				padding: 30px;
+				font-size: 25px;
+				font-weight: 600;
+				border-radius: 20px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<form action="/send-email" method="POST">
+			<div class="wrap">
+				<div class="top">
+					<div class="logo">
+						<img src="http://34.47.86.42/main_logo.png" alt="이제너해 로고" />
+					</div>
+				</div>
+				<div class="mid">
+					<h2>QnA 답변 안내</h2>
+					<p>
+						안녕하세요. 회원님<br />
+						회원님의 질문에 대한 QnA 답변입니다.
+					</p>
+					<div class="mid_bottom">
+						<h3>{{answer}}</h3>
+					</div>
+				</div>
+				<div class="bottom">
+					<a href="http://34.47.86.42/">이제너해 방문하기</a>
+				</div>
+			</div>
+		</form>
+	</body>
+</html>

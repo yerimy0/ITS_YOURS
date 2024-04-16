@@ -24,8 +24,8 @@ router.get('/me', validateToken, getMember);
 //판매자 정보 조회
 router.get('/sellerInfo', getSellerInfo);
 // 회원정보 수정
-router.put('/me', validateToken, updateMember);
-// 회원정보 수정
+router.put('/me', validateToken, upload.single('profilePic'), updateMember);
+// 회원정보 삭제
 router.delete('/me', validateToken, deleteMember);
 
 // 아이디 찾기

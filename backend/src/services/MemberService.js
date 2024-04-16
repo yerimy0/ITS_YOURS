@@ -1,5 +1,5 @@
 const { Members, Wishes } = require('../models/index');
-const { sendCustomEmail, sendPasswordResetEmail } = require('../utils/Mailer');
+const { sendPasswordEmail, sendVerifyEmail } = require('../utils/Mailer');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
@@ -193,20 +193,14 @@ async function resetPassword(id, email) {
 
 	await sendPasswordEmail(email, verificationCode); // 수정된 부분
 
-	return { updatePassword, emailResult }; // 'emailResult'는 정의되지 않았으므로 이 부분도 확인 필요
+	return { updatePassword }; // 'emailResult'는 정의되지 않았으므로 이 부분도 확인 필요
 }
 
-async function sendVerifiyEmail(email) {
-	const verifyCode = generateTempPassword(4);
-	console.log(verifyCode);
-	await sendCustomEmail({
-		to: email,
-		subject: '[이제너해] 회원가입 인증코드입니다',
-		templateName: 'SignUpEmailForm',
-		newPassword: verifyCode, // 랜덤하게 생성된 인증코드를 전달
-	});
+async function sendEmailVerification(email) {
+	const verificationCode = generateTempPassword(4);
+	await sendVerifyEmail(email, verificationCode);
 
-	return true;
+	return verificationCode; // 수정된 부분
 }
 
 module.exports = {
@@ -218,5 +212,5 @@ module.exports = {
 	deleteMember,
 	findIdByNameAndEmail,
 	resetPassword,
-	sendVerifiyEmail,
+	sendEmailVerification,
 };

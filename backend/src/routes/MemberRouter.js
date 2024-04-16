@@ -9,7 +9,7 @@ const {
 	deleteMember,
 	findId,
 	resetPassword,
-	sendVerifiyEmail,
+	sendVerifyEmail,
 } = require('../controllers/MemberController');
 const validateToken = require('../middlewares/ValidateToken');
 const upload = require('../config/MulterConfig');
@@ -33,6 +33,6 @@ router.post('/findId', findId);
 // 비밀번호 찾기
 router.post('/findPassword', resetPassword);
 // 회원가입 이메일 인증코드발금
-router.post('/sendVerifiyEmail', sendVerifiyEmail);
+router.post('/sendVerifyEmail', sendVerifyEmail);
 
 module.exports = router;

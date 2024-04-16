@@ -86,8 +86,8 @@ async function getMember(userId) {
 	}
 }
 
-async function getSellerInfo(sellerId) {
-	const sellerInfo = await Members.findOne({ id: sellerId }).select(
+async function getSellerInfo(id) {
+	const sellerInfo = await Members.findOne({ id: id }).select(
 		'id name profilePic nickName region schoolName',
 	);
 	return sellerInfo;
@@ -157,28 +157,6 @@ function generateTempPassword(length) {
 		.toString('hex') // 바이트를 hex 문자열로 변환
 		.slice(0, length); // 원하는 길이로 문자열을 자릅니다
 }
-
-// async function resetPasswordAndSendEmail(id, email) {
-// 	const member = await Members.findOne({ id: id, email: email });
-// 	if (!member) {
-// 		throw new Error('해당하는 사용자가 없습니다.');
-// 	}
-
-// 	const tempPassword = generateTempPassword(10); // 예를 들어, 길이가 10인 임시 비밀번호 생성
-// 	const hashedPassword = await bcrypt.hash(tempPassword, 10);
-
-// 	const updatePassword = await Members.updateOne({ id: id }, { password: hashedPassword });
-
-// 	const html = 'FindPwEmailForm';
-// 	await sendPasswordResetEmail({
-// 		to: member.email,
-// 		subject: '테스트',
-// 		templateName: html,
-// 		replacements: tempPassword,
-// 	});
-
-// 	return { updatePassword, emailResult };
-// }
 
 async function resetPassword(id, email) {
 	const member = await Members.findOne({ id: id, email: email });

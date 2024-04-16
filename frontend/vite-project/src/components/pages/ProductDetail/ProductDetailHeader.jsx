@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
 	ProductDetail,
 	BookCover,
-	BookImg,
 	ProductContent,
 	SalesInfo,
 	BookContainer,
@@ -17,6 +16,7 @@ import SellerProfileWrap from './SellerProfileWrap';
 import { useParams } from 'react-router-dom';
 import { GetDetail } from '../../../apis/service/product.api';
 import ProductDetailContainer from './ProductDetailContainer';
+import BookImgSlider from '../../BookImgSlider';
 
 function ProductDetailHeader() {
 	const { id } = useParams();
@@ -40,13 +40,10 @@ function ProductDetailHeader() {
 	}, [id]);
 
 	console.log(product);
-	console.log(product.sellerId);
 
 	return (
 		<ProductDetail>
-			<BookCover>
-				<BookImg src={product.imgUrls} alt={product.name} />
-			</BookCover>
+			<BookCover>{product.imgUrls && <BookImgSlider images={product.imgUrls} />}</BookCover>
 			<ProductContent>
 				<SalesInfo>
 					{product.sellerId && <SellerProfileWrap id={product.sellerId} />}

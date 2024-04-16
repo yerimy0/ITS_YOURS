@@ -19,14 +19,6 @@ const BookCover = styled.div`
 	gap: 8px;
 `;
 
-const BookImg = styled.img`
-	width: 450px;
-	height: 450px;
-	max-width: 450px;
-	max-height: 450px;
-	object-fit: cover;
-`;
-
 const ProductContent = styled.div`
 	width: 450px;
 	height: 450px;
@@ -113,7 +105,6 @@ const ProductInfoText = styled.div`
 export {
 	ProductDetail,
 	BookCover,
-	BookImg,
 	ProductContent,
 	SalesInfo,
 	BookContainer,

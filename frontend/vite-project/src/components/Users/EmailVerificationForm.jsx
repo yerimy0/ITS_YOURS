@@ -1,5 +1,5 @@
 import React from 'react';
-import { InlineGroup, StyledInput, SmallButton, ErrorMessage } from './UsersStyles';
+import { InlineGroup, StyledInput, SmallButton, EmailErrorMessage } from './UsersStyles';
 
 function EmailVerificationForm({
 	email,
@@ -24,7 +24,7 @@ function EmailVerificationForm({
 					인증요청
 				</SmallButton>
 			</InlineGroup>
-			{emailError && <ErrorMessage>{emailError}</ErrorMessage>}
+			{emailError && <EmailErrorMessage>{emailError}</EmailErrorMessage>}
 			<InlineGroup>
 				<StyledInput
 					type="text"

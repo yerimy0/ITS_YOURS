@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box2, UpdateBooks, UpdateTitle, Button, ButtonBox, Img } from '../HomeStyle';
 import SearchBar from '../../../../components/SearchBar';
-import { pics } from './data';
 import { useNavigate } from 'react-router-dom';
 import { fetchDefaultProducts } from '../../../../apis/service/product.api';
 
@@ -48,6 +47,7 @@ function Section2() {
 								alt={`Book ${i}`}
 								onClick={() => {
 									navigate(`/product/${book._id}`);
+									window.scrollTo(0, 0);
 								}}
 							/>
 						))}

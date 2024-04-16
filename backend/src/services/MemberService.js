@@ -86,8 +86,20 @@ async function getMember(userId) {
 	}
 }
 
-async function getSellerInfo(id) {
-	const sellerInfo = await Members.findOne({ id: id }).select(
+/**
+ * 이메일 회원정보 조회 service
+ * 작성자: 이정은
+ * 작성일: 2024-04-16
+ * 회원 정보를 이메일로 조회해오는 service입니다.
+ */
+async function getMemberByEmail(email) {
+	const memberInfo = await Members.findOne({ email: email });
+
+	return memberInfo;
+}
+
+async function getSellerInfo(sellerId) {
+	const sellerInfo = await Members.findOne({ id: sellerId }).select(
 		'id name profilePic nickName region schoolName',
 	);
 	return sellerInfo;
@@ -185,6 +197,7 @@ module.exports = {
 	signUp,
 	login,
 	getMember,
+	getMemberByEmail,
 	getSellerInfo,
 	updateMember,
 	deleteMember,

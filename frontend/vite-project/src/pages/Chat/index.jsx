@@ -8,8 +8,8 @@ function Chat() {
 		<ChatWrap className="chatwrap">
 			<div className="chat_inner">
 				<ChatList />
-				<DefaultChatRoom />
-				{/* <ChatRoom /> */}
+				{/* <DefaultChatRoom /> */}
+				<ChatRoom />
 			</div>
 		</ChatWrap>
 	);

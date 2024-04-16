@@ -34,10 +34,11 @@ function Section5() {
 				num: `${quantity.length}`,
 				end: '권',
 			});
-			infos.push(bookInfo);
+			infos[3] = bookInfo;
 		}
 		booksquantity();
 	}, []);
+
 	return (
 		<Box4>
 			<Title className="sec4_title">

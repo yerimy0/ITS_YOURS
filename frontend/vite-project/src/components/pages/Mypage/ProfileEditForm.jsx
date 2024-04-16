@@ -35,12 +35,13 @@ function ProfileEditForm({ userInfo }) {
 	const fetchProfileData = async () => {
 		try {
 			const data = await fetchMyPageData();
+			console.log(data);
 			setUserId(data.id);
 			setName(data.realName);
 			setEmail(data.email);
-			setUniversity(data.univName);
+			setUniversity(data.schoolName);
 			setNickname(data.nickName);
-			setProfileImage(data.profilePic);
+			setProfileImage(data.profilePic); // 프로필 이미지 데이터를 설정합니다.
 		} catch (error) {
 			console.error('프로필 정보 로딩 실패:', error);
 		}
@@ -103,7 +104,7 @@ function ProfileEditForm({ userInfo }) {
 				onClose={handleCloseModal}
 				onSelectUniversity={handleSelectUniversity}
 			/>
-			<ProfileImageUploader onImageSelected={setProfileImage} />
+			<ProfileImageUploader onImageSelected={setProfileImage} profileImage={profileImage} />
 			<Form onSubmit={handleSubmit}>
 				<Input type="text" placeholder="아이디" value={userId} disabled />
 				<Input

@@ -54,14 +54,13 @@ function SignUpForm() {
 
 	const handleSubmit = async event => {
 		event.preventDefault();
-		// Validate all fields before submitting
 		handleBlurUserId();
 		handleBlurPassword();
 		handleBlurConfirmPassword();
 		handleBlurName();
 		handleBlurEmail();
 		handleBlurNickname();
-		handleSelectUniversity(university); // This might not be necessary here, re-validate on modal selection
+		handleSelectUniversity(university);
 
 		if (
 			!userIdError &&
@@ -83,11 +82,18 @@ function SignUpForm() {
 				formData.append('profilePic', profileImage);
 			}
 
-			const { data, error } = await signUpApi(formData);
-			if (error) {
-				console.error('회원가입 실패:', error);
-			} else {
-				console.log('회원가입 성공:', data);
+			try {
+				const { data, error } = await signUpApi(formData);
+				if (error) {
+					console.error('회원가입 실패:', error);
+					if (error.response && error.response.status === 409) {
+						setUserIdError('이미 사용중인 아이디입니다');
+					}
+				} else {
+					console.log('회원가입 성공:', data);
+				}
+			} catch (e) {
+				console.error('서버 통신 중 에러 발생:', e);
 			}
 		} else {
 			console.error('Validation errors:', {
@@ -101,7 +107,6 @@ function SignUpForm() {
 			});
 		}
 	};
-
 	return (
 		<>
 			<UniversityModal

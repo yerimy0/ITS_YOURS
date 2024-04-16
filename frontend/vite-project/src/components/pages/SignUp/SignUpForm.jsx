@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UniversityModal from '../../Users/University/UniversityModal';
 import ProfileImageUploader from '../../../components/Users/ProfileImageUploader';
 import { signUpApi } from '../../../apis/service/SignUpApi';
@@ -17,6 +18,7 @@ import {
 } from '../../Users/ValidationService';
 
 function SignUpForm() {
+	const navigate = useNavigate();
 	const [profileImage, setProfileImage] = useState(null);
 	const [userId, setUserId] = useState('');
 	const [userIdError, setUserIdError] = useState('');
@@ -91,6 +93,7 @@ function SignUpForm() {
 					}
 				} else {
 					console.log('회원가입 성공:', data);
+					navigate('/login');
 				}
 			} catch (e) {
 				console.error('서버 통신 중 에러 발생:', e);
@@ -107,6 +110,7 @@ function SignUpForm() {
 			});
 		}
 	};
+
 	return (
 		<>
 			<UniversityModal

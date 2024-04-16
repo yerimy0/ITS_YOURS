@@ -15,7 +15,7 @@ const ChatListHeader = styled.div`
 	width: 100%;
 	display: flex;
 	align-items: center;
-	font-family: moiraione-regular;
+	font-family: 'moiraione-regular', sans-serif;
 	font-size: 26px;
 
 	img {

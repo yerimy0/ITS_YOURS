@@ -4,21 +4,21 @@ import { ChatListWrap, ChatListHeader, ChatContainer } from './ChatListStyle';
 
 function ChatList() {
 	return (
-		<ChatListWrap className="chatlistwrap">
-			<ChatListHeader className="chatlistheader">
+		<ChatListWrap>
+			<ChatListHeader>
 				<img src="/logoCharacter.png" alt="" />
 				Chat List
 			</ChatListHeader>
-			<ChatContainer className="chatcontainer">
-				<ChatListProfile className="chatlistprofile" />
-				<ChatListProfile className="chatlistprofile" />
-				<ChatListProfile className="chatlistprofile" />
-				<ChatListProfile className="chatlistprofile" />
-				<ChatListProfile className="chatlistprofile" />
-				<ChatListProfile className="chatlistprofile" />
-				<ChatListProfile className="chatlistprofile" />
-				<ChatListProfile className="chatlistprofile" />
-				<ChatListProfile className="chatlistprofile" />
+			<ChatContainer>
+				<ChatListProfile />
+				<ChatListProfile />
+				<ChatListProfile />
+				<ChatListProfile />
+				<ChatListProfile />
+				<ChatListProfile />
+				<ChatListProfile />
+				<ChatListProfile />
+				<ChatListProfile />
 			</ChatContainer>
 		</ChatListWrap>
 	);

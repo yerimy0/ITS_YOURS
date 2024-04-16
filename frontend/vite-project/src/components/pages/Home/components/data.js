@@ -21,12 +21,12 @@ const infos = [
 		num: 42,
 		end: '학교',
 	},
-	{
-		image: 'sub_users.png',
-		content: '거래중인 도서수',
-		num: 152,
-		end: '권',
-	},
+	// {
+	// 	image: 'sub_users.png',
+	// 	content: '거래중인 도서수',
+	// 	num: 152,
+	// 	end: '권',
+	// },
 	{
 		image: 'sub_dev.png',
 		content: 'By Elice 개발자',

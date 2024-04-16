@@ -13,13 +13,14 @@ import {
 import BookInfoWrap from './BookInfoWrap';
 import ProductInfoWrap from './ProductInfoWrap';
 import SellerProfileWrap from './SellerProfileWrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { GetDetail } from '../../../apis/service/product.api';
 import ProductDetailContainer from './ProductDetailContainer';
 import BookImgSlider from '../../BookImgSlider';
 
 function ProductDetailHeader() {
 	const { id } = useParams();
+	const navigate = useNavigate();
 	const [product, setProduct] = useState([]);
 
 	useEffect(() => {
@@ -39,6 +40,11 @@ function ProductDetailHeader() {
 		loadProductData();
 	}, [id]);
 
+	// 채팅하기 버튼 클릭 시 채팅 화면으로 이동
+	const handleChatButtonClick = () => {
+		navigate(`/chat`); // 채팅 화면으로 이동
+	};
+
 	return (
 		<ProductDetail>
 			<BookCover>{product.imgUrls && <BookImgSlider images={product.imgUrls} />}</BookCover>
@@ -53,7 +59,7 @@ function ProductDetailHeader() {
 						publisher={product.publisher}
 						condition={product.condition}
 					/>
-					<ChatButton>채팅하기</ChatButton>
+					<ChatButton onClick={handleChatButtonClick}>채팅하기</ChatButton>
 				</BookContainer>
 			</ProductContent>
 			<ProductInfoTextWrap>

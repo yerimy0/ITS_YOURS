@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FlexColumn, StyledButton, ButtonContent, StyledArrowIcon } from './ProfileStyles';
 import { useNavigate } from 'react-router-dom';
+import UserIdContext from '../../../../context/UserIdContext';
 
 function NavigationButton() {
 	const navigate = useNavigate();
+	const { id } = useContext(UserIdContext);
 
 	return (
 		<FlexColumn>
-			<StyledButton onClick={() => navigate('/saleshistory')}>
+			<StyledButton onClick={() => navigate(`/saleshistory/${id}`)}>
 				<ButtonContent>💰 판매내역</ButtonContent>
 				<StyledArrowIcon as="img" src="/ArrowIcon.svg" />
 			</StyledButton>
-			<StyledButton onClick={() => navigate('/purchasehistory')}>
+			<StyledButton onClick={() => navigate(`/purchasehistory/${id}`)}>
 				<ButtonContent>📘 구매내역</ButtonContent>
 				<StyledArrowIcon as="img" src="/ArrowIcon.svg" />
 			</StyledButton>

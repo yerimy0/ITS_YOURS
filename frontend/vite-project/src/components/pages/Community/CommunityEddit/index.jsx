@@ -6,9 +6,9 @@ import {
 	InputBox,
 	InputTitle,
 	InputContent,
-	AlertMessage,
 	Img,
 } from '../CommunityWrite/WriteStyle';
+import { RedStar } from '../../../WriteFrom/WriteFormStyle';
 import { Button } from '../CommunityList/CommunityStyle';
 import { ProductImg, ButtonUpload } from '../../../WriteFrom/WriteFormStyle';
 import { UpdateCommunnity, GetDetail } from '../../../../apis/service/community.api';
@@ -75,13 +75,14 @@ function CommuEddit({ id }) {
 			<CommuHeader />
 			<WriteForm>
 				<InputBox>
+					{isBlanked && <RedStar>제목과 내용을 모두 입력해주세요 :)</RedStar>}
 					<InputTitle
 						placeholder="제목을 입력해주세요"
 						name="title"
 						value={writeCommu.title}
 						onChange={handleInputChange}
 					/>
-					{isBlanked && <AlertMessage>제목과 내용을 모두 입력해주세요 :)</AlertMessage>}
+
 					<InputContent
 						placeholder="글 내용을 입력해주세요"
 						name="content"

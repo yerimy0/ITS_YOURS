@@ -128,6 +128,13 @@ const Comment = styled.div`
 	align-items: center;
 	flex-direction: row;
 `;
+const Label = styled.label`
+	display: flex;
+`;
+
+const SendBtn = styled.button`
+	font-size: 20px;
+`;
 
 export {
 	Box,
@@ -148,4 +155,6 @@ export {
 	ButtonBox,
 	Img,
 	ListRight,
+	Label,
+	SendBtn,
 };

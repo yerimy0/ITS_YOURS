@@ -99,6 +99,7 @@ function ProductsContainer() {
 
 	const handleProductClick = productId => {
 		navigate(`/product/${productId}`);
+		scrollToTop();
 	};
 
 	return (

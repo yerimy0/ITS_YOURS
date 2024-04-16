@@ -1,5 +1,4 @@
 import {
-	Line,
 	Box,
 	ListOfOne,
 	LeftBottom,
@@ -14,7 +13,7 @@ import {
 } from '../CommunityList/CommunityStyle';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../CommunityList/CommunityStyle';
-import { FaComments } from 'react-icons/fa';
+// import { FaComments } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { GetCommunnityList } from '../../../../apis/service/community.api';
 import detailDate from '../../../../utils/writeTime';
@@ -34,21 +33,21 @@ function CommuList() {
 	console.log(communityLists);
 	return (
 		<Box>
-			<ButtonBox
-				onClick={() => {
-					navigate('/community/write');
-				}}
-			>
-				<Button>새글 등록</Button>
-			</ButtonBox>
-			<Line>
-				<hr />
-			</Line>
-			<List>
-				{communityLists.map((commu, i) => (
-					<ListOne key={`list-item-${i}`} commu={commu} />
-				))}
-			</List>
+			<div className="comm_list_wrap">
+				<ButtonBox
+					onClick={() => {
+						navigate('/community/write');
+					}}
+				>
+					<Button>새글 등록</Button>
+				</ButtonBox>
+
+				<List>
+					{communityLists.map((commu, i) => (
+						<ListOne key={`list-item-${i}`} commu={commu} />
+					))}
+				</List>
+			</div>
 		</Box>
 	);
 }
@@ -58,24 +57,26 @@ function ListOne({ commu }) {
 	const time = detailDate(commu.createdAt);
 	return (
 		<ListOfOne
+			className="listone"
 			onClick={() => {
 				navigate(`/community/${commu._id}`);
 			}}
 		>
-			<ListLeft>
-				<ListTitle>{commu.title}</ListTitle>
-				<ListSub>{commu.content}</ListSub>
-				<LeftBottom>
-					<ListSub>{commu.schoolName}</ListSub>
-					<ListSub>{time}</ListSub>
+			<ListLeft className="listleft">
+				<ListTitle className="listtitle">{commu.title}</ListTitle>
+				<ListSub className="listsub">{commu.content}</ListSub>
+				<LeftBottom className="listbottom">
+					<ListSub className="listsub">{commu.schoolName}</ListSub>
+					<ListSub className="listsub">{time}</ListSub>
 				</LeftBottom>
 			</ListLeft>
-			<ListRight>
-				<Comment>
-					<FaComments />
-					<ListSub>{commu.commentCounts}</ListSub>
+			<ListRight className="listright">
+				<Comment className="comment">
+					<img className="comment_icon" src="/comment_i.png" alt="" />
+					{/* <FaComments /> */}
+					<ListSub className="listsub">{commu.commentCounts}</ListSub>
 				</Comment>
-				<Img src={commu.photos}></Img>
+				<Img className="comm_list_img" src={commu.photos}></Img>
 			</ListRight>
 		</ListOfOne>
 	);

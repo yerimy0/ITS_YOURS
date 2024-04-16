@@ -1,6 +1,5 @@
 const express = require('express');
 const logger = require('morgan');
-const upload = require('./src/config/MulterConfig');
 
 const insertDataRouter = require('./src/routes/InsertDataRouter');
 const memberRouter = require('./src/routes/MemberRouter');

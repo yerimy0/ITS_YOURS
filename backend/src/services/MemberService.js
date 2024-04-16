@@ -1,5 +1,5 @@
 const { Members, Wishes } = require('../models/index');
-const { sendCustomEmail } = require('../utils/Mailer');
+const { sendPasswordEmail, sendVerifyEmail } = require('../utils/Mailer');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
@@ -49,6 +49,8 @@ async function login(id, password) {
 				user: {
 					username: member.realName,
 					id: member.id,
+					nickName: member.nickName,
+					profilePic: member.profilePic,
 					isAdmin: member.isAdmin,
 				},
 			},
@@ -84,8 +86,8 @@ async function getMember(userId) {
 	}
 }
 
-async function getSellerInfo(sellerId) {
-	const sellerInfo = await Members.findOne({ id: sellerId }).select(
+async function getSellerInfo(id) {
+	const sellerInfo = await Members.findOne({ id: id }).select(
 		'id name profilePic nickName region schoolName',
 	);
 	return sellerInfo;
@@ -156,24 +158,27 @@ function generateTempPassword(length) {
 		.slice(0, length); // 원하는 길이로 문자열을 자릅니다
 }
 
-async function resetPasswordAndSendEmail(id, email) {
+async function resetPassword(id, email) {
 	const member = await Members.findOne({ id: id, email: email });
 	if (!member) {
 		throw new Error('해당하는 사용자가 없습니다.');
 	}
 
-	const tempPassword = generateTempPassword(10); // 예를 들어, 길이가 10인 임시 비밀번호 생성
-	const hashedPassword = await bcrypt.hash(tempPassword, 10);
+	const verificationCode = generateTempPassword(10); // 예를 들어, 길이가 10인 인증번호 생성
+	const hashedPassword = await bcrypt.hash(verificationCode, 10);
 
-	await Members.updateOne({ id: id }, { password: hashedPassword });
+	const updatePassword = await Members.updateOne({ id: id }, { password: hashedPassword });
 
-	await sendCustomEmail({
-		to: email,
-		subject: '[이제너해] 임시 비밀번호 발급 안내',
-		newPassword: tempPassword, // 랜덤하게 생성된 임시 비밀번호를 전달
-	});
+	await sendPasswordEmail(email, verificationCode); // 수정된 부분
 
-	return true;
+	return { updatePassword }; // 'emailResult'는 정의되지 않았으므로 이 부분도 확인 필요
+}
+
+async function sendEmailVerification(email) {
+	const verificationCode = generateTempPassword(4);
+	await sendVerifyEmail(email, verificationCode);
+
+	return verificationCode; // 수정된 부분
 }
 
 module.exports = {
@@ -184,5 +189,6 @@ module.exports = {
 	updateMember,
 	deleteMember,
 	findIdByNameAndEmail,
-	resetPasswordAndSendEmail,
+	resetPassword,
+	sendEmailVerification,
 };

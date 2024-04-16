@@ -71,14 +71,8 @@ const InputContent = styled.textarea`
 	}
 `;
 
-const AlertMessage = styled.div`
-	font-family: SUIT;
-	font-size: 15px;
-	font-style: normal;
-	font-weight: 400;
-`;
-
 const Img = styled.img`
 	width: 50%;
 `;
-export { Box, WriteForm, InputBox, InputTitle, InputContent, AlertMessage, Img };
+
+export { Box, WriteForm, InputBox, InputTitle, InputContent, Img };

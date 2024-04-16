@@ -1,30 +1,62 @@
 const { Category, Members, Products } = require('../models/index');
 const axios = require('axios');
 
-async function getRandomId() {
-	const members = await Members.find({ deletedAt: { $exists: false } }).select('id');
-	const randomIndex = Math.floor(Math.random() * members.length);
-	return members[randomIndex].id;
+async function getRandomMemberUniversity() {
+	try {
+		// Members 컬렉션에서 무작위로 하나의 문서를 선택
+		const randomMember = await Members.aggregate([
+			{ $match: { schoolName: { $exists: true }, deletedAt: { $exists: false } } },
+			{ $sample: { size: 1 } },
+		]);
+
+		if (randomMember.length === 0) {
+			throw new Error('회원을 찾을 수 없습니다.');
+		}
+
+		const member = randomMember[0];
+		return { id: member.id, schoolName: member.schoolName };
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
 }
 
-async function getRandomUniversity() {
-	const categories = await Category.find();
-	const randomIndex1 = Math.floor(Math.random() * categories.length);
-	const selectedCategory = categories[randomIndex1];
-	const randomIndex2 = Math.floor(Math.random() * selectedCategory.universities.length);
-	return {
-		region: selectedCategory.region,
-		schoolName: selectedCategory.universities[randomIndex2].name,
-		latitude: selectedCategory.universities[randomIndex2].latitude, // 대학 정문의 위도 반환
-		longitude: selectedCategory.universities[randomIndex2].longitude, // 대학 정문의 경도 반환
-	};
-}
+async function getUniversityByMember(member) {
+	try {
+		// memberId를 사용하여 회원 정보를 검색
+		const memberInfo = await Members.findOne({ id: member.id }).select('schoolName');
+		if (!memberInfo) {
+			throw new Error('회원을 찾을 수 없습니다.');
+		}
 
+		// 회원의 schoolName을 사용하여 Category 테이블에서 학교 정보를 검색
+		const category = await Category.findOne({ 'universities.name': member.schoolName });
+		if (!category) {
+			throw new Error('해당 학교를 찾을 수 없습니다.');
+		}
+
+		// 찾은 학교 정보 중 정확한 학교 정보를 추출
+		const university = category.universities.find(u => u.name === member.schoolName);
+		if (!university) {
+			throw new Error('학교 정보를 찾을 수 없습니다.');
+		}
+
+		return {
+			region: category.region,
+			schoolName: university.name,
+			latitude: university.latitude,
+			longitude: university.longitude,
+		};
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+}
 //상품 데이터 추가
 const insertProductsData = async (req, res) => {
 	try {
 		const response = await axios.get(
-			`https://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=${process.env.TTBKey}&QueryType=ItemNewAll&MaxResults=60&start=1&SearchTarget=Book&CategoryId=8257&output=js&Version=20131101`,
+			`https://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=${process.env.TTBKey}&QueryType=ItemNewAll&MaxResults=100&start=1&SearchTarget=Book&CategoryId=8257&output=js&Version=20131101`,
 		);
 		const data = response.data.item;
 
@@ -40,8 +72,9 @@ const insertProductsData = async (req, res) => {
 		// 모든 항목에 대해 비동기 작업을 수행
 		const newData = await Promise.all(
 			data.map(async item => {
-				const sellerId = await getRandomId();
-				const { region, schoolName, latitude, longitude } = await getRandomUniversity();
+				const sellerId = await getRandomMemberUniversity(); // 판매자 ID 가져오기
+				// 판매자 ID를 사용하여 sellerId에 연결된 학교 정보 가져오기
+				const { region, schoolName, latitude, longitude } = await getUniversityByMember(sellerId);
 
 				return {
 					name: item.title,
@@ -49,7 +82,7 @@ const insertProductsData = async (req, res) => {
 					price: item.priceStandard,
 					imgUrls: item.cover,
 					publisher: item.publisher,
-					sellerId,
+					sellerId: sellerId.id, // sellerId 객체에서 id만 저장
 					region,
 					schoolName,
 					latitude, // 대학 정문의 위도 추가

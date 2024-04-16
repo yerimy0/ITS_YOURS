@@ -36,10 +36,14 @@ function FindPasswordForm() {
 		if (!userId.trim() || userIdError || !email.trim() || emailError) {
 			setModalMessage('아이디와 이메일을 정확하게 입력해주세요.');
 			setIsModalOpen(true);
-			setTimeout(() => setIsModalOpen(false), 3000);
 			return;
 		}
 		findPassword(userId, email, setModalMessage, setIsModalOpen, navigate);
+	}
+
+	function closeModalAndRedirect() {
+		setIsModalOpen(false);
+		navigate('/login'); // 로그인 페이지 경로로 리다이렉트
 	}
 
 	return (
@@ -64,7 +68,7 @@ function FindPasswordForm() {
 				<Button type="submit">비밀번호 찾기</Button>
 			</Form>
 			{isModalOpen && (
-				<Modal isOpen={isModalOpen} message={modalMessage} onClose={() => setIsModalOpen(false)} />
+				<Modal isOpen={isModalOpen} message={modalMessage} onClose={closeModalAndRedirect} />
 			)}
 		</>
 	);

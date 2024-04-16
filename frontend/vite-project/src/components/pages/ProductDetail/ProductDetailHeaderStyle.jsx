@@ -9,7 +9,6 @@ const ProductDetail = styled.section`
 	gap: 55px;
 	flex-wrap: wrap;
 	justify-content: center;
-	border-bottom: 2px solid #000;
 `;
 
 const BookCover = styled.div`
@@ -18,13 +17,6 @@ const BookCover = styled.div`
 	max-height: 600px;
 	align-items: flex-start;
 	gap: 8px;
-`;
-
-const BookImg = styled.img`
-	width: 450px;
-	height: 450px;
-	max-width: 450px;
-	max-height: 450px;
 `;
 
 const ProductContent = styled.div`
@@ -44,8 +36,8 @@ const SalesInfo = styled.div`
 	align-items: flex-start;
 	gap: 15px;
 	margin-right: auto;
-	padding-bottom: 10px;
-	border-bottom: 1px solid #000;
+	padding-bottom: 30px;
+	border-bottom: 1px solid #ddd;
 `;
 
 const BookContainer = styled.div`
@@ -113,7 +105,6 @@ const ProductInfoText = styled.div`
 export {
 	ProductDetail,
 	BookCover,
-	BookImg,
 	ProductContent,
 	SalesInfo,
 	BookContainer,

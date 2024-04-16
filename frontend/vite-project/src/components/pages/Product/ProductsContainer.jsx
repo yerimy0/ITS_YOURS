@@ -9,33 +9,37 @@ import {
 } from './ProductsContainerStyle';
 import Paginator from '../../Paginator';
 import ProductHeader from './ProductHeader';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation as useRegion } from 'react-router-dom';
 import { fetchDefaultProducts } from '../../../apis/service/product.api';
 
 function ProductsContainer() {
 	const navigate = useNavigate();
-	const location = useLocation();
+	const region = useRegion();
 
 	const [products, setProducts] = useState([]);
 	const [displayProducts, setDisplayProducts] = useState([]);
+	const [filteredProducts, setFilteredProducts] = useState([]);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [totalItems, setTotalItems] = useState(0);
+	const [selectedRegion, setSelectedRegion] = useState('');
+	const [selectedUniversity, setSelectedUniversity] = useState('');
 
 	const itemsPerPage = 20;
 
 	useEffect(() => {
-		if (location.state && location.state.searchResults) {
-			handleSearchResults(location.state.searchResults);
+		if (region.state && region.state.searchResults) {
+			handleSearchResults(region.state.searchResults);
 		} else {
 			loadDefaultProducts();
 		}
-	}, [location.state]);
+	}, [region.state]);
 
 	const loadDefaultProducts = async () => {
 		try {
 			const productsData = await fetchDefaultProducts();
 			setProducts(productsData);
 			setDisplayProducts(productsData);
+			setFilteredProducts(productsData);
 			setTotalItems(productsData.length);
 		} catch (error) {
 			console.error('Error loading default products:', error);
@@ -44,44 +48,58 @@ function ProductsContainer() {
 
 	const handleSearchResults = results => {
 		setDisplayProducts(results);
-		setTotalItems(results.length);
+		applyFilter(selectedRegion, selectedUniversity, results);
+		setCurrentPage(0);
+	};
+
+	const applyFilter = (region, university, productsToFilter) => {
+		// region과 university를 사용하여 필터링된 상품을 찾음
+		let filtered = productsToFilter.filter(product => {
+			const isRegionMatch = region ? product.region === region : true;
+			const isUniversityMatch = university
+				? university === '전체' || product.schoolName === university
+				: true;
+			return isRegionMatch && isUniversityMatch;
+		});
+
+		setFilteredProducts(filtered);
+		setTotalItems(filtered.length);
 		setCurrentPage(0);
 	};
 
 	const handleSortChange = sortOption => {
-		let sorted = [...displayProducts];
+		let sorted = [...filteredProducts];
 		if (sortOption === 'latest') {
 			sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 		} else if (sortOption === 'cheapest') {
 			sorted.sort((a, b) => a.price - b.price);
 		}
-		setDisplayProducts(sorted);
+		setFilteredProducts(sorted);
 		setCurrentPage(0);
 	};
 
-	const handleFilterChange = (selectedLocation, selectedUniversity) => {
-		const filteredProducts = products.filter(product => {
-			const isLocationMatch = selectedLocation ? product.region === selectedLocation : true;
-			const isUniversityMatch = selectedUniversity
-				? selectedUniversity === '전체' || product.schoolName === selectedUniversity
-				: true;
-			return isLocationMatch && isUniversityMatch;
-		});
-		setDisplayProducts(filteredProducts);
-		setTotalItems(filteredProducts.length);
-		setCurrentPage(0);
+	const handleFilterChange = (region, university) => {
+		setSelectedRegion(region);
+		setSelectedUniversity(university);
+		applyFilter(region, university, displayProducts);
 	};
 
 	const startIndex = currentPage * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
-	const productsToShow = displayProducts.slice(startIndex, endIndex);
+	const productsToShow = filteredProducts.slice(startIndex, endIndex);
+
+	const scrollToTop = () => {
+		window.scrollTo({ top: 0 });
+	};
 
 	const handlePageChange = pageNumber => {
 		setCurrentPage(pageNumber);
+		scrollToTop();
 	};
 
 	const handleProductClick = productId => {
 		navigate(`/product/${productId}`);
+		scrollToTop();
 	};
 
 	return (

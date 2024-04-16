@@ -14,6 +14,7 @@ const getAllCategories = async (req, res, next) => {
 	}
 };
 
+//학교명 > 지역 가져오기
 const getRegionBySchoolName = async (req, res, next) => {
 	try {
 		const { schoolName } = req.params;
@@ -29,6 +30,7 @@ const getRegionBySchoolName = async (req, res, next) => {
 	}
 };
 
+//대학명 > 위도-경도 가져오기
 const getUniversityLocation = async (req, res, next) => {
 	try {
 		const { schoolName } = req.params; // URL 파라미터에서 학교 이름을 받습니다.

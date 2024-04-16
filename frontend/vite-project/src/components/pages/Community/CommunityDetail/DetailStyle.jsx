@@ -116,14 +116,16 @@ const CommentList = styled(CommentsBox)`
 `;
 
 const CommentInput = styled.input`
+	width: 800px;
 	display: flex;
-	height: 35px;
+	height: 50px;
 	padding: 8px;
 	justify-content: center;
 	align-items: center;
 	align-self: stretch;
 	border-radius: 20px;
 	border: 1px solid #888;
+	margin-right: 15px;
 
 	background: #fff;
 	&:focus {

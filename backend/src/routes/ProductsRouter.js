@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const validateToken = require('../middlewares/ValidateToken');
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = require('../config/MulterConfig');
 
 const {
 	getProductsList,

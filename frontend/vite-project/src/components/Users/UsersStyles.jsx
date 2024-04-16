@@ -167,16 +167,28 @@ export const ErrorMessage = styled.div`
 	margin-left: 10px;
 `;
 
+export const EmailErrorMessage = styled.div`
+	color: #b3261e;
+	font-size: 12px;
+	margin-right: 220px;
+`;
+
+export const VerificationErrorMessage = styled.div`
+	color: #b3261e;
+	font-size: 12px;
+	margin-right: 270px;
+`;
+
 export const InlineGroup = styled.div`
 	display: flex;
-	align-items: stretch; 
-	width: 400px; 
+	align-items: stretch;
+	width: 400px;
 `;
 
 export const StyledInput = styled.input`
 	flex-grow: 1;
 	padding: 0.7rem;
-	margin-right: 0.5rem; 
+	margin-right: 0.5rem;
 	margin-top: 1rem;
 	border: 1px solid #009dff;
 	border-radius: 20px;
@@ -207,7 +219,7 @@ export const InputWithIcon = styled.div`
 export const InputIcon = styled.img`
 	position: absolute;
 	right: 10px;
-	top: 50%; 
+	top: 50%;
 	transform: translateY(-10%);
 	width: 20px;
 	height: 20px;
@@ -216,5 +228,5 @@ export const InputIcon = styled.img`
 
 export const SearchInput = styled(Input)`
 	padding-right: 40px;
-	width: 100%; 
+	width: 100%;
 `;

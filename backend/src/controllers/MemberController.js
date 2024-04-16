@@ -18,7 +18,8 @@ const {
  */
 const signUp = async (req, res, next) => {
 	try {
-		const { id, password, realName, email, schoolName, nickName, profilePic } = req.body;
+		const { id, password, realName, email, schoolName, nickName } = req.body;
+		let profilePic = req.file ? req.file.path : ''; // 파일 경로 저장
 
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 
@@ -122,8 +123,8 @@ const getMember = async (req, res, next) => {
  */
 const getSellerInfo = async (req, res, next) => {
 	try {
-		const { sellerId } = req.params;
-		const sellerInfo = await memberService.getSellerInfo(sellerId);
+		const { id } = req.query;
+		const sellerInfo = await memberService.getSellerInfo(id);
 
 		if (!sellerInfo) {
 			throw new BadRequestError('사용자 정보를 찾을 수 없습니다.');
@@ -221,8 +222,22 @@ async function findId(req, res) {
 async function resetPassword(req, res) {
 	try {
 		const { id, email } = req.body;
-		await memberService.resetPasswordAndSendEmail(id, email);
-		res.json({ message: '임시 비밀번호가 이메일로 전송되었습니다.' });
+		const reset = await memberService.resetPassword(id, email);
+		res.json({ message: '임시 비밀번호가 이메일로 전송되었습니다.', reset });
+	} catch (error) {
+		throw new BadRequestError(error.message);
+	}
+}
+
+// 이메일 인증코드
+async function sendVerifyEmail(req, res) {
+	try {
+		const { email } = req.body;
+		if (!email) {
+			throw new BadRequestError('이메일을 입력해주세요');
+		}
+		await memberService.sendEmailVerification(email);
+		res.json({ message: '인증코드가 이메일로 전송되었습니다.' });
 	} catch (error) {
 		throw new BadRequestError(error.message);
 	}
@@ -237,4 +252,5 @@ module.exports = {
 	deleteMember,
 	findId,
 	resetPassword,
+	sendVerifyEmail,
 };

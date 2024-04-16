@@ -5,20 +5,22 @@ const ProfileWrap = styled.div`
 	display: flex;
 	padding: 10px;
 	align-items: center;
-	box-sizing: border-box;
-	border-radius: 20px;
-	background: #f7f2fa;
+	border-radius: 10px;
 	cursor: pointer;
+	margin-bottom: 20px;
+
+	&:active,
+	&:focus,
+	&.active {
+		background: #f4f4f4;
+	}
 `;
 
-const Profile = styled.div`
-	width: 56px;
-	height: 56px;
-`;
+const Profile = styled.div``;
 
 const ProfileImg = styled.img`
-	width: 100%;
-	height: 100%;
+	width: 56px;
+	height: 56px;
 	border-radius: 50%;
 	object-fit: cover;
 `;
@@ -64,6 +66,13 @@ const BookName = styled.p`
 	line-height: 20px;
 	letter-spacing: 0.25px;
 	margin: 0;
+	overflow: hidden;
+	white-space: normal;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	width: 70%;
 `;
 
 const SendTime = styled.p`
@@ -75,6 +84,7 @@ const SendTime = styled.p`
 	line-height: 20px;
 	letter-spacing: 0.25px;
 	margin: 0;
+	width: 20%;
 `;
 
 export {

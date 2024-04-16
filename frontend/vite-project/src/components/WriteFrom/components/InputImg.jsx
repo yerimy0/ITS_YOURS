@@ -8,6 +8,7 @@ import {
 	ProductImg,
 	Img,
 	ButtonUpload,
+	CloseButton,
 } from '../WriteFormStyle';
 
 function InputImg({ onImageChange, value }) {
@@ -36,6 +37,14 @@ function InputImg({ onImageChange, value }) {
 		FileInputs.current[index].click();
 	}
 
+	// 업로드한 사진 삭제
+	function handleRemove(index) {
+		const newUrls = [...imgUrls];
+		newUrls[index] = '';
+		setImgUrls(newUrls);
+		onImageChange(newUrls);
+	}
+
 	return (
 		<Box>
 			<Sentence>
@@ -49,6 +58,7 @@ function InputImg({ onImageChange, value }) {
 						<ButtonUpload onClick={() => handleClick(index)}>
 							{url ? <Img src={url} alt={`image-${index}`} /> : ' 📸 Upload a file'}
 						</ButtonUpload>
+						{url && <CloseButton onClick={() => handleRemove(index)}>✖</CloseButton>}
 						<input
 							type="file"
 							onChange={e => handleChange(index, e)}

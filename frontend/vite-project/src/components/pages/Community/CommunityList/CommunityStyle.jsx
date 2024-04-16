@@ -101,11 +101,11 @@ const ListLeft = styled.div`
 `;
 
 const List = styled.div`
-	// display: flex;
-	// flex-direction: column;
-	// align-items: flex-start;
-	// gap: 10px;
-	// align-self: stretch;
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: flex-start;
+	gap: 10px;
+	align-self: stretch;
 `;
 
 const ButtonBox = styled.div`

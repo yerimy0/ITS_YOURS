@@ -1,37 +1,71 @@
 import React, { useState, useEffect } from 'react';
 import { fetchMyPageData, updateMyPageData } from '../../../apis/service/ProfileEdit';
 import ProfileImageUploader from '../../Users/ProfileImageUploader';
-import { Form, Input, Button } from '../../Users/UsersStyles';
+import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
+import {
+	validateUserId,
+	validatePassword,
+	validateConfirmPassword,
+	validateName,
+	validateEmail,
+	validateNickname,
+	validateUniversity,
+} from '../../Users/ValidationService';
+import EmailVerificationForm from '../../Users/EmailVerificationForm';
+import UniversitySearchForm from '../../Users/University/UniversitySearchForm';
+import UniversityModal from '../../Users/University/UniversityModal';
 
 function ProfileEditForm({ userInfo }) {
 	const [profileImage, setProfileImage] = useState(null);
 	const [userId, setUserId] = useState(userInfo?.userId || '');
 	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
 	const [name, setName] = useState(userInfo?.name || '');
 	const [email, setEmail] = useState(userInfo?.email || '');
 	const [university, setUniversity] = useState(userInfo?.university || '');
 	const [nickname, setNickname] = useState(userInfo?.nickname || '');
+	const [errors, setErrors] = useState({});
+	const [emailVerificationCode, setEmailVerificationCode] = useState('');
+	const [isModalOpen, setModalOpen] = useState(false);
 
 	useEffect(() => {
-		const loadProfileData = async () => {
-			try {
-				const data = await fetchMyPageData();
-				setUserId(data.id);
-				setName(data.realName);
-				setEmail(data.email);
-				setUniversity(data.univName);
-				setNickname(data.nickName);
-				setProfileImage(data.profilePic);
-			} catch (error) {
-				console.error('프로필 정보 로딩 실패:', error);
-			}
-		};
-
-		loadProfileData();
+		fetchProfileData();
 	}, []);
+
+	const fetchProfileData = async () => {
+		try {
+			const data = await fetchMyPageData();
+			setUserId(data.id);
+			setName(data.realName);
+			setEmail(data.email);
+			setUniversity(data.univName);
+			setNickname(data.nickName);
+			setProfileImage(data.profilePic);
+		} catch (error) {
+			console.error('프로필 정보 로딩 실패:', error);
+		}
+	};
+
+	const handleValidation = () => {
+		const newErrors = {
+			userId: validateUserId(userId),
+			password: validatePassword(password),
+			confirmPassword: validateConfirmPassword(password, confirmPassword),
+			name: validateName(name),
+			email: validateEmail(email),
+			university: validateUniversity(university),
+			nickname: validateNickname(nickname),
+		};
+		setErrors(newErrors);
+		return Object.values(newErrors).every(error => error === '');
+	};
 
 	const handleSubmit = async event => {
 		event.preventDefault();
+		if (!handleValidation()) {
+			console.error('유효성 검사 실패:', errors);
+			return;
+		}
 		const formData = new FormData();
 		formData.append('userId', userId);
 		if (password) {
@@ -41,59 +75,77 @@ function ProfileEditForm({ userInfo }) {
 		formData.append('email', email);
 		formData.append('university', university);
 		formData.append('nickname', nickname);
-
 		if (profileImage) {
 			formData.append('profileImage', profileImage);
 		}
 
 		try {
 			const response = await updateMyPageData(formData);
-			console.log('Profile Update:', response);
+			console.log('프로필 업데이트 완료:', response);
+			await fetchProfileData(); // 업데이트 후 프로필 데이터를 비동기적으로 다시 불러옵니다.
 		} catch (error) {
 			console.error('프로필 업데이트 오류:', error);
 		}
 	};
 
+	const handleOpenModal = () => setModalOpen(true);
+	const handleCloseModal = () => setModalOpen(false);
+	const handleSelectUniversity = selectedUniversity => {
+		setUniversity(selectedUniversity);
+		setErrors(prevErrors => ({ ...prevErrors, university: '' }));
+		handleCloseModal();
+	};
+
 	return (
 		<>
+			<UniversityModal
+				isOpen={isModalOpen}
+				onClose={handleCloseModal}
+				onSelectUniversity={handleSelectUniversity}
+			/>
 			<ProfileImageUploader onImageSelected={setProfileImage} />
 			<Form onSubmit={handleSubmit}>
-				<Input
-					type="text"
-					placeholder="아이디를 입력하세요"
-					value={userId}
-					onChange={e => setUserId(e.target.value)}
-					disabled
-				/>
+				<Input type="text" placeholder="아이디" value={userId} disabled />
 				<Input
 					type="password"
 					placeholder="비밀번호를 입력하세요"
 					value={password}
 					onChange={e => setPassword(e.target.value)}
 				/>
+				{errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+				<Input
+					type="password"
+					placeholder="비밀번호 확인"
+					value={confirmPassword}
+					onChange={e => setConfirmPassword(e.target.value)}
+				/>
+				{errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
+				<Input
+					type="text"
+					placeholder="닉네임"
+					value={nickname}
+					onChange={e => setNickname(e.target.value)}
+				/>
+				{errors.nickname && <ErrorMessage>{errors.nickname}</ErrorMessage>}
 				<Input
 					type="text"
 					placeholder="이름을 입력하세요"
 					value={name}
 					onChange={e => setName(e.target.value)}
 				/>
-				<Input
-					type="email"
-					placeholder="이메일을 입력하세요"
-					value={email}
-					onChange={e => setEmail(e.target.value)}
+				{errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+				<EmailVerificationForm
+					email={email}
+					setEmail={setEmail}
+					emailVerificationCode={emailVerificationCode}
+					setEmailVerificationCode={setEmailVerificationCode}
+					emailError={errors.email}
 				/>
-				<Input
-					type="text"
-					placeholder="대학명"
-					value={university}
-					onChange={e => setUniversity(e.target.value)}
-				/>
-				<Input
-					type="text"
-					placeholder="닉네임"
-					value={nickname}
-					onChange={e => setNickname(e.target.value)}
+				<UniversitySearchForm
+					university={university}
+					setUniversity={setUniversity}
+					universityError={errors.university}
+					onSearchUniversity={handleOpenModal}
 				/>
 				<Button type="submit">수정하기</Button>
 			</Form>

@@ -16,10 +16,12 @@ function ProfileForm({
 	passwordError,
 	confirmPasswordError,
 	nameError,
+	nicknameError,
 	handleBlurUserId,
 	handleBlurPassword,
 	handleBlurConfirmPassword,
 	handleBlurName,
+	handleBlurNickname,
 }) {
 	return (
 		<Form>
@@ -60,7 +62,9 @@ function ProfileForm({
 				placeholder="*닉네임을 입력해주세요"
 				value={nickname}
 				onChange={e => setNickname(e.target.value)}
+				onBlur={handleBlurNickname}
 			/>
+			{nicknameError && <ErrorMessage>{nicknameError}</ErrorMessage>}
 		</Form>
 	);
 }

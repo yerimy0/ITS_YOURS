@@ -5,8 +5,12 @@ import { ChatListWrap, ChatListHeader, ChatContainer } from './ChatListStyle';
 function ChatList() {
 	return (
 		<ChatListWrap>
-			<ChatListHeader>하리보</ChatListHeader>
+			<ChatListHeader>
+				<img src="/logoCharacter.png" alt="" />
+				Chat List
+			</ChatListHeader>
 			<ChatContainer>
+				<ChatListProfile />
 				<ChatListProfile />
 				<ChatListProfile />
 				<ChatListProfile />

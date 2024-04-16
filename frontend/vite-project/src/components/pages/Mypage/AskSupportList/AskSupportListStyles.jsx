@@ -74,3 +74,10 @@ export const InquiryButton = styled(ButtonStyles)`
 		color: white;
 	}
 `;
+
+export const EmptyMessage = styled.div`
+  text-align: center; // 텍스트를 가운데 정렬
+  font-size: 20px; // 글씨 크기 20px로 설정
+  color: #666; // 글씨 색상 설정 (선택적)
+  padding: 20px; // 패딩 추가 (선택적)
+`;

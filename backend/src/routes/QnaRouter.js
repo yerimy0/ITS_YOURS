@@ -7,6 +7,7 @@ const {
 	getAllQna,
 	deleteQna,
 	getMyQna,
+	answerQna,
 } = require('../controllers/QnaController');
 
 const router = Router();
@@ -16,5 +17,6 @@ router.put('/', validateToken, updateQna);
 router.get('/admin', validateToken, getAllQna);
 router.delete('/', validateToken, deleteQna);
 router.get('/', validateToken, getMyQna);
+router.post('/answer/:qnaId', validateToken, answerQna);
 
 module.exports = router;

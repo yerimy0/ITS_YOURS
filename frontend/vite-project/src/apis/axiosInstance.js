@@ -14,6 +14,9 @@ const instance = axios.create({
 instance.interceptors.request.use(
 	req => {
 		const authToken = getAuthToken();
+		if (req.data instanceof FormData) {
+			req.headers['Content-Type'] = 'multipart/form-data';
+		}
 		req.headers.Authorization = `${authToken}`;
 		return req;
 	},

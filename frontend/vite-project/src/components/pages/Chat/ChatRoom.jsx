@@ -48,8 +48,28 @@ function ChatRoom() {
 					<ChatWrap>
 						<SendTextWrap>
 							<SendTime>오후 7:50</SendTime>
-							<SendText>Lorem ipsum dolor sit amet</SendText>
+							<SendText>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</SendText>
 						</SendTextWrap>
+						<ReplyTextWrap>
+							<ReplyText>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+								incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+								exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+							</ReplyText>
+							<ReplyTime>오후 12:50</ReplyTime>
+						</ReplyTextWrap>
+						<SendTextWrap>
+							<SendTime>오후 7:50</SendTime>
+							<SendText>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</SendText>
+						</SendTextWrap>
+						<ReplyTextWrap>
+							<ReplyText>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+								incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+								exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+							</ReplyText>
+							<ReplyTime>오후 12:50</ReplyTime>
+						</ReplyTextWrap>
 						<ReplyTextWrap>
 							<ReplyText>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -61,8 +81,9 @@ function ChatRoom() {
 					</ChatWrap>
 				</ChatContainer>
 			</ChatSction>
-			<InputWrap>
+			<InputWrap className="inputwrap">
 				<InputText
+					className="inputtext"
 					type="text"
 					placeholder={placeholder}
 					onFocus={handleFocus}

@@ -2,9 +2,7 @@ import styled from 'styled-components';
 
 const ChatRoomHeaderWrap = styled.div`
 	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	background: #fff;
 `;
 
 const SellerProfile = styled.div`
@@ -18,15 +16,13 @@ const SellerProfile = styled.div`
 	gap: 10px;
 `;
 
-const Profile = styled.div`
-	width: 56px;
-	height: 56px;
-`;
+const Profile = styled.div``;
 
 const ProfileImg = styled.img`
-	width: 100%;
-	height: 100%;
+	width: 56px;
+	height: 56px;
 	border-radius: 50%;
+
 	object-fit: cover;
 `;
 
@@ -41,7 +37,7 @@ const NickName = styled.p`
 	align-items: center;
 	font-size: 22px;
 	font-style: normal;
-	font-weight: 700;
+	font-weight: 500;
 	line-height: 28px;
 	margin: 0;
 `;
@@ -64,7 +60,7 @@ const Img = styled.img`
 const Menu = styled.div`
 	position: absolute;
 	top: 30px;
-	left: 0;
+	right: -20%;
 	background: #fff;
 	border: 2px solid #f7f2fa;
 	border-radius: 20px;
@@ -90,6 +86,7 @@ const MenuItem = styled.div`
 
 const BookInfo = styled.div`
 	width: 100%;
+	background: #f4f4f4;
 	padding: 10px 15px;
 	display: flex;
 	padding: 10px;
@@ -97,6 +94,7 @@ const BookInfo = styled.div`
 	align-items: center;
 	box-sizing: border-box;
 	gap: 10px;
+	margin-bottom: 10px;
 `;
 
 const BookCover = styled.div`

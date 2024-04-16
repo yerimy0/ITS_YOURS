@@ -1,4 +1,3 @@
-// ValidationService.js
 export const validateUserId = userId => {
 	if (!userId.trim()) {
 		return '아이디를 입력해주세요.';
@@ -7,7 +6,6 @@ export const validateUserId = userId => {
 	} else if (userId.length < 5 || userId.length > 20) {
 		return '아이디는 5자 이상, 20자 이하로 설정해 주세요.';
 	}
-	// 고유성 검사는 API 호출로 처리해야 하므로 여기서는 구현하지 않습니다.
 	return '';
 };
 
@@ -43,23 +41,20 @@ export const validateEmail = email => {
 	if (!emailRegex.test(email)) {
 		return '유효하지 않은 이메일 형식입니다.';
 	}
-	// 고유성 검사는 API 호출로 처리해야 하므로 여기서는 구현하지 않습니다.
 	return '';
 };
-
 export const validateNickname = nickname => {
-	if (nickname.length < 2 || nickname.length > 10) {
-		return '닉네임은 2자 이상 10자 이하로 설정해 주세요.';
+	if (nickname.length < 2 || nickname.length > 6) {
+		return '닉네임은 2자 이상 6자 이하로 설정해 주세요.';
 	} else if (/[^a-zA-Z0-9가-힣]/.test(nickname)) {
 		return '닉네임에는 특수 문자를 사용할 수 없습니다.';
 	}
-	// 고유성 검사는 API 호출로 처리해야 하므로 여기서는 구현하지 않습니다.
 	return '';
 };
 
 export const validateUniversity = university => {
 	if (!university) {
-		return '대학명을 선택하거나 입력해주세요.';
+		return '대학명을 선택해주세요.';
 	}
 	return '';
 };

@@ -4,7 +4,6 @@ async function fetchSellerDataById(id) {
 	try {
 		const res = await instance.get(`/members/sellerInfo?id=${id}`);
 		if (res.status === 200) {
-			console.log('jsonData::' + JSON.stringify(res.data));
 			return res.data;
 		}
 	} catch (err) {

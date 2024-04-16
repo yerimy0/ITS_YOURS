@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { LuSlidersHorizontal } from 'react-icons/lu';
 import {
 	Alignments,
-	Bilnd,
+	Blind,
 	Alignment,
 	Filter,
 	FilterButton,
@@ -19,7 +19,7 @@ const ProductFilter = ({ onFilterChange, onSortChange }) => {
 	const [cheapestClicked, setCheapestClicked] = useState(false);
 
 	// 필터 상태
-	const [selectedLocation, setSelectedLocation] = useState('');
+	const [selectedRegion, setSelectedRegion] = useState('');
 	const [selectedUniversity, setSelectedUniversity] = useState('');
 
 	// 정렬 옵션 변경
@@ -66,7 +66,7 @@ const ProductFilter = ({ onFilterChange, onSortChange }) => {
 	return (
 		<>
 			<Alignments>
-				<Bilnd>정렬</Bilnd>
+				<Blind>정렬</Blind>
 				<Alignment onClick={handleLatestClick} isActive={latestClicked}>
 					최신순
 				</Alignment>
@@ -82,13 +82,13 @@ const ProductFilter = ({ onFilterChange, onSortChange }) => {
 				{showButtons && (
 					<FilterContent ref={filterRef}>
 						<ProductFilterLogic
-							onApplyFilter={(location, university) => {
-								onFilterChange(location, university);
-								setSelectedLocation(location);
+							onApplyFilter={(region, university) => {
+								onFilterChange(region, university);
+								setSelectedRegion(region);
 								setSelectedUniversity(university);
 							}}
 							onCloseFilter={closeFilter}
-							selectedLocation={selectedLocation}
+							selectedRegion={selectedRegion}
 							selectedUniversity={selectedUniversity}
 						/>
 					</FilterContent>

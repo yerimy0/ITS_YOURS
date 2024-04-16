@@ -52,6 +52,5 @@ function MyPage() {
 		</PageContainer>
 	);
 }
-//주석 임시 추가
 
 export default MyPage;

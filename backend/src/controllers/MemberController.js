@@ -23,16 +23,15 @@ const signUp = async (req, res, next) => {
 
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 
+		const isRegisteredId = await memberService.getMember(id);
+		const isRegisteredEmail = await memberService.getMemberByEmail(email);
+
 		if (!id || !password || !realName || !email || !region || !schoolName || !nickName) {
 			throw new BadRequestError('필수 정보를 모두 입력하세요.');
 		}
-
-		const isRegisterd = await memberService.getMember(id);
-
-		if (isRegisterd) {
+		if (isRegisteredId || isRegisteredEmail) {
 			throw new ConflictError('이미 가입된 회원입니다.');
 		}
-
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
 			id,

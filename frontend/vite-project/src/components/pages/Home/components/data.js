@@ -23,7 +23,13 @@ const books = [
 
 const pics = ['book1.png', 'book2.png', 'book3.png', 'book4.png', 'book5.png'];
 
-const schools = ['school1.png', 'school2.png', 'school3.png', 'school4.png', 'school5.png'];
+const schools = [
+	{ pic: 'school1.png', name: '서울시립대학교' },
+	{ pic: 'school2.png', name: '중앙대학교' },
+	{ pic: 'school3.png', name: '고려대학교' },
+	{ pic: 'school4.png', name: '건국대학교' },
+	{ pic: 'school5.png', name: '경희대학교' },
+];
 
 const infos = [
 	{

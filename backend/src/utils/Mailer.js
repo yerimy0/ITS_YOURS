@@ -21,6 +21,13 @@ async function sendCustomEmail({ to, subject, templateName, replacements }) {
 			html = html.replace(`{{${key}}}`, replacements[key]);
 		});
 
+		// replacements 객체에 있는 모든 키-값 쌍을 사용하여 템플릿 내용을 치환
+		Object.keys(replacements).forEach(key => {
+			const regex = new RegExp(`{{${key}}}`, 'g'); // 정규 표현식 사용
+			console.log(`Replacing: ${key} with: ${replacements[key]}`); // 치환 과정 로깅
+			html = html.replace(regex, replacements[key]);
+		});
+
 		const mailOptions = {
 			from: process.env.EMAIL_USER,
 			to,
@@ -37,27 +44,42 @@ async function sendCustomEmail({ to, subject, templateName, replacements }) {
 	}
 }
 
-async function sendSignupVerificationEmail(email, verificationLink) {
+async function sendPasswordEmail(email, verificationCode) {
 	await sendCustomEmail({
 		to: email,
-		subject: '[이제너해] 회원가입 이메일 인증',
-		templateName: 'SignupVerificationEmailForm',
+		subject: '[이제너해] 인증번호 안내',
+		templateName: 'FindPwEmailForm',
 		replacements: {
-			verificationLink: verificationLink, // 인증 링크를 치환할 위치
+			verificationCode: verificationCode, // 인증번호를 치환할 위치
 		},
 	});
 }
 
-async function sendQnAReplyEmail(email, question, answer) {
+async function sendQnAReplyEmail(email, answer) {
 	await sendCustomEmail({
 		to: email,
-		subject: '[이제너해] QnA 답변',
+		subject: '[이제너해] QnA 답변 안내',
 		templateName: 'QnaAnswerForm',
 		replacements: {
-			question: question, // 질문을 치환할 위치
 			answer: answer, // 답변을 치환할 위치
 		},
 	});
 }
 
-module.exports = { sendCustomEmail, sendSignupVerificationEmail, sendQnAReplyEmail };
+async function sendVerifyEmail(email, verificationCode) {
+	await sendCustomEmail({
+		to: email,
+		subject: '[이제너해] 회원가입 이메일 인증코드입니다.',
+		templateName: 'SignUpEmailForm',
+		replacements: {
+			verificationCode: verificationCode, // 답변을 치환할 위치
+		},
+	});
+}
+
+module.exports = {
+	sendCustomEmail,
+	sendPasswordEmail,
+	sendQnAReplyEmail,
+	sendVerifyEmail,
+};

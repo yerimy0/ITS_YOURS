@@ -76,8 +76,14 @@ function ProductsContainer() {
 	const endIndex = startIndex + itemsPerPage;
 	const productsToShow = displayProducts.slice(startIndex, endIndex);
 
+	const scrollToTop = () => {
+		// 전체 페이지 상단으로 스크롤
+		window.scrollTo({ top: 500 });
+	};
+
 	const handlePageChange = pageNumber => {
 		setCurrentPage(pageNumber);
+		scrollToTop();
 	};
 
 	const handleProductClick = productId => {

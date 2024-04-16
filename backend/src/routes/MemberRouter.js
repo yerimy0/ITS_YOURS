@@ -9,12 +9,14 @@ const {
 	deleteMember,
 	findId,
 	resetPassword,
+	sendVerifiyEmail,
 } = require('../controllers/MemberController');
 const validateToken = require('../middlewares/ValidateToken');
+const upload = require('../config/MulterConfig');
 
 const router = Router();
 // 회원가입
-router.post('/signUp', signUp);
+router.post('/signUp', upload.single('profilePic'), signUp);
 // 로그인
 router.post('/login', login);
 // 회원정보 조회
@@ -30,5 +32,7 @@ router.delete('/me', validateToken, deleteMember);
 router.post('/findId', findId);
 // 비밀번호 찾기
 router.post('/findPassword', resetPassword);
+// 회원가입 이메일 인증코드발금
+router.post('/sendVerifiyEmail', sendVerifiyEmail);
 
 module.exports = router;

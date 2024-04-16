@@ -1,8 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
 import Modal from '../../Users/Modal';
-import { loginApi, validateToken } from '../../../apis/service/LoginApi';
+import { loginApi } from '../../../apis/service/LoginApi';
 import UserIdContext from '../../../context/UserIdContext';
 
 function LoginForm() {
@@ -14,25 +14,6 @@ function LoginForm() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
 	const { setId } = useContext(UserIdContext);
-
-	useEffect(() => {
-		const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
-		const storedUserId = document.cookie.split('; ').find(row => row.startsWith('userId='));
-		if (token && storedUserId) {
-			const tokenValue = token.split('=')[1];
-			const userIdValue = decodeURIComponent(storedUserId.split('=')[1]);
-			validateToken(tokenValue).then(isValid => {
-				if (isValid) {
-					setId(userIdValue);
-					navigate('/');
-				} else {
-					// 토큰이 유효하지 않다면 쿠키에서 제거
-					document.cookie = 'authToken=; Max-Age=-99999999;';
-					document.cookie = 'userId=; Max-Age=-99999999;';
-				}
-			});
-		}
-	}, [setId, navigate]);
 
 	function handleUserIdBlur() {
 		if (!userId.trim()) {
@@ -57,7 +38,6 @@ function LoginForm() {
 			console.log(res);
 			if (res.accessToken) {
 				document.cookie = `authToken=${res.accessToken}; path=/; Secure`;
-				document.cookie = `userId=${userId}; path=/; Secure`;
 				setId(userId);
 				navigate('/');
 			} else {

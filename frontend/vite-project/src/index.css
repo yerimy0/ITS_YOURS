@@ -271,3 +271,34 @@ input {
 	border-radius: 20px !important;
 }
 /* =================== 공통 */
+.comm_list_wrap {
+}
+.buttonbox {
+}
+.button {
+}
+
+.listone {
+}
+.listleft {
+}
+.listtitle {
+}
+.listsub {
+}
+.listbottom {
+}
+.listbottom .listsub:first-child {
+}
+.listbottom .listsub:last-child {
+}
+.listright {
+}
+.listright .comment_icon {
+}
+.comment {
+}
+.comment .listsub {
+}
+.comm_list_img {
+}

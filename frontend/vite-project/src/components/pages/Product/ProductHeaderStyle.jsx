@@ -34,6 +34,14 @@ const TextWrap = styled.div`
 	display: inline-block;
 	font-size: 35px;
 	margin: 70px 0;
+	@media (max-width: 1000px) {
+		/* box-shadow: none; */
+		margin: 25px 0;
+		h4 {
+			font-size: 30px;
+			text-align: center;
+		}
+	}
 
 	.tw_wrap {
 		margin: 80px 0 20px;
@@ -68,6 +76,9 @@ const ProductListTitle = styled.h1`
 	padding-bottom: 10px;
 	margin: 20px 0 5px 10px;
 	color: #666;
+	@media (max-width: 1000px) {
+		font-size: 16px;
+	}
 `;
 
 const SearchResultContainer = styled.div`
@@ -84,7 +95,11 @@ const SearchResultContainer = styled.div`
 	}
 `;
 
-const SearchResult = styled.p``;
+const SearchResult = styled.p`
+	@media (max-width: 1000px) {
+		margin: 30px 0 0px 0;
+	}
+`;
 
 const ProductFilterWrap = styled.div`
 	display: flex;

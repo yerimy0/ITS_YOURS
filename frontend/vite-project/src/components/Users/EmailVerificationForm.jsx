@@ -25,8 +25,9 @@ function EmailVerificationForm({
 						인증요청
 					</SmallButton>
 				</div>
+				{emailError && <EmailErrorMessage>{emailError}</EmailErrorMessage>}
 			</InlineGroup>
-			{emailError && <EmailErrorMessage>{emailError}</EmailErrorMessage>}
+
 			<InlineGroup>
 				<div className="inline_wrap">
 					<StyledInput

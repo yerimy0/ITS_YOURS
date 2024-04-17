@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
-import { SaleStatuses } from '../../../pages/Mypage/SalesHistory';
+import { SaleStatuses } from '../../../../pages/Mypage/SalesHistory';
 
 const SalesHistoryHeader = ({ onStatusChange, currentStatus }) => {
 	return (

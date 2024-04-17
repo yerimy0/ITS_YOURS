@@ -1,100 +1,62 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { fetchQnaData, handleAnswerSubmit } from '../../apis/service/AdminQnaApi';
 import styled from 'styled-components';
 import Paginator, { PaginatorContext } from '../Paginator';
 import AdminModal from './AdminModal';
 
 function AdminQnA() {
-	const perPage = 10; // 페이지 당
+	const perPage = 10;
 	const { currentPage } = useContext(PaginatorContext);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedQna, setSelectedQna] = useState(null);
-	const [qnaList, setQnaList] = useState([
-		{
-			id: '정한석',
-			title: '불량거래지롱헤헤',
-			date: '2024-04-01',
-			detail: '사기가 의심돼요.',
-			Process: '미처리',
-		},
-		{
-			id: '더글라스 하퍼',
-			title: '불량거래지롱헤헤',
-			date: '2024-04-01',
-			detail: '이것도 사기인 것 같아요.',
-			Process: '미처리',
-		},
-
-		// ...추가 데이터
-	]);
-
-	const handleRowClick = qna => {
-		if (qna.Process === '처리') return; // 이미 처리된 경우 동작안함.
-		setSelectedQna(qna); // 선택된 qna 설정
-		setIsModalOpen(true);
-	};
-
-	const handleAnswerSubmit = (answer, qnaId) => {
-		const updatedQnaList = qnaList.map(qna =>
-			qna.id === qnaId ? { ...qna, Process: '처리' } : qna,
-		);
-		setQnaList(updatedQnaList);
-
-		// TODO: nodemailer를 사용하여 이메일보내기
-
-		setIsModalOpen(false); // 모달 닫기
-	};
-
-	const currentData = qnaList.slice(currentPage * perPage, (currentPage + 1) * perPage);
+	const [qnaList, setQnaList] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState('');
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const res = await fetch('https://api.example.com/qna');
-				if (!res.ok) {
-					throw new Error('네트워크 응답이 올바르지 않습니다.');
-				}
-				const result = await res.json();
-				setData(result);
-			} catch (error) {
-				console.error('QnA 데이터를 가져오는 중 오류발생: ', error);
-			}
-		};
-
-		fetchData();
-	}, []);
+		fetchQnaData(currentPage, perPage, setIsLoading, setQnaList, setError);
+	}, [currentPage, perPage]);
 
 	return (
 		<>
 			<Container>
 				<TableTitle>신고내역 처리</TableTitle>
-				<Table>
-					<TableHead>
-						<TableRow>
-							<TableHeader>질문자 ID</TableHeader>
-							<TableHeader>글 제목</TableHeader>
-							<TableHeader>작성일자</TableHeader>
-							<TableHeader>글 내용</TableHeader>
-							<TableHeader>답변여부</TableHeader>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{currentData.map(qna => (
-							<TableRow
-								key={qna.id}
-								onClick={() => !qna.Processed && handleRowClick(qna)}
-								processed={qna.Process === '처리'}
-							>
-								<TableCell>{qna.id}</TableCell>
-								<TableCell>{qna.title}</TableCell>
-								<TableCell>{qna.date}</TableCell>
-								<TableCell>{qna.detail}</TableCell>
-								<TableCell>
-									<ReportProcess processed={qna.Process === '처리'}>{qna.Process}</ReportProcess>
-								</TableCell>
+				{isLoading ? (
+					<p>데이터 로딩중...</p>
+				) : error ? (
+					<p>{error}</p>
+				) : (
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableHeader>질문자 ID</TableHeader>
+								<TableHeader>글 제목</TableHeader>
+								<TableHeader>작성일자</TableHeader>
+								<TableHeader>글 내용</TableHeader>
+								<TableHeader>답변여부</TableHeader>
 							</TableRow>
-						))}
-					</TableBody>
-				</Table>
+						</TableHead>
+						<TableBody>
+							{qnaList.length > 0 ? (
+								qnaList.map(qna => (
+									<TableRow key={qna.id}>
+										<TableCell>{qna.nickname}</TableCell>
+										<TableCell>{qna.title}</TableCell>
+										<TableCell>{qna.createdAt}</TableCell>
+										<TableCell>{qna.content}</TableCell>
+										<TableCell>
+											<ReportProcess>{qna.iscompleted}</ReportProcess>
+										</TableCell>
+									</TableRow>
+								))
+							) : (
+								<TableRow>
+									<TableCell colSpan="5">No data available</TableCell>
+								</TableRow>
+							)}
+						</TableBody>
+					</Table>
+				)}
 				<PaginationContainer>
 					<Paginator totalItems={qnaList.length} perPage={perPage} />
 				</PaginationContainer>

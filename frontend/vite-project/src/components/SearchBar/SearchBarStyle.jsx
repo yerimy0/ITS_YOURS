@@ -22,6 +22,10 @@ const SearchInputBox = styled.div`
 	padding: 15px 20px;
 
 	border-radius: 20px !important;
+
+	@media screen and (max-width: 864px) {
+		width: 100%;
+	}
 `;
 
 const SearchInput = styled.input`
@@ -29,6 +33,10 @@ const SearchInput = styled.input`
 	width: 90%;
 	text-align: start;
 	font-size: 20px;
+
+	@media screen and (max-width: 864px) {
+		font-size: 18px;
+	}
 `;
 const ClearButton = styled.button`
 	color: #ded8e1;

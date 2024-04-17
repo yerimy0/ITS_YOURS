@@ -231,7 +231,7 @@ async function resetPassword(req, res) {
 	}
 }
 
-// 이메일 인증코드
+// 이메일 인증코드 전송
 async function sendVerifyEmail(req, res) {
 	try {
 		const { email } = req.body;
@@ -240,6 +240,24 @@ async function sendVerifyEmail(req, res) {
 		}
 		await memberService.sendEmailVerification(email);
 		res.json({ message: '인증코드가 이메일로 전송되었습니다.' });
+	} catch (error) {
+		throw new BadRequestError(error.message);
+	}
+}
+
+// 인증코드 검증
+async function verifyCode(req, res) {
+	try {
+		const { code } = req.body;
+		if (!code) {
+			throw new BadRequestError('인증코드를 입력해주세요.');
+		}
+		const isVerified = await memberService.verifyCode(code);
+		if (isVerified) {
+			res.json({ message: '인증에 성공했습니다.' });
+		} else {
+			throw new BadRequestError('인증코드가 일치하지 않습니다.');
+		}
 	} catch (error) {
 		throw new BadRequestError(error.message);
 	}
@@ -255,4 +273,5 @@ module.exports = {
 	findId,
 	resetPassword,
 	sendVerifyEmail,
+	verifyCode,
 };

@@ -27,18 +27,21 @@ function UniversitySearchForm({ university, setUniversity }) {
 	return (
 		<>
 			<InputWithIcon>
-				<SearchInput
-					ref={inputRef}
-					type="text"
-					placeholder="대학명을 입력해주세요"
-					value={university}
-					readOnly
-					onClick={handleInputClick}
-					onBlur={handleBlur}
-				/>
-				<InputIcon src="/ReadingGlasses.svg" alt="Search" onClick={handleInputClick} />
+				<div style={{ position: 'relative' }}>
+					<SearchInput
+						ref={inputRef}
+						type="text"
+						placeholder="대학명을 입력해주세요"
+						value={university}
+						readOnly
+						onClick={handleInputClick}
+						onBlur={handleBlur}
+					/>
+					<InputIcon src="/ReadingGlasses.svg" alt="Search" onClick={handleInputClick} />
+				</div>
+				{universityError && <VerificationErrorMessage>{universityError}</VerificationErrorMessage>}
 			</InputWithIcon>
-			{universityError && <VerificationErrorMessage>{universityError}</VerificationErrorMessage>}
+
 			{isModalOpen && (
 				<UniversityModal
 					isOpen={isModalOpen}

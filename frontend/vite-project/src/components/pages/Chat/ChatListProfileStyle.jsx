@@ -73,6 +73,10 @@ const BookName = styled.p`
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	width: 70%;
+
+	@media screen and (max-width: 1030px) {
+		width: 60%;
+	}
 `;
 
 const SendTime = styled.p`
@@ -85,6 +89,10 @@ const SendTime = styled.p`
 	letter-spacing: 0.25px;
 	margin: 0;
 	width: 20%;
+
+	@media screen and (max-width: 1030px) {
+		width: 30%;
+	}
 `;
 
 export {

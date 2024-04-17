@@ -10,6 +10,7 @@ const commentRouter = require('./src/routes/CommentRouter');
 const wishRouter = require('./src/routes/WishesRouter');
 const categoriesRouter = require('./src/routes/CategoryRouter');
 const errorHandler = require('./src/middlewares/ErrorHandler');
+const chatRouter = require('./src/routes/ChatRouter');
 
 const cors = require('cors');
 
@@ -29,8 +30,9 @@ const app = express();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+//
 const corsOptions = {
-	origin: ['http://localhost:5173', 'http://34.47.86.42/'],
+	origin: ['http://localhost:5173', 'http://34.47.86.42'],
 	credentials: true,
 };
 app.use(cors(corsOptions));
@@ -53,6 +55,7 @@ app.use('/api/community', postRouter);
 app.use('/api/community', commentRouter);
 app.use('/api/wishes', wishRouter);
 app.use('/api/categories', categoriesRouter);
+app.use('/api/chat', chatRouter);
 app.use(errorHandler);
 
 module.exports = app;

@@ -8,7 +8,7 @@ const {
 	ConflictError,
 	ForbiddenError,
 	UnauthorizedError,
-} = require('../config/customError');
+} = require('../config/CustomError');
 
 /**
  * 회원가입 controller

@@ -45,9 +45,16 @@ function ProductDetailHeader() {
 		navigate(`/chat`); // 채팅 화면으로 이동
 	};
 
+	// 디테일 이미지 잘나오게 하는 부분 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+	// console.log(product);
+	const parseImgUrls = product.imgUrls;
+	let updatedImgUrls = parseImgUrls?.map(url => url.replace('coversum', 'cover500'));
+	// console.log(updatedImgUrls);
+
 	return (
 		<ProductDetail>
-			<BookCover>{product.imgUrls && <BookImgSlider images={product.imgUrls} />}</BookCover>
+			<BookCover>{updatedImgUrls && <BookImgSlider images={updatedImgUrls} />}</BookCover>
 			<ProductContent>
 				<SalesInfo>
 					{product.sellerId && <SellerProfileWrap id={product.sellerId} />}

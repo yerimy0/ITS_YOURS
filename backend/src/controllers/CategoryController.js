@@ -1,4 +1,4 @@
-const { NotFoundError } = require('../config/customError');
+const { NotFoundError } = require('../config/CustomError');
 const categoryService = require('../services/CategoryService');
 
 // 카테고리 조회 API

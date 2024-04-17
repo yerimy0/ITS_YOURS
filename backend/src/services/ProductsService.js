@@ -111,9 +111,10 @@ async function tradedProductsBySellerId(sellerId) {
 
 // 판매내역 삭제
 async function deleteSalesHis(sellerId, prodId) {
-	await Products.findOne({ sellerId: sellerId }, { _id: prodId });
 	await Products.findOneAndUpdate({ _id: prodId }, { deletedAt: Date.now() + 9 * 60 * 60 * 1000 });
-	return { message: '판매내역이 삭제되었습니다.', deleteSalesHis };
+	const result = await Products.findOne({ _id: prodId });
+
+	return result;
 }
 
 module.exports = {

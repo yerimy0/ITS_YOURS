@@ -21,7 +21,6 @@ const Box1 = styled.section`
 	}
 
 	.sec1_wrap {
-		position: relative;
 		z-index: 1;
 	}
 	img {
@@ -30,7 +29,7 @@ const Box1 = styled.section`
 	}
 
 	.img1 {
-		animation: bounce 1s 3;
+		animation: bounce 1s 20;
 
 		max-width: 300px;
 		position: absolute;
@@ -39,6 +38,7 @@ const Box1 = styled.section`
 		transform: translateY(-50%);
 		z-index: 1;
 	}
+
 	@keyframes bounce {
 		0%,
 		100% {
@@ -50,12 +50,68 @@ const Box1 = styled.section`
 	}
 
 	.img2 {
-		animation: bounce 1s 3;
+		animation: bounce 1s 20;
 		max-width: 300px;
 		position: absolute;
 		top: 50%;
 		right: 5%;
 		transform: translateY(-50%);
+	}
+
+	.br {
+		display: none;
+	}
+
+	@media screen and (max-width: 864px) {
+		.sec1_title {
+			padding: 0;
+		}
+		.br {
+			display: block;
+		}
+		.br1 {
+			display: none;
+		}
+		.sec1_text {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, 70%);
+			width: 100%;
+			font-size: 22px !important;
+			line-height: 30px !important;
+		}
+
+		.sec1_name {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, 230%);
+			width: 100%;
+			font-size: 26px;
+		}
+
+		@keyframes bounce {
+			0%,
+			100% {
+				transform: translateY(-10%);
+			}
+			50% {
+				transform: translateY(-20%);
+			}
+		}
+
+		.img1 {
+			width: 60%;
+			left: -1%;
+			transform: translateY(-24%);
+			z-index: 0;
+		}
+		.img2 {
+			width: 60%;
+			right: 3%;
+			transform: translateY(-20%);
+		}
 	}
 `;
 
@@ -76,6 +132,7 @@ const Title = styled.div`
 const Slogan = styled.p`
 	font-size: 18px;
 	font-weight: 400;
+	margin-top: 20px;
 `;
 
 const TitleName = styled.p`
@@ -102,9 +159,21 @@ const Box3 = styled.div`
 	.sec3_title {
 		display: block;
 		text-align: center;
-		margin: 0;
 		padding: 90px 0;
 		font-weight: 500;
+	}
+
+	.br {
+		display: none;
+	}
+
+	.title_name {
+		font-size: 26px;
+	}
+	@media screen and (max-width: 1115px) {
+		.br {
+			display: block;
+		}
 	}
 `;
 
@@ -140,6 +209,14 @@ const UpdateBooks = styled.div`
 			0 10px 20px rgba(0, 0, 0, 0.19),
 			0 6px 6px rgba(0, 0, 0, 0.23);
 	}
+
+	@media screen and (max-width: 1115px) {
+		flex-wrap: wrap;
+
+		.sec2_img {
+			margin-top: 20px;
+		}
+	}
 `;
 
 const UpdateTitle = styled.div`
@@ -148,6 +225,10 @@ const UpdateTitle = styled.div`
 	font-weight: 500;
 	margin-top: 100px;
 	margin-bottom: 30px;
+
+	@media screen and (max-width: 864px) {
+		font-size: 24px;
+	}
 `;
 
 const ButtonBox = styled.div`
@@ -159,9 +240,23 @@ const ButtonBox = styled.div`
 	.sec3_button {
 		padding: 10px 25px;
 		border-radius: 25px;
-		border: 2px solid #009dff;
+		border: 1px solid #009dff;
+		font-weight: 500;
 		background: #fff;
 		color: #009dff;
+
+		&:hover {
+			// transform: scale(1.05);
+			border: 1px solid #009dff;
+			background-color: #009dff;
+			color: #fff;
+			transition: all 0.5s;
+		}
+	}
+
+	@media screen and (max-width: 864px) {
+		justify-content: center;
+		margin-top: 60px;
 	}
 `;
 
@@ -172,7 +267,15 @@ const Button = styled.button`
 	border-radius: 25px;
 	color: #fff;
 	background: #009dff;
-	border: 0;
+	border: 1px solid #009dff;
+
+	&:hover {
+		// transform: scale(1.05);
+		background-color: #fff;
+		color: #009dff;
+		border: 1px solid #009dff;
+		transition: all 0.5s;
+	}
 `;
 
 const Img = styled.img`
@@ -228,21 +331,37 @@ const PRContent = styled.div`
 	background: #f2fdff;
 	border-radius: 15px;
 	margin-top: 50px;
+
+	@media screen and (max-width: 864px) {
+		justify-content: center;
+	}
 `;
 
 const EachInfo = styled.div`
 	display: flex;
 	width: 146px;
-	// height: 200px;
 	flex-direction: column;
 	align-items: center;
 	gap: 0;
 	justify-content: flex-end;
+
+	@media screen and (max-width: 864px) {
+		width: 100%;
+		margin-bottom: 45px;
+
+		// &::last-child {
+		// 	margin-bottom: 0;
+		// }
+	}
 `;
 
 const SmallIcon = styled.img`
 	display: block;
 	margin: 0 auto 50px auto;
+
+	@media screen and (max-width: 864px) {
+		margin: 0 auto 24px auto;
+	}
 `;
 
 const SmallTitle = styled(Title)`
@@ -269,6 +388,12 @@ const Unit = styled.div`
 		text-align: center;
 		display: block;
 		font-size: 26px;
+	}
+
+	@media screen and (max-width: 864px) {
+		p {
+			font-size: 24px;
+		}
 	}
 `;
 
@@ -299,6 +424,19 @@ const Box4 = styled.div`
 	${Slogan} {
 		font-size: 18px;
 		font-weight: 400;
+	}
+
+	@media screen and (max-width: 864px) {
+		${TitleName} {
+			font-size: 28px;
+		}
+
+		${Slogan} {
+			font-size: 18px;
+			font-weight: 500;
+			width: 80%;
+			margin: 0 auto;
+		}
 	}
 `;
 export {

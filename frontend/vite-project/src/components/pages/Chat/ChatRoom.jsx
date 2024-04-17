@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ChatRoomHeader from './ChatRoomHeader';
 import {
 	ChatRoomWrap,
@@ -16,9 +16,14 @@ import {
 	InputText,
 } from './ChatRoomStyle';
 
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:4000');
+
 function ChatRoom() {
 	const [placeholder, setPlaceholder] = useState('메시지 입력해 주세요.');
 	const [isInputFocused, setIsInputFocused] = useState(false);
+	const [sendMes, setSendMes] = useState('');
+	const [receivedMes, setReceivedMes] = useState('');
 
 	// 입력창 포커스 관리 핸들러
 	const handleFocus = () => {
@@ -35,9 +40,19 @@ function ChatRoom() {
 	// 엔터 키 다운 핸들러
 	const handleKeyDown = e => {
 		if (e.key === 'Enter') {
-			e.preventDefault();
+			socket.emit('send_message', { message: sendMes });
 		}
 	};
+	// 메시지 전송 내용
+	function onChange(e) {
+		setSendMes(e.target.value);
+	}
+
+	useEffect(() => {
+		socket.on('receive_message', data => {
+			setReceivedMes(data.message);
+		});
+	}, [socket]);
 
 	return (
 		<ChatRoomWrap>
@@ -78,6 +93,8 @@ function ChatRoom() {
 							</ReplyText>
 							<ReplyTime>오후 12:50</ReplyTime>
 						</ReplyTextWrap>
+						<h1>받은 메시지:</h1>
+						{receivedMes}
 					</ChatWrap>
 				</ChatContainer>
 			</ChatSction>
@@ -89,6 +106,8 @@ function ChatRoom() {
 					onFocus={handleFocus}
 					onBlur={handleBlur}
 					onKeyDown={handleKeyDown}
+					onChange={onChange}
+					value={sendMes}
 				></InputText>
 			</InputWrap>
 		</ChatRoomWrap>

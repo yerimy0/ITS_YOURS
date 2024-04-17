@@ -64,6 +64,11 @@ const FilterContent = styled.div`
 	transition:
 		visibility 0.3s,
 		opacity 0.3s;
+
+	@media screen and (max-width: 1030px) {
+		width: 300px;
+		padding: 15px;
+	}
 `;
 
 const RegionList = styled.ul`
@@ -72,6 +77,7 @@ const RegionList = styled.ul`
 	text-align: center;
 	height: 400px;
 	overflow-y: scroll;
+	border-right: 1px solid #eee;
 `;
 
 const UniversityList = styled.ul`
@@ -93,7 +99,7 @@ const Item = styled.li`
 	padding: 15px 0;
 	cursor: pointer;
 	// border-bottom: 1px solid #ddd;
-	border-right: 1px solid #ddd;
+	/* border-right: 1px solid #ddd; */
 
 	&:last-child {
 		border-bottom: 0;
@@ -121,6 +127,9 @@ const Buttons = styled.div`
 		font-size: 16px;
 		color: #fff;
 	}
+	@media screen and (max-width: 1030px) {
+		gap: 5%;
+	}
 `;
 
 const FilterInButton = styled.button`
@@ -131,6 +140,10 @@ const FilterInButton = styled.button`
 	font-size: 16px;
 	color: #009dff;
 	font-weight: 500;
+
+	@media screen and (max-width: 1030px) {
+		width: 50%;
+	}
 `;
 
 export {

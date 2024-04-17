@@ -20,7 +20,7 @@ function ProfileImageUploader({ onImageSelected, initialPreview }) {
 
 	return (
 		<ProfileWrapper>
-			<div className="profile_wrap">
+			<div className="profile_wrap" style={{ marginTop: '30px' }}>
 				{/* alt 일단 기본 프로필이 없어서 삼항연산자로 변경해뒀어요! */}
 				<ProfileImage src={preview} alt={!preview ? 'preview' : ''} />
 				<HiddenFileInput

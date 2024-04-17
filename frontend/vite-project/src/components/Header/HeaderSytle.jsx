@@ -35,7 +35,7 @@ const HeaderMain = styled.div`
 		padding: 15px 20px 15px 55px;
 
 		.main_logo {
-			width: 70%;
+			width: 130px;
 		}
 
 		.ham_a {
@@ -61,7 +61,7 @@ const HeaderMain = styled.div`
 			top: 0;
 			left: 0;
 			background: #fff;
-			width: 60%;
+			width: 70%;
 			height: 100vh;
 			z-index: 999;
 			padding: 20px;
@@ -133,10 +133,13 @@ const NavWrap = styled.div`
 	align-items: center;
 	width: 80%;
 	gap: 30px;
+
+	@media screen and (max-width: 864px) {
+		width: auto;
+	}
 `;
 const MainLogo = styled.div``;
 
-// 햄버거 버튼 숨기고 일단 right nav 숨기는데 여기부분 필요할것같아요!
 const RightNav = styled.div`
 	display: flex;
 	align-items: center;
@@ -145,6 +148,7 @@ const RightNav = styled.div`
 	width: 70%;
 
 	@media screen and (max-width: 864px) {
+		width: auto;
 		display: none;
 	}
 
@@ -173,6 +177,10 @@ const Nav = styled(HeaderMain)`
 
 	img {
 		width: 60px;
+	}
+
+	@media screen and (max-width: 864px) {
+		width: 45%;
 	}
 `;
 

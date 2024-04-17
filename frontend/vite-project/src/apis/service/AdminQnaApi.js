@@ -1,24 +1,23 @@
 import instance from '../axiosInstance';
 
-export const fetchQnaData = async (setIsLoading, setQnaList, setError) => {
-	setIsLoading(true);
+async function fetchQnaData() {
 	try {
-		const res = await instance.get('/admin/qna');
-		if (res.status === 200) {
-			setQnaList(res.data);
-		} else {
-			throw new Error('데이터 패치 실패');
-		}
+		const res = await instance.get('/qna/admin');
+		return res.data;
 	} catch (error) {
-		console.error('QnA 데이터를 가져오는 중 오류발생: ', error);
-		setError('데이터로딩에 실패했습니다.');
+		console.error('QnA목록을 가져오는데 실패했습니다.', error);
+		throw error;
 	}
-	setIsLoading(false);
-};
+}
 
-export const handleAnswerSubmit = (qnaList, setQnaList, setIsModalOpen, answer, qnaId) => {
-	const updatedQnaList = qnaList.map(qna => (qna.id === qnaId ? { ...qna, Process: '처리' } : qna));
-	setQnaList(updatedQnaList);
-	setIsModalOpen(false);
-	// 노드메일링
-};
+async function qnaMailing(Id) {
+	try {
+		const res = await instance.post(`/admin/qna/answer/${Id}`);
+		return res.data;
+	} catch (error) {
+		console.error('메일링에 실패했습니다:', error);
+		throw error;
+	}
+}
+
+export { fetchQnaData, qnaMailing };

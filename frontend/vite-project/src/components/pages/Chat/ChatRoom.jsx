@@ -93,7 +93,7 @@ function ChatRoom() {
 							</ReplyText>
 							<ReplyTime>오후 12:50</ReplyTime>
 						</ReplyTextWrap>
-						<h1>받은 메시지:</h1>
+						{/* <h1>받은 메시지:</h1> */}
 						{receivedMes}
 					</ChatWrap>
 				</ChatContainer>

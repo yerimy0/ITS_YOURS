@@ -61,7 +61,7 @@ const HeaderMain = styled.div`
 			top: 0;
 			left: 0;
 			background: #fff;
-			width: 70%;
+			width: 75%;
 			height: 100vh;
 			z-index: 999;
 			padding: 20px;
@@ -164,6 +164,9 @@ const LeftNav = styled.div`
 	gap: 20px;
 	width: 100%;
 	justify-content: flex-end;
+	@media (max-width: 1000px) {
+		display: none;
+	}
 `;
 
 const Nav = styled(HeaderMain)`

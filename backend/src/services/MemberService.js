@@ -3,6 +3,7 @@ const { sendPasswordEmail, sendVerifyEmail } = require('../utils/Mailer');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const emailVerificationCodes = {}; // 이메일과 인증코드를 저장할 객체
 
 /**
  * 회원가입 service
@@ -188,9 +189,24 @@ async function resetPassword(id, email) {
 
 async function sendEmailVerification(email) {
 	const verificationCode = generateTempPassword(4);
+	emailVerificationCodes[email] = verificationCode; // 인증코드 저장
 	await sendVerifyEmail(email, verificationCode);
 
-	return verificationCode; // 수정된 부분
+	// 인증코드를 반환하지 않고 저장만 합니다.
+}
+
+// 인증코드 검증 함수
+async function verifyCode(email, code) {
+	const storedCode = emailVerificationCodes[email];
+	console.log(email);
+	console.log(code);
+	console.log(storedCode);
+	if (storedCode && storedCode === code) {
+		delete emailVerificationCodes[email]; // 인증 후 코드 삭제
+		return true;
+	} else {
+		return false;
+	}
 }
 
 module.exports = {
@@ -204,4 +220,5 @@ module.exports = {
 	findIdByNameAndEmail,
 	resetPassword,
 	sendEmailVerification,
+	verifyCode,
 };

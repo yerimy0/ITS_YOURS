@@ -142,6 +142,7 @@ function SignUpForm() {
 				handleBlurNickname={handleBlurNickname}
 			/>
 			<EmailVerificationForm
+				className="sign_email"
 				email={email}
 				setEmail={setEmail}
 				emailVerificationCode={emailVerificationCode}

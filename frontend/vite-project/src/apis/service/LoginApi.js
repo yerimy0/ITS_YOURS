@@ -12,4 +12,9 @@ const loginApi = async (userId, password) => {
 	}
 };
 
-export { loginApi };
+// 로그아웃
+function logout() {
+	document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+	localStorage.setItem('userId', '');
+}
+export { loginApi, logout };

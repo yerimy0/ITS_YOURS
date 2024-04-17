@@ -1,22 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import { fetchQnaData, handleAnswerSubmit } from '../../apis/service/AdminQnaApi';
 import styled from 'styled-components';
-import Paginator, { PaginatorContext } from '../Paginator';
+import Paginator from '../Paginator';
 import AdminModal from './AdminModal';
 
 function AdminQnA() {
-	const perPage = 10;
-	const { currentPage } = useContext(PaginatorContext);
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [selectedQna, setSelectedQna] = useState(null);
-	const [qnaList, setQnaList] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState('');
-
-	useEffect(() => {
-		fetchQnaData(currentPage, perPage, setIsLoading, setQnaList, setError);
-	}, [currentPage, perPage]);
-
 	return (
 		<>
 			<Container>
@@ -37,28 +25,27 @@ function AdminQnA() {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{qnaList.length > 0 ? (
-								qnaList.map(qna => (
-									<TableRow key={qna.id}>
-										<TableCell>{qna.nickname}</TableCell>
-										<TableCell>{qna.title}</TableCell>
-										<TableCell>{qna.createdAt}</TableCell>
-										<TableCell>{qna.content}</TableCell>
-										<TableCell>
-											<ReportProcess>{qna.iscompleted}</ReportProcess>
-										</TableCell>
-									</TableRow>
-								))
-							) : (
-								<TableRow>
-									<TableCell colSpan="5">No data available</TableCell>
+							{qnaList.map(qna => (
+								<TableRow key={qna.id}>
+									<TableCell>{qna.nickname}</TableCell>
+									<TableCell>{qna.title}</TableCell>
+									<TableCell>{qna.createdAt}</TableCell>
+									<TableCell>{qna.content}</TableCell>
+									<TableCell>
+										<ReportProcess>{qna.isCompleted ? 'Yes' : 'No'}</ReportProcess>
+									</TableCell>
 								</TableRow>
-							)}
+							))}
 						</TableBody>
 					</Table>
 				)}
 				<PaginationContainer>
-					<Paginator totalItems={qnaList.length} perPage={perPage} />
+					<Paginator
+						currentPage={currentPage}
+						totalItems={totalItems}
+						itemsCountPerPage={perPage}
+						onChange={handlePageChange}
+					/>
 				</PaginationContainer>
 			</Container>
 			{selectedQna && (

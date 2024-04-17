@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Modal from '../Modal';
 import DateSlicer from '../../utils/dateSlicer';
 
-function SoldCard({ imgUrls, price, name, like, chat, createdAt, onDelete }) {
+function SoldCard({ isCompleted, imgUrls, price, name, like, chat, createdAt, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const openDeleteModal = () => {
@@ -37,6 +37,7 @@ function SoldCard({ imgUrls, price, name, like, chat, createdAt, onDelete }) {
 						<Icon src="../../../chat_bubble_oval.svg" alt="Chat" />
 						<Status>{chat}</Status>
 					</Stats>
+					{isCompleted && <SoldCompleteDiv>판매완료</SoldCompleteDiv>}
 				</SalesInfo>
 				<ButtonBox>
 					<DeleteBtn onClick={openDeleteModal}>삭제</DeleteBtn>
@@ -144,4 +145,19 @@ const DeleteBtn = styled.button`
 	&:hover {
 		cursor: pointer;
 	}
+`;
+
+const SoldCompleteDiv = styled.div`
+	font-family: SUIT;
+	font-size: 18px;
+	padding: 10px 15px;
+	border: 1px solid #000000;
+	background: #666666;
+	color: #ffffff;
+	border-radius: 10px;
+	margin-top: 10px;
+	position: relative;
+	white-space: nowrap;
+	line-height: 22px;
+	width: 100px;
 `;

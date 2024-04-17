@@ -2,30 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PurchaseHistoryCard from '../../../MypageHistoryCard/PurchaseHistoryCard';
-import instance from '../../../../apis/axiosInstance';
+import { fetchPurchaseItems } from './PurchaseApi';
 
 const PurchaseHistoryContainer = () => {
 	const [purchaseList, setPurchaseList] = useState([]);
 	const { id } = useParams(); // useParams를 사용하여 buyerid 가져오기
 
 	useEffect(() => {
-		const fetchPurchaseList = async () => {
-			try {
-				if (id) {
-					// buyerid 존재 여부 확인
-					const url = `/products/myTradedProducts/${id}`;
-					const res = await instance.get(url);
-					console.log(res);
-					setPurchaseList(res.data.data);
-				} else {
-					console.log('buyerId가 제공되지 않았습니다');
-				}
-			} catch (error) {
-				console.error('구매목록을 가져오는데 실패했습니다.', error);
-			}
-		};
-
-		fetchPurchaseList();
+		if (id) {
+			fetchPurchaseItems(id)
+				.then(data => {
+					const validItems = data.filter(item => item.isCompleted === true);
+					setPurchaseList(validItems);
+				})
+				.catch(error => {
+					console.error('구매목록을 가져오는데 실패했습니다.', error);
+				});
+		}
 	}, [id]);
 
 	return (

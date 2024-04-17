@@ -10,6 +10,7 @@ const CommentsSchema = require('./schemas/Comments');
 const WishesSchema = require('./schemas/Wishes');
 const CategorySchema = require('./schemas/Category');
 const ChatroomSchema = require('./schemas/Chatroom');
+const ChatMessageSchema = require('./schemas/ChatMessage');
 
 exports.Members = mongoose.model('Members', MembersSchema);
 exports.Products = mongoose.model('Products', ProductsSchema);
@@ -21,3 +22,4 @@ exports.Comments = mongoose.model('Comments', CommentsSchema);
 exports.Wishes = mongoose.model('Wisher', WishesSchema);
 exports.Category = mongoose.model('Category', CategorySchema);
 exports.Chatroom = mongoose.model('Chatroom', ChatroomSchema);
+exports.ChatMessage = mongoose.model('ChatMessageSchema', ChatMessageSchema);

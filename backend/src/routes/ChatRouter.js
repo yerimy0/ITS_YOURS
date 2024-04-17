@@ -1,9 +1,6 @@
 const { Router } = require('express');
 
 const { createChatroom } = require('../controllers/ChatController');
-// const {
-
-// } = require('../controllers/ChatController');
 
 const router = Router();
 

@@ -13,7 +13,7 @@ async function createChatroom(productId, sellerId, buyerId) {
 		buyerId: buyerId,
 		createdAt: new Date(),
 	};
-	console.log(newRoomData);
+	console.log('newData', newRoomData);
 	const createChatroom = await Chatroom.create(newRoomData);
 	return createChatroom;
 }

@@ -244,6 +244,14 @@ const ButtonBox = styled.div`
 		font-weight: 500;
 		background: #fff;
 		color: #009dff;
+
+		&:hover {
+			// transform: scale(1.05);
+			border: 1px solid #009dff;
+			background-color: #009dff;
+			color: #fff;
+			transition: all 0.5s;
+		}
 	}
 
 	@media screen and (max-width: 864px) {
@@ -259,7 +267,15 @@ const Button = styled.button`
 	border-radius: 25px;
 	color: #fff;
 	background: #009dff;
-	border: 0;
+	border: 1px solid #009dff;
+
+	&:hover {
+		// transform: scale(1.05);
+		background-color: #fff;
+		color: #009dff;
+		border: 1px solid #009dff;
+		transition: all 0.5s;
+	}
 `;
 
 const Img = styled.img`

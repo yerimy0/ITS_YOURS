@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('itsYours:server');
 var http = require('http');
+const { Chatroom, ChatMessage } = require('../src/models/index');
 
 /**
  * Get port from environment and store in Express.
@@ -92,16 +93,52 @@ app.use(cors());
 
 const io = new Server(server, {
 	cors: {
-		origin: 'http://localhost:5173',
+		origin: '*',
 		method: ['GET', 'POST'],
 	},
 });
 
 io.on('connection', socket => {
 	console.log(`User Connected:: ${socket.id}`);
-	socket.on('send_message', data => {
-		console.log(data);
-		// io.emit('receive_message', data);
-		socket.broadcast.emit('receive_message', data);
+	//채팅방 참여 & 채팅방 생성정보 저장
+	socket.on('join_room', async data => {
+		console.log('data::', data);
+		socket.join(data.room);
+		console.log(`User with ID: ${socket.id} joined room: ${data.room}`);
+
+		try {
+			const newChatroom = new Chatroom({
+				productId: data._id,
+				buyerId: req.user.id,
+				sellerId: data.sellerId,
+				isActivated: true,
+			});
+			await newChatroom.save();
+			console.log('제발 저장되게해주세요.');
+		} catch (error) {
+			console.error('에러가났어요:', error);
+		}
+
+		//메세지 보내기
+		socket.on('send_message', async data => {
+			try {
+				const newMessage = new ChatMessage({
+					chatRoomId: data.chatRoomId,
+					content: data.content,
+					chatAuth: data.chatAuth,
+				});
+				await newMessage.save();
+				console.log(data);
+				socket.broadcast.emit('receive_message', data);
+			} catch (err) {
+				console.error('Error saving message:', err);
+			}
+		});
+
+		//채팅방 나가기
+		socket.on('disconnect', chatId => {
+			console.log(`exit chat`);
+			socket.leave(chatId);
+		});
 	});
 });

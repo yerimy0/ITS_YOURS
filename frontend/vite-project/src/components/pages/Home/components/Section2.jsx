@@ -43,7 +43,10 @@ function Section2() {
 							<Img
 								className="sec2_img"
 								key={`List-item-${i}`}
-								src={`${book.imgUrls}`}
+								// src={`${book.imgUrls}`}
+								//이미지api 정보에는 imgurl에 중간에 coversum 이라고들어가는데 cover라고 바꾸면 사진이 깨끗해짐,
+								// 하지만 api 어떤걸로 불러와야하는지몰라서 imgurl자체를 coversum단어를 cover로 대체해서 넣어버림
+								src={`${book.imgUrls.map(url => url.replace('coversum', 'cover500'))}`}
 								alt={`Book ${i}`}
 								onClick={() => {
 									navigate(`/product/${book._id}`);

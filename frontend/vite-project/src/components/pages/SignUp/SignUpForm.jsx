@@ -142,6 +142,7 @@ function SignUpForm() {
 				handleBlurNickname={handleBlurNickname}
 			/>
 			<EmailVerificationForm
+				className="sign_email"
 				email={email}
 				setEmail={setEmail}
 				emailVerificationCode={emailVerificationCode}
@@ -155,7 +156,7 @@ function SignUpForm() {
 				universityError={universityError}
 				onSearchUniversity={handleOpenModal}
 			/>
-			<Button type="submit" onClick={handleSubmit}>
+			<Button type="submit" onClick={handleSubmit} className="join_btn">
 				회원가입하기
 			</Button>
 		</>

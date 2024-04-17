@@ -74,19 +74,25 @@ function Header() {
 					{isAuth ? (
 						<>
 							<li>
-								<NavLink to="/mypage">너의페이지</NavLink>
+								<NavLink to="/mypage" style={{ fontSize: '16px', marginRight: '10px' }}>
+									너의페이지
+								</NavLink>
 							</li>
 							<li>
-								<a onClick={handleLogout}>로그아웃</a>
+								<a onClick={handleLogout} style={{ fontSize: '16px', marginRight: '10px' }}>
+									로그아웃
+								</a>
 							</li>
 						</>
 					) : (
 						<li>
-							<NavLink to="/login">로그인</NavLink>
+							<NavLink to="/login" style={{ fontSize: '16px', marginRight: '10px' }}>
+								로그인
+							</NavLink>
 						</li>
 					)}
-					<img src="/light.png" />
 				</LeftNav>
+				<img src="/light.png" />
 				<div className="ham_wrap">
 					<img src="/ham_btn.png" className="ham_img " alt="햄버거 버튼" onClick={handleClick} />
 					{/* <RxHamburgerMenu className="" onClick={handleClick} /> */}
@@ -104,10 +110,11 @@ function Header() {
 							<img className="img2" src="/main_logo.png" alt="" />
 						</NavLink>
 					</div>
-					<h2>
+					<h2 style={{ marginBottom: '5px' }}>
 						즐거운 쇼핑생활! <br />
 						<span>이제너해</span>가 함께 합니다!
 					</h2>
+
 					<div className="li">
 						<NavLink to="/product" className="ham_a">
 							<img src="/i1.png" className="li_i" alt="" />
@@ -132,6 +139,45 @@ function Header() {
 							내책판매
 						</NavLink>
 					</div>
+					{isAuth ? (
+						<>
+							<div
+								style={{
+									fontSize: '16px',
+									padding: '5px',
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'normal',
+									gap: '10px',
+									marginTop: '100px',
+									color: '#666',
+								}}
+							>
+								<NavLink to="/mypage" className="ham_a">
+									너의페이지
+								</NavLink>
+								|
+								<NavLink to="/product" className="ham_a">
+									<a onClick={handleLogout}>로그아웃</a>
+								</NavLink>
+							</div>
+						</>
+					) : (
+						<div
+							style={{
+								fontSize: '16px',
+								padding: '5px',
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'normal',
+								gap: '10px',
+								marginTop: '100px',
+								color: '#666',
+							}}
+						>
+							<NavLink to="/login">로그인</NavLink>
+						</div>
+					)}
 				</div>
 			)}
 		</HeaderMain>

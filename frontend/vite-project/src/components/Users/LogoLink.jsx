@@ -4,9 +4,11 @@ import { Logo } from './UsersStyles';
 
 function LogoLink({ src, alt = '로고' }) {
 	return (
-		<Link to="/">
-			<Logo src={src} alt={alt} />
-		</Link>
+		<div className="link_wrap">
+			<Link to="/" className="sign_logo">
+				<Logo src={src} alt={alt} />
+			</Link>
+		</div>
 	);
 }
 

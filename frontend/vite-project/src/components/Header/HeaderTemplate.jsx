@@ -39,7 +39,7 @@ function Header() {
 	const isMainPage = location.pathname === '/';
 
 	return (
-		<HeaderMain istoggled={isToggled} isMainPage={isMainPage}>
+		<HeaderMain className="header_main" istoggled={isToggled} isMainPage={isMainPage}>
 			{/* RIGHT 부분을 NavWrap안에 감싸서 다시 넣어놨어요! */}
 			<NavWrap>
 				<NavLink to="/">

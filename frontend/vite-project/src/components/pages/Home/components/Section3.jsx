@@ -42,7 +42,10 @@ function Section3() {
 		<Box3 className="BlueBack">
 			<div className="container">
 				<Title className="sec3_title">
-					<TitleName>같은 학교부터, 근처 지역까지 당신 가까이의 전공책</TitleName>
+					<TitleName className="title_name">
+						같은 학교부터, 근처 지역까지
+						<br className="br" /> 당신 가까이의 전공책
+					</TitleName>
 					<Slogan className="Sub">검색과 필터링 기능으로 손쉽고 빠르게 </Slogan>
 				</Title>
 				<SchoolBox onClick={perSchoolBook}>

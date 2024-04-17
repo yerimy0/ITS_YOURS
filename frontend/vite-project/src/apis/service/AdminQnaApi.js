@@ -1,11 +1,11 @@
 import instance from '../axiosInstance';
 
-export const fetchQnaData = async (currentPage, perPage, setIsLoading, setQnaList, setError) => {
+export const fetchQnaData = async (setIsLoading, setQnaList, setError) => {
 	setIsLoading(true);
 	try {
 		const res = await instance.get('/admin/qna');
 		if (res.status === 200) {
-			setQnaList(res.data.data);
+			setQnaList(res.data);
 		} else {
 			throw new Error('데이터 패치 실패');
 		}

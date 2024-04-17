@@ -10,9 +10,10 @@ async function fetchOnSaleItems(sellerId) {
 	}
 }
 
-async function deleteSaleItem(sellerId, productId) {
+async function deleteSaleItem(sellerId, prodId) {
 	try {
-		await instance.delete(`/products/deleteMySalesHistory/${sellerId}/${productId}`);
+		const response = await instance.delete(`/products/deleteMySalesHistory/${sellerId}/${prodId}`);
+		return response; // 반환값 추가
 	} catch (error) {
 		console.error('아이템 삭제 실패:', error);
 		throw error;

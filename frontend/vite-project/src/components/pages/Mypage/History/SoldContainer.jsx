@@ -1,4 +1,3 @@
-// SoldContainer.js
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { SalesHistoryWrap, ForSalesList, SoldVoid } from './SoldContainerStyle';
@@ -29,11 +28,16 @@ const SoldContainer = () => {
 	const handleDelete = async prodId => {
 		try {
 			const response = await deleteSaleItem(id, prodId);
+			// 여기서 response 객체가 유효한지 확인합니다.
+			if (!response) {
+				throw new Error('No response from the server.');
+			}
 			if (response.status === 200) {
 				const newItems = soldItems.filter(item => item._id !== prodId);
-				setSoldItems(newItems); // 서버에서 삭제 성공 후 상태 업데이트
+				setSoldItems([...newItems]); // 배열을 복사하여 상태를 갱신합니다.
 			} else {
-				throw new Error('서버에서 아이템 삭제 실패');
+				console.error('Server responded with status:', response.status);
+				throw new Error('Failed to delete the item on the server.');
 			}
 		} catch (error) {
 			console.error('아이템 삭제 실패:', error);
@@ -51,11 +55,12 @@ const SoldContainer = () => {
 							price={sold.price}
 							name={sold.name}
 							sellDate={sold.sellDate}
-							like={sold.like}
+							like={sold.wishesCount}
 							chat={sold.chat}
 							onDelete={() => handleDelete(sold._id)}
 							id={sold._id}
 							createdAt={sold.createdAt}
+							isCompleted={sold.isCompleted}
 						/>
 					</ForSalesList>
 				))

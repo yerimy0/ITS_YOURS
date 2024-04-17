@@ -11,12 +11,13 @@ async function fetchSoldItems(sellerId) {
 	}
 }
 
-async function deleteSaleItem(sellerId, productId) {
+async function deleteSaleItem(sellerId, prodId) {
 	try {
-		await instance.delete(`/products/deleteMySalesHistory/${sellerId}/${productId}`);
+		const response = await instance.delete(`/products/deleteMySalesHistory/${sellerId}/${prodId}`);
+		return response; // 반환값 추가
 	} catch (error) {
 		console.error('아이템 삭제 실패:', error);
-		throw error;
+		throw error; // 이 error를 던지면 상위 catch 블록에서 잡힐 것입니다.
 	}
 }
 

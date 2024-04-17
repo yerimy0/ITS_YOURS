@@ -48,6 +48,11 @@ const SendText = styled.div`
 	font-size: 16px;
 	line-height: 22px;
 	color: #fff;
+
+	@media screen and (max-width: 1030px) {
+		width: 65%;
+		padding: 15px;
+	}
 `;
 
 const ReplyTextWrap = styled.div`
@@ -65,6 +70,11 @@ const ReplyText = styled.div`
 	padding: 20px 20px 20px 25px;
 	background: #fff;
 	font-size: 16px;
+
+	@media screen and (max-width: 1030px) {
+		width: 65%;
+		padding: 15px;
+	}
 `;
 const ReplyTime = styled.div``;
 

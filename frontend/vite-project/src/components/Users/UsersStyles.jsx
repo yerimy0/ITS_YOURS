@@ -18,7 +18,8 @@ export const Wrapper = styled.div`
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: 50px 0;
+		/* padding: 50px 0; */
+		padding-top: 50px;
 	}
 	.sign_logo img {
 		max-width: 150px;

@@ -12,7 +12,7 @@ const PurchaseHistoryContainer = () => {
 		if (id) {
 			fetchPurchaseItems(id)
 				.then(data => {
-					const validItems = data.filter(item => item.isCompleted === true);
+					const validItems = data.filter(item => item.isCompleted === true && item.buyerId);
 					setPurchaseList(validItems);
 				})
 				.catch(error => {
@@ -23,17 +23,21 @@ const PurchaseHistoryContainer = () => {
 
 	return (
 		<PurchaseHistoryWrap>
-			{purchaseList.map(purchase => (
-				<ForPurchaseList key={purchase._id}>
-					<PurchaseHistoryCard
-						imgUrls={purchase.imgUrls}
-						price={purchase.price}
-						sellerId={purchase.sellerId}
-						name={purchase.name} // 추가된 정보
-						buyDate={purchase.buyDate} // 추가된 정보
-					/>
-				</ForPurchaseList>
-			))}
+			{purchaseList.length > 0 ? (
+				purchaseList.map(purchase => (
+					<ForPurchaseList key={purchase._id}>
+						<PurchaseHistoryCard
+							imgUrls={purchase.imgUrls}
+							price={purchase.price}
+							sellerId={purchase.sellerId}
+							name={purchase.name}
+							buyDate={purchase.buyDate}
+						/>
+					</ForPurchaseList>
+				))
+			) : (
+				<PurchaseVoid>구매완료 상품이 없습니다.</PurchaseVoid>
+			)}
 		</PurchaseHistoryWrap>
 	);
 };
@@ -51,4 +55,15 @@ const ForPurchaseList = styled.div`
 	border-bottom: 1px solid #ded8e1;
 	height: auto;
 	padding: 10px;
+`;
+
+const PurchaseVoid = styled.div`
+	font-family: SUIT;
+	font-size: 20px;
+	margin: 50px 0px;
+	text-align: center;
+	border-top: 1px solid #ded8e1;
+	border-bottom: 1px solid #ded8e1;
+	padding: 70px 0px;
+	width: 100%;
 `;

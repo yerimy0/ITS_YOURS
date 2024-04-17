@@ -32,23 +32,6 @@ function AdminReport() {
 
 	const currentData = data.slice(currentPage * perPage, (currentPage + 1) * perPage);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const res = await fetch('https://api.example.com/reports');
-				if (!res.ok) {
-					throw new Error('네트워크 응답이 올바르지 않습니다.');
-				}
-				const result = await res.json();
-				setData(result);
-			} catch (error) {
-				console.error('데이터를 가져오는 중 오류발생: ', error);
-			}
-		};
-
-		fetchData();
-	}, []);
-
 	return (
 		<>
 			<Container>

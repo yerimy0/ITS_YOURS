@@ -9,6 +9,7 @@ const {
 	BadRequestError,
 	InternalServerError,
 	ForbiddenError,
+	UnauthorizedError,
 } = require('../config/customError');
 
 //전체 상품목록 조회
@@ -230,6 +231,17 @@ const deleteSalesHis = async (req, res, next) => {
 		const { prodId } = req.params;
 		const prodObjectId = new ObjectId(prodId);
 		const sellerId = req.user.id;
+
+		if (!sellerId) {
+			throw new UnauthorizedError('로그인 후 이용해주세요.');
+		}
+
+		const productInfo = await productsService.getProductInfo(prodId);
+
+		if (productInfo.deletedAt) {
+			throw new BadRequestError('이미 삭제된 상품입니다.');
+		}
+
 		const deleteSalesHis = await productsService.deleteSalesHis(sellerId, prodObjectId);
 
 		if (!deleteSalesHis) {

@@ -248,6 +248,20 @@ select {
 	font-weight: normal;
 	font-style: normal;
 }
+@font-face {
+	font-family: 'SDSamliphopangche_Outline';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'yg-jalnan';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 
 /*사파리 버튼 초기화*/
 input[type='text'],
@@ -271,34 +285,21 @@ input {
 	border-radius: 20px !important;
 }
 /* =================== 공통 */
-.comm_list_wrap {
-}
-.buttonbox {
-}
-.button {
+
+/* =================== 다크모드 예시 =================== */
+.body {
+	background-color: #000;
+	color: #fff;
 }
 
-.listone {
+.body .BlueBack {
+	background-color: #000;
 }
-.listleft {
+
+.body .blurEffect {
+	background: #454545 !important;
 }
-.listtitle {
-}
-.listsub {
-}
-.listbottom {
-}
-.listbottom .listsub:first-child {
-}
-.listbottom .listsub:last-child {
-}
-.listright {
-}
-.listright .comment_icon {
-}
-.comment {
-}
-.comment .listsub {
-}
-.comm_list_img {
+
+.body .header_main {
+	background-color: #454545;
 }

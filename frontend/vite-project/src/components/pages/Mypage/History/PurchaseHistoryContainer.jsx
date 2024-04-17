@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import PurchaseHistoryCard from '../../MypageHistoryCard/PurchaseHistoryCard';
-import instance from '../../../apis/axiosInstance';
+import PurchaseHistoryCard from '../../../MypageHistoryCard/PurchaseHistoryCard';
+import instance from '../../../../apis/axiosInstance';
 
 const PurchaseHistoryContainer = () => {
 	const [purchaseList, setPurchaseList] = useState([]);

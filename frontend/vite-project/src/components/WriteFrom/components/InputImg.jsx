@@ -56,7 +56,12 @@ function InputImg({ onImageChange, value }) {
 				{imgUrls.map((url, index) => (
 					<div key={index}>
 						<ButtonUpload onClick={() => handleClick(index)}>
-							{url ? <Img src={url} alt={`image-${index}`} /> : ' 📸 Upload a file'}
+							{url ? (
+								<Img src={url.replace('coversum', 'cover500')} alt={`image-${index}`} />
+							) : (
+								' 📸 Upload a file'
+							)}
+							{console.log(url)}
 						</ButtonUpload>
 						{url && <CloseButton onClick={() => handleRemove(index)}>✖</CloseButton>}
 						<input

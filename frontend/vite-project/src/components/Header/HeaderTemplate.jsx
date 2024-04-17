@@ -92,8 +92,10 @@ function Header() {
 						<img src="/close_btn.png" alt="" />
 					</button>
 					<div className="img_wrap">
-						<img className="img1" src="/logoCharacter.png" alt="" />
-						<img className="img2" src="/main_logo.png" alt="" />
+						<NavLink to="/">
+							<img className="img1" src="/logoCharacter.png" alt="" />
+							<img className="img2" src="/main_logo.png" alt="" />
+						</NavLink>
 					</div>
 					<h2>
 						즐거운 쇼핑생활! <br />
@@ -118,7 +120,7 @@ function Header() {
 						</NavLink>
 					</div>
 					<div className="li">
-						<NavLink to="/mypage" className="ham_a">
+						<NavLink to="/product/write" className="ham_a">
 							<img src="/i4.png" className="li_i" alt="" />
 							내책판매
 						</NavLink>

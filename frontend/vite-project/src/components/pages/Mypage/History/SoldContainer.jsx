@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import SoldCard from '../../MypageHistoryCard/SoldCard';
-import instance from '../../../apis/axiosInstance';
+import SoldCard from '../../../MypageHistoryCard/SoldCard';
+import instance from '../../../../apis/axiosInstance';
 
 const SoldContainer = () => {
 	const [soldItems, setSoldItems] = useState([]);

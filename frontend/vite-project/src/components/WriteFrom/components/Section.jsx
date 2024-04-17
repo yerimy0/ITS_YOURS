@@ -12,12 +12,12 @@ import {
 } from '../WriteFormStyle';
 import { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { RegisterContext } from '../index';
+import { RegisterContext, SetRegisterContext } from '../index';
 import { GetBookInfo } from '../../../apis/service/product.api';
 
 function Section({ label, onChange, value, name }) {
 	const { id } = useParams();
-	const { setRegister } = useContext(RegisterContext);
+	const setRegister = useContext(SetRegisterContext);
 
 	const [books, setBooks] = useState([]); // 알라딘을 통한 검색 도서 리스트
 	const [inputFocused, setInputFocused] = useState(false); // 필수값 입력 여부 확인
@@ -149,8 +149,8 @@ function Section3({ label, onChange, value, name }) {
 
 function Section4({ value }) {
 	const [active, setActive] = useState(value);
-	const { setRegister } = useContext(RegisterContext);
-	const { register } = useContext(RegisterContext);
+	const register = useContext(RegisterContext);
+	const setRegister = useContext(SetRegisterContext);
 
 	useEffect(() => {
 		setActive(value);

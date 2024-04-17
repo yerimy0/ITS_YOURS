@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import SalesHistoryHeader from '../../components/pages/Mypage/SalesHistoryHeader';
-import OnSaleContainer from '../../components/pages/Mypage/OnSaleContainer';
-import SoldContainer from '../../components/pages/Mypage/SoldContainer';
+import SalesHistoryHeader from '../../components/pages/Mypage/History/SalesHistoryHeader';
+import OnSaleContainer from '../../components/pages/Mypage/History/OnSaleContainer';
+import SoldContainer from '../../components/pages/Mypage/History/SoldContainer';
 import OnSaleCard from '../../components/MypageHistoryCard/OnSaleCard';
 import SoldCard from '../../components/MypageHistoryCard/SoldCard';
 

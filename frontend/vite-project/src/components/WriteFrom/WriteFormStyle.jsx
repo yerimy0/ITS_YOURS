@@ -232,6 +232,11 @@ const CloseButton = styled.button`
 		font-size: 24px;
 	}
 `;
+
+const Alert = styled.div`
+	color: grey;
+	font: SUIT;
+`;
 export {
 	RegisterBox,
 	Box,
@@ -256,4 +261,5 @@ export {
 	SearchContainer,
 	SearchtItem,
 	CloseButton,
+	Alert,
 };

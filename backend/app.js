@@ -29,7 +29,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const corsOptions = {
-	origin: ['http://localhost:5173', 'http://34.47.86.42/'],
+	origin: ['http://localhost:5173', 'http://34.47.86.42'],
 	credentials: true,
 };
 app.use(cors(corsOptions));

@@ -5,7 +5,7 @@ const {
 	BadRequestError,
 	InternalServerError,
 	UnauthorizedError,
-} = require('../config/customError');
+} = require('../config/CustomError');
 
 // Q&A 작성
 const createQna = async (req, res, next) => {

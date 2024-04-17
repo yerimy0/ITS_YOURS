@@ -12,9 +12,12 @@ const Title = styled.p`
 	align-items: center;
 	font-size: 28px;
 	font-style: normal;
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 36px;
 	margin: 10px 0;
+	@media (max-width: 1000px) {
+		font-size: 18px;
+	}
 `;
 
 const Content = styled.div`

@@ -9,6 +9,9 @@ const ProductDetail = styled.section`
 	gap: 55px;
 	flex-wrap: wrap;
 	justify-content: center;
+	@media (max-width: 1000px) {
+		padding: 0 15px;
+	}
 `;
 
 const BookCover = styled.div`
@@ -17,6 +20,11 @@ const BookCover = styled.div`
 	max-height: 600px;
 	align-items: flex-start;
 	gap: 8px;
+	box-shadow: 0 2px 8px #777;
+	img {
+		width: 100%;
+		object-fit: cover;
+	}
 `;
 
 const ProductContent = styled.div`
@@ -26,6 +34,11 @@ const ProductContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	@media (max-width: 1000px) {
+		width: 100%;
+		/* padding: 0 15px; */
+		height: auto;
+	}
 `;
 
 const SalesInfo = styled.div`
@@ -45,25 +58,28 @@ const BookContainer = styled.div`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: normal;
 	justify-content: space-between;
+	@media (max-width: 1000px) {
+		justify-content: normal;
+	}
 `;
 
 const ChatButton = styled.button`
 	display: flex;
-	width: 100%;
+	width: 50%;
 	height: auto;
-	padding: 8px 16px;
+	padding: 15px;
 	justify-content: center;
 	align-items: center;
 	border: 1px solid #009dff;
 	border-radius: 20px;
 	background: #009dff;
 	color: #fff;
-	font-size: 32px;
+	font-size: 18px;
 	font-style: normal;
-	font-weight: 700;
-	line-height: 40px;
+	font-weight: 600;
+	line-height: 100%;
 	letter-spacing: 0.15px;
 	text-align: center;
 	white-space: nowrap;
@@ -71,6 +87,13 @@ const ChatButton = styled.button`
 	&:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
+	}
+	@media (max-width: 1000px) {
+		font-size: 16px;
+		line-height: 100%;
+		padding: 10px;
+		width: 100%;
+		box-sizing: border-box;
 	}
 `;
 
@@ -86,9 +109,12 @@ const Title = styled.p`
 	align-items: center;
 	font-size: 28px;
 	font-style: normal;
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 36px;
 	margin: 10px 0;
+	@media (max-width: 1000px) {
+		font-size: 18px;
+	}
 `;
 
 const ProductInfoText = styled.div`
@@ -100,6 +126,9 @@ const ProductInfoText = styled.div`
 	line-height: 24px;
 	letter-spacing: 0.15px;
 	margin: 0;
+	@media (max-width: 1000px) {
+		font-weight: 400;
+	}
 `;
 
 export {

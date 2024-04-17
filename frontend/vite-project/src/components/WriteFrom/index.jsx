@@ -128,9 +128,9 @@ function WriteForm() {
 						<TopTitle>상품 등록</TopTitle>
 						<RedStar>*필수 항목</RedStar>
 					</Title>
-					<Line>
+					{/* <Line>
 						<hr />
-					</Line>
+					</Line> */}
 					<MainContent>
 						<InputImg onImageChange={handleImageChange} value={imgUrls} />
 						<Section label={'도서명'} onChange={onChange} value={name} name="name" />

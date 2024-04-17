@@ -27,11 +27,16 @@ const OnSaleContainer = () => {
 	const handleDelete = async prodId => {
 		try {
 			const response = await deleteSaleItem(id, prodId);
+			// 여기서 response 객체가 유효한지 확인합니다.
+			if (!response) {
+				throw new Error('No response from the server.');
+			}
 			if (response.status === 200) {
 				const newItems = saleItems.filter(item => item._id !== prodId);
-				setSaleItems(newItems); // 서버에서 삭제 성공 후 상태 업데이트
+				setSaleItems([...newItems]); // 배열을 복사하여 상태를 갱신합니다.
 			} else {
-				throw new Error('서버에서 아이템 삭제 실패');
+				console.error('Server responded with status:', response.status);
+				throw new Error('Failed to delete the item on the server.');
 			}
 		} catch (error) {
 			console.error('아이템 삭제 실패:', error);

@@ -59,6 +59,7 @@ const FilterContent = styled.div`
 	top: 15px;
 	right: 0;
 	box-shadow: 0 5px 18px -7px rgba(0, 0, 0, 1);
+	z-index: 5;
 
 	transition:
 		visibility 0.3s,

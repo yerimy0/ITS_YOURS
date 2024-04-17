@@ -24,7 +24,7 @@ function ProfileForm({
 	handleBlurNickname,
 }) {
 	return (
-		<Form>
+		<Form className="profile_form">
 			<Input
 				type="text"
 				placeholder="*아이디를 입력해주세요"

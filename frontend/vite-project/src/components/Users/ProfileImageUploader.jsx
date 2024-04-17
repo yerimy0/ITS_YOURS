@@ -20,16 +20,19 @@ function ProfileImageUploader({ onImageSelected, initialPreview }) {
 
 	return (
 		<ProfileWrapper>
-			<ProfileImage src={preview} alt="Profile" />
-			<HiddenFileInput
-				type="file"
-				accept="image/*"
-				onChange={handleImageChange}
-				id="profile-image-upload"
-			/>
-			<IconWrapper htmlFor="profile-image-upload">
-				<IconImage src="/photo.svg" alt="Upload" />
-			</IconWrapper>
+			<div className="profile_wrap">
+				{/* alt 일단 기본 프로필이 없어서 삼항연산자로 변경해뒀어요! */}
+				<ProfileImage src={preview} alt={!preview ? 'preview' : ''} />
+				<HiddenFileInput
+					type="file"
+					accept="image/*"
+					onChange={handleImageChange}
+					id="profile-image-upload"
+				/>
+				<IconWrapper htmlFor="profile-image-upload">
+					<IconImage src="/photo.svg" alt="Upload" />
+				</IconWrapper>
+			</div>
 		</ProfileWrapper>
 	);
 }

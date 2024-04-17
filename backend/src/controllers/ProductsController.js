@@ -10,7 +10,7 @@ const {
 	InternalServerError,
 	ForbiddenError,
 	UnauthorizedError,
-} = require('../config/customError');
+} = require('../config/CustomError');
 
 //전체 상품목록 조회
 const getProductsList = async (req, res) => {

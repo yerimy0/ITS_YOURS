@@ -6,7 +6,7 @@ const {
 	ConflictError,
 	ForbiddenError,
 	UnauthorizedError,
-} = require('../config/customError');
+} = require('../config/CustomError');
 
 /**
  * 커뮤니티 게시글 작성 controller

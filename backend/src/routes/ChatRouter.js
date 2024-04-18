@@ -4,6 +4,7 @@ const {
 	createChatroom,
 	getChatroomList,
 	saveChatMessage,
+	getDetailChat,
 	giveGoodManners,
 	giveBadManners,
 	confirmPurchase,
@@ -19,7 +20,10 @@ router.post('/:productId/:sellerId/:buyerNickName', validateToken, createChatroo
 router.get('/:memberId', validateToken, getChatroomList);
 
 //채팅방 메세지 저장하기
-router.post('/', validateToken, saveChatMessage);
+router.post('/:chatroomId', validateToken, saveChatMessage);
+
+//채팅방 메세지 보기
+router.get('/chat/detail/:id', validateToken, getDetailChat);
 
 //좋아요 반영하기
 router.put('/thumbsUp', validateToken, giveGoodManners);

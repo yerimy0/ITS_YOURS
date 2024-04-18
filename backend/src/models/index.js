@@ -10,11 +10,13 @@ const CommentsSchema = require('./schemas/Comments');
 const WishesSchema = require('./schemas/Wishes');
 const CategorySchema = require('./schemas/Category');
 const ChatroomSchema = require('./schemas/Chatroom');
+const VerifyCodeSchema = require('./schemas/VerifyCode');
 
 exports.Members = mongoose.model('Members', MembersSchema);
 exports.Products = mongoose.model('Products', ProductsSchema);
 
 exports.Qna = mongoose.model('Qna', QnaSchema);
+exports.VerifyCode = mongoose.model('VerifyCode', VerifyCodeSchema);
 
 exports.Posts = mongoose.model('Posts', PostsSchema);
 exports.Comments = mongoose.model('Comments', CommentsSchema);

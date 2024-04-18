@@ -183,7 +183,7 @@ async function resetPassword(id, email) {
 
 	await sendPasswordEmail(email, verificationCode); // 수정된 부분
 
-	return { updatePassword }; // 'emailResult'는 정의되지 않았으므로 이 부분도 확인 필요
+	return { updatePassword };
 }
 
 async function sendEmailVerification(email) {
@@ -192,17 +192,24 @@ async function sendEmailVerification(email) {
 		email: email,
 		code: verificationCode,
 	};
-	// 인증정보 저장
-	await VerifyCode.create(verifyInfo);
+
+	const existingVerifyInfo = await VerifyCode.findOne({ email: email });
+
+	if (existingVerifyInfo) {
+		await VerifyCode.updateOne({ email: email }, { $set: { code: verificationCode } });
+	} else {
+		await VerifyCode.create(verifyInfo);
+	}
+
 	await sendVerifyEmail(email, verificationCode);
 }
 
 // 인증코드 검증 함수
 async function chkVerifyCode(email, code) {
-	const storedCode = await VerifyCode.findOne({ email: email, code: code }); // db에서 해당 이메일의 코드 검색
+	const storedCode = await VerifyCode.findOne({ email: email }); // db에서 해당 이메일의 코드 검색
 	if (storedCode && storedCode.code === code) {
 		// 인증 후 코드 삭제
-		await VerifyCode.deleteMany({ email: email });
+		await VerifyCode.deleteOne({ email: email });
 		return true;
 	} else {
 		return false;

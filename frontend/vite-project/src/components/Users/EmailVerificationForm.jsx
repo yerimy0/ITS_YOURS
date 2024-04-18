@@ -21,14 +21,28 @@ function EmailVerificationForm({
 
 	const handleVerifyCode = async () => {
 		try {
-			const result = await verifyCode(email, emailVerificationCode);
-			if (result.success) {
+			const response = await verifyCode(email, emailVerificationCode);
+			if (!response || !response.data) {
+				throw new Error('No response data received');
+			}
+			console.log('Server response:', response.data);
+			if (response.data.verified) {
 				alert('이메일 인증 성공!');
 			} else {
-				alert('인증번호가 일치하지 않습니다.');
+				alert(response.data.error || '인증 실패');
 			}
 		} catch (error) {
-			alert('인증 실패');
+			console.error('Axios error:', error);
+			if (error.response) {
+				// 서버 응답 오류
+				alert(`서버 응답 오류: ${error.response.data.error}`);
+			} else if (error.request) {
+				// 네트워크 오류
+				alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+			} else {
+				// 기타 오류
+				alert('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
+			}
 		}
 	};
 

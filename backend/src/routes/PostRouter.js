@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const validateToken = require('../middlewares/ValidateToken');
+const upload = require('../middlewares/MulterConfig');
 const {
 	createPost,
 	getAllPosts,
@@ -11,13 +12,13 @@ const {
 const router = Router();
 
 // 커뮤니티 - 게시글 글 작성
-router.post('/posts', validateToken, createPost);
+router.post('/posts', upload.single('photos'), validateToken, createPost);
 // 커뮤니티 - 게시글 글 목록 조회
 router.get('/posts', getAllPosts);
 // 커뮤니티 - 게시글 상세 글 조회
 router.get('/posts/:postId', getPostDetails);
 // 커뮤니티 - 게시글 수정
-router.put('/posts/:postId/', validateToken, updatePost);
+router.put('/posts/:postId/', upload.single('photos'), validateToken, updatePost);
 // 커뮤니티 - 게시글 삭제
 router.delete('/posts/:postId', validateToken, deletePost);
 

@@ -81,12 +81,20 @@ const ReplyText = styled.div`
 const ReplyTime = styled.div``;
 
 const InputWrap = styled.div`
+	/* padding: 8px 20px; */
 	width: 80%;
-	margin: 20px auto 0;
-	border: 1px solid #ddd;
-	border-radius: 20px;
-	background: #fff;
-	padding: 8px 20px;
+	margin: 0 auto;
+
+	.inputtext {
+		width: 100%;
+		height: 42px;
+		margin: 20px auto 0;
+		border: 1px solid #ddd;
+		border-radius: 20px;
+		background: #fff;
+		font-size: 16px;
+		padding: 10px;
+	}
 `;
 
 const TextAreaText = styled.textarea`

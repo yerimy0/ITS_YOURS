@@ -1,4 +1,4 @@
-const { Chatroom } = require('../models');
+const { Chatroom, Members, Products, ChatMessage } = require('../models/index');
 
 /*
  * 채팅방 생성 service
@@ -23,9 +23,67 @@ async function getChatroomList(memberId) {
 	return chatList;
 }
 
-async function saveChatMessage() {}
+async function saveChatMessage(roomObjId, { auth, content }) {
+	const newChat = {
+		chatRoomId: roomObjId,
+		chatAuth: auth,
+		content: content,
+	};
+	const chat = await ChatMessage.create(newChat);
+	return chat;
+}
+
+async function getDetailChat() {}
+
+async function giveGoodManners(memberId) {
+	try {
+		const member = await Members.findOneAndUpdate(
+			{ _id: memberId },
+			{ $inc: { likeCount: 1 } },
+			{ new: true, runValidators: true }, // 업데이트된 문서 반환 및 유효성 검사 실행
+		);
+
+		// likeCount가 0보다 작은 경우 에러 발생
+		if (member.likeCount < 0) {
+			throw new Error('0보다 적은 값은 가질수 없습니다.');
+		}
+		return member;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+}
+
+async function giveBadManners(memberId) {
+	const member = await Members.findOneAndUpdate(
+		{ _id: memberId },
+		{ $inc: { dislikeCount: 1 } },
+		{ new: true }, // 업데이트된 문서 반환
+	);
+	return member;
+}
+
+async function confirmPurchase(productId) {
+	const result = await Products.findOneAndUpdate(
+		{ _id: productId },
+		{ isCompleted: true },
+		{ new: true },
+	);
+	return result;
+}
+
+async function quitChatroom(chatroomId) {
+	const result = await Chatroom.deleteOne({ _id: chatroomId });
+	return result;
+}
+
 module.exports = {
 	createChatroom,
 	getChatroomList,
 	saveChatMessage,
+	getDetailChat,
+	giveGoodManners,
+	giveBadManners,
+	confirmPurchase,
+	quitChatroom,
 };

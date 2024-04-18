@@ -24,7 +24,7 @@ const WriteForm = styled.div`
 	}
 `;
 
-const InputBox = styled.div`
+const InputBox = styled.form`
 	width: 100%;
 `;
 const InputTitle = styled.input`

@@ -19,7 +19,7 @@ const {
 const signUp = async (req, res, next) => {
 	try {
 		const { id, password, realName, email, schoolName, nickName } = req.body;
-		let profilePic = req.file ? req.file.path : ''; // 파일 경로 저장
+		let profilePic = req.file ? req.file.location : ''; // 파일 경로 저장
 
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 
@@ -146,12 +146,12 @@ const getSellerInfo = async (req, res, next) => {
 const updateMember = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
-		const { password, realName, email, schoolName, nickName, profilePic } = req.body;
+		let profilePic = req.file ? req.file.location : '';
+		const { password, realName, email, schoolName, nickName } = req.body;
 
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 
 		const chkDeleted = await memberService.getMember(userId);
-		const isRegisteredEmail = await memberService.getMemberByEmail(email);
 
 		if (!userId) {
 			throw new BadRequestError('로그인이 필요한 서비스입니다.');
@@ -164,9 +164,7 @@ const updateMember = async (req, res, next) => {
 		if (chkDeleted.deletedAt) {
 			throw new BadRequestError('이미 탈퇴한 회원의 정보는 수정할 수 없습니다.');
 		}
-		if (isRegisteredEmail) {
-			throw new BadRequestError('이미 사용중인 이메일입니다.');
-		}
+
 		const memberInfo = await memberService.updateMember(
 			userId,
 			password,
@@ -237,7 +235,7 @@ async function resetPassword(req, res) {
 // 이메일 인증코드 전송
 async function sendVerifyEmail(req, res, next) {
 	try {
-		const { email } = req.body;
+		const { email, code } = req.body;
 		if (!email) {
 			throw new BadRequestError('이메일을 입력해주세요');
 		}

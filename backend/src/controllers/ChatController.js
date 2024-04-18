@@ -61,8 +61,33 @@ const getChatroomList = async (req, res, next) => {
 	}
 };
 //채팅방 메세지 저장
-const saveChatMessage = async (req, res, next) => {};
+const saveChatMessage = async (req, res, next) => {
+	try {
+		const { chatroomId } = req.params;
+		const roomObjId = new ObjectId(chatroomId);
 
+		const auth = req.user._id;
+
+		const { content } = req.body;
+
+		if (!auth) {
+			throw new BadRequestError('로그인 후 이용해주세요.');
+		}
+
+		const chat = await chatService.saveChatMessage(roomObjId, { auth, content });
+		res.status(200).json({ data: chat, message: '채팅 메세지 추가' });
+	} catch (err) {
+		next(err);
+	}
+};
+
+//채팅방 내용보기
+const getDetailChat = async (req, res, next) => {
+	try {
+	} catch (err) {
+		next(err);
+	}
+};
 //칭찬하기
 const giveGoodManners = async (req, res, next) => {
 	try {
@@ -155,6 +180,7 @@ module.exports = {
 	createChatroom,
 	getChatroomList,
 	saveChatMessage,
+	getDetailChat,
 	giveGoodManners,
 	giveBadManners,
 	confirmPurchase,

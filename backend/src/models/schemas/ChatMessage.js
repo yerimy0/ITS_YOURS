@@ -12,18 +12,16 @@ const ChatMessageSchema = new Schema({
 		ref: 'Chatroom',
 		required: true,
 	},
-	//메세지 내용
-	content: {
-		type: SchemaTypes.ObjectId,
-		required: true,
-		ref: 'Members',
-	},
-
 	// 채팅 작성자
 	chatAuth: {
 		type: SchemaTypes.ObjectId,
 		required: true,
-		ref: 'Chatroom',
+		ref: 'Members',
+	},
+	//메세지 내용
+	content: {
+		type: String,
+		required: true,
 	},
 	// 채팅메세지 생성일자
 	chatCreatedAt: {

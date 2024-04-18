@@ -1,4 +1,4 @@
-const { Chatroom, Members, Products } = require('../models/index');
+const { Chatroom, Members, Products, ChatMessage } = require('../models/index');
 
 /*
  * 채팅방 생성 service
@@ -23,7 +23,17 @@ async function getChatroomList(memberId) {
 	return chatList;
 }
 
-async function saveChatMessage() {}
+async function saveChatMessage(roomObjId, { auth, content }) {
+	const newChat = {
+		chatRoomId: roomObjId,
+		chatAuth: auth,
+		content: content,
+	};
+	const chat = await ChatMessage.create(newChat);
+	return chat;
+}
+
+async function getDetailChat() {}
 
 async function giveGoodManners(memberId) {
 	try {
@@ -71,6 +81,7 @@ module.exports = {
 	createChatroom,
 	getChatroomList,
 	saveChatMessage,
+	getDetailChat,
 	giveGoodManners,
 	giveBadManners,
 	confirmPurchase,

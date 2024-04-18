@@ -186,7 +186,7 @@ async function resetPassword(id, email) {
 
 	return { updatePassword }; // 'emailResult'는 정의되지 않았으므로 이 부분도 확인 필요
 }
-
+// 인증코드 전송
 async function sendEmailVerification(email) {
 	const verificationCode = generateTempPassword(4);
 	emailVerificationCodes[email] = verificationCode; // 인증코드 저장
@@ -195,7 +195,7 @@ async function sendEmailVerification(email) {
 	// 인증코드를 반환하지 않고 저장만 합니다.
 }
 
-// 인증코드 검증 함수
+// 인증코드 검증
 async function verifyCode(email, code) {
 	const storedCode = emailVerificationCodes[email];
 	console.log(email);

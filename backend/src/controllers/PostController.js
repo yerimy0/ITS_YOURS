@@ -19,8 +19,9 @@ const createPost = async (req, res, next) => {
 		const nickName = req.user.nickName;
 		const profilePic = req.user.profilePic;
 		const schoolName = req.user.schoolName;
+		let photos = req.file ? req.file.location : '';
 
-		const { title, content, photos } = req.body;
+		const { title, content } = req.body;
 
 		if (!nickName) {
 			throw new BadRequestError('로그인 후 이용해주세요.');
@@ -89,10 +90,11 @@ const getPostDetails = async (req, res, next) => {
  * 기능 : 게시글 수정에 필요한 동작들을 모아놓은 컨트롤러입니다.
  */
 const updatePost = async (req, res, next) => {
-	const { title, content, photos } = req.body;
+	const { title, content } = req.body;
 
 	try {
 		const { postId } = req.params;
+		let photos = req.file ? req.file.location : '';
 		// const postService = new PostService();
 		const updatedPost = await PostService.updatePost(postId, {
 			title,

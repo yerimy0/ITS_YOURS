@@ -49,7 +49,13 @@ function DetailTopSection({ detail }) {
 						수정
 					</Button>
 					<Button onClick={handleOpenModal}>삭제</Button>
-					<Red>신고하기</Red>
+					<Red
+						onClick={() => {
+							navigate(`/asksupportwrite`);
+						}}
+					>
+						신고하기
+					</Red>
 				</Buttons>
 				{modalOpen && (
 					<Modal

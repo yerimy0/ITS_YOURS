@@ -11,6 +11,7 @@ import {
 	CancelButton,
 } from './SignOutStyles';
 import { useNavigate } from 'react-router-dom';
+import { logout } from '../../../apis/service/LoginApi';
 
 function SignOutModal({ isOpen, onClose }) {
 	const navigate = useNavigate();
@@ -22,7 +23,9 @@ function SignOutModal({ isOpen, onClose }) {
 			await instance.delete('/members/me');
 			console.log('회원 탈퇴 성공');
 			onClose();
-			navigate('/signout');
+			await logout();
+			window.location.reload();
+			navigate(`/`);
 		} catch (error) {
 			console.log('회원 탈퇴 실패:', error.response);
 		}

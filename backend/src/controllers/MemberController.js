@@ -19,7 +19,7 @@ const {
 const signUp = async (req, res, next) => {
 	try {
 		const { id, password, realName, email, schoolName, nickName } = req.body;
-		let profilePic = req.file ? req.file.path : ''; // 파일 경로 저장
+		let profilePic = req.file ? req.file.location : ''; // 파일 경로 저장
 
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 
@@ -146,7 +146,8 @@ const getSellerInfo = async (req, res, next) => {
 const updateMember = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
-		const { password, realName, email, schoolName, nickName, profilePic } = req.body;
+		let profilePic = req.file ? req.file.location : '';
+		const { password, realName, email, schoolName, nickName } = req.body;
 
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 
@@ -237,7 +238,7 @@ async function resetPassword(req, res) {
 // 이메일 인증코드 전송
 async function sendVerifyEmail(req, res, next) {
 	try {
-		const { email } = req.body;
+		const { email, code } = req.body;
 		if (!email) {
 			throw new BadRequestError('이메일을 입력해주세요');
 		}

@@ -99,46 +99,61 @@ const io = new Server(server, {
 });
 
 io.on('connection', socket => {
-	console.log(`User Connected:: ${socket.id}`);
+	// console.log(`User Connected:: ${socket.id}`);
 	//채팅방 참여 & 채팅방 생성정보 저장
-	socket.on('join_room', async data => {
+	socket.on('ask_join', async data => {
 		console.log('data::', data);
-		socket.join(data.room);
-		console.log(`User with ID: ${socket.id} joined room: ${data.room}`);
+		// 여기에 if문 돌려서 현재 로그인하고 채팅방에 들어가려는 사람이 채팅방 정보에 있는 사람인지 판별해줘야 함
+		socket.join(data.roomNum); // 채팅방에 유저 넣어주기
+		console.log(`User with ID: ${socket.id} joined room: ${data.roomNum}`);
 
-		try {
-			const newChatroom = new Chatroom({
-				productId: data._id,
-				buyerId: req.user.id,
-				sellerId: data.sellerId,
-				isActivated: true,
-			});
-			await newChatroom.save();
-			console.log('제발 저장되게해주세요.');
-		} catch (error) {
-			console.error('에러가났어요:', error);
-		}
+		// try {
+		// 	const newChatroom = new Chatroom({
+		// 		productId: data._id,
+		// 		buyerId: req.user.id,
+		// 		sellerId: data.sellerId,
+		// 		isActivated: true,
+		// 	});
+		// 	await newChatroom.save();
+		// 	console.log('제발 저장되게해주세요.');
+		// } catch (error) {
+		// 	console.error('에러가났어요:', error);
+		// }
 
 		//메세지 보내기
-		socket.on('send_message', async data => {
-			try {
-				const newMessage = new ChatMessage({
-					chatRoomId: data.chatRoomId,
-					content: data.content,
-					chatAuth: data.chatAuth,
-				});
-				await newMessage.save();
-				console.log(data);
-				socket.broadcast.emit('receive_message', data);
-			} catch (err) {
-				console.error('Error saving message:', err);
-			}
-		});
+		// socket.on('send_message', async data => {
+		// 	console.log(data.message);
+		// 	try {
+		// 		const newMessage = new ChatMessage({
+		// 			chatRoomId: data.chatRoomId,
+		// 			content: data.content,
+		// 			chatAuth: data.chatAuth,
+		// 		});
+		// 		await newMessage.save();
+		// 		console.log(data);
+		// 		socket.broadcast.emit('receive_message', data);
+		// 	} catch (err) {
+		// 		console.error('Error saving message:', err);
+		// 	}
+		// });
 
 		//채팅방 나가기
-		socket.on('disconnect', chatId => {
-			console.log(`exit chat`);
-			socket.leave(chatId);
-		});
+		// socket.on('disconnect', chatId => {
+		// 	console.log(`exit chat`);
+		// 	socket.leave(chatId);
+		// });
 	});
+
+	//메세지 보내기
+	socket.on('send_message', data => {
+		console.log(data);
+		// 여기에 보낸 채팅 저장하는 로직필요
+		socket.to(data.roomNum).emit('message_broadcast', { message: data.message });
+	});
+
+	//채팅방 나가기
+	// socket.on('disconnect', chatId => {
+	// 	console.log(`exit chat`);
+	// 	socket.leave(chatId);
+	// });
 });

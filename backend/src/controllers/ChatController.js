@@ -10,7 +10,7 @@ const createChatroom = async (req, res, next) => {
 	try {
 		// 필요한값 상품 id, 판매자 id, 구매자 id,
 		const buyerId = req.user._id;
-		const { productId, sellerId } = req.params;
+		const { productId, sellerId, buyerNickName } = req.params;
 
 		const newChatroom = await ChatService.createChatroom(buyerId, productId, sellerId);
 

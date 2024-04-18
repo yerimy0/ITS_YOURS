@@ -5,9 +5,9 @@ import EditButton from './EditButton';
 function ProfileHeader(props) {
 	return (
 		<Greeting>
-			안녕하세요
+			<h3>안녕하세요</h3>
 			<NameBadge>
-				{props.userName}님
+				<h4>{props.userName}님</h4>
 				<EditButton />
 			</NameBadge>
 		</Greeting>

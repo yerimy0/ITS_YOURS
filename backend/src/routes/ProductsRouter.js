@@ -33,10 +33,10 @@ router.get('/mySalesHistory/:sellerId', validateToken, mySalesHistory);
 router.delete('/deleteMySalesHistory/:sellerId/:prodId', validateToken, deleteSalesHis);
 
 // 상품 등록
-router.post('/', validateToken, upload.array('imgUrls', 3), insertProduct);
+router.post('/', validateToken, upload.single('img1'), insertProduct);
 
 // 상품 수정
-router.put('/', validateToken, upload.array('imgUrls', 3), updateProduct);
+router.put('/', validateToken, upload.single('img1'), updateProduct);
 
 //상품 삭제
 router.delete('/', validateToken, deleteProduct);

@@ -10,6 +10,7 @@ const {
 	findId,
 	resetPassword,
 	sendVerifyEmail,
+	verifyCode,
 } = require('../controllers/MemberController');
 const validateToken = require('../middlewares/ValidateToken');
 const upload = require('../config/MulterConfig');
@@ -32,7 +33,9 @@ router.delete('/me', validateToken, deleteMember);
 router.post('/findId', findId);
 // 비밀번호 찾기
 router.post('/findPassword', resetPassword);
-// 회원가입 이메일 인증코드발금
+// 회원가입 이메일 인증코드발급
 router.post('/sendVerifyEmail', sendVerifyEmail);
+// 인증번호 검증
+router.post('/verifyCode', verifyCode);
 
 module.exports = router;

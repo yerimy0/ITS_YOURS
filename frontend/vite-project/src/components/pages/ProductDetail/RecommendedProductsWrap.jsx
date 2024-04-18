@@ -42,7 +42,7 @@ function RecommendedProductsWrap({ product }) {
 								productId={recommendedProduct._id}
 								name={recommendedProduct.name}
 								price={recommendedProduct.price}
-								imgUrls={recommendedProduct.imgUrls}
+								imgUrls={recommendedProduct.imgUrls.map(url => url.replace('coversum', 'cover500'))}
 								onClick={() => handleProductClick(recommendedProduct._id)}
 							/>
 						))}

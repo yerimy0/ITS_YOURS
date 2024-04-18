@@ -14,7 +14,7 @@ function CommuHeader() {
 				<HeaderTop>
 					<HeaderLeft>
 						<MainTitle>
-							<HeaderTitle>이거</HeaderTitle>
+							<HeaderTitle>이제</HeaderTitle>
 							<HeaderTitleBlue>너:</HeaderTitleBlue>
 							<HeaderTitle>해</HeaderTitle>
 						</MainTitle>

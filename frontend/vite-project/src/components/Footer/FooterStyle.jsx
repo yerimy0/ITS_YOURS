@@ -12,6 +12,7 @@ const Content = styled.div`
 	align-items: center;
 	gap: 23px;
 	bottom: 0px;
+	margin-top: 100px;
 `;
 
 const Icons = styled.div`

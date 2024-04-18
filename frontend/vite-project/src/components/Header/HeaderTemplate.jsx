@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { RightNav, LeftNav, HeaderMain, Nav, NavWrap } from './HeaderSytle';
 import { useState, useContext, useEffect } from 'react';
-import { RxHamburgerMenu } from 'react-icons/rx';
 import { useLocation } from 'react-router-dom';
 import UserIdContext from '../../context/UserIdContext';
 import { logout } from '../../apis/service/LoginApi';
@@ -115,25 +114,25 @@ function Header() {
 						<span>이제너해</span>가 함께 합니다!
 					</h2>
 
-					<div className="li">
+					<div className="li" onClick={isToggled}>
 						<NavLink to="/product" className="ham_a">
 							<img src="/i1.png" className="li_i" alt="" />
 							도서거래
 						</NavLink>
 					</div>
-					<div className="li">
+					<div className="li" onClick={isToggled}>
 						<NavLink to="/community" className="ham_a">
 							<img src="/i2.png" className="li_i" alt="" />
 							커뮤니티
 						</NavLink>
 					</div>
-					<div className="li">
+					<div className="li" onClick={isToggled}>
 						<NavLink to="/chat" className="ham_a">
 							<img src="/i3.png" className="li_i" alt="" />
 							채팅하기
 						</NavLink>
 					</div>
-					<div className="li">
+					<div className="li" onClick={isToggled}>
 						<NavLink to="/product/write" className="ham_a">
 							<img src="/i4.png" className="li_i" alt="" />
 							내책판매
@@ -153,11 +152,11 @@ function Header() {
 									color: '#666',
 								}}
 							>
-								<NavLink to="/mypage" className="ham_a">
+								<NavLink to="/mypage" className="ham_a" onClick={isToggled}>
 									너의페이지
 								</NavLink>
 								|
-								<NavLink to="/product" className="ham_a">
+								<NavLink to="/product" className="ham_a" onClick={isToggled}>
 									<a onClick={handleLogout}>로그아웃</a>
 								</NavLink>
 							</div>

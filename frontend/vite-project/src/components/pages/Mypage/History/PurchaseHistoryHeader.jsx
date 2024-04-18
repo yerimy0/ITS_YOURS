@@ -23,6 +23,7 @@ const PurchaseHistoryTitle = styled.h1`
 
 	@media (max-width: 500px) {
 		font-size: 46px;
+		margin-bottom: 20px;
 	}
 `;
 

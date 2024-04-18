@@ -4,7 +4,7 @@ import styled from 'styled-components';
 function PurchaseHistoryCard({ imgUrls, price, name, sellerId }) {
 	return (
 		<>
-			<PurchaseCardWrap>
+			<PurchaseCardWrap className="purch_list">
 				<ImageBox>
 					<ForPurchaseListImage
 						src={imgUrls.map(url => url.replace('coversum', 'cover500'))}
@@ -32,8 +32,8 @@ const PurchaseCardWrap = styled.div`
 	width: 100%;
 	padding: 10px 15px;
 	border-top: 1px solid #eee;
+
 	&:hover {
-		cursor: pointer;
 		background: #f4f4f4;
 	}
 `;

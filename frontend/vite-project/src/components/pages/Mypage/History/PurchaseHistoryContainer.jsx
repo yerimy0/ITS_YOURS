@@ -44,13 +44,21 @@ const PurchaseHistoryContainer = () => {
 export default PurchaseHistoryContainer;
 
 const PurchaseHistoryWrap = styled.section`
-	/* padding: 20px; */
+	padding: 20px 20px 0;
 	margin: 40px 0;
 	min-height: 350px;
+	width: 90%;
+	margin: 0 auto;
+	border-bottom: 1px solid #eee;
+
+	@media (max-width: 500px) {
+		width: 100%;
+		padding: 0;
+	}
 `;
 
 const ForPurchaseList = styled.div`
-	width: 90%;
+	width: 100%;
 	margin: 0 auto;
 `;
 

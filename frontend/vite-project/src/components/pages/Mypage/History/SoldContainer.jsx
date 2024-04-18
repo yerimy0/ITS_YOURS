@@ -51,11 +51,11 @@ const SoldContainer = () => {
 				soldItems.map(sold => (
 					<ForSalesList key={sold._id}>
 						<SoldCard
-							imgUrls={sold.imgUrls}
+							imgUrls={sold.imgUrls.map(url => url.replace('coversum', 'cover500'))}
 							price={sold.price}
 							name={sold.name}
 							sellDate={sold.sellDate}
-							like={sold.wishesCount}
+							wishescount={sold.wishesCount}
 							onDelete={() => handleDelete(sold._id)}
 							id={sold._id}
 							createdAt={sold.createdAt}

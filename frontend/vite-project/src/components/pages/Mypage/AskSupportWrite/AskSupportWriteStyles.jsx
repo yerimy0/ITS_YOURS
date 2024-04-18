@@ -11,28 +11,44 @@ export const Form = styled.form`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 60%;
-	max-width: 800px;
+	width: 800px;
 	margin: 0 auto;
+
+	@media (max-width: 870px) {
+		width: 98%;
+	}
 `;
 
 export const Input = styled.input`
 	padding: 10px;
-	margin: 10px 0;
-	border: 1px solid #ccc;
-	border-radius: 4px;
+	margin: 10px 0 30px;
+	border-bottom: 1px solid #eee;
+	border-radius: 0 !important;
 	width: 100%;
+	font-size: 18px;
+
+	&::placeholder {
+		color: #999;
+	}
 `;
 
 export const TextArea = styled.textarea`
 	padding: 10px;
-	padding-bottom: 300px;
+	min-height: 345px;
 	margin-bottom: 10px;
-	border: 1px solid #ccc;
+	border: 1px solid #eee;
 	border-radius: 4px;
 	width: 100%;
-`;
+	font-size: 16px;
 
+	&::placeholder {
+		color: #999;
+	}
+
+	@media (max-width: 850px) {
+		min-height: 250px;
+	}
+`;
 export const Button = styled.button`
 	padding: 10px 20px;
 	background-color: white;
@@ -40,12 +56,15 @@ export const Button = styled.button`
 	border-radius: 20px;
 	color: #009dff;
 	font-size: 16px;
+	font-weight: 500;
 	cursor: pointer;
-	margin-top: 10px;
+	margin: 10px 0 20px;
 
 	&:hover {
+		border: 1px solid #009dff;
 		background-color: #009dff;
-		color: white;
+		color: #fff;
+		transition: all 0.5s;
 	}
 `;
 

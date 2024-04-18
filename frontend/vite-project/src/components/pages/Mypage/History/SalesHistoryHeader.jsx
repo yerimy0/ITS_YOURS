@@ -40,6 +40,10 @@ const SalesHistoryTitle = styled.h1`
 	font-size: 57px;
 	font-weight: 400;
 	margin-top: 60px;
+
+	@media (max-width: 800px) {
+		font-size: 46px;
+	}
 `;
 
 const SalesHistorySection2 = styled.div`
@@ -56,6 +60,13 @@ const SalesStatus = styled.div`
 	align-items: center;
 	justify-content: center;
 	height: 50px;
+
+	@media (max-width: 800px) {
+		width: 80%;
+		margin: 0 auto;
+		font-size: 16px;
+		gap: 15px;
+	}
 `;
 
 const ForSale = styled.button`

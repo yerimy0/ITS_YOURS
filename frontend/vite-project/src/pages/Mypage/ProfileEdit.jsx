@@ -28,7 +28,9 @@ function ProfileEdit() {
 		<Wrapper>
 			<Title>개인정보수정</Title>
 			<ProfileEditForm userInfo={userInfo} />
-			<SignOutLink onClick={openModal}>탈퇴하기</SignOutLink>
+			<SignOutLink className="user_out" onClick={openModal}>
+				탈퇴하기
+			</SignOutLink>
 			<SignOutModal isOpen={isModalOpen} onClose={closeModal} />
 		</Wrapper>
 	);

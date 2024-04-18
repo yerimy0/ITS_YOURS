@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchMyPageData, updateMyPageData } from '../../../apis/service/ProfileEdit';
-import ProfileImageUploader from '../../Users/ProfileImageUploader';
+import ProfileImageUploader from '../../Users/ProfileImageEdit';
 import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
 import {
 	validateUserId,

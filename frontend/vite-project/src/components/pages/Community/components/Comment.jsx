@@ -80,14 +80,14 @@ function CommentSection({ id }) {
 						))}
 					</Comments>
 				</CommentList>
-				<Label>
+				<Label className="commu_comment_box">
 					<CommentInput
 						value={newComment}
 						onChange={onChange}
 						onKeyDown={activeEnter}
 						placeholder="댓글을 입력하세요"
 					/>
-					<SendBtn onClick={onClick}>
+					<SendBtn className="send_btn" onClick={onClick}>
 						<IoSend />
 					</SendBtn>
 				</Label>

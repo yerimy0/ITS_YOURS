@@ -284,21 +284,24 @@ input {
 	border-radius: 20px !important;
 }
 /* =================== 공통 */
-
-/* =================== 다크모드 예시 =================== */
-.body {
-	background-color: #000;
-	color: #fff;
+/* 글쓰는곳들 조금 달라서 여기에 적어둘게요 커뮤니티-글쓰기 */
+.commu_file_up {
+	width: 100% !important;
 }
 
-.body .BlueBack {
-	background-color: #000;
+.InputPics {
+	text-align: left;
+	margin-bottom: 40px !important;
 }
 
-.body .blurEffect {
-	background: #454545 !important;
+.commu_file {
+	text-align: left !important;
 }
 
-.body .header_main {
-	background-color: #454545;
+.commu_comment_box {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	border: 1px solid #eee;
+	border-radius: 20px;
 }

@@ -24,10 +24,10 @@ function CommuDetail() {
 			<ContentBox>
 				<Content>{detail.content}</Content>
 			</ContentBox>
-			<img src={detail.photos} />
-			<Line>
+			<img src={detail.photos} style={{ width: '70%' }} />
+			{/* <Line>
 				<hr />
-			</Line>
+			</Line> */}
 			<CommentSection id={id} />
 		</DetailBox>
 	);

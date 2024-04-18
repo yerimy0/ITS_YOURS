@@ -25,7 +25,7 @@ function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, chat, on
 		<>
 			<ProductCardWrap>
 				<ImageBox>
-					<ForSalesListImage src={imgUrls} alt="" />
+					<ForSalesListImage src={imgUrls} alt="" onClick={() => navigate(`/product/${id}`)} />
 				</ImageBox>
 				<SalesInfo>
 					<Title>{name}</Title>
@@ -67,14 +67,14 @@ export default OnSaleCard;
 const ProductCardWrap = styled.div`
 	display: flex;
 	padding: 10px;
-	&:hover {
-		cursor: pointer;
-	}
 `;
 
 const ImageBox = styled.div`
 	border: 1px solid #ded8e1;
 	padding: 10px;
+	&:hover {
+		cursor: pointer;
+	}
 `;
 
 const ForSalesListImage = styled.img`

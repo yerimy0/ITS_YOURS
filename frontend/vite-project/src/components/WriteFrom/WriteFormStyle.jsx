@@ -4,7 +4,7 @@ const RegisterBox = styled.div`
 	left: 263px;
 	display: flex;
 	align-items: center;
-	width: 100%;
+	width: auto;
 	padding: 70px 30px;
 	flex-direction: column;
 	justify-content: center;
@@ -26,13 +26,21 @@ const RegisterBox = styled.div`
 		justify-content: center;
 		align-items: center;
 		gap: 8px;
+
+		&:hover {
+			border: 1px solid #009dff;
+			background-color: #009dff;
+			color: #fff;
+			transition: all 0.5s;
+		}
+
 		@media (max-width: 1000px) {
 			font-size: 14px;
 		}
 	}
 
 	input::placeholder {
-		font-size: 14px;
+		font-size: 18px;
 		color: #888;
 		font-weight: 400;
 		line-height: normal;
@@ -49,10 +57,8 @@ const RegisterBox = styled.div`
 `;
 
 const Notion = styled.span`
-	font-size: 13px;
-	font-style: normal;
-	font-weight: 400;
-	/* line-height: 28px; */
+	font-size: 14px;
+	margin-left: 10px;
 	line-height: 100%;
 	margin-left: 10px;
 `;
@@ -87,22 +93,17 @@ const Title = styled.div`
 
 const RedStar = styled.span`
 	color: #b3261e;
-	/* font-family: SUIT; */
 	font-size: 16px;
-	font-style: normal;
 	font-weight: 400;
-	line-height: 24px; /* 150% */
+	line-height: 24px;
 	@media (max-width: 1000px) {
 		font-size: 14px;
 		line-height: 100%;
 	}
 `;
 const TopTitle = styled.span`
-	color: #000;
 	text-align: center;
-	/* font-family: SUIT; */
 	font-size: 28px;
-	font-style: normal;
 	font-weight: 700;
 	line-height: 36px; /* 128.571% */
 `;
@@ -114,7 +115,7 @@ const Line = styled.div`
 
 const Input = styled.input`
 	border-radius: 10px !important;
-	border: 1px solid #888;
+	border: 1px solid #eee;
 	background: #fff;
 	padding: 8px;
 	/* width: ${({ className }) => (className === 'Small' ? '386px' : '838px')};
@@ -126,7 +127,7 @@ const Input = styled.input`
 `;
 const InputContent = styled.textarea`
 	border-radius: 10px !important;
-	border: 1px solid #888;
+	border: 1px solid #eee;
 	background: #fff;
 	padding: 8px;
 	width: 100%;
@@ -134,11 +135,7 @@ const InputContent = styled.textarea`
 `;
 
 const Label = styled.span`
-	color: #000;
-	/* font-family: SUIT; */
 	font-size: 18px;
-	font-style: normal;
-	font-weight: 400;
 	line-height: 28px;
 	@media (max-width: 1000px) {
 		line-height: 100%;
@@ -151,7 +148,6 @@ const RegButtons = styled.div`
 	justify-content: center;
 	align-items: center;
 	gap: 45px;
-	/* align-self: stretch; */
 	width: 60%;
 	@media (max-width: 1000px) {
 		width: 100%;
@@ -176,7 +172,6 @@ const ProductTwoInput = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 60px;
-	/* align-self: stretch; */
 	width: 60%;
 	@media (max-width: 1000px) {
 		width: 100%;
@@ -187,25 +182,28 @@ const ProductTwoInput = styled.div`
 
 const SmallButton = styled.button`
 	font-weight: 500;
-	/* line-height: 28px; */
 	width: 20%;
-	/* height: 40px; */
 	margin: 10px 0;
+
 	&.active {
 		color: #fff;
 		background: #009dff;
 	}
+
+	&:hover {
+		border: 1px solid #009dff;
+		background-color: #009dff;
+		color: #fff;
+		transition: all 0.5s;
+	}
+
 	@media (max-width: 1000px) {
 		width: 100%;
 	}
 `;
 const BigButton = styled.button`
 	font-size: 18px;
-	font-style: normal;
-	font-weight: 500;
-	/* line-height: 40px;  */
 	width: 50%;
-	/* height: 51px; */
 	@media (max-width: 1000px) {
 		font-size: 16px;
 	}
@@ -223,7 +221,6 @@ const ProductImg = styled.div`
 	align-items: flex-end;
 	align-content: flex-end;
 	gap: 25px;
-	/* align-self: stretch; */
 	flex-wrap: wrap;
 `;
 
@@ -239,7 +236,7 @@ const ButtonUpload = styled.button`
 const SearchContainer = styled.div`
 	max-height: 200px;
 	overflow-y: auto;
-	border: 1px solid #ccc;
+	border: 1px solid #eee;
 	border-radius: 10px !important;
 	padding: 10px;
 `;
@@ -277,7 +274,6 @@ const CloseButton = styled.button`
 
 const Alert = styled.div`
 	color: grey;
-	/* font: SUIT; */
 `;
 export {
 	RegisterBox,

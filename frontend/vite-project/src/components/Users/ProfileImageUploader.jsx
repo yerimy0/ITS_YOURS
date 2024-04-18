@@ -21,17 +21,24 @@ function ProfileImageUploader({ onImageSelected, initialPreview }) {
 	return (
 		<ProfileWrapper>
 			<div className="profile_wrap" style={{ marginTop: '30px' }}>
-				{/* alt 일단 기본 프로필이 없어서 삼항연산자로 변경해뒀어요! */}
-				<ProfileImage src={preview} alt={!preview ? 'preview' : ''} />
-				<HiddenFileInput
-					type="file"
-					accept="image/*"
-					onChange={handleImageChange}
-					id="profile-image-upload"
-				/>
-				<IconWrapper htmlFor="profile-image-upload">
-					<IconImage src="/photo.svg" alt="Upload" />
-				</IconWrapper>
+				<ProfileImage src={preview} alt={preview ? '' : '기본 프로필 이미지'} />
+				<form
+					className="form-box"
+					action="/api/members/signup"
+					method="POST"
+					enctype="multipart/form-data"
+				>
+					<HiddenFileInput
+						type="file"
+						name="profilePic"
+						accept="image/*"
+						onChange={handleImageChange}
+						id="profile-image-upload"
+					/>
+					<IconWrapper htmlFor="profile-image-upload">
+						<IconImage src="/photo.svg" alt="Upload" />
+					</IconWrapper>
+				</form>
 			</div>
 		</ProfileWrapper>
 	);

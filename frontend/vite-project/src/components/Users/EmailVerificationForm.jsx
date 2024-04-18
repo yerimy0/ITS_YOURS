@@ -1,15 +1,37 @@
 import React from 'react';
 import { InlineGroup, StyledInput, SmallButton, EmailErrorMessage } from './UsersStyles';
+import { sendVerifyEmail, verifyCode } from '../../apis/service/EmailVerificationForm';
 
 function EmailVerificationForm({
 	email,
 	setEmail,
 	emailVerificationCode,
 	setEmailVerificationCode,
-	onVerifyEmail,
 	emailError,
 	handleBlurEmail,
 }) {
+	const handleSendVerifyEmail = async () => {
+		try {
+			await sendVerifyEmail(email);
+			alert('인증번호가 전송되었습니다.');
+		} catch (error) {
+			alert('인증번호 전송 실패');
+		}
+	};
+
+	const handleVerifyCode = async () => {
+		try {
+			const result = await verifyCode(email, emailVerificationCode);
+			if (result.success) {
+				alert('이메일 인증 성공!');
+			} else {
+				alert('인증번호가 일치하지 않습니다.');
+			}
+		} catch (error) {
+			alert('인증 실패');
+		}
+	};
+
 	return (
 		<>
 			<InlineGroup>
@@ -21,7 +43,7 @@ function EmailVerificationForm({
 						onChange={e => setEmail(e.target.value)}
 						onBlur={handleBlurEmail}
 					/>
-					<SmallButton type="button" onClick={() => onVerifyEmail(email)}>
+					<SmallButton type="button" onClick={handleSendVerifyEmail}>
 						인증요청
 					</SmallButton>
 				</div>
@@ -36,7 +58,7 @@ function EmailVerificationForm({
 						value={emailVerificationCode}
 						onChange={e => setEmailVerificationCode(e.target.value)}
 					/>
-					<SmallButton type="button" onClick={onVerifyEmail}>
+					<SmallButton type="button" onClick={handleVerifyCode}>
 						인증확인
 					</SmallButton>
 				</div>

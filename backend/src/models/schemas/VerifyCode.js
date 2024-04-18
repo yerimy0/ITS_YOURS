@@ -1,18 +1,16 @@
 const { Schema } = require('mongoose');
 
 /**
- * Q&A 스키마
- * 작성자 : 류효종
- * 작성시작일 : 2024-04-08
+ * 인증코드 스키마
+ * 작성자 : 이정은
+ * 작성시작일 : 2024-04-18
  */
 
 const VerifyCodeSchema = new Schema({
-	// Q&A 작성자
 	email: {
 		type: String,
-		// required: true,
+		required: true,
 	},
-	// Q&A 제목
 	code: {
 		type: String,
 		required: true,

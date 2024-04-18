@@ -35,7 +35,6 @@ const getChatroomList = async (req, res, next) => {
 		const memberId = req.user._id;
 		const memberObjectId = new ObjectId(memberId);
 
-		console.log(memberObjectId);
 		if (!memberId) {
 			throw new BadRequestError('로그인 후 이용해주세요.');
 		}

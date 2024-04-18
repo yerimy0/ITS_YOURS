@@ -51,8 +51,6 @@ async function getDetailChat(chatroomId) {
 		chatroom,
 		messages,
 	};
-
-	return chatroom;
 }
 
 async function giveGoodManners(memberId) {

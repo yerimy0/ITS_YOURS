@@ -47,8 +47,8 @@ const router = createBrowserRouter([
 			{ path: '/signout', element: <SignOut /> },
 			{ path: '/showid', element: <ShowId /> },
 			{ path: '/profileedit', element: <ProfileEdit /> },
-			{ path: '/chat', element: <Chat /> },
-			{ path: '/chat/:chatroomId', element: <Chat /> },
+			{ path: '/chat', element: <Chat /> }, // 채팅 목록
+			{ path: '/chat/:chatroomId', element: <Chat /> }, // 채팅 상세
 			{ path: '/community', element: <Community /> },
 			{ path: '/community/:id', element: <CommunityDetail /> },
 			{ path: '/community/write', element: <CommunityWrite /> },

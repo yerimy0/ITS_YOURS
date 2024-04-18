@@ -10,6 +10,7 @@ const CommentsSchema = require('./schemas/Comments');
 const WishesSchema = require('./schemas/Wishes');
 const CategorySchema = require('./schemas/Category');
 const ChatroomSchema = require('./schemas/Chatroom');
+const ChatMessageSchema = require('./schemas/ChatMessage');
 const VerifyCodeSchema = require('./schemas/VerifyCode');
 
 exports.Members = mongoose.model('Members', MembersSchema);

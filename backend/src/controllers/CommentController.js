@@ -6,7 +6,7 @@ const {
 	ConflictError,
 	ForbiddenError,
 	UnauthorizedError,
-} = require('../config/customError');
+} = require('../config/CustomError');
 
 /**
  * 커뮤니티 댓글 작성 service
@@ -24,7 +24,7 @@ const createComment = async (req, res, next) => {
 		if (!nickName) {
 			throw new BadRequestError('로그인 후 이용해주세요.');
 		}
-		if(!content) {
+		if (!content) {
 			throw new BadRequestError('필수 내용을 입력 후 등록해주세요.');
 		}
 		const newComment = await CommentService.createComment(postId, content, nickName, profilePic);

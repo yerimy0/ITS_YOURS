@@ -1,67 +1,44 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchQnaData, qnaMailing } from '../../apis/service/AdminQnaApi';
 import styled from 'styled-components';
-import Paginator, { PaginatorContext } from '../Paginator';
+// import Paginator from '../Paginator';
 import AdminModal from './AdminModal';
+import DateSlicer from '../../utils/dateSlicer';
 
 function AdminQnA() {
-	const perPage = 10; // 페이지 당
-	const { currentPage } = useContext(PaginatorContext);
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [qnaList, setQnaList] = useState([]);
 	const [selectedQna, setSelectedQna] = useState(null);
-	const [qnaList, setQnaList] = useState([
-		{
-			id: '정한석',
-			title: '불량거래지롱헤헤',
-			date: '2024-04-01',
-			detail: '사기가 의심돼요.',
-			Process: '미처리',
-		},
-		{
-			id: '더글라스 하퍼',
-			title: '불량거래지롱헤헤',
-			date: '2024-04-01',
-			detail: '이것도 사기인 것 같아요.',
-			Process: '미처리',
-		},
-
-		// ...추가 데이터
-	]);
-
-	const handleRowClick = qna => {
-		if (qna.Process === '처리') return; // 이미 처리된 경우 동작안함.
-		setSelectedQna(qna); // 선택된 qna 설정
-		setIsModalOpen(true);
-	};
-
-	const handleAnswerSubmit = (answer, qnaId) => {
-		const updatedQnaList = qnaList.map(qna =>
-			qna.id === qnaId ? { ...qna, Process: '처리' } : qna,
-		);
-		setQnaList(updatedQnaList);
-
-		// TODO: nodemailer를 사용하여 이메일보내기
-
-		setIsModalOpen(false); // 모달 닫기
-	};
-
-	const currentData = qnaList.slice(currentPage * perPage, (currentPage + 1) * perPage);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const loadData = async () => {
 			try {
-				const res = await fetch('https://api.example.com/qna');
-				if (!res.ok) {
-					throw new Error('네트워크 응답이 올바르지 않습니다.');
-				}
-				const result = await res.json();
-				setData(result);
+				const data = await fetchQnaData();
+				setQnaList(data.map(item => ({ ...item, isCompleted: item.isCompleted || '미처리' })));
 			} catch (error) {
-				console.error('QnA 데이터를 가져오는 중 오류발생: ', error);
+				console.error('QnA 데이터 로딩 중 오류 발생:', error);
 			}
 		};
 
-		fetchData();
+		loadData();
 	}, []);
+
+	const handleRowClick = qna => {
+		setSelectedQna(qna);
+		setIsModalOpen(true);
+	};
+
+	const handleAnswerSubmit = async (answer, qnaId) => {
+		try {
+			await qnaMailing(); // 메일 발송 API 호출
+			setQnaList(
+				qnaList.map(item => (item.id === qnaId ? { ...item, isCompleted: '처리' } : item)),
+			);
+			setIsModalOpen(false);
+		} catch (error) {
+			console.error('답변 등록 및 메일 발송 실패:', error);
+		}
+	};
 
 	return (
 		<>
@@ -78,26 +55,27 @@ function AdminQnA() {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{currentData.map(qna => (
-							<TableRow
-								key={qna.id}
-								onClick={() => !qna.Processed && handleRowClick(qna)}
-								processed={qna.Process === '처리'}
-							>
-								<TableCell>{qna.id}</TableCell>
+						{qnaList.map(qna => (
+							<TableRow key={qna.id} onClick={() => handleRowClick(qna)}>
+								<TableCell>{qna.nickname}</TableCell>
 								<TableCell>{qna.title}</TableCell>
-								<TableCell>{qna.date}</TableCell>
-								<TableCell>{qna.detail}</TableCell>
+								<TableCell>{DateSlicer(qna.createdAt)}</TableCell>
+								<TableCell>{qna.content}</TableCell>
 								<TableCell>
-									<ReportProcess processed={qna.Process === '처리'}>{qna.Process}</ReportProcess>
+									<ReportProcess>{qna.isCompleted}</ReportProcess>
 								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>
 				</Table>
-				<PaginationContainer>
-					<Paginator totalItems={qnaList.length} perPage={perPage} />
-				</PaginationContainer>
+				{/* <PaginationContainer>
+					<Paginator
+						currentPage={currentPage}
+						totalItems={totalItems}
+						itemsCountPerPage={perPage}
+						onChange={handlePageChange}
+					/>
+				</PaginationContainer> */}
 			</Container>
 			{selectedQna && (
 				<AdminModal
@@ -183,7 +161,7 @@ const ReportProcess = styled.div`
 	letter-spacing: -0.14px;
 `;
 
-const PaginationContainer = styled.div`
-	padding-top: 20px;
-	text-align: center;
-`;
+// const PaginationContainer = styled.div`
+// 	padding-top: 20px;
+// 	text-align: center;
+// `;

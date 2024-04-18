@@ -8,7 +8,7 @@ const {
 	ConflictError,
 	ForbiddenError,
 	UnauthorizedError,
-} = require('../config/customError');
+} = require('../config/CustomError');
 
 /**
  * 회원가입 controller
@@ -23,16 +23,18 @@ const signUp = async (req, res, next) => {
 
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 
+		const isRegisteredId = await memberService.getMember(id);
+		const isRegisteredEmail = await memberService.getMemberByEmail(email);
+
 		if (!id || !password || !realName || !email || !region || !schoolName || !nickName) {
 			throw new BadRequestError('필수 정보를 모두 입력하세요.');
 		}
-
-		const isRegisterd = await memberService.getMember(id);
-
-		if (isRegisterd) {
-			throw new ConflictError('이미 가입된 회원입니다.');
+		if (isRegisteredId) {
+			throw new ConflictError('이미 사용중인 아이디입니다.');
 		}
-
+		if (isRegisteredEmail) {
+			throw new ConflictError('이미 사용중인 이메일입니다.');
+		}
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
 			id,
@@ -213,7 +215,7 @@ async function findId(req, res) {
 	try {
 		const { realName, email } = req.body;
 		const userId = await memberService.findIdByNameAndEmail(realName, email);
-		res.json({ message: '사용자의 아이디를 찾았습니다.', userId });
+		res.status(200).json({ message: '사용자의 아이디를 찾았습니다.', userId });
 	} catch (error) {
 		throw new BadRequestError(error.message);
 	}
@@ -223,23 +225,41 @@ async function resetPassword(req, res) {
 	try {
 		const { id, email } = req.body;
 		const reset = await memberService.resetPassword(id, email);
-		res.json({ message: '임시 비밀번호가 이메일로 전송되었습니다.', reset });
+		res.status(200).json({ message: '임시 비밀번호가 이메일로 전송되었습니다.', reset });
 	} catch (error) {
 		throw new BadRequestError(error.message);
 	}
 }
 
-// 이메일 인증코드
-async function sendVerifyEmail(req, res) {
+// 이메일 인증코드 전송
+async function sendVerifyEmail(req, res, next) {
 	try {
 		const { email } = req.body;
 		if (!email) {
 			throw new BadRequestError('이메일을 입력해주세요');
 		}
 		await memberService.sendEmailVerification(email);
-		res.json({ message: '인증코드가 이메일로 전송되었습니다.' });
-	} catch (error) {
-		throw new BadRequestError(error.message);
+		res.status(200).json({ message: '인증코드가 이메일로 전송되었습니다.' });
+	} catch (err) {
+		next(err);
+	}
+}
+
+// 인증코드 검증
+async function verifyCode(req, res, next) {
+	try {
+		const { email, code } = req.body;
+		if (!email || !code) {
+			throw new BadRequestError('이메일과 인증코드를 모두 입력해주세요.');
+		}
+		const isVerified = await memberService.chkVerifyCode(email, code);
+		if (isVerified) {
+			res.status(200).json({ message: '인증에 성공했습니다.' });
+		} else {
+			throw new BadRequestError('인증코드가 일치하지 않습니다.');
+		}
+	} catch (err) {
+		next(err);
 	}
 }
 
@@ -253,4 +273,5 @@ module.exports = {
 	findId,
 	resetPassword,
 	sendVerifyEmail,
+	verifyCode,
 };

@@ -1,24 +1,81 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+	width: 100%;
 	height: 100vh;
-	padding: 150px;
+	overflow-y: scroll;
+
+	.link_wrap {
+		width: 248px;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.logo_link {
+	}
+
+	.sign_logo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		/* padding: 50px 0; */
+		padding-top: 50px;
+	}
+	.sign_logo img {
+		max-width: 150px;
+	}
+
+	.login_container {
+		width: 400px;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	.add_option {
+		/* padding: 20px; */
+	}
+
+	.profile_form {
+		width: 50%;
+		margin: 30px auto 0;
+	}
+
+	.inline_wrap {
+		position: relative;
+		display: flex;
+		justify-content: center;
+	}
+
+	.join_btn {
+		width: 50%;
+		margin: 0 auto;
+		display: block;
+		margin-top: 15px;
+	}
+	@media screen and (max-width: 500px) {
+		.login_container {
+			width: 90%;
+		}
+		.profile_form {
+			width: 90%;
+		}
+		.join_btn {
+			width: 90%;
+		}
+	}
 `;
 
 export const Logo = styled.img`
-	max-width: auto;
-	max-height: 60px;
-	margin-bottom: 2rem;
+	/* width: 100%;
+	margin: 0 auto; */
 `;
 
 export const Form = styled.form`
 	display: flex;
 	flex-direction: column;
-	width: 400px;
+	width: 100%;
 `;
 
 export const Input = styled.input`
@@ -26,14 +83,20 @@ export const Input = styled.input`
 	padding: 0.7rem;
 	border: 1px solid #009dff;
 	border-radius: 20px;
-	color: #79747e;
+
+	&::placeholder {
+		color: #79747e; // placeholder 글씨 색상을 회색으로 설정
+	}
+	&:disabled {
+		background-color: #f3f4f6; // 비활성화 상태의 배경색도 설정할 수 있습니다.
+	}
 `;
 
 export const Button = styled.button`
 	padding: 0.7rem;
 	margin-top: 1rem;
 	font-size: 14px;
-	width: 400px;
+	width: 100%;
 	background-color: #009dff;
 	color: white;
 	border: none;
@@ -58,10 +121,16 @@ export const ClickableWrapper = styled.div`
 `;
 
 export const Div1 = styled.div`
-  font-size: 1rem;
-  color: #79747E;
-  &:hover {
-    text-decoration: underline;
+	font-size: 14px;
+	padding-bottom: 3px;
+	border-bottom: 1px solid transparent;
+	color: #79747e;
+
+	&:hover {
+		border-color: #79747e;
+		transition: all 0.3s ease;
+		box-sizing: border-box;
+	}
 `;
 
 export const Container = styled.div`
@@ -71,9 +140,9 @@ export const Container = styled.div`
 `;
 
 export const Div2 = styled.div`
-	font-size: 1rem;
+	font-size: 14px;
 	color: #79747e;
-	padding: 0 10px;
+	padding: 0;
 `;
 
 export const SocialLogin = styled.div`
@@ -111,24 +180,36 @@ export const SocialButton = styled.button`
 `;
 
 export const ProfileWrapper = styled.div`
-	position: relative;
+	/* position: relative; */
+	/* display: flex;
+	justify-content: center;
+	margin-bottom: 2rem; */
 	display: flex;
 	justify-content: center;
-	margin-bottom: 2rem;
+
+	.profile_wrap {
+		position: relative;
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		object-fit: cover;
+		background-color: #009dff;
+	}
 `;
 
 export const ProfileImage = styled.img`
+	width: 100%;
+	height: auto;
 	width: 120px;
 	height: 120px;
 	border-radius: 50%;
 	object-fit: cover;
-	background-color: #009dff;
 `;
 
 export const IconWrapper = styled.label`
 	position: absolute;
-	bottom: 0;
 	right: 0;
+	bottom: 0;
 	width: 35px;
 	height: 35px;
 	border-radius: 50%;
@@ -170,19 +251,21 @@ export const ErrorMessage = styled.div`
 export const EmailErrorMessage = styled.div`
 	color: #b3261e;
 	font-size: 12px;
-	margin-right: 220px;
+	/* margin-right: 220px; */
 `;
 
 export const VerificationErrorMessage = styled.div`
 	color: #b3261e;
 	font-size: 12px;
-	margin-right: 270px;
+	/* margin-right: 270px; */
 `;
 
 export const InlineGroup = styled.div`
-	display: flex;
-	align-items: stretch;
-	width: 400px;
+	width: 50%;
+	margin: 0 auto;
+	@media (max-width: 500px) {
+		width: 90%;
+	}
 `;
 
 export const StyledInput = styled.input`
@@ -192,7 +275,11 @@ export const StyledInput = styled.input`
 	margin-top: 1rem;
 	border: 1px solid #009dff;
 	border-radius: 20px;
-	color: #79747e;
+	color: #000; // 입력하는 글씨의 색상을 검정색으로 설정
+
+	&::placeholder {
+		color: #79747e; // placeholder의 글씨 색상을 회색으로 설정
+	}
 `;
 
 export const SmallButton = styled.button`
@@ -211,9 +298,14 @@ export const SmallButton = styled.button`
 
 export const InputWithIcon = styled.div`
 	position: relative;
-	display: flex;
-	align-items: center;
-	width: 400px;
+	/* display: flex; */
+	/* align-items: center; */
+	width: 50%;
+	margin: 0 auto;
+
+	@media (max-width: 500px) {
+		width: 90%;
+	}
 `;
 
 export const InputIcon = styled.img`

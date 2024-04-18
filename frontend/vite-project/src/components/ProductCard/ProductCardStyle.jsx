@@ -23,7 +23,7 @@ const ProductImage = styled.img`
 	width: 100%;
 	/* margin: 0 auto;
 	display: block; */
-	/* object-fit: cover; */
+	object-fit: cover;
 	/* height: 254px; */
 	/* align-items: flex-start; */
 	box-shadow: 0 2px 8px #777;

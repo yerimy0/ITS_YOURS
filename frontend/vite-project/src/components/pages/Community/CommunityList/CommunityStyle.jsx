@@ -15,6 +15,10 @@ const Box = styled.div`
 		font-weight: 400;
 		margin-top: 30px;
 	}
+
+	.comm_list_wrap {
+		min-height: 400px;
+	}
 	@media (max-width: 1000px) {
 		width: 100%;
 		padding: 0 15px;
@@ -80,6 +84,13 @@ const Button = styled.button`
 	font-size: 16px;
 	color: #009dff;
 	padding: 10px 20px;
+
+	&:hover {
+		border: 1px solid #009dff;
+		background-color: #009dff;
+		color: #fff;
+		transition: all 0.5s;
+	}
 	@media (max-width: 1000px) {
 		padding: 5px 10px;
 		font-size: 14px;
@@ -95,7 +106,8 @@ const ListOfOne = styled.div`
 	margin-bottom: 10px;
 
 	@media (max-width: 1000px) {
-		display: block;
+		/* display: block; */
+		align-items: flex-end;
 		.list_border {
 			border-bottom: 1px solid #ddd;
 		}
@@ -113,6 +125,10 @@ const ListRight = styled(ListOfOne)`
 	.comment_icon {
 		width: 18px;
 		height: 18px;
+	}
+
+	@media (max-width: 1000px) {
+		width: auto;
 	}
 `;
 const LeftBottom = styled.div`
@@ -142,7 +158,7 @@ const ListLeft = styled.div`
 	width: 80%;
 	text-align: left;
 	@media (max-width: 1000px) {
-		width: 100%;
+		/* width: 100%; */
 	}
 `;
 

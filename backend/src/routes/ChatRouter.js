@@ -23,7 +23,7 @@ router.get('/:memberId', validateToken, getChatroomList);
 router.post('/:chatroomId', validateToken, saveChatMessage);
 
 //채팅방 메세지 보기
-router.get('/chat/detail/:id', validateToken, getDetailChat);
+router.get('/detail/:chatroomId', validateToken, getDetailChat);
 
 //좋아요 반영하기
 router.put('/thumbsUp', validateToken, giveGoodManners);

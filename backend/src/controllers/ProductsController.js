@@ -76,7 +76,12 @@ const getProductInfo = async (req, res) => {
 const insertProduct = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
-		let imgUrls = req.file ? req.file.location : '';
+		// let imgUrls = req.files ? req.files.location : '';
+
+		console.log(req.files);
+		if (req.files) {
+			imgUrls = req.files.map(file => file.location);
+		}
 		if (!userId) {
 			throw new BadRequestError('로그인이 필요한 서비스입니다.');
 		}

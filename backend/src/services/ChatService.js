@@ -18,6 +18,11 @@ async function createChatroom(buyerId, productId, sellerId) {
 	return createChatroom;
 }
 
+async function getOneChatRoom(chatroomId) {
+	const result = await Chatroom.findOne({ _id: chatroomId });
+	return result;
+}
+
 async function getChatroomList(memberId) {
 	const chatList = await Chatroom.find({ $or: [{ buyerId: memberId }, { sellerId: memberId }] });
 	return chatList;
@@ -33,7 +38,23 @@ async function saveChatMessage(roomObjId, { auth, content }) {
 	return chat;
 }
 
-async function getDetailChat() {}
+async function getDetailChat(chatroomId) {
+	const chatroom = await Chatroom.findOne({ _id: chatroomId })
+		.populate('productId', 'name price imgUrls')
+		.populate('buyerId', 'nickName profilePic')
+		.populate('sellerId', 'nickName profilePic');
+
+	const messages = await ChatMessage.find({ chatRoomId: chatroomId })
+		.populate('chatAuth', 'content')
+		.sort({ chatCreatedAt: -1 });
+
+	return {
+		chatroom,
+		messages,
+	};
+
+	return chatroom;
+}
 
 async function giveGoodManners(memberId) {
 	try {
@@ -79,6 +100,7 @@ async function quitChatroom(chatroomId) {
 
 module.exports = {
 	createChatroom,
+	getOneChatRoom,
 	getChatroomList,
 	saveChatMessage,
 	getDetailChat,

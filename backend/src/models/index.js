@@ -23,3 +23,4 @@ exports.Comments = mongoose.model('Comments', CommentsSchema);
 exports.Wishes = mongoose.model('Wisher', WishesSchema);
 exports.Category = mongoose.model('Category', CategorySchema);
 exports.Chatroom = mongoose.model('Chatroom', ChatroomSchema);
+exports.ChatMessage = mongoose.model('ChatMessageSchema', ChatMessageSchema);

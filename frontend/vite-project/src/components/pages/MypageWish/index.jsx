@@ -45,6 +45,8 @@ function WishContainer() {
 		navigate(`/product/${productId}`);
 	};
 
+	console.log('dd', userWishListToShow);
+
 	return (
 		<>
 			<WishsWrap>
@@ -62,7 +64,9 @@ function WishContainer() {
 								<ProductCard
 									key={wishItem.productId._id}
 									productId={wishItem.productId._id}
-									imgUrls={wishItem.productId.imgUrls}
+									imgUrls={wishItem.productId.imgUrls.map(url =>
+										url.replace('coversum', 'cover500'),
+									)}
 									name={wishItem.productId.name}
 									price={wishItem.productId.price}
 									onClick={() => handleProductClick(wishItem.productId._id)}

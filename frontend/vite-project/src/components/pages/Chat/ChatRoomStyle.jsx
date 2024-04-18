@@ -48,6 +48,7 @@ const SendText = styled.div`
 	font-size: 16px;
 	line-height: 22px;
 	color: #fff;
+	word-break: break-all;
 
 	@media screen and (max-width: 1030px) {
 		width: 65%;
@@ -70,6 +71,7 @@ const ReplyText = styled.div`
 	padding: 20px 20px 20px 25px;
 	background: #fff;
 	font-size: 16px;
+	word-break: break-all;
 
 	@media screen and (max-width: 1030px) {
 		width: 65%;

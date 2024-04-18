@@ -62,7 +62,7 @@ function ProfileEditForm({ userInfo }) {
 		return Object.values(newErrors).every(error => error === '');
 	};
 
-	const handleSubmit = async event => {
+	async function handleSubmit(event) {
 		event.preventDefault();
 		if (!handleValidation()) {
 			console.error('유효성 검사 실패:', errors);
@@ -73,27 +73,28 @@ function ProfileEditForm({ userInfo }) {
 			alert('프로필을 업데이트하기 전에 이메일 인증을 완료해주세요.');
 			return;
 		}
+
 		const formData = new FormData();
 		formData.append('userId', userId);
-		if (password) {
-			formData.append('password', password);
-		}
-		formData.append('name', name);
+		formData.append('password', password);
+		formData.append('realName', name);
 		formData.append('email', email);
-		formData.append('university', university);
-		formData.append('nickname', nickname);
+		formData.append('schoolName', university);
+		formData.append('nickName', nickname);
 		if (profileImage) {
-			formData.append('profileImage', profileImage);
+			formData.append('profilePic', profileImage);
 		}
+
+		console.log('Sending data:', Object.fromEntries(formData));
 
 		try {
 			const response = await updateMyPageData(formData);
 			console.log('프로필 업데이트 완료:', response);
 			await fetchProfileData(); // 업데이트 후 프로필 데이터를 비동기적으로 다시 불러옵니다.
 		} catch (error) {
-			console.error('프로필 업데이트 오류:', error);
+			console.error('프로필 업데이트 오류:', error.response ? error.response.data : error);
 		}
-	};
+	}
 
 	const handleOpenModal = () => setModalOpen(true);
 	const handleCloseModal = () => setModalOpen(false);

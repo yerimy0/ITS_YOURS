@@ -66,12 +66,12 @@ export default OnSaleCard;
 
 const ProductCardWrap = styled.div`
 	display: flex;
-	padding: 10px;
+	/* padding: 10px; */
 `;
 
 const ImageBox = styled.div`
 	border: 1px solid #ded8e1;
-	padding: 10px;
+	/* padding: 10px; */
 	&:hover {
 		cursor: pointer;
 	}

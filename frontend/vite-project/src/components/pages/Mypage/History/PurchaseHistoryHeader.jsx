@@ -17,11 +17,13 @@ const InPurchaseHistoryHeader = styled.section`
 `;
 
 const PurchaseHistoryTitle = styled.h1`
-	font-family: SUIT;
-	font-size: 48px;
-	font-style: normal;
-	font-weight: 700;
+	font-size: 57px;
+	font-weight: 400;
 	line-height: normal;
+
+	@media (max-width: 500px) {
+		font-size: 46px;
+	}
 `;
 
 export default PurchaseHistoryHeader;

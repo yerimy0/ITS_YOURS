@@ -19,7 +19,7 @@ export const Greeting = styled.h1`
 		font-size: 42px;
 	}
 
-	@media (max-width: 1000px) {
+	@media (max-width: 800px) {
 		h4 {
 			font-weight: 600;
 		}
@@ -167,7 +167,9 @@ export const ProfileImage = styled.div`
 export const FlexColumn = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: 0 15px;
+	@media (max-width: 1000px) {
+		padding: 0 15px;
+	}
 `;
 
 export const ProfileSection = styled.div`

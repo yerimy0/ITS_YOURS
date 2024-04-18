@@ -37,11 +37,9 @@ const InSalesHistoryHeader = styled.section`
 `;
 
 const SalesHistoryTitle = styled.h1`
-	font-family: SUIT;
-	font-size: 48px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: normal;
+	font-size: 57px;
+	font-weight: 400;
+	margin-top: 60px;
 `;
 
 const SalesHistorySection2 = styled.div`
@@ -54,20 +52,20 @@ const SalesHistorySection2 = styled.div`
 const SalesStatus = styled.div`
 	display: flex;
 	width: 1000px;
+	gap: 30px;
 	align-items: center;
 	justify-content: center;
 	height: 50px;
 `;
 
 const ForSale = styled.button`
-	width: 207px;
+	width: 200px;
+	padding: 12px 0;
 	border-radius: 20px;
 	text-align: center;
-	font-family: SUIT;
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 300;
 	border: 0px;
-	height: 100%;
 	&:hover {
 		cursor: pointer;
 	}
@@ -77,13 +75,10 @@ const ForSale = styled.button`
 `;
 
 const SalesCompleted = styled(ForSale)`
-	width: 207px;
+	width: 200px;
 	border-radius: 20px;
 	text-align: center;
-	font-family: SUIT;
-	font-size: 20px;
-	font-weight: 300;
-	height: 100%;
+	font-size: 18px;
 	&:hover {
 		cursor: pointer;
 	}

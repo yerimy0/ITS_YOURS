@@ -18,4 +18,5 @@ const PurchaseHistoryWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	margin-top: 60px;
 `;

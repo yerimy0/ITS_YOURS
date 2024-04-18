@@ -97,6 +97,7 @@ function SignUpForm() {
 					}
 				} else {
 					console.log('회원가입 성공:', data);
+					alert('회원가입을 축하드립니다! 이제너해와 함께해요 :)');
 					navigate('/login');
 				}
 			} catch (e) {

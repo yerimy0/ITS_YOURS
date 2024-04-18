@@ -164,6 +164,7 @@ const updateMember = async (req, res, next) => {
 		if (chkDeleted.deletedAt) {
 			throw new BadRequestError('이미 탈퇴한 회원의 정보는 수정할 수 없습니다.');
 		}
+
 		const memberInfo = await memberService.updateMember(
 			userId,
 			password,

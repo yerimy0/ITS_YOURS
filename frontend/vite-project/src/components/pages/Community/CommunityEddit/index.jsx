@@ -43,14 +43,11 @@ function CommuEddit({ id }) {
 
 	function handleImageChange(e) {
 		const file = e.target.files[0];
-		const reader = new FileReader();
-		reader.onload = () => {
-			setImgUrl(reader.result);
-			setWriteCommu({ ...writeCommu, photos: reader.result });
-		};
-
 		if (file) {
-			reader.readAsDataURL(file);
+			setWriteCommu({ ...writeCommu, photos: file });
+			setImgUrl(URL.createObjectURL(file));
+		} else {
+			setWriteCommu({ ...writeCommu, photos: '/commu_default_pic.png' });
 		}
 	}
 
@@ -58,15 +55,22 @@ function CommuEddit({ id }) {
 		fileInputRef.current.click();
 	}
 
-	function handleSubmit() {
-		async function update() {
-			await UpdateCommunnity(id, writeCommu);
-			navigate('/community');
-		}
-		if (writeCommu.title !== '' && writeCommu.content !== '') {
-			update();
-		} else {
-			setIsBlanked(true);
+	async function handleSubmit() {
+		console.log(writeCommu.photos);
+		try {
+			if (writeCommu.title !== '' && writeCommu.content !== '') {
+				const formData = new FormData();
+				formData.append('title', writeCommu.title);
+				formData.append('content', writeCommu.content);
+				formData.append('photos', writeCommu.photos);
+
+				await UpdateCommunnity(id, formData);
+				navigate('/community');
+			} else {
+				setIsBlanked(true);
+			}
+		} catch (err) {
+			console.error(err);
 		}
 	}
 
@@ -74,7 +78,12 @@ function CommuEddit({ id }) {
 		<Box>
 			<CommuHeader />
 			<WriteForm>
-				<InputBox>
+				<InputBox
+					encType="multipart/form-data"
+					onSubmit={e => {
+						e.preventDefault();
+					}}
+				>
 					{isBlanked && <RedStar>제목과 내용을 모두 입력해주세요 :)</RedStar>}
 					<InputTitle
 						placeholder="제목을 입력해주세요"
@@ -95,6 +104,7 @@ function CommuEddit({ id }) {
 						</ButtonUpload>
 						<input
 							type="file"
+							name="photos"
 							ref={fileInputRef}
 							onChange={handleImageChange}
 							style={{ display: 'none' }}

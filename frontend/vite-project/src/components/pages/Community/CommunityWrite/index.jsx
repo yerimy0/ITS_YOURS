@@ -33,7 +33,6 @@ function CommuWrite() {
 			setImgUrl(URL.createObjectURL(file));
 		} else {
 			setWriteCommu({ ...writeCommu, photos: '/commu_default_pic.png' });
-			setImgUrl('/commu_default_pic.png');
 		}
 	}
 
@@ -48,7 +47,7 @@ function CommuWrite() {
 				const formData = new FormData();
 				formData.append('title', writeCommu.title);
 				formData.append('content', writeCommu.content);
-				formData.append('img2', writeCommu.photos.name);
+				formData.append('photos', writeCommu.photos);
 
 				await PostCommunity(formData);
 				navigate('/community');

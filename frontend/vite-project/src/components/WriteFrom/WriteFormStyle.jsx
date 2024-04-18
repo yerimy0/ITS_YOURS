@@ -272,9 +272,6 @@ const CloseButton = styled.button`
 	}
 `;
 
-const Alert = styled.div`
-	color: grey;
-`;
 export {
 	RegisterBox,
 	Box,

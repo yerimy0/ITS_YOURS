@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import AdminReport from '../../components/Admin/AdminReport';
 import AdminQna from '../../components/Admin/AdminQnA';
+import { useNavigate } from 'react-router-dom';
 
 function AdminPage() {
 	const [activeNav, setActiveNav] = useState('report');
+	const navigate = useNavigate();
 
 	const renderContent = () => {
 		switch (activeNav) {
@@ -20,7 +22,7 @@ function AdminPage() {
 	return (
 		<AdminLayout>
 			<HeaderBar>
-				<NavLogo src="./main_logo.png" alt="Logo" />
+				<NavLogo src="'../../../public/main_logo.png" alt="Logo" onClick={() => navigate('/')} />
 				<Header>안녕하세요 관리자님👋🏼,</Header>
 			</HeaderBar>
 			<ContentArea>
@@ -56,6 +58,9 @@ const AdminNavBar = styled.nav`
 const NavLogo = styled.img`
 	width: 200px;
 	height: 80px;
+	&:hover {
+		cursor: pointer;
+	}
 `;
 
 const NavItem = styled.div`

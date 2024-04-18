@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Modal from '../Modal';
 import DateSlicer from '../../utils/dateSlicer';
 
-function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, chat, onDelete }) {
+function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, chat, on
 		<>
 			<ProductCardWrap>
 				<ImageBox>
-					<ForSalesListImage src={imgUrls} alt="" />
+					<ForSalesListImage src={imgUrls} alt="" onClick={() => navigate(`/product/${id}`)} />
 				</ImageBox>
 				<SalesInfo>
 					<Title>{name}</Title>
@@ -34,10 +34,8 @@ function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, chat, on
 						<Won>원</Won>
 					</PriceWrapper>
 					<Stats>
-						<Icon src="../../../heart.svg" alt="Wish" />
+						<Icon src="/heart.svg" alt="Wish" />
 						<Status>{wishescount}</Status>
-						<Icon src="../../../chat_bubble_oval.svg" alt="Chat" />
-						<Status>{chat}</Status>
 					</Stats>
 					<Date>{DateSlicer(createdAt)}</Date>
 				</SalesInfo>
@@ -67,14 +65,14 @@ export default OnSaleCard;
 const ProductCardWrap = styled.div`
 	display: flex;
 	padding: 10px;
-	&:hover {
-		cursor: pointer;
-	}
 `;
 
 const ImageBox = styled.div`
 	border: 1px solid #ded8e1;
 	padding: 10px;
+	&:hover {
+		cursor: pointer;
+	}
 `;
 
 const ForSalesListImage = styled.img`

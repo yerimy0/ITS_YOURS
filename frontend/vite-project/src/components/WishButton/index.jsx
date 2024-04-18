@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import WishBtn from './WishButtonStyle';
 import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import UserIdContext from '../../context/UserIdContext';
 import { fetchUserWishList, toggleWishlist } from '../../apis/service/WishApi';
+import styled from 'styled-components';
 
 // WishButton 컴포넌트
 function WishButton({ productId }) {
@@ -60,5 +60,15 @@ function WishButton({ productId }) {
 
 	return <WishBtn onClick={wishCountHandler}>{WishIcon}</WishBtn>;
 }
+
+const WishBtn = styled.button`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: none;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+`;
 
 export default WishButton;

@@ -183,7 +183,7 @@ const UpdateBooks = styled.div`
 	justify-content: center;
 	gap: 5%;
 	margin-top: 15px;
-
+	cursor: pointer;
 	div {
 		display: block;
 		margin-top: 30px;
@@ -279,8 +279,8 @@ const Button = styled.button`
 `;
 
 const Img = styled.img`
-display: block;
-	width: 100%;a(0, 0, 0.25);
+	display: block;
+	width: 100%;
 `;
 
 const SchoolBox = styled.div`

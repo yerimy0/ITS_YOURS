@@ -56,7 +56,6 @@ const SoldContainer = () => {
 							name={sold.name}
 							sellDate={sold.sellDate}
 							like={sold.wishesCount}
-							chat={sold.chat}
 							onDelete={() => handleDelete(sold._id)}
 							id={sold._id}
 							createdAt={sold.createdAt}

@@ -19,7 +19,7 @@ const {
 const signUp = async (req, res, next) => {
 	try {
 		const { id, password, realName, email, schoolName, nickName } = req.body;
-		let profilePic = req.file ? req.file.path : ''; // 파일 경로 저장
+		let profilePic = req.file ? req.file.location : ''; // 파일 경로 저장
 
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 
@@ -33,7 +33,7 @@ const signUp = async (req, res, next) => {
 			throw new ConflictError('이미 사용중인 아이디입니다.');
 		}
 		if (isRegisteredEmail) {
-			throw new ConflictError('이미 사용중인 이메일입니다.');
+			throw new BadRequestError('이미 사용중인 이메일입니다.');
 		}
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
@@ -146,7 +146,8 @@ const getSellerInfo = async (req, res, next) => {
 const updateMember = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
-		const { password, realName, email, schoolName, nickName, profilePic } = req.body;
+		let profilePic = req.file ? req.file.location : '';
+		const { password, realName, email, schoolName, nickName } = req.body;
 
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 
@@ -234,7 +235,7 @@ async function resetPassword(req, res) {
 // 이메일 인증코드 전송
 async function sendVerifyEmail(req, res, next) {
 	try {
-		const { email } = req.body;
+		const { email, code } = req.body;
 		if (!email) {
 			throw new BadRequestError('이메일을 입력해주세요');
 		}
@@ -254,7 +255,7 @@ async function verifyCode(req, res, next) {
 		}
 		const isVerified = await memberService.chkVerifyCode(email, code);
 		if (isVerified) {
-			res.status(200).json({ message: '인증에 성공했습니다.' });
+			res.status(200).json({ isVerified });
 		} else {
 			throw new BadRequestError('인증코드가 일치하지 않습니다.');
 		}

@@ -52,6 +52,8 @@ async function login(id, password) {
 					nickName: member.nickName,
 					profilePic: member.profilePic,
 					isAdmin: member.isAdmin,
+					schoolName: member.schoolName,
+					_id: member._id,
 				},
 			},
 			process.env.ACCESS_TOKEN_SECRET,

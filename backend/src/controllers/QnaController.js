@@ -45,6 +45,7 @@ const getAllQna = async (req, res, next) => {
 const updateQna = async (req, res, next) => {
 	try {
 		const id = req.user.id;
+		const isAdmin = req.user.isAdmin;
 		const nickname = await qnaService.getNickName(id);
 
 		const { qnaId } = req.query;
@@ -56,7 +57,7 @@ const updateQna = async (req, res, next) => {
 		if (!id) {
 			throw new BadRequestError('로그인 후 이용해주세요.');
 		}
-		if (nickname !== chkDeleted.nickname) {
+		if (nickname !== chkDeleted.nickname || !isAdmin) {
 			throw new UnauthorizedError('권한이 없습니다.');
 		}
 		if (chkDeleted.deletedAt) {
@@ -81,6 +82,7 @@ const updateQna = async (req, res, next) => {
 const deleteQna = async (req, res, next) => {
 	try {
 		const id = req.user.id;
+		const isAdmin = req.user.isAdmin;
 		const nickname = await qnaService.getNickName(id);
 
 		const { qnaId } = req.query;
@@ -91,7 +93,7 @@ const deleteQna = async (req, res, next) => {
 		if (!id) {
 			throw new BadRequestError('로그인 후 이용해주세요.');
 		}
-		if (nickname !== chkDeleted.nickname) {
+		if (nickname !== chkDeleted.nickname || !isAdmin) {
 			throw new UnauthorizedError('권한이 없습니다.');
 		}
 		if (chkDeleted.deletedAt) {
@@ -126,16 +128,21 @@ const getMyQna = async (req, res, next) => {
 };
 
 // Q&A 답변 처리 + 이메일 전송
-const answerQna = async (req, res) => {
+const answerQna = async (req, res, next) => {
 	const { qnaId } = req.params; // URL에서 qnaId 추출
 	const { answer } = req.body; // 요청 본문에서 답변 내용 추출
 
 	try {
+		const isAdmin = req.user.isAdmin;
+
+		if (!isAdmin) {
+			throw new UnauthorizedError('권한이 없습니다.');
+		}
 		// 답변 저장 및 이메일 전송
 		const result = await qnaService.answerQna(qnaId, answer);
 		res.status(200).json(result);
-	} catch (error) {
-		res.status(500).json({ message: error.message });
+	} catch (err) {
+		next(err);
 	}
 };
 

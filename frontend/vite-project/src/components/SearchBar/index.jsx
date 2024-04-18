@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { CgSearch } from 'react-icons/cg';
 import {
 	SearchWrap,
 	SearchInputBox,
@@ -70,7 +69,6 @@ function SearchBar({ onSearchResults }) {
 				)}
 				<SearchButton onClick={handleSearch}>
 					<img src="/search_btn.png" alt="검색버튼" />
-					{/* <CgSearch size="30" /> */}
 				</SearchButton>
 			</SearchInputBox>
 		</SearchWrap>

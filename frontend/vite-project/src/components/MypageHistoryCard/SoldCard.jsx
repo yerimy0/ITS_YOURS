@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../Modal';
-import DateSlicer from '../../utils/dateSlicer';
 
 function SoldCard({ isCompleted, imgUrls, price, name, like, chat, createdAt, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,10 +31,8 @@ function SoldCard({ isCompleted, imgUrls, price, name, like, chat, createdAt, on
 						<Won>원</Won>
 					</PriceWrapper>
 					<Stats>
-						<Icon src="../../../heart.svg" alt="Wish" />
-						<Status>{like}</Status>
-						<Icon src="../../../chat_bubble_oval.svg" alt="Chat" />
-						<Status>{chat}</Status>
+						<Icon src="/heart.svg" alt="Wish" />
+						<Status>{wishescount}</Status>
 					</Stats>
 					{isCompleted && <SoldCompleteDiv>판매완료</SoldCompleteDiv>}
 				</SalesInfo>

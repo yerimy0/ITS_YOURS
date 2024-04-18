@@ -55,7 +55,7 @@ const SoldContainer = () => {
 							price={sold.price}
 							name={sold.name}
 							sellDate={sold.sellDate}
-							like={sold.wishesCount}
+							wishescount={sold.wishesCount}
 							onDelete={() => handleDelete(sold._id)}
 							id={sold._id}
 							createdAt={sold.createdAt}

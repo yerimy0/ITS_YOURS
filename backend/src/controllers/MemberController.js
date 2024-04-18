@@ -82,9 +82,10 @@ const login = async (req, res, next) => {
 		if (!loginResult) {
 			throw new ForbiddenError('아이디 또는 비밀번호를 잘못 입력하셨습니다.');
 		}
-		const { accessToken } = loginResult;
+		const { accessToken, isAdmin } = loginResult;
 		res.status(200).json({
 			accessToken: accessToken,
+			isAdmin: isAdmin,
 			message: '로그인에 성공했습니다!',
 		});
 	} catch (err) {

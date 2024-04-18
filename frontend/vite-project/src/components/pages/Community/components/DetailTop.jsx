@@ -36,9 +36,9 @@ function DetailTopSection({ detail }) {
 	const date = DateSlicer(detail.createdAt);
 	return (
 		<DetailTop>
-			<TitleBox>
-				<ListTitle>
-					<h3>{detail.title}</h3>
+			<TitleBox className="commu_title_box">
+				<ListTitle className="commu_detail_wrap">
+					<h3 className="commu_detail_title">{detail.title}</h3>
 				</ListTitle>
 				<Buttons>
 					<Button

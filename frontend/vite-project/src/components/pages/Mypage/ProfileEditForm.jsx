@@ -26,6 +26,7 @@ function ProfileEditForm({ userInfo }) {
 	const [nickname, setNickname] = useState(userInfo?.nickname || '');
 	const [errors, setErrors] = useState({});
 	const [emailVerificationCode, setEmailVerificationCode] = useState('');
+	const [isEmailVerified, setEmailVerified] = useState(false);
 	const [isModalOpen, setModalOpen] = useState(false);
 
 	useEffect(() => {
@@ -65,6 +66,11 @@ function ProfileEditForm({ userInfo }) {
 		event.preventDefault();
 		if (!handleValidation()) {
 			console.error('유효성 검사 실패:', errors);
+			return;
+		}
+
+		if (!isEmailVerified) {
+			alert('프로필을 업데이트하기 전에 이메일 인증을 완료해주세요.');
 			return;
 		}
 		const formData = new FormData();
@@ -141,6 +147,7 @@ function ProfileEditForm({ userInfo }) {
 					emailVerificationCode={emailVerificationCode}
 					setEmailVerificationCode={setEmailVerificationCode}
 					emailError={errors.email}
+					setEmailVerified={setEmailVerified} // 콜백 전달
 				/>
 				<UniversitySearchForm
 					university={university}

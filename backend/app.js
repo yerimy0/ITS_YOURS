@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const logger = require('morgan');
 
@@ -15,8 +16,6 @@ const chatRouter = require('./src/routes/ChatRouter');
 const cors = require('cors');
 
 const mongoose = require('mongoose');
-
-require('dotenv').config();
 
 mongoose.connect(
 	`mongodb+srv://${process.env.DB_ID}:${process.env.DB_PW}@itsyours.gerbwmz.mongodb.net/`,

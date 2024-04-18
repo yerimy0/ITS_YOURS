@@ -90,13 +90,6 @@ async function answerQna(qnaId, answer) {
 
 	// 답변 이메일 전송
 	const emailResult = await sendQnAReplyEmail(qna.email, answer);
-	const html = 'QnaAnswerForm';
-	await sendCustomEmail({
-		to: qna.email,
-		subject: '[이제너해] QnA 답변입니다.',
-		templateName: html,
-		replacements: answer,
-	});
 
 	return { updatedQna, emailResult };
 }

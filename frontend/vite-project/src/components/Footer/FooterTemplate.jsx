@@ -6,15 +6,15 @@ function Footer() {
 	return (
 		<Content>
 			<Icons>
-				<span>
+				<a href="https://kdt-gitlab.elice.io/sw_track/class_08/web_project_ii/team08/its-yours2">
 					<BsGitlab />
-				</span>
-				<span>
+				</a>
+				<a href="https://quark-dianella-5e6.notion.site/8-ef850840febd4931939e33d674e6964e?pvs=4">
 					<SiNotion />
-				</span>
-				<span>
+				</a>
+				<a href="https://www.figma.com/files/project/217859975/Team-project?fuid=1329746140332818240">
 					<SiFigma />
-				</span>
+				</a>
 			</Icons>
 			<Line>
 				{' '}

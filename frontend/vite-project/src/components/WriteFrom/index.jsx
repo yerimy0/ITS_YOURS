@@ -14,13 +14,16 @@ import {
 } from './WriteFormStyle';
 import InputImg from './components/InputImg';
 import { Section, Section2, Section3, Section4 } from './components/Section';
-import { useEffect, useState, createContext } from 'react';
+import { useEffect, useState, useContext, createContext } from 'react';
 import { Register } from '../../apis/service/product.api';
+import UserIdContext from '../../context/UserIdContext';
 
 export const SetRegisterContext = createContext();
 export const RegisterContext = createContext();
 
 function WriteForm() {
+	const { id } = useContext(UserIdContext);
+
 	const navigate = useNavigate();
 	const [isValid, setIsValid] = useState(false);
 	const [register, setRegister] = useState({
@@ -34,6 +37,11 @@ function WriteForm() {
 	});
 
 	const { name, price, author, publisher, condition, description, imgUrls } = register;
+
+	useEffect(() => {
+		console.log(id);
+		if (id == '') navigate('/login');
+	}, []);
 
 	useEffect(() => {
 		const isFilled = Object.values(register).every(value => value !== '');

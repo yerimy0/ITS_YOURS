@@ -1,4 +1,13 @@
-const ChatService = require('../services/ChatService');
+const chatService = require('../services/ChatService');
+const ObjectId = require('mongodb').ObjectId;
+const {
+	NotFoundError,
+	BadRequestError,
+	InternalServerError,
+	ConflictError,
+	ForbiddenError,
+	UnauthorizedError,
+} = require('../config/CustomError');
 
 /*
  * 채팅방 생성 controller
@@ -10,16 +19,37 @@ const createChatroom = async (req, res, next) => {
 	try {
 		// 필요한값 상품 id, 판매자 id, 구매자 id,
 		const buyerId = req.user._id;
-		const { productId, sellerId, buyerNickName } = req.params;
+		const { productId, sellerId } = req.params;
 
-		const newChatroom = await ChatService.createChatroom(buyerId, productId, sellerId);
+		const newChatroom = await chatService.createChatroom(buyerId, productId, sellerId);
 
 		res.status(200).json(newChatroom);
 	} catch (err) {
-		console.log(err);
+		next(err);
 	}
 };
 
+//채팅방 목록 불러오기
+const getChatroomList = async (req, res, next) => {
+	try {
+		const memberId = req.user._id;
+		const memberObjectId = new ObjectId(memberId);
+
+		console.log(memberObjectId);
+		if (!memberId) {
+			throw new BadRequestError('로그인 후 이용해주세요.');
+		}
+		const chatList = await chatService.getChatroomList(memberObjectId);
+
+		res.status(200).json(chatList);
+	} catch (err) {
+		next(err);
+	}
+};
+
+const saveChatMessage = async (req, res, next) => {};
 module.exports = {
 	createChatroom,
+	getChatroomList,
+	saveChatMessage,
 };

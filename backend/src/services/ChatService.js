@@ -18,6 +18,14 @@ async function createChatroom(buyerId, productId, sellerId) {
 	return createChatroom;
 }
 
+async function getChatroomList(memberId) {
+	const chatList = await Chatroom.find({ $or: [{ buyerId: memberId }, { sellerId: memberId }] });
+	return chatList;
+}
+
+async function saveChatMessage() {}
 module.exports = {
 	createChatroom,
+	getChatroomList,
+	saveChatMessage,
 };

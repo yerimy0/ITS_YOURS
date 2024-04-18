@@ -10,7 +10,6 @@ import {
 	ProductTwoInput,
 	SmallButton,
 	BigButton,
-	Alert,
 } from './WriteFormStyle';
 import InputImg from './components/InputImg';
 import { Section, Section2, Section3, Section4 } from './components/Section';
@@ -52,9 +51,8 @@ function WriteForm() {
 		const dbReq = indexedDB.open('tempSave', 1);
 		dbReq.addEventListener('success', function (e) {
 			const db = e.target.result;
-
-			const transaction = db.transaction(['product'], 'readwrite');
-			const store = transaction.objectStore('product');
+			const transaction = db.transaction(['productTemp'], 'readwrite');
+			const store = transaction.objectStore('productTemp');
 			const request = store.getAll();
 
 			request.onsuccess = function (e) {
@@ -64,6 +62,37 @@ function WriteForm() {
 					setRegister(latestData);
 				}
 			};
+		});
+		dbReq.addEventListener('upgradeneeded', function (e) {
+			let db = e.target.result;
+			let oldVersion = e.oldVersion;
+			if (oldVersion === 0) {
+				db.createObjectStore('productTemp', {
+					keyPath: 'id',
+					autoIncrement: true,
+				});
+				dbReq.onerror = e => {
+					console.log('fail', e);
+				};
+				dbReq.onsuccess = e => {
+					console.log('성공');
+					db = dbReq.result;
+					dbReq.addEventListener('success', function (e) {
+						const db = e.target.result;
+						const transaction = db.transaction(['productTemp'], 'readwrite');
+						const store = transaction.objectStore('productTemp');
+						const request = store.getAll();
+
+						request.onsuccess = function (e) {
+							const savedData = e.target.result;
+							if (savedData.length > 0) {
+								const latestData = savedData[0];
+								setRegister(latestData);
+							}
+						};
+					});
+				};
+			}
 		});
 	}, []);
 
@@ -87,16 +116,38 @@ function WriteForm() {
 		});
 	}
 
-	function tempSave() {
-		const dbReq = indexedDB.open('tempSave', 1);
-		let db;
+	async function tempSave() {
+		let dbReq = indexedDB.open('tempSave', 1);
+
+		// if (dbReq) {
+		// 	indexedDB.deleteDatabase('tempSave');
+		// }
+		// dbReq = indexedDB.open('tempSave', 1);
+		// let db;
+		// dbReq.onupgradeneeded = e => {
+		// 	db = e.target.result;
+		// };
+
 		dbReq.addEventListener('success', function (e) {
-			db = e.target.result;
+			let db = e.target.result;
 
-			const transaction = db.transaction(['product'], 'readwrite');
+			const transaction = db.transaction(['productTemp'], 'readwrite');
+			let store, request;
 
-			const store = transaction.objectStore('product');
-			const request = store.put(register);
+			if (transaction) {
+				store = transaction.objectStore('productTemp');
+			} else {
+				db.createObjectStore('productTemp', {
+					keyPath: 'id',
+					autoIncrement: true,
+				});
+				const newTransaction = db.transaction(['productTemp'], 'readwrite');
+				console.log({ newTransaction });
+				store = newTransaction.objectStore('productTemp');
+			}
+			console.log({ store });
+			request = store.put(register);
+			console.log({ request });
 
 			request.onsuccess = function () {
 				console.log('임시 저장되었습니다.');
@@ -119,11 +170,18 @@ function WriteForm() {
 		dbReq.addEventListener('upgradeneeded', function (e) {
 			db = e.target.result;
 			let oldVersion = e.oldVersion;
-			if (oldVersion < 1) {
-				const productStore = db.createObjectStore('product', {
+			if (oldVersion === 0) {
+				db.createObjectStore('productTemp', {
 					keyPath: 'id',
 					autoIncrement: true,
 				});
+				dbReq.onerror = e => {
+					console.log('fail', e);
+				};
+				dbReq.onsuccess = e => {
+					console.log('성공');
+					db = dbReq.result;
+				};
 			}
 		});
 	}
@@ -172,11 +230,6 @@ function WriteForm() {
 							등록하기
 						</BigButton>
 					</RegButtons>
-					<Alert>
-						* 시크릿 브라우징 모드와 같은 환경 등에서는 임시저장 기능을 사용할 수 없습니다. 환경을
-						확인해주십시오! <br />
-						또한, 임시저장이 되지 않는 경우, 쿠키를 지우고 다시 시도하세요!
-					</Alert>
 				</RegisterBox>
 			</RegisterContext.Provider>
 		</SetRegisterContext.Provider>

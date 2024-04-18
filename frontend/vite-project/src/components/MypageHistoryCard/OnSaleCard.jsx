@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Modal from '../Modal';
 import DateSlicer from '../../utils/dateSlicer';
 
-function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, chat, onDelete }) {
+function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 
@@ -34,10 +34,8 @@ function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, chat, on
 						<Won>원</Won>
 					</PriceWrapper>
 					<Stats>
-						<Icon src="../../../heart.svg" alt="Wish" />
+						<Icon src="/heart.svg" alt="Wish" />
 						<Status>{wishescount}</Status>
-						<Icon src="../../../chat_bubble_oval.svg" alt="Chat" />
-						<Status>{chat}</Status>
 					</Stats>
 					<Date>{DateSlicer(createdAt)}</Date>
 				</SalesInfo>

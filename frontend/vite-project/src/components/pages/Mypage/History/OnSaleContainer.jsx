@@ -27,16 +27,15 @@ const OnSaleContainer = () => {
 	const handleDelete = async prodId => {
 		try {
 			const response = await deleteSaleItem(id, prodId);
-			// 여기서 response 객체가 유효한지 확인합니다.
 			if (!response) {
-				throw new Error('No response from the server.');
+				throw new Error('서버의 응답이 없습니다.');
 			}
 			if (response.status === 200) {
 				const newItems = saleItems.filter(item => item._id !== prodId);
-				setSaleItems([...newItems]); // 배열을 복사하여 상태를 갱신합니다.
+				setSaleItems([...newItems]);
 			} else {
-				console.error('Server responded with status:', response.status);
-				throw new Error('Failed to delete the item on the server.');
+				console.error('서버가 응답한 Status:', response.status);
+				throw new Error('서버에서 아이템 삭제가 실패했습니다..');
 			}
 		} catch (error) {
 			console.error('아이템 삭제 실패:', error);
@@ -54,8 +53,7 @@ const OnSaleContainer = () => {
 							price={onsale.price}
 							name={onsale.name}
 							createdAt={onsale.createdAt}
-							wishescount={onsale.wishescount}
-							chat={onsale.chat}
+							wishescount={onsale.wishesCount}
 							onDelete={() => handleDelete(onsale._id)}
 							id={onsale._id}
 						/>

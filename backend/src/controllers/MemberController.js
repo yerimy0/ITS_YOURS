@@ -257,7 +257,7 @@ async function verifyCode(req, res, next) {
 		}
 		const isVerified = await memberService.chkVerifyCode(email, code);
 		if (isVerified) {
-			res.status(200).json({ message: 'true' });
+			res.status(200).json({ isVerified });
 		} else {
 			throw new BadRequestError('인증코드가 일치하지 않습니다.');
 		}

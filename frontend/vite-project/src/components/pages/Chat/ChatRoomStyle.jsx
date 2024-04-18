@@ -89,7 +89,7 @@ const InputWrap = styled.div`
 	padding: 8px 20px;
 `;
 
-const InputText = styled.input`
+const TextAreaText = styled.textarea`
 	width: 100%;
 	font-size: 16px;
 
@@ -111,5 +111,5 @@ export {
 	ReplyTime,
 	ReplyText,
 	InputWrap,
-	InputText,
+	TextAreaText,
 };

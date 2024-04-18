@@ -4,9 +4,12 @@ import styled from 'styled-components';
 function PurchaseHistoryCard({ imgUrls, price, name, sellerId }) {
 	return (
 		<>
-			<PurchaseCardWrap>
+			<PurchaseCardWrap className="purch_list">
 				<ImageBox>
-					<ForPurchaseListImage src={imgUrls} alt="" />
+					<ForPurchaseListImage
+						src={imgUrls.map(url => url.replace('coversum', 'cover500'))}
+						alt=""
+					/>
 				</ImageBox>
 				<PurchaseListTitle>
 					{name}
@@ -24,9 +27,14 @@ export default PurchaseHistoryCard;
 
 const PurchaseCardWrap = styled.div`
 	display: flex;
-	margin-left: 50px;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+	padding: 10px 15px;
+	border-top: 1px solid #eee;
+
 	&:hover {
-		cursor: pointer;
+		background: #f4f4f4;
 	}
 `;
 
@@ -47,25 +55,24 @@ const ForPurchaseListImage = styled.img`
 
 const PurchaseListTitle = styled.div`
 	color: var(--M3-black, #000);
-	font-family: SUIT;
 	font-size: 20px;
-	font-style: normal;
-	font-weight: 300;
 	letter-spacing: 0.15px;
-	margin-top: 40px;
 	margin-left: 10px;
+
+	@media (max-width: 500px) {
+		font-size: 16px;
+	}
 `;
 
 const PurchaseListPrice = styled.div`
 	display: flex;
+	margin-top: 50px;
 `;
 
 const PurchaseListPriceNum = styled.div`
 	color: var(--M3-black, #000);
-	font-family: SUIT;
 	font-size: 24px;
-	font-style: normal;
-	font-weight: 700;
+	font-weight: 600;
 	display: inline-block;
 	margin: 0px;
 `;

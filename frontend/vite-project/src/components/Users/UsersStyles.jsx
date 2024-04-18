@@ -67,10 +67,7 @@ export const Wrapper = styled.div`
 	}
 `;
 
-export const Logo = styled.img`
-	/* width: 100%;
-	margin: 0 auto; */
-`;
+export const Logo = styled.img``;
 
 export const Form = styled.form`
 	display: flex;
@@ -81,14 +78,15 @@ export const Form = styled.form`
 export const Input = styled.input`
 	margin-top: 1rem;
 	padding: 0.7rem;
-	border: 1px solid #009dff;
+	border: 1px solid #ddd;
 	border-radius: 20px;
+	font-size: 16px;
 
 	&::placeholder {
 		color: #79747e; // placeholder 글씨 색상을 회색으로 설정
 	}
 	&:disabled {
-		background-color: #f3f4f6; // 비활성화 상태의 배경색도 설정할 수 있습니다.
+		background-color: #f1f1f1; // 비활성화 상태의 배경색도 설정할 수 있습니다.
 	}
 `;
 
@@ -201,11 +199,14 @@ export const Title = styled.h1`
 	justify-content: center;
 	padding-bottom: 30px;
 	font-size: 48px;
-	font-style: normal;
-	font-weight: 700;
+	font-weight: 500;
 	line-height: 64px;
 	text-align: center;
 	margin: 0;
+
+	@media (max-width: 850px) {
+		font-size: 36px;
+	}
 `;
 
 export const ErrorMessage = styled.div`
@@ -239,12 +240,13 @@ export const StyledInput = styled.input`
 	padding: 0.7rem;
 	margin-right: 0.5rem;
 	margin-top: 1rem;
-	border: 1px solid #009dff;
+	border: 1px solid #ddd;
+	font-size: 16px;
 	border-radius: 20px;
 	color: #000; // 입력하는 글씨의 색상을 검정색으로 설정
 
 	&::placeholder {
-		color: #79747e; // placeholder의 글씨 색상을 회색으로 설정
+		color: #999; // placeholder의 글씨 색상을 회색으로 설정
 	}
 `;
 

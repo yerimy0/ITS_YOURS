@@ -28,7 +28,7 @@ async function createPost(title, content, nickName, profilePic, schoolName, phot
  */
 async function getAllPosts() {
 	// 삭제되지 않은 모든 게시글을 조회
-	const posts = await Posts.find({ deletedAt: { $exists: false } });
+	const posts = await Posts.find({ deletedAt: { $exists: false } }).sort({ _id: -1 });
 
 	return posts;
 }

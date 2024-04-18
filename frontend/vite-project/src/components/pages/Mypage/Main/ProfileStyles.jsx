@@ -19,7 +19,7 @@ export const Greeting = styled.h1`
 		font-size: 42px;
 	}
 
-	@media (max-width: 1000px) {
+	@media (max-width: 800px) {
 		h4 {
 			font-weight: 600;
 		}
@@ -60,16 +60,14 @@ export const Button = styled.button`
 	padding: 20px 30px;
 	margin-top: 30px;
 	width: 100%;
-	color: #000;
 	font-size: 18px;
-	font-weight: bold;
+	font-weight: 500;
 	background-color: #fff;
 	border: 1px solid #ded8e1;
 	border-radius: 20px;
 	cursor: pointer;
 
 	&:hover {
-		background-color: #fff;
 		border: 1px solid #009dff;
 		color: #000;
 	}
@@ -120,7 +118,6 @@ export const InfoBox = styled.div`
 	}
 
 	&:not(:nth-child(2)):hover {
-		border-color: #ded8e1;
 		cursor: auto;
 	}
 `;
@@ -167,7 +164,9 @@ export const ProfileImage = styled.div`
 export const FlexColumn = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: 0 15px;
+	@media (max-width: 1000px) {
+		padding: 0 15px;
+	}
 `;
 
 export const ProfileSection = styled.div`

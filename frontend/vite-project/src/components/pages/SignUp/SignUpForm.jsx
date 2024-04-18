@@ -119,6 +119,7 @@ function SignUpForm() {
 				onSelectUniversity={handleSelectUniversity}
 			/>
 			<ProfileImageUploader onImageSelected={setProfileImage} />
+
 			<ProfileForm
 				userId={userId}
 				setUserId={setUserId}

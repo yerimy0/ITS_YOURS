@@ -24,8 +24,8 @@ function ProfileImageUploader({ onImageSelected, initialPreview }) {
 				<ProfileImage src={preview} alt={preview ? '' : '기본 프로필 이미지'} />
 				<form
 					className="form-box"
-					action="/api/members/signup"
-					method="POST"
+					action="/api/members/me"
+					method="PUT"
 					enctype="multipart/form-data"
 				>
 					<HiddenFileInput

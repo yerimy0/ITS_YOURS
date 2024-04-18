@@ -30,11 +30,25 @@ const Paginator = ({ totalItems, itemsCountPerPage, currentPage, onChange }) => 
 		onChange(page);
 	};
 
+	const getPageRange = () => {
+		const pagesPerBlock = 5; // 한 블록에 표시할 페이지 수
+		const startPage = Math.floor(localCurrentPage / pagesPerBlock) * pagesPerBlock;
+		const endPage = Math.min(startPage + pagesPerBlock, totalPage);
+		const pageRange = [];
+
+		for (let i = startPage; i < endPage; i++) {
+			pageRange.push(i);
+		}
+
+		return pageRange;
+	};
+
 	const contextValue = {
 		totalPage,
 		currentPage: localCurrentPage,
 		handleClickNav,
 		handleClickPage,
+		getPageRange,
 	};
 
 	return (

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../Modal';
 
-function SoldCard({ isCompleted, imgUrls, price, name, like, chat, createdAt, onDelete }) {
+function SoldCard({ isCompleted, imgUrls, price, name, wishescount, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const openDeleteModal = () => {

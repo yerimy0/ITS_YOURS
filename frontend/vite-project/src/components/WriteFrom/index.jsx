@@ -10,7 +10,6 @@ import {
 	ProductTwoInput,
 	SmallButton,
 	BigButton,
-	Alert,
 } from './WriteFormStyle';
 import InputImg from './components/InputImg';
 import { Section, Section2, Section3, Section4 } from './components/Section';
@@ -231,11 +230,6 @@ function WriteForm() {
 							등록하기
 						</BigButton>
 					</RegButtons>
-					<Alert>
-						* 시크릿 브라우징 모드와 같은 환경 등에서는 임시저장 기능을 사용할 수 없습니다. 환경을
-						확인해주십시오! <br />
-						또한, 임시저장이 되지 않는 경우, 쿠키를 지우고 다시 시도하세요!
-					</Alert>
 				</RegisterBox>
 			</RegisterContext.Provider>
 		</SetRegisterContext.Provider>

@@ -1,9 +1,8 @@
-const { Members, Wishes } = require('../models/index');
+const { Members, Wishes, VerifyCode } = require('../models/index');
 const { sendPasswordEmail, sendVerifyEmail } = require('../utils/Mailer');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-const emailVerificationCodes = {}; // 이메일과 인증코드를 저장할 객체
 
 /**
  * 회원가입 service
@@ -53,6 +52,8 @@ async function login(id, password) {
 					nickName: member.nickName,
 					profilePic: member.profilePic,
 					isAdmin: member.isAdmin,
+					schoolName: member.schoolName,
+					_id: member._id,
 				},
 			},
 			process.env.ACCESS_TOKEN_SECRET,
@@ -184,25 +185,33 @@ async function resetPassword(id, email) {
 
 	await sendPasswordEmail(email, verificationCode); // 수정된 부분
 
-	return { updatePassword }; // 'emailResult'는 정의되지 않았으므로 이 부분도 확인 필요
+	return { updatePassword };
 }
-// 인증코드 전송
+
 async function sendEmailVerification(email) {
 	const verificationCode = generateTempPassword(4);
-	emailVerificationCodes[email] = verificationCode; // 인증코드 저장
-	await sendVerifyEmail(email, verificationCode);
+	const verifyInfo = {
+		email: email,
+		code: verificationCode,
+	};
 
-	// 인증코드를 반환하지 않고 저장만 합니다.
+	const existingVerifyInfo = await VerifyCode.findOne({ email: email });
+
+	if (existingVerifyInfo) {
+		await VerifyCode.updateOne({ email: email }, { $set: { code: verificationCode } });
+	} else {
+		await VerifyCode.create(verifyInfo);
+	}
+
+	await sendVerifyEmail(email, verificationCode);
 }
 
-// 인증코드 검증
-async function verifyCode(email, code) {
-	const storedCode = emailVerificationCodes[email];
-	console.log(email);
-	console.log(code);
-	console.log(storedCode);
-	if (storedCode && storedCode === code) {
-		delete emailVerificationCodes[email]; // 인증 후 코드 삭제
+// 인증코드 검증 함수
+async function chkVerifyCode(email, code) {
+	const storedCode = await VerifyCode.findOne({ email: email }); // db에서 해당 이메일의 코드 검색
+	if (storedCode && storedCode.code === code) {
+		// 인증 후 코드 삭제
+		await VerifyCode.deleteOne({ email: email });
 		return true;
 	} else {
 		return false;
@@ -220,5 +229,5 @@ module.exports = {
 	findIdByNameAndEmail,
 	resetPassword,
 	sendEmailVerification,
-	verifyCode,
+	chkVerifyCode,
 };

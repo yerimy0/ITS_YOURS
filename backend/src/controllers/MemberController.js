@@ -33,7 +33,7 @@ const signUp = async (req, res, next) => {
 			throw new ConflictError('이미 사용중인 아이디입니다.');
 		}
 		if (isRegisteredEmail) {
-			throw new ConflictError('이미 사용중인 이메일입니다.');
+			throw new BadRequestError('이미 사용중인 이메일입니다.');
 		}
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
@@ -152,6 +152,7 @@ const updateMember = async (req, res, next) => {
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 
 		const chkDeleted = await memberService.getMember(userId);
+		const isRegisteredEmail = await memberService.getMemberByEmail(email);
 
 		if (!userId) {
 			throw new BadRequestError('로그인이 필요한 서비스입니다.');
@@ -164,7 +165,9 @@ const updateMember = async (req, res, next) => {
 		if (chkDeleted.deletedAt) {
 			throw new BadRequestError('이미 탈퇴한 회원의 정보는 수정할 수 없습니다.');
 		}
-
+		if (isRegisteredEmail) {
+			throw new BadRequestError('이미 사용중인 이메일입니다.');
+		}
 		const memberInfo = await memberService.updateMember(
 			userId,
 			password,
@@ -216,7 +219,7 @@ async function findId(req, res) {
 	try {
 		const { realName, email } = req.body;
 		const userId = await memberService.findIdByNameAndEmail(realName, email);
-		res.json({ message: '사용자의 아이디를 찾았습니다.', userId });
+		res.status(200).json({ message: '사용자의 아이디를 찾았습니다.', userId });
 	} catch (error) {
 		throw new BadRequestError(error.message);
 	}
@@ -226,41 +229,41 @@ async function resetPassword(req, res) {
 	try {
 		const { id, email } = req.body;
 		const reset = await memberService.resetPassword(id, email);
-		res.json({ message: '임시 비밀번호가 이메일로 전송되었습니다.', reset });
+		res.status(200).json({ message: '임시 비밀번호가 이메일로 전송되었습니다.', reset });
 	} catch (error) {
 		throw new BadRequestError(error.message);
 	}
 }
 
 // 이메일 인증코드 전송
-async function sendVerifyEmail(req, res) {
+async function sendVerifyEmail(req, res, next) {
 	try {
 		const { email, code } = req.body;
 		if (!email) {
 			throw new BadRequestError('이메일을 입력해주세요');
 		}
 		await memberService.sendEmailVerification(email);
-		res.json({ message: '인증코드가 이메일로 전송되었습니다.' });
-	} catch (error) {
-		throw new BadRequestError(error.message);
+		res.status(200).json({ message: '인증코드가 이메일로 전송되었습니다.' });
+	} catch (err) {
+		next(err);
 	}
 }
 
 // 인증코드 검증
-async function verifyCode(req, res) {
+async function verifyCode(req, res, next) {
 	try {
-		const { code } = req.body;
-		if (!code) {
-			throw new BadRequestError('인증코드를 입력해주세요.');
+		const { email, code } = req.body;
+		if (!email || !code) {
+			throw new BadRequestError('이메일과 인증코드를 모두 입력해주세요.');
 		}
-		const isVerified = await memberService.verifyCode(code);
+		const isVerified = await memberService.chkVerifyCode(email, code);
 		if (isVerified) {
-			res.json({ message: '인증에 성공했습니다.' });
+			res.status(200).json({ message: 'true' });
 		} else {
 			throw new BadRequestError('인증코드가 일치하지 않습니다.');
 		}
-	} catch (error) {
-		throw new BadRequestError(error.message);
+	} catch (err) {
+		next(err);
 	}
 }
 

@@ -165,6 +165,7 @@ const updateProduct = async (req, res, next) => {
 //상품정보 삭제
 const deleteProduct = async (req, res, next) => {
 	try {
+		const isAdmin = req.user.isAdmin;
 		const { prodId } = req.query;
 		const prodObjectId = new ObjectId(prodId); // 상품의 _id 값
 
@@ -174,8 +175,8 @@ const deleteProduct = async (req, res, next) => {
 		// 현재 로그인한 사용자의 ID
 		const userId = req.user.id;
 
-		// 상품을 올린 사용자와 현재 로그인한 사용자가 다른 경우
-		if (product.sellerId !== userId) {
+		// 상품을 올린 사용자와 현재 로그인한 사용자가 다르거나, 관리자가 아닌 경우
+		if (product.sellerId !== userId || !isAdmin) {
 			throw new ForbiddenError('상품을 올린 사용자만이 삭제할 수 있습니다.');
 		}
 		if (product.deletedAt) {
@@ -242,7 +243,9 @@ const deleteSalesHis = async (req, res, next) => {
 		if (productInfo.deletedAt) {
 			throw new BadRequestError('이미 삭제된 상품입니다.');
 		}
-
+		if (sellerId != productInfo.sellerId) {
+			throw new BadRequestError('판매자만 자신의 판매내역을 삭제할 수 있습니다.');
+		}
 		const deleteSalesHis = await productsService.deleteSalesHis(sellerId, prodObjectId);
 
 		if (!deleteSalesHis) {

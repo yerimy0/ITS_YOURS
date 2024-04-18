@@ -1,10 +1,10 @@
 import { NavLink } from 'react-router-dom';
 import { RightNav, LeftNav, HeaderMain, Nav, NavWrap } from './HeaderSytle';
 import { useState, useContext, useEffect } from 'react';
-import { RxHamburgerMenu } from 'react-icons/rx';
 import { useLocation } from 'react-router-dom';
 import UserIdContext from '../../context/UserIdContext';
 import { logout } from '../../apis/service/LoginApi';
+import { useNavigate } from 'react-router-dom';
 
 // ================= 토글박스 뜨면 스크롤 안되도록 막기
 // ================= 토글박스안에 메인로고 이미지 클릭하면 홈으로 이동할수있도록 link 컴포넌트 사용!
@@ -13,6 +13,7 @@ function Header() {
 	const [isAuth, setIsAuth] = useState(false);
 	const [isToggled, setIsToggled] = useState(false);
 	const { id } = useContext(UserIdContext);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		console.log(id);
@@ -40,6 +41,7 @@ function Header() {
 	async function handleLogout() {
 		await logout();
 		window.location.reload();
+		navigate(`/`);
 	}
 
 	const location = useLocation();

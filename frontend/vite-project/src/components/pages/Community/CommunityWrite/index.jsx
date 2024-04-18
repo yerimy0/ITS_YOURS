@@ -67,6 +67,7 @@ function CommuWrite() {
 						value={writeCommu.title}
 						onChange={handleInputChange}
 					/>
+					<div className="line_style"></div>
 					<InputContent
 						placeholder="글 내용을 입력해주세요"
 						name="content"
@@ -74,8 +75,21 @@ function CommuWrite() {
 						onChange={handleInputChange}
 					/>
 					<div className="InputPics">
-						<ButtonUpload onClick={handleClick}>
-							{imgUrl ? <Img src={imgUrl} alt="Uploaded Image" /> : ' 📸 Upload a file'}
+						<ButtonUpload onClick={handleClick} className="commu_file">
+							{/* {imgUrl ? <Img src={imgUrl} alt="Uploaded Image" /> : ' 📸 Upload a file'} */}
+							{imgUrl ? (
+								<Img src={imgUrl} alt="Uploaded Image" />
+							) : (
+								<>
+									<img
+										src="/file_i4.png"
+										className="file_icon"
+										alt="File Icon"
+										style={{ marginRight: '8px', width: '26px', height: '26px' }}
+									/>
+									Upload a file
+								</>
+							)}
 						</ButtonUpload>
 						<input
 							type="file"

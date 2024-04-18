@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../Modal';
-import DateSlicer from '../../utils/dateSlicer';
 
 function SoldCard({ isCompleted, imgUrls, price, name, like, chat, createdAt, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);

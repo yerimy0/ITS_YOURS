@@ -24,6 +24,7 @@ function AdminModal({ isOpen, onClose, qna, onAnswer }) {
 		if (answer.trim()) {
 			onAnswer(answer, qna.id);
 			setAnswer('');
+			onClose();
 		} else {
 			alert('답변을 입력해주세요.');
 		}

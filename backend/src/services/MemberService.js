@@ -1,4 +1,4 @@
-const { Members, Wishes } = require('../models/index');
+const { Members, Wishes, VerifyCode } = require('../models/index');
 const { sendPasswordEmail, sendVerifyEmail } = require('../utils/Mailer');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -188,9 +188,25 @@ async function resetPassword(id, email) {
 
 async function sendEmailVerification(email) {
 	const verificationCode = generateTempPassword(4);
+	const verifyInfo = {
+		email: email,
+		code: verificationCode,
+	};
+	// 인증정보 저장
+	await VerifyCode.create(verifyInfo);
 	await sendVerifyEmail(email, verificationCode);
+}
 
-	return verificationCode; // 수정된 부분
+// 인증코드 검증 함수
+async function chkVerifyCode(email, code) {
+	const storedCode = await VerifyCode.findOne({ email: email, code: code }); // db에서 해당 이메일의 코드 검색
+	if (storedCode && storedCode.code === code) {
+		// 인증 후 코드 삭제
+		await VerifyCode.deleteMany({ email: email });
+		return true;
+	} else {
+		return false;
+	}
 }
 
 module.exports = {
@@ -204,4 +220,5 @@ module.exports = {
 	findIdByNameAndEmail,
 	resetPassword,
 	sendEmailVerification,
+	chkVerifyCode,
 };

@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { RightNav, LeftNav, HeaderMain, Nav, NavWrap } from './HeaderSytle';
 import { useState, useContext, useEffect } from 'react';
-import { RxHamburgerMenu } from 'react-icons/rx';
 import { useLocation } from 'react-router-dom';
 import UserIdContext from '../../context/UserIdContext';
 import { logout } from '../../apis/service/LoginApi';

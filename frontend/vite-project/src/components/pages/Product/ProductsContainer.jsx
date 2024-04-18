@@ -88,18 +88,14 @@ function ProductsContainer() {
 	const endIndex = startIndex + itemsPerPage;
 	const productsToShow = filteredProducts.slice(startIndex, endIndex);
 
-	const scrollToTop = () => {
-		window.scrollTo({ top: 0 });
-	};
-
 	const handlePageChange = pageNumber => {
 		setCurrentPage(pageNumber);
-		scrollToTop();
+		window.scrollTo({ top: 800 });
 	};
 
 	const handleProductClick = productId => {
 		navigate(`/product/${productId}`);
-		scrollToTop();
+		window.scrollTo({ top: 0 });
 	};
 
 	return (

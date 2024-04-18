@@ -33,7 +33,7 @@ const signUp = async (req, res, next) => {
 			throw new ConflictError('이미 사용중인 아이디입니다.');
 		}
 		if (isRegisteredEmail) {
-			throw new ConflictError('이미 사용중인 이메일입니다.');
+			throw new BadRequestError('이미 사용중인 이메일입니다.');
 		}
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
@@ -151,6 +151,7 @@ const updateMember = async (req, res, next) => {
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 
 		const chkDeleted = await memberService.getMember(userId);
+		const isRegisteredEmail = await memberService.getMemberByEmail(email);
 
 		if (!userId) {
 			throw new BadRequestError('로그인이 필요한 서비스입니다.');
@@ -163,7 +164,9 @@ const updateMember = async (req, res, next) => {
 		if (chkDeleted.deletedAt) {
 			throw new BadRequestError('이미 탈퇴한 회원의 정보는 수정할 수 없습니다.');
 		}
-
+		if (isRegisteredEmail) {
+			throw new BadRequestError('이미 사용중인 이메일입니다.');
+		}
 		const memberInfo = await memberService.updateMember(
 			userId,
 			password,

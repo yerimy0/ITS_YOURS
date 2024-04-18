@@ -36,9 +36,9 @@ function DetailTopSection({ detail }) {
 	const date = DateSlicer(detail.createdAt);
 	return (
 		<DetailTop>
-			<TitleBox>
-				<ListTitle>
-					<h3>{detail.title}</h3>
+			<TitleBox className="commu_title_box">
+				<ListTitle className="commu_detail_wrap">
+					<h3 className="commu_detail_title">{detail.title}</h3>
 				</ListTitle>
 				<Buttons>
 					<Button
@@ -49,7 +49,13 @@ function DetailTopSection({ detail }) {
 						수정
 					</Button>
 					<Button onClick={handleOpenModal}>삭제</Button>
-					<Red>신고하기</Red>
+					<Red
+						onClick={() => {
+							navigate(`/asksupportwrite`);
+						}}
+					>
+						신고하기
+					</Red>
 				</Buttons>
 				{modalOpen && (
 					<Modal

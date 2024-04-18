@@ -14,7 +14,7 @@ import {
 	ReplyTime,
 	ReplyText,
 	InputWrap,
-	InputText,
+	TextAreaText,
 } from './ChatRoomStyle';
 import { useParams } from 'react-router-dom';
 
@@ -26,8 +26,8 @@ function ChatRoom() {
 	const [isInputFocused, setIsInputFocused] = useState(false);
 	const [sendMes, setSendMes] = useState('');
 
-	const [receivedMes, setReceivedMes] = useState([]);
-	const [sendMsgStorage, setSendMsgStorage] = useState([]);
+	const [receivedMes, setReceivedMes] = useState([]); // 여기에 전체 (수신 + 발신 )
+	const [sendMsgStorage, setSendMsgStorage] = useState([]); // 프론트 테스트용 (temp) -> 삭제
 
 	const { id } = useContext(UserIdContext);
 	const { chatroomId } = useParams();
@@ -58,9 +58,11 @@ function ChatRoom() {
 		setSendMes(e.target.value);
 	}
 
-	// socket 랜더링시, 방 조인 + 메시지 수신
 	useEffect(() => {
 		socket.emit('ask_join', { roomNum: chatroomId });
+	}, []);
+	// socket 랜더링시, 방 조인 + 메시지 수신
+	useEffect(() => {
 		socket.on('message_broadcast', data => {
 			console.log(data.message);
 			setReceivedMes(data.message);
@@ -90,7 +92,7 @@ function ChatRoom() {
 				</ChatContainer>
 			</ChatSction>
 			<InputWrap className="inputwrap">
-				<InputText
+				<TextAreaText
 					className="inputtext"
 					type="text"
 					placeholder={placeholder}
@@ -99,7 +101,7 @@ function ChatRoom() {
 					onKeyDown={handleKeyDown}
 					onChange={onChange}
 					value={sendMes}
-				></InputText>
+				></TextAreaText>
 			</InputWrap>
 		</ChatRoomWrap>
 	);

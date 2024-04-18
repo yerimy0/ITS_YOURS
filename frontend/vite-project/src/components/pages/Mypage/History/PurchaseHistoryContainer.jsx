@@ -6,14 +6,13 @@ import { fetchPurchaseItems } from './PurchaseApi';
 
 const PurchaseHistoryContainer = () => {
 	const [purchaseList, setPurchaseList] = useState([]);
-	const { id } = useParams(); // useParams를 사용하여 buyerid 가져오기
+	const { id } = useParams();
 
 	useEffect(() => {
 		if (id) {
 			fetchPurchaseItems(id)
 				.then(data => {
-					const validItems = data.filter(item => item.isCompleted === true && item.buyerId);
-					setPurchaseList(validItems);
+					setPurchaseList(data);
 				})
 				.catch(error => {
 					console.error('구매목록을 가져오는데 실패했습니다.', error);

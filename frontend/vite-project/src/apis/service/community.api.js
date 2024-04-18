@@ -46,6 +46,7 @@ async function Getcommets(id) {
 async function PostCommunity(writeCommu) {
 	try {
 		const res = await instance.post(`/community/posts`, writeCommu);
+		console.log(writeCommu);
 		return res.data;
 	} catch (err) {
 		console.log(err);

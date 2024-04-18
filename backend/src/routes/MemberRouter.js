@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const upload = require('../middlewares/MulterConfig');
 
 const {
 	signUp,
@@ -13,7 +14,6 @@ const {
 	verifyCode,
 } = require('../controllers/MemberController');
 const validateToken = require('../middlewares/ValidateToken');
-const upload = require('../config/MulterConfig');
 
 const router = Router();
 // 회원가입

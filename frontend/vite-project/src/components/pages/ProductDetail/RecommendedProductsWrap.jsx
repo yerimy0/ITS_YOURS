@@ -32,7 +32,7 @@ function RecommendedProductsWrap({ product }) {
 	return (
 		<>
 			<RecommendedProducts>
-				<Title>{product.schoolName} 대학교의 다른 상품</Title>
+				<Title>{product.schoolName}의 다른 상품</Title>
 				<ProductContainer>
 					{recommendedProducts
 						.filter(recommendedProduct => recommendedProduct._id !== product._id) // 현재 상품 필터링

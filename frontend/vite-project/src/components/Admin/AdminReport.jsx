@@ -1,36 +1,56 @@
-import React, { useState, useEffect, useContext } from 'react';
-import styled from 'styled-components';
-import Paginator, { PaginatorContext } from '../Paginator/';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Paginator from '../Paginator/';
 import Modal from '../Modal';
+import {
+	Container,
+	TableTitle,
+	Table,
+	TableHead,
+	TableBody,
+	TableRow,
+	TableCell,
+	TableHeader,
+	ReportProcess,
+	PaginationContainer,
+} from './AdminReportStyle';
 
 function AdminReport() {
-	const perPage = 10; // 페이지 당
-	const { currentPage } = useContext(PaginatorContext);
+	const itemsPerPage = 10; // 페이지 당
+	const [currentPage, setCurrentPage] = useState(0);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [selectedItem, setSelectedItem] = useState(null);
-
+	const [selectedReport, setSelectedReport] = useState(null);
+	const navigate = useNavigate();
 	const [data, setData] = useState([
 		{ id: 11, title: '사기신고', date: '2024-04-02', detail: '사기가 의심되용', Process: '미처리' },
 		{ id: 22, title: '사신기고', date: '2024-04-04', detail: '사기가 의심되용', Process: '미처리' },
 	]);
 
+	const handlePageChange = newPage => {
+		setCurrentPage(newPage);
+	};
+
 	const openModal = item => {
 		if (item.Process === '처리') {
 			return;
 		}
-		setSelectedItem(item);
+		setSelectedReport(item);
 		setIsModalOpen(true);
 	};
 
 	const handleConfirm = () => {
 		const newData = data.map(item =>
-			item.id === selectedItem.id ? { ...item, Process: '처리' } : item,
+			item.id === selectedReport.id ? { ...item, Process: '처리' } : item,
 		);
+		navigate('/asksupportlist');
 		setData(newData);
 		setIsModalOpen(false);
 	};
 
-	const currentData = data.slice(currentPage * perPage, (currentPage + 1) * perPage);
+	const paginatedReportList = data.slice(
+		currentPage * itemsPerPage,
+		(currentPage + 1) * itemsPerPage,
+	);
 
 	return (
 		<>
@@ -47,7 +67,7 @@ function AdminReport() {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{currentData.map((item, index) => (
+						{paginatedReportList.map((item, index) => (
 							<TableRow
 								key={index}
 								onClick={() => openModal(item)}
@@ -65,15 +85,20 @@ function AdminReport() {
 					</TableBody>
 				</Table>
 				<PaginationContainer>
-					<Paginator totalItems={data.length} perPage={perPage}></Paginator>
+					<Paginator
+						totalItems={data.length}
+						itemsCountPerPage={itemsPerPage}
+						currentPage={currentPage}
+						onChange={handlePageChange}
+					/>
 				</PaginationContainer>
 			</Container>
 			<Modal
 				isOpen={isModalOpen}
 				onClose={() => setIsModalOpen(false)}
 				title="신고 처리"
-				content={`"${selectedItem?.id}" 사용자를 신고 처리하시겠습니까?`}
-				confirmText="처리하기"
+				content="사용자 신고처리기능이 구현되지 않았습니다. 1:1문의하기로 진행해주세요 !"
+				confirmText="문의하러가기"
 				onConfirm={handleConfirm}
 			/>
 		</>
@@ -81,86 +106,3 @@ function AdminReport() {
 }
 
 export default AdminReport;
-
-const Container = styled.div`
-	width: 1440px;
-	max-width: 100%;
-	margin: 0 auto;
-	padding: 20px;
-	background: #fff;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	font-family: suit;
-	border-radius: 10px;
-`;
-
-const TableTitle = styled.div`
-	color: #000;
-	font-family: suit;
-	font-size: 32px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: normal;
-`;
-
-const Table = styled.table`
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 20px;
-`;
-
-const TableHead = styled.thead`
-	margin-bottom: 10px;
-`;
-
-const TableBody = styled.tbody``;
-
-const TableRow = styled.tr`
-	&:nth-child(even) {
-		background: #f9f9f9;
-	}
-
-	&:hover {
-		cursor: pointer;
-	}
-	${props =>
-		props.processed &&
-		`
-	&:hover {
-	cursor: default;
-		}
-	`}
-`;
-
-const TableCell = styled.td`
-	padding: 10px;
-	text-align: left;
-	border-top: 1px solid #e1e1e1;
-	text-align: center;
-	justify-content: center;
-`;
-
-const TableHeader = styled.th`
-	padding: 10px;
-	color: #000;
-	font-family: suit;
-	font-size: 14px;
-	font-style: normal;
-	line-height: normal;
-	letter-spacing: -0.14px;
-`;
-
-const ReportProcess = styled.div`
-	color: ${props => (props.processed ? 'blue' : 'red')};
-	text-align: center;
-	font-family: suit;
-	font-size: 14px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	letter-spacing: -0.14px;
-`;
-
-const PaginationContainer = styled.div`
-	padding-top: 20px;
-	text-align: center;
-`;

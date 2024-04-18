@@ -1,4 +1,3 @@
-import ProductHeader from '../../components/pages/Product/ProductHeader';
 import ProductsContainer from '../../components/pages/Product/ProductsContainer';
 import ProductWrap from './ProductStyle';
 

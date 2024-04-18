@@ -1,12 +1,5 @@
 const PostService = require('../services/PostService');
-const {
-	NotFoundError,
-	BadRequestError,
-	InternalServerError,
-	ConflictError,
-	ForbiddenError,
-	UnauthorizedError,
-} = require('../config/CustomError');
+const { NotFoundError, BadRequestError, InternalServerError } = require('../config/CustomError');
 
 /**
  * 커뮤니티 게시글 작성 controller
@@ -19,8 +12,9 @@ const createPost = async (req, res, next) => {
 		const nickName = req.user.nickName;
 		const profilePic = req.user.profilePic;
 		const schoolName = req.user.schoolName;
+		let photos = req.file ? req.file.location : '';
 
-		const { title, content, photos } = req.body;
+		const { title, content } = req.body;
 
 		if (!nickName) {
 			throw new BadRequestError('로그인 후 이용해주세요.');
@@ -50,7 +44,7 @@ const createPost = async (req, res, next) => {
  * 커뮤니티 모든 게시글 조회 controller
  * 작성자 : 유경아
  * 작성 시작일 : 2024-04-05
- * 기능 : 게시글 리스트 조회시 필요한 동작들을 모아놓은  컨트롤러입니다.
+ * 기능 : 게시글 리스트 조회시 필요한 동작들을 모아놓은 컨트롤러입니다.
  */
 const getAllPosts = async (req, res, next) => {
 	try {
@@ -89,11 +83,17 @@ const getPostDetails = async (req, res, next) => {
  * 기능 : 게시글 수정에 필요한 동작들을 모아놓은 컨트롤러입니다.
  */
 const updatePost = async (req, res, next) => {
-	const { title, content, photos } = req.body;
+	const userNickname = req.user.nickName;
+	let photos = req.file ? req.file.location : '';
+	const { title, content } = req.body;
 
 	try {
 		const { postId } = req.params;
-		// const postService = new PostService();
+		const postInfo = await PostService.getPostDetails(postId);
+
+		if (postInfo.nickName !== userNickname) {
+			throw new BadRequestError('게시글 작성자만 수정할 수 있습니다');
+		}
 		const updatedPost = await PostService.updatePost(postId, {
 			title,
 			content,
@@ -116,13 +116,22 @@ const updatePost = async (req, res, next) => {
  */
 const deletePost = async (req, res, next) => {
 	try {
+		const userNickname = req.user.nickName;
+		const isAdmin = req.user.isAdmin;
 		const { postId } = req.params;
+		const postInfo = await PostService.getPostDetails(postId);
+
+		if (!isAdmin) {
+			if (postInfo.nickName !== userNickname) {
+				throw new BadRequestError('게시글 작성자만 삭제할 수 있습니다');
+			}
+		}
+
 		const deletedPost = await PostService.deletePost(postId);
 
 		if (!deletedPost) {
 			throw new NotFoundError('게시글이 없습니다.');
 		}
-
 		// 삭제 성공 응답
 		res.status(200).json({
 			message: deletedPost.message, // 성공 메시지를 서비스로부터 받아온 메시지로 설정

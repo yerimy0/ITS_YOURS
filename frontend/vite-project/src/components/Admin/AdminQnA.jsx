@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchQnaData, qnaMailing } from '../../apis/service/AdminQnaApi';
 import styled from 'styled-components';
-// import Paginator from '../Paginator';
+import Paginator from '../Paginator';
 import AdminModal from './AdminModal';
 import DateSlicer from '../../utils/dateSlicer';
 
@@ -9,6 +9,8 @@ function AdminQnA() {
 	const [qnaList, setQnaList] = useState([]);
 	const [selectedQna, setSelectedQna] = useState(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [currentPage, setCurrentPage] = useState(0);
+	const itemsPerPage = 10;
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -28,16 +30,29 @@ function AdminQnA() {
 		setIsModalOpen(true);
 	};
 
-	const handleAnswerSubmit = async (answer, qnaId) => {
-		try {
-			await qnaMailing(); // 메일 발송 API 호출
-			setQnaList(
-				qnaList.map(item => (item.id === qnaId ? { ...item, isCompleted: '처리' } : item)),
-			);
-			setIsModalOpen(false);
-		} catch (error) {
-			console.error('답변 등록 및 메일 발송 실패:', error);
+	const handlePageChange = newPage => {
+		setCurrentPage(newPage);
+	};
+
+	const paginatedQnaList = qnaList.slice(
+		currentPage * itemsPerPage,
+		(currentPage + 1) * itemsPerPage,
+	);
+
+	const onAnswerSubmit = (answer, qnaId) => {
+		if (!qnaId) {
+			console.error('QnA ID를 찾지못했습니다 그러므로 메일을 보내지못했슴둥.');
+			alert('서버오류가 발생했습니다. 다시 시도해주세요');
+			return;
 		}
+		console.log('QnA ID에 대해 제출된 답변:', qnaId);
+		qnaMailing(qnaId, answer)
+			.then(() => {
+				console.log('메일이 성공적으로 전송되었습니다.');
+			})
+			.catch(error => {
+				console.error('답변 제출 및 이메일 전송 실패:', error);
+			});
 	};
 
 	return (
@@ -55,8 +70,8 @@ function AdminQnA() {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{qnaList.map(qna => (
-							<TableRow key={qna.id} onClick={() => handleRowClick(qna)}>
+						{paginatedQnaList.map(qna => (
+							<TableRow key={qna._id} onClick={() => handleRowClick(qna)}>
 								<TableCell>{qna.nickname}</TableCell>
 								<TableCell>{qna.title}</TableCell>
 								<TableCell>{DateSlicer(qna.createdAt)}</TableCell>
@@ -68,21 +83,21 @@ function AdminQnA() {
 						))}
 					</TableBody>
 				</Table>
-				{/* <PaginationContainer>
+				<PaginationContainer>
 					<Paginator
+						totalItems={qnaList.length}
+						itemsCountPerPage={itemsPerPage}
 						currentPage={currentPage}
-						totalItems={totalItems}
-						itemsCountPerPage={perPage}
 						onChange={handlePageChange}
 					/>
-				</PaginationContainer> */}
+				</PaginationContainer>
 			</Container>
 			{selectedQna && (
 				<AdminModal
 					isOpen={isModalOpen}
 					onClose={() => setIsModalOpen(false)}
 					qna={selectedQna}
-					onAnswer={handleAnswerSubmit}
+					onAnswer={answer => onAnswerSubmit(answer, selectedQna._id)}
 				/>
 			)}
 		</>
@@ -161,7 +176,7 @@ const ReportProcess = styled.div`
 	letter-spacing: -0.14px;
 `;
 
-// const PaginationContainer = styled.div`
-// 	padding-top: 20px;
-// 	text-align: center;
-// `;
+const PaginationContainer = styled.div`
+	padding-top: 20px;
+	text-align: center;
+`;

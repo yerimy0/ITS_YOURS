@@ -58,7 +58,7 @@ const router = createBrowserRouter([
 	{ path: '/findid', element: <FindId /> },
 	{ path: '/findpassword', element: <FindPassword /> },
 	{ path: '/signup', element: <SignUp /> },
-	{ path: '/adminpage', element: <AdminPage /> },
+	{ path: '/adminpage/:id', element: <AdminPage /> },
 ]);
 
 export default router;

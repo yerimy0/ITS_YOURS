@@ -296,5 +296,4 @@ export {
 	SearchContainer,
 	SearchtItem,
 	CloseButton,
-	Alert,
 };

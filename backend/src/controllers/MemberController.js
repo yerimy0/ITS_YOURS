@@ -152,7 +152,6 @@ const updateMember = async (req, res, next) => {
 		let region = await categoryService.getRegionBySchoolName(schoolName);
 
 		const chkDeleted = await memberService.getMember(userId);
-		const isRegisteredEmail = await memberService.getMemberByEmail(email);
 
 		if (!userId) {
 			throw new BadRequestError('로그인이 필요한 서비스입니다.');
@@ -164,9 +163,6 @@ const updateMember = async (req, res, next) => {
 
 		if (chkDeleted.deletedAt) {
 			throw new BadRequestError('이미 탈퇴한 회원의 정보는 수정할 수 없습니다.');
-		}
-		if (isRegisteredEmail) {
-			throw new BadRequestError('이미 사용중인 이메일입니다.');
 		}
 		const memberInfo = await memberService.updateMember(
 			userId,

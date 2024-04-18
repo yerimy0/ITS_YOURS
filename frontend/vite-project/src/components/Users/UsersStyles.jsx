@@ -145,40 +145,6 @@ export const Div2 = styled.div`
 	padding: 0;
 `;
 
-export const SocialLogin = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 1rem;
-`;
-
-export const SocialLoginTitle = styled.div`
-	text-align: center;
-	margin: 20px 0;
-	color: #79747e;
-	display: flex;
-	align-items: center;
-	gap: 10px;
-`;
-
-export const SocialButtonContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	gap: 1rem;
-`;
-
-export const SocialButton = styled.button`
-	padding: 0.5rem;
-	border: none;
-	cursor: pointer;
-	background-color: #fff;
-
-	img {
-		width: 45px;
-		height: auto;
-	}
-`;
-
 export const ProfileWrapper = styled.div`
 	/* position: relative; */
 	/* display: flex;

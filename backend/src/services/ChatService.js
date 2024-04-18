@@ -47,7 +47,6 @@ async function getDetailChat(chatroomId) {
 	const messages = await ChatMessage.find({ chatRoomId: chatroomId })
 		.populate('chatAuth', 'content')
 		.sort({ chatCreatedAt: -1 });
-
 	return {
 		chatroom,
 		messages,

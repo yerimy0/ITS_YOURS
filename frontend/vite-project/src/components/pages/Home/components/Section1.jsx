@@ -9,7 +9,7 @@ function Section1() {
 				<Title className="sec1_title">
 					<Slogan className="sec1_text">
 						한 학기만 쓰고 버리는
-						<br className="br1" /> 전공책이
+						<br className="br1" /> 전공책이&nbsp;
 						<br className="br" />
 						이제는 아깝지 않도록
 					</Slogan>

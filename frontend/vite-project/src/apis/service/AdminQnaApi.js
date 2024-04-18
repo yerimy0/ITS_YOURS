@@ -10,9 +10,9 @@ async function fetchQnaData() {
 	}
 }
 
-async function qnaMailing(Id) {
+async function qnaMailing(qnaId, answer) {
 	try {
-		const res = await instance.post(`/admin/qna/answer/${Id}`);
+		const res = await instance.post(`/qna/answer/${qnaId}`, { answer });
 		return res.data;
 	} catch (error) {
 		console.error('메일링에 실패했습니다:', error);

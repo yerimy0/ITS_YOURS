@@ -1,12 +1,5 @@
 const CommentService = require('../services/CommentService');
-const {
-	NotFoundError,
-	BadRequestError,
-	InternalServerError,
-	ConflictError,
-	ForbiddenError,
-	UnauthorizedError,
-} = require('../config/CustomError');
+const { BadRequestError, UnauthorizedError } = require('../config/CustomError');
 
 /**
  * 커뮤니티 댓글 작성 service
@@ -60,8 +53,14 @@ const getComment = async (req, res, next) => {
  */
 const updateComment = async (req, res, next) => {
 	try {
+		const writer = req.user.nickName;
 		const { commentId } = req.params;
 		const { content } = req.body;
+
+		const commentInfo = await CommentService.getComment(commentId);
+		if (writer !== commentInfo.nickName) {
+			throw new UnauthorizedError('권한이 없습니다.');
+		}
 
 		const updateResult = await CommentService.updateComment(commentId, content);
 
@@ -83,6 +82,18 @@ const updateComment = async (req, res, next) => {
 const deleteComment = async (req, res) => {
 	try {
 		const { commentId } = req.params;
+		const writer = req.user.nickName;
+		const isAdmin = req.user.isAdmin;
+
+		console.log(isAdmin);
+
+		const commentInfo = await CommentService.getComment(commentId);
+
+		if (!isAdmin) {
+			if (writer !== commentInfo.nickName) {
+				throw new UnauthorizedError('권한이 없습니다.');
+			}
+		}
 
 		const deleteComment = await CommentService.deleteComment(commentId);
 

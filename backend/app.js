@@ -17,6 +17,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 require('dotenv').config();
+
 mongoose.connect(
 	`mongodb+srv://${process.env.DB_ID}:${process.env.DB_PW}@itsyours.gerbwmz.mongodb.net/`,
 );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
 	ProductDetail,
 	BookCover,
@@ -17,33 +17,39 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { GetDetail } from '../../../apis/service/product.api';
 import ProductDetailContainer from './ProductDetailContainer';
 import BookImgSlider from '../../BookImgSlider';
+import UserIdContext from '../../../context/UserIdContext';
+import { createChatroom } from '../../../apis/service/Chat.api';
 
 function ProductDetailHeader() {
-	const { id } = useParams();
+	const { productId } = useParams();
 	const navigate = useNavigate();
 	const [product, setProduct] = useState([]);
+	const { id } = useContext(UserIdContext);
 
 	useEffect(() => {
 		const loadProductData = async () => {
-			if (id) {
+			if (productId) {
 				// 상품 ID가 존재할 때만 데이터를 가져옵니다.
 				try {
-					const productData = await GetDetail(id);
+					const productData = await GetDetail(productId);
 					setProduct(productData);
 				} catch (error) {
 					console.error('상품 데이터를 불러오는 중 에러 발생:', error);
 				}
 			} else {
-				console.error('올바르지 않은 상품 ID:', id);
+				console.error('올바르지 않은 상품 ID:', productId);
 			}
 		};
 		loadProductData();
-	}, [id]);
+	}, []);
 
 	// 채팅하기 버튼 클릭 시 채팅 화면으로 이동
-	const handleChatButtonClick = () => {
-		navigate(`/chat`); // 채팅 화면으로 이동
-	};
+	async function handleChatButtonClick() {
+		console.log(product);
+		const res = await createChatroom(productId, product._id, id);
+		const chatroomId = res._id;
+		navigate(`/chat/${chatroomId}`); // 채팅 화면으로 이동
+	}
 
 	// 디테일 이미지 잘나오게 하는 부분 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

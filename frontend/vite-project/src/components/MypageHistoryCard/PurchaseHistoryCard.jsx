@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function PurchaseHistoryCard({ _id, imgUrls, price, sellerId, name, buyDate, type }) {
+function PurchaseHistoryCard({ imgUrls, price, name, sellerId }) {
 	return (
 		<>
 			<PurchaseCardWrap>
@@ -11,7 +11,7 @@ function PurchaseHistoryCard({ _id, imgUrls, price, sellerId, name, buyDate, typ
 				<PurchaseListTitle>
 					{name}
 					<PurchaseListPrice>
-						<PurchaseListPriceNum>{price}</PurchaseListPriceNum>
+						<PurchaseListPriceNum>{Number(price).toLocaleString()}</PurchaseListPriceNum>
 						<PurchaseListWon>원</PurchaseListWon>
 					</PurchaseListPrice>
 					<PurchaseListSeller>{sellerId}</PurchaseListSeller>
@@ -79,7 +79,7 @@ const PurchaseListWon = styled.div`
 	line-height: 24px;
 	display: inline-block;
 	margin: 0px;
-	flex-direction: column-reverse;
+	margin-top: 5px;
 `;
 
 const PurchaseListSeller = styled.div`
@@ -92,30 +92,4 @@ const PurchaseListSeller = styled.div`
 	display: inline-block;
 	margin: 0px;
 	flex-direction: column-reverse;
-`;
-
-const PurchaseListBtnBox = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	margin-left: 1000px;
-	margin-top: 100px;
-`;
-
-const DeleteBtnBox = styled.div`
-	margin-left: auto; /* 버튼을 오른쪽으로 정렬 */
-`;
-const DeleteBtn = styled.button`
-	width: 66px;
-	height: 53px;
-	border-radius: 20px;
-	border: 1px solid #ded8e1;
-	background: #fff;
-	color: #000;
-	font-family: SUIT;
-	font-size: 16px;
-	font-weight: 700;
-	margin: 3px;
-	&:hover {
-		cursor: pointer;
-	}
 `;

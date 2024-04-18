@@ -1,21 +1,29 @@
 import styled from 'styled-components';
 
 const ProductsWrap = styled.section`
-	display: flex;
-	max-width: 1200px;
+	/* display: flex; */
+	/* max-width: 1200px; */
 	width: 100%;
 	margin: 0 auto;
-	flex-direction: column;
+	/* flex-direction: column; */
+	padding: 0 50px;
+	@media (max-width: 1000px) {
+		padding: 0 15px;
+	}
 `;
 
 const Products = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	align-content: center;
-	gap: 50px;
-	justify-content: space-around;
-	margin: 60px 0 30px 0;
+	gap: 5%;
+	/* align-content: center; */
+	/* gap: 50px; */
+	width: 100%;
+	/* justify-content: space-around; */
+	justify-content: normal;
+	/* margin: 60px 0 30px 0; */
+	/* margin-top: 60px; */
 `;
 
 const NoProductsMessageWrap = styled.div`

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import UserIdContext from '../../../context/UserIdContext';
 import ChatRoomHeader from './ChatRoomHeader';
 import {
 	ChatRoomWrap,
@@ -15,10 +16,21 @@ import {
 	InputWrap,
 	InputText,
 } from './ChatRoomStyle';
+import { useParams } from 'react-router-dom';
+
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:4000');
 
 function ChatRoom() {
 	const [placeholder, setPlaceholder] = useState('메시지 입력해 주세요.');
 	const [isInputFocused, setIsInputFocused] = useState(false);
+	const [sendMes, setSendMes] = useState('');
+
+	const [receivedMes, setReceivedMes] = useState([]);
+	const [sendMsgStorage, setSendMsgStorage] = useState([]);
+
+	const { id } = useContext(UserIdContext);
+	const { chatroomId } = useParams();
 
 	// 입력창 포커스 관리 핸들러
 	const handleFocus = () => {
@@ -34,10 +46,26 @@ function ChatRoom() {
 
 	// 엔터 키 다운 핸들러
 	const handleKeyDown = e => {
-		if (e.key === 'Enter') {
-			e.preventDefault();
+		if (e.key == 'Enter') {
+			// 보낼 메시지와 보낼 채팅방번호
+			socket.emit('send_message', { message: sendMes, roomNum: chatroomId, sendId: id });
+			setSendMsgStorage(prevMessages => [...prevMessages, sendMes]);
+			setSendMes('');
 		}
 	};
+	// 메시지 전송 내용
+	function onChange(e) {
+		setSendMes(e.target.value);
+	}
+
+	// socket 랜더링시, 방 조인 + 메시지 수신
+	useEffect(() => {
+		socket.emit('ask_join', { roomNum: chatroomId });
+		socket.on('message_broadcast', data => {
+			console.log(data.message);
+			setReceivedMes(data.message);
+		});
+	}, [socket]);
 
 	return (
 		<ChatRoomWrap>
@@ -46,36 +74,16 @@ function ChatRoom() {
 				<ChatContainer>
 					<ChatDate>2024. 3. 28</ChatDate>
 					<ChatWrap>
-						<SendTextWrap>
-							<SendTime>오후 7:50</SendTime>
-							<SendText>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</SendText>
-						</SendTextWrap>
+						{sendMsgStorage.map((msg, i) => {
+							return (
+								<SendTextWrap>
+									<SendTime>오후 7:50</SendTime>
+									<SendText>{msg}</SendText>
+								</SendTextWrap>
+							);
+						})}
 						<ReplyTextWrap>
-							<ReplyText>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-								incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-								exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-							</ReplyText>
-							<ReplyTime>오후 12:50</ReplyTime>
-						</ReplyTextWrap>
-						<SendTextWrap>
-							<SendTime>오후 7:50</SendTime>
-							<SendText>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</SendText>
-						</SendTextWrap>
-						<ReplyTextWrap>
-							<ReplyText>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-								incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-								exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-							</ReplyText>
-							<ReplyTime>오후 12:50</ReplyTime>
-						</ReplyTextWrap>
-						<ReplyTextWrap>
-							<ReplyText>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-								incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-								exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-							</ReplyText>
+							<ReplyText>{receivedMes}</ReplyText>
 							<ReplyTime>오후 12:50</ReplyTime>
 						</ReplyTextWrap>
 					</ChatWrap>
@@ -89,6 +97,8 @@ function ChatRoom() {
 					onFocus={handleFocus}
 					onBlur={handleBlur}
 					onKeyDown={handleKeyDown}
+					onChange={onChange}
+					value={sendMes}
 				></InputText>
 			</InputWrap>
 		</ChatRoomWrap>

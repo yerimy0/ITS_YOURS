@@ -7,9 +7,17 @@ import LogoLink from '../../components/Users/LogoLink';
 function FindId() {
 	return (
 		<Wrapper>
-			<LogoLink src="/logoText.png" />
-			<FindIdForm />
-			<AdditionalOptions options={[{ label: '비밀번호찾기', path: '/findpassword' }]} />
+			<div className="login_container">
+				<div className="link_wrap">
+					<LogoLink src="/logoText.png" />
+					<p style={{ fontWeight: 500 }}>사용자 이름, 이메일이 무엇인가요?</p>
+				</div>
+				<FindIdForm />
+				<AdditionalOptions
+					className="add_option"
+					options={[{ label: '비밀번호찾기', path: '/findpassword' }]}
+				/>
+			</div>
 		</Wrapper>
 	);
 }

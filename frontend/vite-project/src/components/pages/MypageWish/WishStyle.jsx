@@ -33,10 +33,11 @@ const Wishs = styled.div`
 	flex-wrap: wrap;
 	align-items: center;
 	align-content: center;
-	gap: 50px;
+	gap: 5%;
 	width: 100%;
 	justify-content: flex-start;
 	margin: 60px 0 30px 0;
+	padding: 0 15px;
 `;
 
 export { WishsWrap, WishTitle, NoWishText, Wishs };

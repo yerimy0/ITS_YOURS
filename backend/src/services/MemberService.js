@@ -1,4 +1,4 @@
-const { Members, Wishes } = require('../models/index');
+const { Members, Wishes, VerifyCode } = require('../models/index');
 const { sendPasswordEmail, sendVerifyEmail } = require('../utils/Mailer');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -86,8 +86,20 @@ async function getMember(userId) {
 	}
 }
 
-async function getSellerInfo(id) {
-	const sellerInfo = await Members.findOne({ id: id }).select(
+/**
+ * 이메일 회원정보 조회 service
+ * 작성자: 이정은
+ * 작성일: 2024-04-16
+ * 회원 정보를 이메일로 조회해오는 service입니다.
+ */
+async function getMemberByEmail(email) {
+	const memberInfo = await Members.findOne({ email: email });
+
+	return memberInfo;
+}
+
+async function getSellerInfo(sellerId) {
+	const sellerInfo = await Members.findOne({ id: sellerId }).select(
 		'id name profilePic nickName region schoolName',
 	);
 	return sellerInfo;
@@ -171,24 +183,49 @@ async function resetPassword(id, email) {
 
 	await sendPasswordEmail(email, verificationCode); // 수정된 부분
 
-	return { updatePassword }; // 'emailResult'는 정의되지 않았으므로 이 부분도 확인 필요
+	return { updatePassword };
 }
 
 async function sendEmailVerification(email) {
 	const verificationCode = generateTempPassword(4);
-	await sendVerifyEmail(email, verificationCode);
+	const verifyInfo = {
+		email: email,
+		code: verificationCode,
+	};
 
-	return verificationCode; // 수정된 부분
+	const existingVerifyInfo = await VerifyCode.findOne({ email: email });
+
+	if (existingVerifyInfo) {
+		await VerifyCode.updateOne({ email: email }, { $set: { code: verificationCode } });
+	} else {
+		await VerifyCode.create(verifyInfo);
+	}
+
+	await sendVerifyEmail(email, verificationCode);
+}
+
+// 인증코드 검증 함수
+async function chkVerifyCode(email, code) {
+	const storedCode = await VerifyCode.findOne({ email: email }); // db에서 해당 이메일의 코드 검색
+	if (storedCode && storedCode.code === code) {
+		// 인증 후 코드 삭제
+		await VerifyCode.deleteOne({ email: email });
+		return true;
+	} else {
+		return false;
+	}
 }
 
 module.exports = {
 	signUp,
 	login,
 	getMember,
+	getMemberByEmail,
 	getSellerInfo,
 	updateMember,
 	deleteMember,
 	findIdByNameAndEmail,
 	resetPassword,
 	sendEmailVerification,
+	chkVerifyCode,
 };

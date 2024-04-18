@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import PurchaseHistoryHeader from '../../components/pages/Mypage/PurchaseHistoryHeader';
-import PurchaseHistoryContainer from '../../components/pages/Mypage/PurchaseHistoryContainer';
+import PurchaseHistoryHeader from '../../components/pages/Mypage/History/PurchaseHistoryHeader';
+import PurchaseHistoryContainer from '../../components/pages/Mypage/History/PurchaseHistoryContainer';
 
 function PurchaseHistory() {
 	return (

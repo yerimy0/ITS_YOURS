@@ -4,16 +4,14 @@ import './index.css';
 import { RouterProvider } from 'react-router-dom';
 import { UserProvider } from './context/UserIdContext';
 import router from './routes/router.jsx';
-import { Provider } from 'react-redux';
-import store from './store.js';
+import HttpsRedirect from 'react-https-redirect';
 
-// 여기에서 로그인 상태 전달 usecontext
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
-		{/* <Provider store={store}> */}
-		<UserProvider>
-			<RouterProvider router={router} />
-			{/* </Provider> */}
-		</UserProvider>
+		<HttpsRedirect>
+			<UserProvider>
+				<RouterProvider router={router} />
+			</UserProvider>
+		</HttpsRedirect>
 	</React.StrictMode>,
 );

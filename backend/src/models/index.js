@@ -9,13 +9,19 @@ const PostsSchema = require('./schemas/Posts');
 const CommentsSchema = require('./schemas/Comments');
 const WishesSchema = require('./schemas/Wishes');
 const CategorySchema = require('./schemas/Category');
+const ChatroomSchema = require('./schemas/Chatroom');
+const ChatMessageSchema = require('./schemas/ChatMessage');
+const VerifyCodeSchema = require('./schemas/VerifyCode');
 
 exports.Members = mongoose.model('Members', MembersSchema);
 exports.Products = mongoose.model('Products', ProductsSchema);
 
 exports.Qna = mongoose.model('Qna', QnaSchema);
+exports.VerifyCode = mongoose.model('VerifyCode', VerifyCodeSchema);
 
 exports.Posts = mongoose.model('Posts', PostsSchema);
 exports.Comments = mongoose.model('Comments', CommentsSchema);
 exports.Wishes = mongoose.model('Wisher', WishesSchema);
 exports.Category = mongoose.model('Category', CategorySchema);
+exports.Chatroom = mongoose.model('Chatroom', ChatroomSchema);
+exports.ChatMessage = mongoose.model('ChatMessageSchema', ChatMessageSchema);

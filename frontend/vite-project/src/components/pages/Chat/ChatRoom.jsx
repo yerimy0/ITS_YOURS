@@ -17,6 +17,7 @@ import {
 	TextAreaText,
 } from './ChatRoomStyle';
 import { useParams } from 'react-router-dom';
+import { postChat } from '../../../apis/service/Chat.api';
 
 import io from 'socket.io-client';
 const socket = io.connect('http://localhost:4000');
@@ -45,14 +46,15 @@ function ChatRoom() {
 	};
 
 	// 엔터 키 다운 핸들러
-	const handleKeyDown = e => {
+	async function handleKeyDown(e) {
 		if (e.key == 'Enter') {
 			// 보낼 메시지와 보낼 채팅방번호
 			socket.emit('send_message', { message: sendMes, roomNum: chatroomId, sendId: id });
-			setSendMsgStorage(prevMessages => [...prevMessages, sendMes]);
+			await postChat(chatroomId, sendMes);
+			// setSendMsgStorage(prevMessages => [...prevMessages, sendMes]);
 			setSendMes('');
 		}
-	};
+	}
 	// 메시지 전송 내용
 	function onChange(e) {
 		setSendMes(e.target.value);

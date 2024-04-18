@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const RegisterBox = styled.div`
+const RegisterBox = styled.form`
 	left: 263px;
 	display: flex;
 	align-items: center;

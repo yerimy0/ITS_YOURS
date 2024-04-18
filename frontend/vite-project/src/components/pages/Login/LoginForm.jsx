@@ -35,11 +35,14 @@ function LoginForm() {
 		event.preventDefault();
 		try {
 			const res = await loginApi(userId, password);
-			console.log(res);
 			if (res.accessToken) {
 				document.cookie = `authToken=${res.accessToken}; path=/; Secure`;
 				setId(userId);
-				navigate('/');
+				if (res.isAdmin === true) {
+					navigate('/adminpage');
+				} else {
+					navigate('/');
+				}
 			} else {
 				throw new Error('아이디 또는 비밀번호가 맞지 않습니다.\n다시 확인해주세요.');
 			}

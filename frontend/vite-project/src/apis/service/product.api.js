@@ -2,6 +2,7 @@ import instance from '../axiosInstance';
 
 async function Register(register) {
 	try {
+		console.log(register.imgUrls);
 		await instance.post('/products', register);
 		return;
 	} catch (err) {

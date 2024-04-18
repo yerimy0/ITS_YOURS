@@ -76,7 +76,12 @@ const getProductInfo = async (req, res) => {
 const insertProduct = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
+		// let imgUrls = req.files ? req.files.location : '';
 
+		console.log(req.files);
+		if (req.files) {
+			imgUrls = req.files.map(file => file.location);
+		}
 		if (!userId) {
 			throw new BadRequestError('로그인이 필요한 서비스입니다.');
 		}
@@ -91,7 +96,7 @@ const insertProduct = async (req, res, next) => {
 		let longitude = getLocation.longitude;
 		let latitude = getLocation.latitude;
 
-		const { name, imgUrls, price, author, publisher, condition, description } = req.body;
+		const { name, price, author, publisher, condition, description } = req.body;
 
 		if (!name || !imgUrls || !price || !author || !publisher || !condition || !description) {
 			throw new BadRequestError('필수 정보를 모두 입력해주세요');
@@ -126,6 +131,7 @@ const insertProduct = async (req, res, next) => {
 const updateProduct = async (req, res, next) => {
 	try {
 		const { prodId } = req.query;
+		let imgUrls = req.file ? req.file.location : '';
 		const prodObjectId = new ObjectId(prodId); // 상품의 _id 값
 
 		// 상품 정보 조회
@@ -140,7 +146,7 @@ const updateProduct = async (req, res, next) => {
 		if (product.deletedAt) {
 			throw new BadRequestError('이미 삭제된 상품은 수정할 수 없습니다.');
 		}
-		const { name, imgUrls, price, author, publisher, condition, description } = req.body;
+		const { name, price, author, publisher, condition, description } = req.body;
 		// imgUrls가 존재하면 상품 정보 업데이트에 포함, 그렇지 않으면 기존 값 유지
 		const updatedProduct = await productsService.updateProduct(prodObjectId, {
 			name,

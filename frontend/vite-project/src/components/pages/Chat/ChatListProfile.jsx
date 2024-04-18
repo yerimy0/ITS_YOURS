@@ -11,9 +11,10 @@ import {
 	SendTime,
 } from './ChatListProfileStyle';
 
-function ChatListProfile() {
+function ChatListProfile({ buyerInfo, productInfo }) {
 	const [isActive, setIsActive] = useState(false);
-
+	// console.log(buyerInfo);
+	// console.log(productInfo);
 	function handleClick() {
 		setIsActive(!isActive);
 	}
@@ -22,17 +23,15 @@ function ChatListProfile() {
 		<>
 			<ProfileWrap className={isActive ? 'active' : ''} onClick={handleClick}>
 				<Profile>
-					<ProfileImg src="/profile.jpg" />
+					<ProfileImg src={buyerInfo.profilePic} />
 				</Profile>
 				<ProfileInfo>
 					<Wrap>
-						<NickName>카페인 줄여야지</NickName>
+						<NickName>{buyerInfo.nickName}</NickName>
 						<Notification />
 					</Wrap>
 					<Wrap>
-						<BookName>
-							데일 카네기의 인ㄹㅇㄴㄴㄴㄹㅇㄹㄴㄹㄴㅇㄴㄴㄹㄹㄴㅇㅇㄹㄴㅇㄹㄴㄹ간관계론
-						</BookName>
+						<BookName>{productInfo.name}</BookName>
 						<SendTime>1시간 전</SendTime>
 					</Wrap>
 				</ProfileInfo>

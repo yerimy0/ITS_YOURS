@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import {
 	ModalWrap,
 	ModalContent,
@@ -18,8 +18,22 @@ import {
 	University,
 	LocalDistrict,
 } from './ProfileModalStyle';
+import { getChatList, getChatDetail } from '../../../apis/service/Chat.api';
 
 function ProfileModal({ isOpen, onClose }) {
+	const [chatroomId, setChatRoomId] = useState(''); //채팅방Id
+	const [buyerInfo, setBuyerInfo] = useState([]);
+	const [productInfo, setProductInfo] = useState([]);
+	useEffect(() => {
+		async function getList() {
+			const res = await getChatList();
+			setChatRoomId(res[0]._id);
+			const detailRes = await getChatDetail(chatroomId);
+			setBuyerInfo(detailRes.buyerId);
+			setProductInfo(detailRes.productId);
+		}
+		getList();
+	}, []);
 	if (!isOpen) return null;
 	return (
 		<ModalWrap>
@@ -29,10 +43,10 @@ function ProfileModal({ isOpen, onClose }) {
 				</ClearWrap>
 				<TextWrap>
 					<Text>안녕하세요</Text>
-					<NickName>카페인 줄여야지님의 페이지입니다.</NickName>
+					<NickName>{`${buyerInfo.nickname}님의 페이지입니다.`}</NickName>
 				</TextWrap>
 				<Profile>
-					<ProfileImg src="/profile.jpg" />
+					<ProfileImg src={buyerInfo.profilePic} />
 				</Profile>
 				<EvaluationWrap>
 					<GoodContainer>

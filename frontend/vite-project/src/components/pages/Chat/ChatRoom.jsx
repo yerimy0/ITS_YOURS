@@ -14,7 +14,7 @@ import {
 	ReplyTime,
 	ReplyText,
 	InputWrap,
-	InputText,
+	TextAreaText,
 } from './ChatRoomStyle';
 import { useParams } from 'react-router-dom';
 
@@ -90,7 +90,7 @@ function ChatRoom() {
 				</ChatContainer>
 			</ChatSction>
 			<InputWrap className="inputwrap">
-				<InputText
+				<TextAreaText
 					className="inputtext"
 					type="text"
 					placeholder={placeholder}
@@ -99,7 +99,7 @@ function ChatRoom() {
 					onKeyDown={handleKeyDown}
 					onChange={onChange}
 					value={sendMes}
-				></InputText>
+				></TextAreaText>
 			</InputWrap>
 		</ChatRoomWrap>
 	);

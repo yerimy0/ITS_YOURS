@@ -22,22 +22,26 @@ function EmailVerificationForm({
 	const handleVerifyCode = async () => {
 		try {
 			const response = await verifyCode(email, emailVerificationCode);
-			if (!response || !response.data) {
+
+			// response 검증
+			if (!response || !response.isVerified) {
 				throw new Error('No response data received');
 			}
-			console.log('Server response:', response.data);
-			if (response.data.verified) {
+
+			if (response.isVerified) {
 				alert('이메일 인증 성공!');
 			} else {
-				alert(response.data.error || '인증 실패');
+				const errorMessage = response.isVerified.error || '인증 실패';
+				alert(errorMessage);
 			}
 		} catch (error) {
 			console.error('Axios error:', error);
-			if (error.response) {
-				// 서버 응답 오류
-				alert(`서버 응답 오류: ${error.response.data.error}`);
+
+			if (error.response && error.response.isVerified) {
+				// 서버 응답이 있을 경우
+				alert(`서버 응답 오류: ${error.response.isVerified.error}`);
 			} else if (error.request) {
-				// 네트워크 오류
+				// 요청이 전송되었지만 응답을 받지 못한 경우
 				alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
 			} else {
 				// 기타 오류

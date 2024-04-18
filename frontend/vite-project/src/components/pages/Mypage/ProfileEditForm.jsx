@@ -35,7 +35,7 @@ function ProfileEditForm({ userInfo }) {
 	const fetchProfileData = async () => {
 		try {
 			const data = await fetchMyPageData();
-			console.log(data);
+			console.log('Received data:', data); // 서버로부터 받은 데이터를 확인합니다.
 			setUserId(data.id);
 			setName(data.realName);
 			setEmail(data.email);
@@ -104,7 +104,7 @@ function ProfileEditForm({ userInfo }) {
 				onClose={handleCloseModal}
 				onSelectUniversity={handleSelectUniversity}
 			/>
-			<ProfileImageUploader onImageSelected={setProfileImage} profileImage={profileImage} />
+			<ProfileImageUploader onImageSelected={setProfileImage} initialPreview={profileImage} />
 			<Form onSubmit={handleSubmit}>
 				<Input type="text" value={userId} disabled />
 				<Input

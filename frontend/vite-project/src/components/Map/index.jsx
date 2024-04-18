@@ -1,15 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useParams } from 'react-router-dom';
 import { GetDetail } from '../../apis/service/product.api';
 
 function KaKao() {
-	const { id } = useParams();
+	const { productId } = useParams();
 	const [sellerLat, setSellerLat] = useState(0);
 	const [sellerLng, setSellerLng] = useState(0);
 	async function GetSellerLoc() {
 		try {
-			const { latitude, longitude } = await GetDetail(id);
+			const { latitude, longitude } = await GetDetail(productId);
+			console.log(longitude);
 			setSellerLat(latitude);
 			setSellerLng(longitude);
 		} catch (error) {

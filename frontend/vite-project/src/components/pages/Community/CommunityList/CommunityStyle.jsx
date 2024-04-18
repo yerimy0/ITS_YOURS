@@ -15,6 +15,21 @@ const Box = styled.div`
 		font-weight: 400;
 		margin-top: 30px;
 	}
+	@media (max-width: 1000px) {
+		width: 100%;
+		padding: 0 15px;
+		.header_logo {
+			width: 40%;
+			position: absolute;
+			top: -15%;
+			right: 0%;
+			z-index: -1;
+		}
+		h5 {
+			width: 100%;
+			display: block;
+		}
+	}
 `;
 
 const HeaderTop = styled.div`
@@ -23,6 +38,13 @@ const HeaderTop = styled.div`
 	align-items: center;
 	padding: 0 50px 100px;
 	border-bottom: 1px solid #eee;
+	@media (max-width: 1000px) {
+		padding: 15px;
+		margin-top: 30px;
+		box-sizing: border-box;
+		display: block;
+		position: relative;
+	}
 `;
 
 const MainTitle = styled.div`
@@ -35,6 +57,9 @@ const HeaderTitle = styled.p`
 	text-align: left;
 	font-size: 64px;
 	font-weight: 900;
+	@media (max-width: 1000px) {
+		font-size: 30px;
+	}
 `;
 
 const HeaderTitleBlue = styled(HeaderTitle)`
@@ -43,6 +68,9 @@ const HeaderTitleBlue = styled(HeaderTitle)`
 const Line = styled.div``;
 const HeaderLeft = styled.div`
 	width: 65%;
+	@media (max-width: 1000px) {
+		width: 100%;
+	}
 `;
 const Button = styled.button`
 	border-radius: 20px;
@@ -52,6 +80,10 @@ const Button = styled.button`
 	font-size: 16px;
 	color: #009dff;
 	padding: 10px 20px;
+	@media (max-width: 1000px) {
+		padding: 5px 10px;
+		font-size: 14px;
+	}
 `;
 const ListOfOne = styled.div`
 	width: 100%;
@@ -61,6 +93,13 @@ const ListOfOne = styled.div`
 	padding: 10px 5px;
 	cursor: pointer;
 	margin-bottom: 10px;
+
+	@media (max-width: 1000px) {
+		display: block;
+		.list_border {
+			border-bottom: 1px solid #ddd;
+		}
+	}
 `;
 
 const ListRight = styled(ListOfOne)`
@@ -83,6 +122,10 @@ const LeftBottom = styled.div`
 const ListTitle = styled.div`
 	font-size: 22px;
 	margin-bottom: 8px;
+	@media (max-width: 1000px) {
+		font-size: 16px;
+		font-weight: 500;
+	}
 `;
 
 const ListSub = styled.div`
@@ -98,6 +141,9 @@ const ListSub = styled.div`
 const ListLeft = styled.div`
 	width: 80%;
 	text-align: left;
+	@media (max-width: 1000px) {
+		width: 100%;
+	}
 `;
 
 const List = styled.div`
@@ -113,12 +159,19 @@ const ButtonBox = styled.div`
 	text-align: end;
 	padding: 50px 0;
 	border-bottom: 1px solid #eee;
+	@media (max-width: 1000px) {
+		padding: 15px 0;
+		border-bottom: 1px solid #ddd;
+	}
 `;
 
 const Img = styled.img`
 	width: 100px;
 	height: 100px;
 	object-fit: cover;
+	@media (max-width: 1000px) {
+		display: none;
+	}
 `;
 
 const Comment = styled.div`

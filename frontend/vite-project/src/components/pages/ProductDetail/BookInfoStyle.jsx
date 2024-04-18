@@ -8,6 +8,9 @@ const BookInfo = styled.div`
 	justify-content: center;
 	gap: 10px;
 	margin: 40px 0 0 0;
+	@media (max-width: 1000px) {
+		margin: 0;
+	}
 `;
 const Div = styled.div`
 	display: flex;

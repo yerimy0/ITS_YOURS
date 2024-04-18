@@ -88,8 +88,12 @@ function SignUpForm() {
 				const { data, error } = await signUpApi(formData);
 				if (error) {
 					console.error('회원가입 실패:', error);
-					if (error.response && error.response.status === 409) {
-						setUserIdError('이미 사용중인 아이디입니다');
+					if (error.response) {
+						if (error.response.status === 409) {
+							setUserIdError('이미 사용중인 아이디입니다');
+						} else if (error.response.status === 400) {
+							setEmailError('이미 사용중인 이메일입니다');
+						}
 					}
 				} else {
 					console.log('회원가입 성공:', data);

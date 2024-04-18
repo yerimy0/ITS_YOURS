@@ -121,8 +121,8 @@ const giveGoodManners = async (req, res, next) => {
 	try {
 		const memberId = req.user._id;
 
-		const { sellerId } = req.body;
-		const sellerObjectId = new ObjectId(sellerId);
+		const { Id } = req.body;
+		const sellerObjectId = new ObjectId(Id);
 
 		if (!memberId) {
 			throw new BadRequestError('로그인 후 이용해주세요.');

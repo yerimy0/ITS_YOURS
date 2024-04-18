@@ -17,7 +17,8 @@ const router = Router();
 router.post('/:productId/:sellerId/:buyerNickName', validateToken, createChatroom);
 
 // 채팅방 목록 보기
-router.get('/:memberId', validateToken, getChatroomList);
+// router.get('/:memberId', validateToken, getChatroomList);
+router.get('/', validateToken, getChatroomList);
 
 //채팅방 메세지 저장하기
 router.post('/:chatroomId', validateToken, saveChatMessage);

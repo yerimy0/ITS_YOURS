@@ -305,3 +305,28 @@ input {
 	border: 1px solid #eee;
 	border-radius: 20px;
 }
+
+.my_info_input {
+	width: 50%;
+	margin: 0 auto;
+	font-size: 16px;
+}
+
+.my_info_input::placeholder {
+	color: #aaa !important;
+}
+.my_info_button {
+	width: 50% !important;
+	margin: 1rem auto 0 !important;
+}
+.common_info {
+	font-size: 16px !important;
+}
+
+.user_out {
+	width: 50%;
+	margin: 50px auto 0;
+	text-align: center;
+	font-size: 16px !important;
+	padding-bottom: 3px;
+}

@@ -81,8 +81,12 @@ function ChatRoom() {
 			const res = await getChatDetail(chatroomId);
 			console.log('내가 누른', res);
 			setIsLoaded(true);
-			setUserInfo(res.chatroom.buyerId);
-			setProductInfo(res.chatroom.productId);
+			if (id === res.buyerInfo.id) {
+				setUserInfo(res.sellerInfo);
+			} else {
+				setUserInfo(res.buyerInfo);
+			}
+			setProductInfo(res.product);
 			setReceivedMes(res.messages);
 			console.log(res.messages.content);
 			socket.emit('ask_join', { roomNum: chatroomId });

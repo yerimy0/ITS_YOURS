@@ -31,6 +31,10 @@ export const ModalContent = styled.div`
 		transform: translate(-50%, -50%);
 		font-size: 15px;
 	}
+
+	@media (max-width: 700px) {
+		width: 85%;
+	}
 `;
 
 export const ModalButton = styled.button`

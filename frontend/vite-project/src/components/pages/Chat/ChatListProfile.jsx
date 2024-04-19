@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	ProfileWrap,
 	Profile,
@@ -11,14 +11,20 @@ import {
 	SendTime,
 } from './ChatListProfileStyle';
 
-function ChatListProfile({ buyerInfo, productInfo }) {
-	const [isActive, setIsActive] = useState(false);
+function ChatListProfile({ buyerInfo, productInfo, product }) {
+	const [insertProduct, setInsertProduct] = useState({});
 
-	// console.log(buyerInfo, productInfo);
+	const [isActive, setIsActive] = useState(false);
+	console.log(productInfo);
 	function handleClick() {
 		setIsActive(!isActive);
 	}
 
+	useEffect(() => {
+		productInfo.map(e => {
+			if (e._id === product) setInsertProduct(e);
+		});
+	}, []);
 	return (
 		<ProfileWrap className={isActive ? 'active' : ''} onClick={handleClick}>
 			<Profile>
@@ -30,7 +36,7 @@ function ChatListProfile({ buyerInfo, productInfo }) {
 					<Notification />
 				</Wrap>
 				<Wrap>
-					<BookName>{productInfo.name}</BookName>
+					<BookName>{insertProduct.name}</BookName>
 					<SendTime>1시간 전</SendTime>
 				</Wrap>
 			</ProfileInfo>

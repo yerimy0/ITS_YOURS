@@ -25,6 +25,7 @@ async function getOneChatRoom(chatroomId) {
 
 async function getChatroomList(memberId) {
 	const chatList = await Chatroom.find({ $or: [{ buyerId: memberId }, { sellerId: memberId }] });
+
 	return chatList;
 }
 

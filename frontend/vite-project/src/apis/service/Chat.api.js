@@ -2,14 +2,18 @@ import instance from '../axiosInstance';
 
 async function createChatroom(productId, sellerId, buyerNickName) {
 	console.log(productId, sellerId, buyerNickName);
-	const res = await instance.post(`/chat/${productId}/${sellerId}/${buyerNickName}`, {});
-	console.log(res);
-	return res.data;
+	try {
+		const res = await instance.post(`/chat/${productId}/${sellerId}/${buyerNickName}`, {});
+		console.log(res);
+		return res.data;
+	} catch (err) {
+		alert('이미 채팅방이 존재합니다!');
+	}
 }
 
 async function getChatList() {
 	const res = await instance.get(`/chat`);
-	// console.log(res.data);
+	console.log(res.data);
 	return res.data;
 }
 async function getChatDetail(chatroomId) {

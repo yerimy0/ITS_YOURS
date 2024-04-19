@@ -155,6 +155,7 @@ const RightNav = styled.div`
 	li {
 		font-size: 20px;
 		font-weight: 500;
+		cursor: pointer;
 	}
 `;
 

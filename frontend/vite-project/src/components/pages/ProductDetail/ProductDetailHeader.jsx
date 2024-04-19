@@ -42,7 +42,7 @@ function ProductDetailHeader() {
 			}
 		};
 		loadProductData();
-	}, []);
+	}, [productId]);
 
 	// 채팅하기 버튼 클릭 시 채팅 화면으로 이동
 	async function handleChatButtonClick() {

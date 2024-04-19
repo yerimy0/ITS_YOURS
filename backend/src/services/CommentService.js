@@ -7,6 +7,7 @@ const { Comments, Posts } = require('../models');
  * 커뮤니티 댓글 조회에 동작되는 DB작업을 모아놓은 service입니다.
  */
 async function createComment(postId, content, nickName, profilePic) {
+	console.log('이렇게되어야하는데');
 	const newComment = {
 		postId: postId,
 		content: content,
@@ -26,15 +27,20 @@ async function createComment(postId, content, nickName, profilePic) {
  * 작성 시작일 : 2024-04-07
  * 커뮤니티 댓글 조회에 동작되는 DB작업을 모아놓은 service입니다.
  */
-async function getComment(postId) {
+async function getComment(postObjId) {
 	try {
-		const comments = await Comments.find({ postId: postId, deletedAt: { $exists: false } });
-
+		const comments = await Comments.find({ postId: postObjId, deletedAt: { $exists: false } });
 		return comments;
 	} catch (error) {
 		console.error('Error fetching comments with member info:', error);
 		throw error;
 	}
+}
+
+async function getOneComment(commentId, postId) {
+	const comment = await Comments.findOne({ _id: commentId, postId: postId });
+
+	return comment;
 }
 
 /**
@@ -44,15 +50,16 @@ async function getComment(postId) {
  * 커뮤니티 댓글 수정에 동작되는 DB작업을 모아놓은 service입니다.
  */
 async function updateComment(commentId, content) {
-	const updateComment = await Comments.findByIdAndUpdate(
-		commentId,
+	await Comments.UpdateOne(
+		{ _id: commentId },
 		{
 			content,
 			updatedAt: Date.now() + 9 * 60 * 60 * 1000,
 		},
-		{ new: true },
 	);
-	return updateComment;
+	const result = await Comments.findOne({ _id: commentId });
+	console.log('result::', result);
+	return result;
 }
 
 /**
@@ -79,6 +86,7 @@ async function deleteComment(commentId) {
 module.exports = {
 	createComment,
 	getComment,
+	getOneComment,
 	updateComment,
 	deleteComment,
 };

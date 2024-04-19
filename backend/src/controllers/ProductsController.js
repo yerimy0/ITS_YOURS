@@ -49,6 +49,35 @@ const getProduct = async (req, res) => {
 	}
 };
 
+const uploadFromUrl = async imageUrl => {
+	return new Promise((resolve, reject) => {
+		const pass = new stream.PassThrough();
+		const params = {
+			Bucket: process.env.S3_BUCKET_NAME,
+			Key: `covers/${Date.now()}.jpeg`, // 파일 이름 설정
+			Body: pass,
+			ContentType: 'image/jpeg', // 파일 타입 설정
+		};
+
+		s3.upload(params, (err, data) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(data.Location);
+			}
+		});
+
+		axios
+			.get(imageUrl, { responseType: 'stream' })
+			.then(response => {
+				response.data.pipe(pass);
+			})
+			.catch(err => {
+				reject(err);
+			});
+	});
+};
+
 //상품등록 > 상품정보 검색
 const getProductInfo = async (req, res) => {
 	try {
@@ -65,7 +94,6 @@ const getProductInfo = async (req, res) => {
 			publisher: item.publisher,
 			cover: item.cover,
 		}));
-
 		res.status(200).json({ data: productDatas, message: '상품등록-상품정보 검색 성공' });
 	} catch (err) {
 		res.status(400).json({ err });
@@ -76,9 +104,6 @@ const getProductInfo = async (req, res) => {
 const insertProduct = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
-		// let imgUrls = req.files ? req.files.location : '';
-
-		console.log(req.files);
 		if (req.files) {
 			imgUrls = req.files.map(file => file.location);
 		}
@@ -117,6 +142,7 @@ const insertProduct = async (req, res, next) => {
 			longitude,
 			latitude,
 		});
+		console.log('product', product);
 
 		if (!product) {
 			throw new InternalServerError('서버 오류');

@@ -69,13 +69,15 @@ const Buttons = styled.div`
 	align-items: center;
 	gap: 10px;
 	flex: 1 0 0;
+	flex-direction: row;
+	flex-basis: auto;
 `;
 
 const Button = styled.button`
 	background-color: #fff;
 	border: none;
 	color: #666;
-
+	display: inline-block;
 	text-align: right;
 	font-family: SUIT;
 	font-size: 14px;

@@ -1,4 +1,4 @@
-import instance from '../../../../apis/axiosInstance';
+import instance from '../axiosInstance';
 
 async function fetchPurchaseItems(buyerId) {
 	try {

@@ -96,7 +96,6 @@ const Title = styled.div`
 const PriceWrapper = styled.div`
 	display: flex;
 	align-items: center;
-	margin-bottom: 18px;
 `;
 
 const Price = styled.div`

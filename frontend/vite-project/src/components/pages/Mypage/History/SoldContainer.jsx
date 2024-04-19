@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { SalesHistoryWrap, ForSalesList, SoldVoid } from './SoldContainerStyle';
 import SoldCard from '../../../MypageHistoryCard/SoldCard';
-import { fetchSoldItems, deleteSaleItem } from './SoldApi'; // API 함수 가져오기
+import { fetchSoldItems, deleteSaleItem } from '../../../../apis/service/SoldApi';
 
 const SoldContainer = () => {
 	const [soldItems, setSoldItems] = useState([]);
@@ -12,7 +12,6 @@ const SoldContainer = () => {
 		if (id) {
 			fetchSoldItems(id)
 				.then(data => {
-					// isCompleted가 true이고, deletedAt이 null인 항목만 필터링
 					const validItems = data.filter(
 						item => item.isCompleted === true && item.deletedAt == null,
 					);
@@ -28,16 +27,15 @@ const SoldContainer = () => {
 	const handleDelete = async prodId => {
 		try {
 			const response = await deleteSaleItem(id, prodId);
-			// 여기서 response 객체가 유효한지 확인합니다.
 			if (!response) {
 				throw new Error('No response from the server.');
 			}
 			if (response.status === 200) {
 				const newItems = soldItems.filter(item => item._id !== prodId);
-				setSoldItems([...newItems]); // 배열을 복사하여 상태를 갱신합니다.
+				setSoldItems([...newItems]);
 			} else {
-				console.error('Server responded with status:', response.status);
-				throw new Error('Failed to delete the item on the server.');
+				console.error('서버 res 상태:', response.status);
+				throw new Error('서버에서 아이템삭제가 실패했습니다.');
 			}
 		} catch (error) {
 			console.error('아이템 삭제 실패:', error);
@@ -51,7 +49,7 @@ const SoldContainer = () => {
 				soldItems.map(sold => (
 					<ForSalesList key={sold._id}>
 						<SoldCard
-							imgUrls={sold.imgUrls.map(url => url.replace('coversum', 'cover500'))}
+							imgUrls={sold.imgUrls[0](url => url.replace('coversum', 'cover500'))}
 							price={sold.price}
 							name={sold.name}
 							sellDate={sold.sellDate}

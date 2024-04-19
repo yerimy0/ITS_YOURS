@@ -16,6 +16,10 @@ const {
 const getProductsList = async (req, res) => {
 	try {
 		const result = await productsService.getProductsList();
+		console.log(
+			'result::',
+			result.map(a => a.name),
+		);
 		res.status(200).json(result);
 	} catch (err) {
 		res.status(400).json({ message: 'failed' });
@@ -121,7 +125,15 @@ const insertProduct = async (req, res, next) => {
 		let longitude = getLocation.longitude;
 		let latitude = getLocation.latitude;
 
-		const { name, price, author, publisher, condition, description } = req.body;
+		const {
+			name,
+			price,
+			author,
+			publisher,
+			condition,
+			description,
+			imgUrls: mainImgUrl,
+		} = req.body;
 
 		if (!name || !imgUrls || !price || !author || !publisher || !condition || !description) {
 			throw new BadRequestError('필수 정보를 모두 입력해주세요');
@@ -129,7 +141,7 @@ const insertProduct = async (req, res, next) => {
 		const product = await productsService.insertProduct({
 			userId,
 			name,
-			imgUrls,
+			imgUrls: [mainImgUrl, ...imgUrls],
 			price,
 			author,
 			publisher,
@@ -142,6 +154,7 @@ const insertProduct = async (req, res, next) => {
 			longitude,
 			latitude,
 		});
+		console.log('body', JSON.stringify(req.body));
 		console.log('product', product);
 
 		if (!product) {

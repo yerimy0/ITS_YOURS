@@ -119,6 +119,9 @@ export const InfoBox = styled.div`
 
 	&:not(:nth-child(2)):hover {
 		cursor: auto;
+		&:hover {
+			border-color: #ded8e1;
+		}
 	}
 `;
 

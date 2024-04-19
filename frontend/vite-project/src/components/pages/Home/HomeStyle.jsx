@@ -328,6 +328,7 @@ const Icon = styled.img`
 	flex-direction: column;
 	align-items: center;
 	gap: 9px;
+	cursor: pointer;
 	&:hover {
 		transform: scale(1.1);
 		transition: transform 0.3s ease;

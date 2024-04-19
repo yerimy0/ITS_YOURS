@@ -11,11 +11,13 @@ import {
 	SendTime,
 } from './ChatListProfileStyle';
 
-function ChatListProfile({ buyerInfo, productInfo, product }) {
+function ChatListProfile({ userInfo, productInfo, product }) {
 	const [insertProduct, setInsertProduct] = useState({});
 
 	const [isActive, setIsActive] = useState(false);
-	console.log(productInfo);
+	console.log('상품', productInfo);
+	console.log('유저', userInfo);
+
 	function handleClick() {
 		setIsActive(!isActive);
 	}
@@ -28,16 +30,16 @@ function ChatListProfile({ buyerInfo, productInfo, product }) {
 	return (
 		<ProfileWrap className={isActive ? 'active' : ''} onClick={handleClick}>
 			<Profile>
-				<ProfileImg src={buyerInfo.profilePic} />
+				<ProfileImg src={userInfo[0].profilePic} />
 			</Profile>
 			<ProfileInfo>
 				<Wrap>
-					<NickName>{buyerInfo.nickName}</NickName>
+					<NickName>{userInfo[0].nickName}</NickName>
 					<Notification />
 				</Wrap>
 				<Wrap>
 					<BookName>{insertProduct.name}</BookName>
-					<SendTime>1시간 전</SendTime>
+					{/* <SendTime>1시간 전</SendTime> */}
 				</Wrap>
 			</ProfileInfo>
 		</ProfileWrap>

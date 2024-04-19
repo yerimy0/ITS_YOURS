@@ -53,35 +53,6 @@ const getProduct = async (req, res) => {
 	}
 };
 
-const uploadFromUrl = async imageUrl => {
-	return new Promise((resolve, reject) => {
-		const pass = new stream.PassThrough();
-		const params = {
-			Bucket: process.env.S3_BUCKET_NAME,
-			Key: `covers/${Date.now()}.jpeg`, // 파일 이름 설정
-			Body: pass,
-			ContentType: 'image/jpeg', // 파일 타입 설정
-		};
-
-		s3.upload(params, (err, data) => {
-			if (err) {
-				reject(err);
-			} else {
-				resolve(data.Location);
-			}
-		});
-
-		axios
-			.get(imageUrl, { responseType: 'stream' })
-			.then(response => {
-				response.data.pipe(pass);
-			})
-			.catch(err => {
-				reject(err);
-			});
-	});
-};
-
 //상품등록 > 상품정보 검색
 const getProductInfo = async (req, res) => {
 	try {
@@ -154,8 +125,6 @@ const insertProduct = async (req, res, next) => {
 			longitude,
 			latitude,
 		});
-		console.log('body', JSON.stringify(req.body));
-		console.log('product', product);
 
 		if (!product) {
 			throw new InternalServerError('서버 오류');
@@ -170,7 +139,9 @@ const insertProduct = async (req, res, next) => {
 const updateProduct = async (req, res, next) => {
 	try {
 		const { prodId } = req.query;
-		let imgUrls = req.file ? req.file.location : '';
+		if (req.files) {
+			imgUrls = req.files.map(file => file.location);
+		}
 		const prodObjectId = new ObjectId(prodId); // 상품의 _id 값
 
 		// 상품 정보 조회
@@ -185,11 +156,19 @@ const updateProduct = async (req, res, next) => {
 		if (product.deletedAt) {
 			throw new BadRequestError('이미 삭제된 상품은 수정할 수 없습니다.');
 		}
-		const { name, price, author, publisher, condition, description } = req.body;
+		const {
+			name,
+			price,
+			author,
+			publisher,
+			condition,
+			description,
+			imgUrls: mainImgUrl,
+		} = req.body;
 		// imgUrls가 존재하면 상품 정보 업데이트에 포함, 그렇지 않으면 기존 값 유지
 		const updatedProduct = await productsService.updateProduct(prodObjectId, {
 			name,
-			imgUrls,
+			imgUrls: [mainImgUrl, ...imgUrls],
 			price,
 			author,
 			publisher,

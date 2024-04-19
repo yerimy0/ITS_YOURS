@@ -61,7 +61,7 @@
 </div>
 
 - 협업 툴
-  - `Figma` `gitlab`📚 `Notion`
+  - `Figma` `gitlab` `Notion`
 
  <div align="center">
   	<img src="https://img.shields.io/badge/GitLab-FC6D26?style=flat&logo=GitLab&logoColor=white" />
@@ -73,7 +73,7 @@
 
 - [와이어 프레임](https://www.figma.com/files/project/217859975/Team-project?fuid=1329746140332818240)
 
-- [API 명세서(스웨거)](http://kdt-sw-7-team07.elicecoding.com/api-docs/)
+- [API 명세서](https://www.postman.com/red-star-460844/workspace/itsyours/overview)
 
 ---
 

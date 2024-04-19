@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../Modal';
 
-function SoldCard({ isCompleted, imgUrls, price, name, like, chat, createdAt, onDelete }) {
+function SoldCard({ isCompleted, imgUrls, price, name, wishescount, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const openDeleteModal = () => {
@@ -56,10 +56,7 @@ export default SoldCard;
 
 const ProductCardWrap = styled.div`
 	display: flex;
-	padding: 10px;
-	&:hover {
-		cursor: pointer;
-	}
+	align-items: center;
 `;
 
 const ImageBox = styled.div`
@@ -70,18 +67,16 @@ const ImageBox = styled.div`
 const ForSalesListImage = styled.img`
 	width: 100px;
 	height: 150px;
+	object-fit: cover;
 `;
 
 const SalesInfo = styled.div`
 	margin-left: 10px;
-	display: flex;
-	flex-direction: column;
 `;
 
 const Title = styled.div`
 	font-size: 20px;
-	font-weight: 300;
-	font-family: SUIT;
+	margin-bottom: 5px;
 `;
 
 const PriceWrapper = styled.div`
@@ -91,18 +86,14 @@ const PriceWrapper = styled.div`
 
 const Price = styled.div`
 	font-size: 24px;
-	font-weight: 700;
-	font-family: SUIT;
+	font-weight: 600;
+	margin-bottom: 20px;
 `;
 
 const Won = styled.div`
-	color: var(--M3-black, #000);
-	font-family: SUIT;
 	font-size: 16px;
-	font-style: normal;
 	font-weight: 500;
 	line-height: 24px;
-	margin-top: 5px;
 	margin-left: 5px;
 `;
 
@@ -118,8 +109,7 @@ const Icon = styled.img`
 `;
 
 const Status = styled.span`
-	font-size: 20px;
-	margin-right: 10px;
+	font-size: 18px;
 `;
 
 const ButtonBox = styled.div`
@@ -129,32 +119,30 @@ const ButtonBox = styled.div`
 `;
 
 const DeleteBtn = styled.button`
-	width: 66px;
-	height: 53px;
-	border-radius: 20px;
+	width: 100px;
+	padding: 10px 0;
+	border-radius: 5px;
 	border: 1px solid #ded8e1;
 	background: #fff;
-	color: #000;
-	font-family: SUIT;
 	font-size: 16px;
-	font-weight: 700;
-	margin: 3px;
+	font-weight: 500;
+
 	&:hover {
-		cursor: pointer;
+		border: 1px solid #009dff;
+		background-color: #009dff;
+		color: #fff;
+		transition: all 0.5s;
 	}
 `;
 
 const SoldCompleteDiv = styled.div`
-	font-family: SUIT;
-	font-size: 18px;
-	padding: 10px 15px;
-	border: 1px solid #000000;
+	font-size: 16px;
+	border: 1px solid #666;
 	background: #666666;
 	color: #ffffff;
-	border-radius: 10px;
-	margin-top: 10px;
-	position: relative;
-	white-space: nowrap;
-	line-height: 22px;
+	border-radius: 5px;
 	width: 100px;
+	margin-top: 5px;
+	padding: 5px 0;
+	text-align: center;
 `;

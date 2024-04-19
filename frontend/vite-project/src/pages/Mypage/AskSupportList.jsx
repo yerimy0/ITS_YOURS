@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { Title } from '../../components/Users/UsersStyles';
 import InquiryList from '../../components/pages/Mypage/AskSupportList/InquiryList';
 import {
@@ -20,7 +20,7 @@ function AskSupportList() {
 			})),
 	]);
 
-	const navigate = useNavigate(); 
+	const navigate = useNavigate();
 
 	function toggleContent(id) {
 		const updatedInquiries = inquiries.map(inquiry =>
@@ -35,7 +35,7 @@ function AskSupportList() {
 	}
 
 	function handleInquiryClick() {
-		navigate('/asksupportwrite'); 
+		navigate('/asksupportwrite');
 	}
 
 	return (

@@ -305,3 +305,29 @@ input {
 	border: 1px solid #eee;
 	border-radius: 20px;
 }
+
+.my_info_input {
+	width: 50%;
+	margin: 0 auto;
+	/* font-size: 16px; */
+}
+
+.my_info_input::placeholder {
+}
+.my_info_button {
+	margin: 1rem auto 0 !important;
+}
+.common_info {
+	/* font-size: 16px !important; */
+}
+
+.user_out {
+	width: 50%;
+	margin: 50px auto 0;
+	text-align: center;
+	padding-bottom: 3px;
+}
+/* 
+.madal_buy {
+	background: #000;
+} */

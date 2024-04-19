@@ -26,11 +26,11 @@ const Navigator = () => {
 
 	return (
 		<NavigatorContainer>
-			<GrFormPrevious size="24" color="#009dff" onClick={onClickPrev} />
+			<GrFormPrevious size="22" color="#009dff" onClick={onClickPrev} />
 			{pages.map((page, index) => (
 				<PageBlock key={`pageblock-${index}`} page={page} />
 			))}
-			<GrFormNext size="24" color="#009dff" onClick={onClickNext} />
+			<GrFormNext size="22" color="#009dff" onClick={onClickNext} />
 		</NavigatorContainer>
 	);
 };

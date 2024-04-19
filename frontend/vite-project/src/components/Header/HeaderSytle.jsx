@@ -155,6 +155,7 @@ const RightNav = styled.div`
 	li {
 		font-size: 20px;
 		font-weight: 500;
+		cursor: pointer;
 	}
 `;
 
@@ -180,6 +181,7 @@ const Nav = styled(HeaderMain)`
 
 	img {
 		width: 60px;
+		display: none;
 	}
 
 	@media screen and (max-width: 864px) {

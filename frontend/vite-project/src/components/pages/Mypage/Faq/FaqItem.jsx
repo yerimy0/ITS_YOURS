@@ -13,7 +13,7 @@ function FaqItem({ question, answer }) {
 			<div className="faq-question" onClick={toggle}>
 				{question}
 				<button className="toggle-answer">
-					<img src="public/PlusIcon.svg" alt="Toggle Answer" />
+					<img src="/PlusIcon.svg" alt="Toggle Answer" />
 				</button>
 			</div>
 			{isOpen && <div className="faq-answer">{answer}</div>}

@@ -77,7 +77,7 @@ function AdminQnA() {
 	return (
 		<>
 			<Container>
-				<TableTitle>신고내역 처리</TableTitle>
+				<TableTitle>Q&A 처리</TableTitle>
 				<Table>
 					<TableHead>
 						<TableRow>

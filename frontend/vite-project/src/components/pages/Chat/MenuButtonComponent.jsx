@@ -3,12 +3,13 @@ import ReportModal from './ReportModal';
 import ToastPopup from '../../TostPopUp';
 import Modal from '../../Modal';
 import { MenuButton, Img, Menu, MenuItem } from './ChatRoomHeaderStyle';
+import { thumbUp, thumbDown, confirmBuying } from '../../../apis/service/Chat.api';
 
-function MenuButtonComponent() {
+function MenuButtonComponent({ userInfo, productInfo }) {
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [reportModalOpen, setReportModalOpen] = useState(false);
 	const [toastMessage, setToastMessage] = useState(''); // 토스트 메시지 상태 추가
-	const [blockUserModalOpen, setBlockUserModalOpen] = useState(false); // 사용자 차단 모달 상태 추가
+	const [buyUserModalOpen, setBuyUserModalOpen] = useState(false); // 사용자  모달 상태 추가
 	const [leaveRoomModalOpen, setLeaveRoomModalOpen] = useState(false); // 채팅방 나가기 모달 상태 추가
 
 	const toggleMenu = () => {
@@ -23,8 +24,8 @@ function MenuButtonComponent() {
 		setReportModalOpen(false);
 	};
 
-	const handleBlockUser = () => {
-		setBlockUserModalOpen(true);
+	const handleBuyUser = () => {
+		setBuyUserModalOpen(true);
 	};
 
 	const handleLeaveRoom = () => {
@@ -32,7 +33,9 @@ function MenuButtonComponent() {
 	};
 
 	const handleCloseModal = () => {
-		setBlockUserModalOpen(false);
+		console.log(productInfo._id);
+		confirmBuying(productInfo._id);
+		setBuyUserModalOpen(false);
 		setLeaveRoomModalOpen(false);
 	};
 
@@ -46,15 +49,25 @@ function MenuButtonComponent() {
 	return (
 		<>
 			<MenuButton onClick={toggleMenu}>
-				<Img src="./menu_bar.svg" />
+				<Img src="/menu_bar.svg" />
 				<Menu open={menuOpen}>
-					<MenuItem onClick={() => handleToastMessage('카페인 줄여야지님에게 칭찬하였습니다.')}>
+					<MenuItem
+						onClick={() => {
+							handleToastMessage(`${userInfo.nickName}님에게 칭찬하였습니다.`);
+							thumbUp(userInfo._id);
+						}}
+					>
 						매너 칭찬하기
 					</MenuItem>
-					<MenuItem onClick={() => handleToastMessage('카페인 줄여야지님에게 비판하였습니다.')}>
+					<MenuItem
+						onClick={() => {
+							handleToastMessage(`${userInfo.nickName}님에게 비판하였습니다.`);
+							thumbDown(userInfo._id);
+						}}
+					>
 						매너 비판하기
 					</MenuItem>
-					<MenuItem onClick={handleBlockUser}>차단하기</MenuItem>
+					<MenuItem onClick={handleBuyUser}>구매확정</MenuItem>
 					<MenuItem onClick={openReportModal}>신고하기</MenuItem>
 					<MenuItem onClick={handleLeaveRoom}>채팅방 나가기</MenuItem>
 				</Menu>
@@ -62,15 +75,18 @@ function MenuButtonComponent() {
 			<ReportModal isOpen={reportModalOpen} onClose={closeReportModal} />
 			{toastMessage && <ToastPopup message={toastMessage} />}
 			<Modal
-				isOpen={blockUserModalOpen}
+				isOpen={buyUserModalOpen}
 				onClose={handleCloseModal}
-				title="00님을 차단하시겠습니까?"
-				content=<>
-					차단하면 00님의 게시글은 보이지 않고,
-					<br />
-					나에게 댓글과 채팅도 보낼 수 없어요. 차단하시겠어요?
-				</>
-				confirmText="차단하기"
+				title={`${userInfo.nickName}님과의 
+				구매를 확정하겠습니까?`}
+				content={
+					<>
+						이제너할 수 있도록! 구매를 확정 지어주세요 :)
+						<br />
+						다음 구매와 판매도 이제너해와 함께 해주세요!
+					</>
+				}
+				confirmText="구매 확정하기"
 				onConfirm={handleCloseModal}
 			/>
 			<Modal

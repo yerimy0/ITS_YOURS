@@ -18,10 +18,34 @@ async function createChatroom(buyerId, productId, sellerId) {
 	return createChatroom;
 }
 
+async function getOneChatRoom(chatroomId) {
+	const result = await Chatroom.findOne({ _id: chatroomId });
+	return result;
+}
+
 async function getChatroomList(memberId) {
-	const chatList = await Chatroom.find({ $or: [{ buyerId: memberId }, { sellerId: memberId }] });
+	const member = await Members.findById(memberId);
+
+	const products = await Products.find({
+		sellerId: member.id,
+		isCompleted: false,
+	});
+
+	const productIds = products.map(product => product._id);
+	const chatList = await Chatroom.find({
+		productId: { $in: productIds },
+	});
+
 	return chatList;
 }
+
+const getChatroomListWithFilter = async userId => {
+	const chatList = await Chatroom.find({
+		$and: [{ $or: [{ buyerId: userId }, { sellerId: userId }] }, { isActivated: true }],
+	});
+
+	return chatList;
+};
 
 async function saveChatMessage(roomObjId, { auth, content }) {
 	const newChat = {
@@ -33,7 +57,38 @@ async function saveChatMessage(roomObjId, { auth, content }) {
 	return chat;
 }
 
-async function getDetailChat() {}
+async function getDetailChat(chatroomId) {
+	const chatroom = await Chatroom.findOne({ _id: chatroomId });
+	const product = await Products.findOne({ _id: chatroom.productId })
+		.select('name price imgUrls sellerId')
+		.exec();
+
+	const sellerIdValue = product.sellerId;
+
+	const sellerInfo = await Members.findOne({ id: sellerIdValue })
+		.select('id nickName profilePic')
+		.exec();
+
+	const buyerInfo = await Members.findById(chatroom.buyerId)
+		.select('id nickName profilePic')
+		.exec();
+
+	const messages = await ChatMessage.find({ chatRoomId: chatroomId })
+		.populate({
+			path: 'chatAuth',
+			select: 'id',
+		})
+		.sort({ chatCreatedAt: 1 });
+
+	const chatroomDetails = {
+		product,
+		sellerInfo,
+		buyerInfo,
+		messages,
+	};
+
+	return chatroomDetails;
+}
 
 async function giveGoodManners(memberId) {
 	try {
@@ -69,6 +124,10 @@ async function confirmPurchase(productId) {
 		{ isCompleted: true },
 		{ new: true },
 	);
+
+	if (result) {
+		await Chatroom.updateMany({ productId: productId }, { $set: { isActivated: false } });
+	}
 	return result;
 }
 
@@ -79,7 +138,9 @@ async function quitChatroom(chatroomId) {
 
 module.exports = {
 	createChatroom,
+	getOneChatRoom,
 	getChatroomList,
+	getChatroomListWithFilter,
 	saveChatMessage,
 	getDetailChat,
 	giveGoodManners,

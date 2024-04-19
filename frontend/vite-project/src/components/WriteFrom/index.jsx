@@ -105,8 +105,30 @@ function WriteForm() {
 	}
 
 	async function Upload() {
-		await Register(register);
-		navigate('/product');
+		try {
+			const formData = new FormData();
+			formData.append('name', register.name);
+			formData.append('price', register.price);
+			formData.append('author', register.author);
+			formData.append('publisher', register.publisher);
+			formData.append('condition', register.condition);
+			formData.append('description', register.description);
+
+			console.log(register.imgUrls);
+			register.imgUrls.forEach((file, index) => {
+				formData.append(`imgUrls`, file);
+				console.log('각 사진 파일', file);
+			});
+			console.log('전달할 객체 이미지', formData.imgUrls);
+			await Register(formData);
+			navigate('/product');
+			window.scrollTo({
+				top: 800,
+				behavior: 'smooth',
+			});
+		} catch (err) {
+			console.error(err);
+		}
 	}
 
 	function handleImageChange(newUrls) {
@@ -189,7 +211,12 @@ function WriteForm() {
 	return (
 		<SetRegisterContext.Provider value={setRegister}>
 			<RegisterContext.Provider value={register}>
-				<RegisterBox>
+				<RegisterBox
+					encType="multipart/form-data"
+					onSubmit={e => {
+						e.preventDefault();
+					}}
+				>
 					<Title>
 						<TopTitle>상품 등록</TopTitle>
 						<RedStar>*필수 항목</RedStar>

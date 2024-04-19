@@ -97,7 +97,8 @@ function AdminReport() {
 				isOpen={isModalOpen}
 				onClose={() => setIsModalOpen(false)}
 				title="신고 처리"
-				content="사용자 신고처리기능이 구현되지 않았습니다. 1:1문의하기로 진행해주세요 !"
+				content="사용자 신고처리기능이 구현되지 않았습니다. 
+				1:1 문의하기로 진행해주세요 !"
 				confirmText="문의하러가기"
 				onConfirm={handleConfirm}
 			/>

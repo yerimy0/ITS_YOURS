@@ -48,6 +48,7 @@ const SendText = styled.div`
 	font-size: 16px;
 	line-height: 22px;
 	color: #fff;
+	word-break: break-all;
 
 	@media screen and (max-width: 1030px) {
 		width: 65%;
@@ -70,6 +71,7 @@ const ReplyText = styled.div`
 	padding: 20px 20px 20px 25px;
 	background: #fff;
 	font-size: 16px;
+	word-break: break-all;
 
 	@media screen and (max-width: 1030px) {
 		width: 65%;
@@ -79,12 +81,20 @@ const ReplyText = styled.div`
 const ReplyTime = styled.div``;
 
 const InputWrap = styled.div`
+	/* padding: 8px 20px; */
 	width: 80%;
-	margin: 20px auto 0;
-	border: 1px solid #ddd;
-	border-radius: 20px;
-	background: #fff;
-	padding: 8px 20px;
+	margin: 0 auto;
+
+	.inputtext {
+		width: 100%;
+		height: 42px;
+		margin: 20px auto 0;
+		border: 1px solid #ddd;
+		border-radius: 20px;
+		background: #fff;
+		font-size: 16px;
+		padding: 10px;
+	}
 `;
 
 const TextAreaText = styled.textarea`

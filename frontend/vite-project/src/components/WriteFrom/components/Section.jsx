@@ -55,6 +55,7 @@ function Section({ label, onChange, value, name }) {
 			publisher: data.publisher,
 			imgUrls: [data.cover, '', ''],
 		});
+		console.log(data.cover);
 		setlistOut(false);
 	}
 

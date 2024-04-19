@@ -34,7 +34,7 @@ const getRegionBySchoolName = async (req, res, next) => {
 const getUniversityLocation = async (req, res, next) => {
 	try {
 		const { schoolName } = req.params; // URL 파라미터에서 학교 이름을 받습니다.
-		const location = await CategoryService.findUniversityLocation(schoolName);
+		const location = await categoryService.getUniversityLocation(schoolName);
 
 		if (!location) {
 			throw new NotFoundError('검색하신 학교 정보가 존재하지 않습니다.');

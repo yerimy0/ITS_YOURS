@@ -8,6 +8,7 @@ function EmailVerificationForm({
 	emailVerificationCode,
 	setEmailVerificationCode,
 	emailError,
+	setEmailVerified,
 	handleBlurEmail,
 }) {
 	const handleSendVerifyEmail = async () => {
@@ -22,24 +23,22 @@ function EmailVerificationForm({
 	const handleVerifyCode = async () => {
 		try {
 			const response = await verifyCode(email, emailVerificationCode);
-
-			// response 검증
-			if (!response || !response.isVerified) {
-				throw new Error('No response data received');
-			}
-
+			// 서버로부터의 응답을 확인합니다.
 			if (response.isVerified) {
 				alert('이메일 인증 성공!');
+				setEmailVerified(true); // 이메일 인증 상태 업데이트
 			} else {
-				const errorMessage = response.isVerified.error || '인증 실패';
+				// 응답에 오류 메시지가 포함되어 있다면 사용자에게 알립니다.
+				const errorMessage = response.error || '인증 실패';
 				alert(errorMessage);
+				setEmailVerified(false); // 인증 실패 시 상태 초기화
 			}
 		} catch (error) {
 			console.error('Axios error:', error);
-
-			if (error.response && error.response.isVerified) {
-				// 서버 응답이 있을 경우
-				alert(`서버 응답 오류: ${error.response.isVerified.error}`);
+			if (error.response) {
+				// 서버 응답 오류가 있는 경우
+				const serverError = error.response.data.error || '서버 응답 오류';
+				alert(serverError);
 			} else if (error.request) {
 				// 요청이 전송되었지만 응답을 받지 못한 경우
 				alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
@@ -47,6 +46,7 @@ function EmailVerificationForm({
 				// 기타 오류
 				alert('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
 			}
+			setEmailVerified(false); // 오류 발생 시 상태 초기화
 		}
 	};
 

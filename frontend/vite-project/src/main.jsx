@@ -7,11 +7,11 @@ import router from './routes/router.jsx';
 import HttpsRedirect from 'react-https-redirect';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-	<React.StrictMode>
-		<HttpsRedirect>
-			<UserProvider>
-				<RouterProvider router={router} />
-			</UserProvider>
-		</HttpsRedirect>
-	</React.StrictMode>,
+	//<React.StrictMode>
+	<HttpsRedirect>
+		<UserProvider>
+			<RouterProvider router={router} />
+		</UserProvider>
+	</HttpsRedirect>,
+	//</React.StrictMode>,
 );

@@ -1,7 +1,13 @@
 const chatService = require('../services/ChatService');
 const ObjectId = require('mongodb').ObjectId;
-const { BadRequestError, ForbiddenError, UnauthorizedError } = require('../config/CustomError');
-const { Products, Chatroom } = require('../models/index');
+const {
+	BadRequestError,
+	ForbiddenError,
+	UnauthorizedError,
+	NotFoundError,
+} = require('../config/CustomError');
+const { Products, Chatroom, Members } = require('../models/index');
+const { copyFileSync } = require('fs');
 
 /*
  * 채팅방 생성 controller
@@ -36,25 +42,21 @@ const createChatroom = async (req, res, next) => {
 const getChatroomList = async (req, res, next) => {
 	try {
 		const memberId = req.user._id;
-		const memberObjectId = new ObjectId(memberId);
 
 		if (!memberId) {
 			throw new BadRequestError('로그인 후 이용해주세요.');
 		}
 
-		const chatList = await chatService.getChatroomList(memberObjectId);
-
-		// 사용자의 권한 확인
-		const isAuthorized = chatList.some(
-			chatroom =>
-				chatroom.buyerId.toString() === memberId.toString() ||
-				chatroom.sellerId.toString() === memberId.toString(),
-		);
-
-		if (!isAuthorized) {
-			throw new UnauthorizedError('권한이 없습니다.');
+		// Members 테이블에서 사용자의 실제 ID 찾기
+		const member = await Members.findById(memberId);
+		if (!member) {
+			throw new NotFoundError('회원 정보를 찾을 수 없습니다.');
 		}
-
+		// 사용자의 실제 ID를 사용하여 채팅방 목록 불러오기
+		const chatList = await chatService.getChatroomListWithFilter(member._id);
+		if (!chatList || chatList.length === 0) {
+			throw new NotFoundError('채팅 목록이 없습니다.');
+		}
 		res.status(200).json(chatList);
 	} catch (err) {
 		next(err);
@@ -84,17 +86,39 @@ const saveChatMessage = async (req, res, next) => {
 //채팅방 내용보기
 const getDetailChat = async (req, res, next) => {
 	try {
+		const memberId = req.user._id;
+		const { chatroomId } = req.params;
+		const chatObjId = new ObjectId(chatroomId);
+
+		const chatroom = await chatService.getOneChatRoom(chatObjId);
+
+		if (!chatroom) {
+			throw new NotFoundError('채팅내역이 없습니다.');
+		}
+
+		if (!memberId) {
+			throw new BadRequestError('로그인 후 이용해주세요.');
+		}
+
+		// 채팅방에 참여한 사용자인지 확인
+		if (chatroom.buyerId.toString() !== memberId && chatroom.sellerId.toString() !== memberId) {
+			throw new UnauthorizedError('권한이 없습니다.');
+		}
+
+		const chatData = await chatService.getDetailChat(chatroomId);
+		res.status(200).json({ data: chatData, message: '채팅방 정보 조회 성공' });
 	} catch (err) {
 		next(err);
 	}
 };
+
 //칭찬하기
 const giveGoodManners = async (req, res, next) => {
 	try {
 		const memberId = req.user._id;
 
-		const { sellerId } = req.body;
-		const sellerObjectId = new ObjectId(sellerId);
+		const { Id } = req.body;
+		const sellerObjectId = new ObjectId(Id);
 
 		if (!memberId) {
 			throw new BadRequestError('로그인 후 이용해주세요.');

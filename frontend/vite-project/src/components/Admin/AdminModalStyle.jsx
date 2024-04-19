@@ -15,94 +15,112 @@ export const ModalWrapper = styled.div`
 
 export const ModalContent = styled.div`
 	background-color: #fff;
-	padding: 20px;
+	padding: 20px 0 0;
 	border-radius: 10px;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 	width: 500px;
 	display: flex;
 	flex-direction: column;
+
+	@media (max-width: 500px) {
+		width: 85%;
+	}
 `;
 
 export const ModalHeader = styled.div`
-	font-size: 1.2rem;
-	font-weight: bold;
-	margin-bottom: 10px;
+	font-size: 24px;
+	font-weight: 500;
+	padding: 0 0 0 15px;
+	margin-bottom: 8px;
 `;
 
 export const ModalBody = styled.div`
-	font-size: 1rem;
-	margin-bottom: 20px;
+	/* font-size: 1rem; */
+	/* margin-bottom: 20px; */
 `;
 
 export const ModalFooter = styled.div`
+	width: 100%;
 	display: flex;
-	justify-content: space-evenly;
+	align-items: center;
+	border-top: 1px solid #eee;
 `;
 
 export const Input = styled.input`
+	display: block;
 	width: 90%;
+	margin: 0 auto 20px;
 	padding: 10px;
-	margin-bottom: 20px;
-	border: 1px solid #ccc;
-	border-radius: 10px;
+	font-size: 15px;
+	border: 1px solid #eee;
 `;
 
 export const Button = styled.button`
-	padding: 10px 20px;
-	border: none;
-	border-radius: 5px;
-	color: #fff;
-	cursor: pointer;
 	&:first-child {
+		width: 50%;
+		border-right: 1px solid #eee;
+		padding: 25px 0;
+		font-size: 18px;
 		color: #009dff;
-		border-radius: 20px;
-		border: 1.5px solid #009dff;
-		background: #fff;
-		text-align: center;
-		font-family: SUIT;
-		font-size: 20px;
+		font-weight: 500;
+		border-bottom-left-radius: 20px;
+
+		&:hover {
+			background: #fafafa;
+			color: #038ee5;
+			transition: all 0.5s;
+		}
+
+		@media (max-width: 500px) {
+			font-size: 16px;
+			padding: 25px 0;
+		}
 	}
 	&:last-child {
-		background-color: #007bff; // Submit button color
-		border-radius: 20px;
+		width: 50%;
 		text-align: center;
-		font-family: SUIT;
-		font-size: 20px;
-	}
-	&:hover {
-		opacity: 0.9;
+		padding: 25px 0;
+		font-size: 18px;
+		color: #009dff;
+		font-weight: 500;
+		border-bottom-right-radius: 20px;
+
+		&:hover {
+			background: #fafafa;
+			color: #038ee5;
+			transition: all 0.5s;
+		}
+
+		@media (max-width: 500px) {
+			font-size: 16px;
+			padding: 25px 0;
+		}
 	}
 `;
 
 export const BodyId = styled.div`
-	color: #1e1e1e;
 	font-family: 'Noto Sans KR';
 	font-size: 18px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: normal;
-	margin: 10px 0px;
+	font-weight: 500;
+	margin: 0 15px 5px;
 `;
 
 export const BodyDate = styled.div`
 	color: rgba(30, 30, 30, 0.6);
-	font-family: 'Noto Sans KR';
 	font-size: 12px;
 	font-style: normal;
 	font-weight: 400;
 	line-height: normal;
 	margin-bottom: 30px;
+	padding: 0 0 0 15px;
 `;
 
 export const BodyDetail = styled.div`
-	color: #000;
-	font-family: SUIT;
 	font-size: 16px;
-	font-style: normal;
 	font-weight: 400;
 	line-height: 24px;
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 	margin: 20px 0px;
-	padding: 20px 0px;
+	padding: 20px 10px;
 `;

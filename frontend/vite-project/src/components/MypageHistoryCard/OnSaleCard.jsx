@@ -205,8 +205,8 @@ const DeleteBtn = styled.button`
 	font-weight: 500;
 
 	&:hover {
-		border: 1px solid #606060;
-		background-color: #606060;
+		border: 1px solid #009dff;
+		background-color: #009dff;
 		color: #fff;
 		transition: all 0.5s;
 	}

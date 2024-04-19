@@ -22,10 +22,11 @@ const RegisterBox = styled.form`
 		/* font-family: SUIT; */
 		font-style: normal;
 		display: flex;
-		padding: 8px;
+		padding: 10px;
 		justify-content: center;
 		align-items: center;
 		gap: 8px;
+		/* width: 100%; */
 
 		&:hover {
 			border: 1px solid #009dff;
@@ -204,6 +205,7 @@ const SmallButton = styled.button`
 const BigButton = styled.button`
 	font-size: 18px;
 	width: 50%;
+
 	@media (max-width: 1000px) {
 		font-size: 16px;
 	}

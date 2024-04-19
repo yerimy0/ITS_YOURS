@@ -15,8 +15,9 @@ async function getChatDetail(chatroomId) {
 	// console.log('chatroomId', chatroomId);
 	const res = await instance.get(`/chat/detail/${chatroomId}`);
 	// console.log(res.data.data.chatroom);
-	return res.data.data.chatroom;
+	return res.data.data;
 }
+
 async function postChat(chatroomId, sendMes) {
 	const res = await instance.post(`/chat/${chatroomId}`, { content: sendMes });
 	console.log(res.data.data);

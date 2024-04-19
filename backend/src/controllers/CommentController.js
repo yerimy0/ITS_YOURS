@@ -1,5 +1,6 @@
 const CommentService = require('../services/CommentService');
 const { BadRequestError, UnauthorizedError } = require('../config/CustomError');
+const ObjectId = require('mongodb').ObjectId;
 
 /**
  * 커뮤니티 댓글 작성 service
@@ -54,17 +55,18 @@ const getComment = async (req, res, next) => {
 const updateComment = async (req, res, next) => {
 	try {
 		const writer = req.user.nickName;
-		const { commentId } = req.params;
+		const { commentId, postId } = req.params;
 		const { content } = req.body;
 
-		const commentInfo = await CommentService.getComment(commentId);
+		console.log('params::', JSON.stringify(req.params));
+		const commentInfo = await CommentService.getOneComment(commentId, postId);
+
 		if (writer !== commentInfo.nickName) {
 			throw new UnauthorizedError('권한이 없습니다.');
 		}
 
-		const updateResult = await CommentService.updateComment(commentId, content);
-
-		if (!updateComment) {
+		const updateResult = await CommentService.updateComment(commentObjId, content);
+		if (!updateResult) {
 			throw new BadRequestError('댓글을 찾을 수 없습니다.');
 		}
 		res.status(200).json(updateResult);

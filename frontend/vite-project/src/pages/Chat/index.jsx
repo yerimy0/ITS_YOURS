@@ -4,10 +4,13 @@ import DefaultChatRoom from '../../components/pages/Chat/DefaultChatRoom';
 import ChatRoom from '../../components/pages/Chat/ChatRoom';
 import { useNavigate } from 'react-router-dom';
 import UserIdContext from '../../context/UserIdContext';
-import { useContext, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+
+export const ClickedChatContext = createContext();
 
 function Chat() {
 	const { id } = useContext(UserIdContext);
+	const [clickedChatroom, setClickedChatroom] = useState(null);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -16,13 +19,15 @@ function Chat() {
 	}, []);
 
 	return (
-		<ChatWrap>
-			<div className="chat_inner">
-				<ChatList />
-				{/* <DefaultChatRoom /> */}
-				<ChatRoom />
-			</div>
-		</ChatWrap>
+		<ClickedChatContext.Provider value={{ clickedChatroom, setClickedChatroom }}>
+			<ChatWrap>
+				<div className="chat_inner">
+					<ChatList />
+					{/* <DefaultChatRoom /> */}
+					<ChatRoom />
+				</div>
+			</ChatWrap>
+		</ClickedChatContext.Provider>
 	);
 }
 

@@ -40,21 +40,36 @@ async function saveChatMessage(roomObjId, { auth, content }) {
 }
 
 async function getDetailChat(chatroomId) {
-	const chatroom = await Chatroom.findOne({ _id: chatroomId })
-		.populate('productId', 'name price imgUrls')
-		.populate('buyerId', 'nickName id profilePic')
-		.populate('sellerId', 'nickName id profilePic');
+	const chatroom = await Chatroom.findOne({ _id: chatroomId });
+	const product = await Products.findOne({ _id: chatroom.productId })
+		.select('name price imgUrls sellerId')
+		.exec();
+
+	const sellerIdValue = product.sellerId;
+
+	const sellerInfo = await Members.findOne({ id: sellerIdValue })
+		.select('id nickName profilePic')
+		.exec();
+
+	const buyerInfo = await Members.findById(chatroom.buyerId)
+		.select('id nickName profilePic')
+		.exec();
 
 	const messages = await ChatMessage.find({ chatRoomId: chatroomId })
 		.populate({
 			path: 'chatAuth',
-			select: 'id', // 'nickName' 필드만 가져오도록 수정
+			select: 'id',
 		})
 		.sort({ chatCreatedAt: 1 });
-	return {
-		chatroom,
+
+	const chatroomDetails = {
+		product,
+		sellerInfo,
+		buyerInfo,
 		messages,
 	};
+
+	return chatroomDetails;
 }
 
 async function giveGoodManners(memberId) {

@@ -64,10 +64,16 @@ function ChatList() {
 						<div
 							key={`item=${i}`}
 							onClick={() => {
+								console.log('중요', chatRoomList);
+								console.log('순서', i);
 								handleChatItem(chatRoomList._id);
 							}}
 						>
-							<ChatListProfile buyerInfo={buyerInfo[i]} productInfo={productInfo[i]} />
+							<ChatListProfile
+								buyerInfo={buyerInfo}
+								productInfo={productInfo}
+								product={chatRoomList.productId}
+							/>
 						</div>
 					))}
 			</ChatContainer>

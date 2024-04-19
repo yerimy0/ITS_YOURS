@@ -1,35 +1,40 @@
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../components/Layout';
-import Home from '../pages/Home';
 
-import Login from '../pages/Login/Login';
-import SignUp from '../pages/Signup/Signup';
-import FindId from '../pages/Find/FindId';
-import FindPassword from '../pages/Find/FindPassword';
-import ShowId from '../pages/Find/ShowId';
-import ProductWrite from '../pages/ProductWrite';
-import Product from '../pages/Product';
-import NotFound from '../components/pages/NotFound';
-import MyPageWish from '../pages/Mypage/MypageWish';
-import MyPage from '../pages/Mypage/Mypage.jsx';
-import ProfileEdit from '../pages/Mypage/ProfileEdit';
-import ProductDetail from '../pages/ProductDetail';
-import SalesHistory from '../pages/Mypage/SalesHistory.jsx';
-import Faq from '../pages/Mypage/Faq';
-import AskSupportList from '../pages/Mypage/AskSupportList';
-import AskSupportWrite from '../pages/Mypage/AskSupportWrite';
-import PurchaseHistory from '../pages/Mypage/PurchaseHistory.jsx';
-import SignOut from '../pages/SignOut/SignOut';
-import Community from '../pages/Community/CommunityList';
-import CommunityWrite from '../pages/Community/CommunityWrite';
-import CommunityDetail from '../pages/Community/CommunityDetail.jsx';
-import Chat from '../pages/Chat';
-import AdminPage from '../pages/Admin/AdminPage.jsx';
+const Home = lazy(() => import('../pages/Home'));
+const Login = lazy(() => import('../pages/Login/Login'));
+const SignUp = lazy(() => import('../pages/Signup/Signup'));
+const FindId = lazy(() => import('../pages/Find/FindId'));
+const FindPassword = lazy(() => import('../pages/Find/FindPassword'));
+const ShowId = lazy(() => import('../pages/Find/ShowId'));
+const ProductWrite = lazy(() => import('../pages/ProductWrite'));
+const Product = lazy(() => import('../pages/Product'));
+const NotFound = lazy(() => import('../components/pages/NotFound'));
+const MyPageWish = lazy(() => import('../pages/Mypage/MypageWish'));
+const MyPage = lazy(() => import('../pages/Mypage/Mypage'));
+const ProfileEdit = lazy(() => import('../pages/Mypage/ProfileEdit'));
+const ProductDetail = lazy(() => import('../pages/ProductDetail'));
+const SalesHistory = lazy(() => import('../pages/Mypage/SalesHistory'));
+const Faq = lazy(() => import('../pages/Mypage/Faq'));
+const AskSupportList = lazy(() => import('../pages/Mypage/AskSupportList'));
+const AskSupportWrite = lazy(() => import('../pages/Mypage/AskSupportWrite'));
+const PurchaseHistory = lazy(() => import('../pages/Mypage/PurchaseHistory'));
+const SignOut = lazy(() => import('../pages/SignOut/SignOut'));
+const Community = lazy(() => import('../pages/Community/CommunityList'));
+const CommunityWrite = lazy(() => import('../pages/Community/CommunityWrite'));
+const CommunityDetail = lazy(() => import('../pages/Community/CommunityDetail'));
+const Chat = lazy(() => import('../pages/Chat'));
+const AdminPage = lazy(() => import('../pages/Admin/AdminPage'));
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Layout />,
+		element: (
+			<Suspense>
+				<Layout />
+			</Suspense>
+		),
 		children: [
 			{ path: '/', element: <Home /> },
 			{ path: '/product/write', element: <ProductWrite /> },
@@ -55,11 +60,46 @@ const router = createBrowserRouter([
 			{ path: '/community/edit/:id', element: <CommunityWrite /> },
 		],
 	},
-	{ path: '/login', element: <Login /> },
-	{ path: '/findid', element: <FindId /> },
-	{ path: '/findpassword', element: <FindPassword /> },
-	{ path: '/signup', element: <SignUp /> },
-	{ path: '/adminpage', element: <AdminPage /> },
+	{
+		path: '/login',
+		element: (
+			<Suspense>
+				<Login />
+			</Suspense>
+		),
+	},
+	{
+		path: '/findid',
+		element: (
+			<Suspense>
+				<FindId />
+			</Suspense>
+		),
+	},
+	{
+		path: '/findpassword',
+		element: (
+			<Suspense>
+				<FindPassword />
+			</Suspense>
+		),
+	},
+	{
+		path: '/signup',
+		element: (
+			<Suspense>
+				<SignUp />
+			</Suspense>
+		),
+	},
+	{
+		path: '/adminpage',
+		element: (
+			<Suspense>
+				<AdminPage />
+			</Suspense>
+		),
+	},
 ]);
 
 export default router;

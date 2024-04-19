@@ -65,17 +65,29 @@ function ChatRoom() {
 		setSendMes(e.target.value);
 	}
 
+	// const getRoom = async () => {
+	// 	const res = await getChatDetail(chatroomId);
+	// 	console.log('내가 누른', res);
+	// 	setIsLoaded(true);
+	// 	setUserInfo(res.chatroom.buyerId);
+	// 	setProductInfo(res.chatroom.productId);
+	// 	setReceivedMes(res.messages);
+	// 	console.log(res.messages.content);
+	// }
+
 	useEffect(() => {
 		async function getRoom() {
+			console.log('챗룸', chatroomId);
 			const res = await getChatDetail(chatroomId);
+			console.log('내가 누른', res);
 			setIsLoaded(true);
 			setUserInfo(res.chatroom.buyerId);
 			setProductInfo(res.chatroom.productId);
 			setReceivedMes(res.messages);
 			console.log(res.messages.content);
+			socket.emit('ask_join', { roomNum: chatroomId });
 		}
 		getRoom();
-		socket.emit('ask_join', { roomNum: chatroomId });
 	}, [chatroomId]);
 
 	// socket 랜더링시, 방 조인 + 메시지 수신

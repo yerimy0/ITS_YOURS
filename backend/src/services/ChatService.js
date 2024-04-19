@@ -24,9 +24,28 @@ async function getOneChatRoom(chatroomId) {
 }
 
 async function getChatroomList(memberId) {
-	const chatList = await Chatroom.find({ $or: [{ buyerId: memberId }, { sellerId: memberId }] });
+	const member = await Members.findById(memberId);
+
+	const products = await Products.find({
+		sellerId: member.id,
+		isCompleted: false,
+	});
+
+	const productIds = products.map(product => product._id);
+	const chatList = await Chatroom.find({
+		productId: { $in: productIds },
+	});
+
 	return chatList;
 }
+
+const getChatroomListWithFilter = async userId => {
+	const chatList = await Chatroom.find({
+		$or: [{ buyerId: userId }, { sellerId: userId }],
+	});
+
+	return chatList;
+};
 
 async function saveChatMessage(roomObjId, { auth, content }) {
 	const newChat = {
@@ -117,6 +136,7 @@ module.exports = {
 	createChatroom,
 	getOneChatRoom,
 	getChatroomList,
+	getChatroomListWithFilter,
 	saveChatMessage,
 	getDetailChat,
 	giveGoodManners,

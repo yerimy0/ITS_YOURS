@@ -164,7 +164,7 @@ const updateProduct = async (req, res, next) => {
 		// imgUrls가 존재하면 상품 정보 업데이트에 포함, 그렇지 않으면 기존 값 유지
 		const updatedProduct = await productsService.updateProduct(prodObjectId, {
 			name,
-			imgUrls: [mainImgUrl, ...imgUrls],
+			imgUrls: [...mainImgUrl, ...imgUrls],
 			price,
 			author,
 			publisher,

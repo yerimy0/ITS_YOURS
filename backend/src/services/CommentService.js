@@ -7,7 +7,6 @@ const { Comments, Posts } = require('../models');
  * 커뮤니티 댓글 조회에 동작되는 DB작업을 모아놓은 service입니다.
  */
 async function createComment(postId, content, nickName, profilePic) {
-	console.log('이렇게되어야하는데');
 	const newComment = {
 		postId: postId,
 		content: content,
@@ -50,7 +49,7 @@ async function getOneComment(commentId, postId) {
  * 커뮤니티 댓글 수정에 동작되는 DB작업을 모아놓은 service입니다.
  */
 async function updateComment(commentId, content) {
-	await Comments.UpdateOne(
+	await Comments.findOneAndUpdate(
 		{ _id: commentId },
 		{
 			content,
@@ -58,7 +57,6 @@ async function updateComment(commentId, content) {
 		},
 	);
 	const result = await Comments.findOne({ _id: commentId });
-	console.log('result::', result);
 	return result;
 }
 

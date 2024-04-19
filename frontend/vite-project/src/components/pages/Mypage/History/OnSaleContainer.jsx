@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { SalesHistoryWrap, ForSalesList, OnSaleVoid } from './OnSaleContainerStyle';
 import OnSaleCard from '../../../MypageHistoryCard/OnSaleCard';
-import { fetchOnSaleItems, deleteSaleItem } from './OnSaleApi';
+import { fetchOnSaleItems, deleteSaleItem } from '../../../../apis/service/OnSaleApi';
+
 const OnSaleContainer = () => {
 	const [saleItems, setSaleItems] = useState([]);
 	const { id } = useParams();
@@ -11,7 +12,7 @@ const OnSaleContainer = () => {
 		if (id) {
 			fetchOnSaleItems(id)
 				.then(data => {
-					// isCompleted가 false이고, deletedAt이 null인 항목만 필터링
+					// isCompleted가 false이고, deletedAt이 null인 항목만 필터링 하세요
 					const validItems = data.filter(
 						item => item.isCompleted === false && item.deletedAt == null,
 					);
@@ -49,7 +50,7 @@ const OnSaleContainer = () => {
 				saleItems.map(onsale => (
 					<ForSalesList key={onsale._id}>
 						<OnSaleCard
-							imgUrls={onsale.imgUrls.map(url => url.replace('coversum', 'cover500'))}
+							imgUrls={onsale.imgUrls[0]}
 							price={onsale.price}
 							name={onsale.name}
 							createdAt={onsale.createdAt}

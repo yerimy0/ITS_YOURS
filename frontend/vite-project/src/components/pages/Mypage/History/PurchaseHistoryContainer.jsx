@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PurchaseHistoryCard from '../../../MypageHistoryCard/PurchaseHistoryCard';
-import { fetchPurchaseItems } from './PurchaseApi';
+import { fetchPurchaseItems } from '../../../../apis/service/PurchaseApi';
 
 const PurchaseHistoryContainer = () => {
 	const [purchaseList, setPurchaseList] = useState([]);

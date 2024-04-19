@@ -103,6 +103,7 @@ const getDetailChat = async (req, res, next) => {
 		if (!memberId) {
 			throw new BadRequestError('로그인 후 이용해주세요.');
 		}
+		console.log('chatRoom::', chatroom.sellerId);
 
 		// 채팅방에 참여한 사용자인지 확인
 		if (chatroom.buyerId.toString() !== memberId && chatroom.sellerId.toString() !== memberId) {

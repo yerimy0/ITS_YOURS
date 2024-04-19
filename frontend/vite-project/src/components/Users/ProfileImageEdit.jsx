@@ -5,7 +5,7 @@ import {
 	IconWrapper,
 	HiddenFileInput,
 	IconImage,
-} from './UsersStyles';
+} from '../../components/pages/Mypage/ProfileEditFormStyles';
 
 function ProfileImageUploader({ onImageSelected, initialPreview }) {
 	const [preview, setPreview] = useState('');

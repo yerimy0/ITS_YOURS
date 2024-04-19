@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchMyPageData, updateMyPageData } from '../../../apis/service/ProfileEdit';
 import ProfileImageUploader from '../../Users/ProfileImageEdit';
-import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
+import { Form, Input, Button, ErrorMessage } from './ProfileEditFormStyles';
 import {
 	validateUserId,
 	validatePassword,

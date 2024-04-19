@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Modal from '../Modal';
 import DateSlicer from '../../utils/dateSlicer';
 
-function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, onDelete }) {
+function OnSaleCard({ id, imgUrl, price, name, createdAt, wishescount, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, onDelete
 		<>
 			<ProductCardWrap>
 				<ImageBox>
-					<ForSalesListImage src={imgUrls} alt="" onClick={() => navigate(`/product/${id}`)} />
+					<ForSalesListImage src={imgUrl} alt="" onClick={() => navigate(`/product/${id}`)} />
 				</ImageBox>
 				<SalesInfo>
 					<Title>{name}</Title>

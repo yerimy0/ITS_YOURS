@@ -14,7 +14,7 @@ import {
 function ChatListProfile({ buyerInfo, productInfo }) {
 	const [isActive, setIsActive] = useState(false);
 
-	console.log(buyerInfo, productInfo);
+	// console.log(buyerInfo, productInfo);
 	function handleClick() {
 		setIsActive(!isActive);
 	}

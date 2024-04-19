@@ -90,8 +90,6 @@ const saveChatMessage = async (req, res, next) => {
 //채팅방 내용보기
 const getDetailChat = async (req, res, next) => {
 	try {
-		console.log('params::', JSON.stringify(req.params));
-
 		const memberId = req.user._id;
 		const { chatroomId } = req.params;
 		const chatObjId = new ObjectId(chatroomId);
@@ -105,7 +103,6 @@ const getDetailChat = async (req, res, next) => {
 		if (!memberId) {
 			throw new BadRequestError('로그인 후 이용해주세요.');
 		}
-		console.log('chatRoom::', chatroom.sellerId);
 
 		// 채팅방에 참여한 사용자인지 확인
 		if (chatroom.buyerId.toString() !== memberId && chatroom.sellerId.toString() !== memberId) {

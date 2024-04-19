@@ -35,7 +35,7 @@ async function getChatroomList(memberId) {
 	const chatList = await Chatroom.find({
 		productId: { $in: productIds },
 	});
-
+	// console.log('백', chatList);
 	return chatList;
 }
 

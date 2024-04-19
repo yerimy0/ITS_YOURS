@@ -8,12 +8,13 @@ async function createChatroom(productId, sellerId, buyerNickName) {
 }
 async function getChatList() {
 	const res = await instance.get(`/chat`);
-	console.log(res);
+	// console.log(res.data);
 	return res.data;
 }
 async function getChatDetail(chatroomId) {
+	// console.log('chatroomId', chatroomId);
 	const res = await instance.get(`/chat/detail/${chatroomId}`);
-	// console.log(res);
+	// console.log(res.data.data.chatroom);
 	return res.data.data.chatroom;
 }
 async function postChat(chatroomId, sendMes) {

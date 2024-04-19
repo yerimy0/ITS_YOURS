@@ -12,7 +12,6 @@ function MenuButtonComponent({ userInfo, productInfo }) {
 	const [buyUserModalOpen, setBuyUserModalOpen] = useState(false); // 사용자  모달 상태 추가
 	const [leaveRoomModalOpen, setLeaveRoomModalOpen] = useState(false); // 채팅방 나가기 모달 상태 추가
 
-	console.log(userInfo);
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen);
 	};

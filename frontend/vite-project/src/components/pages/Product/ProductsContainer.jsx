@@ -85,6 +85,8 @@ function ProductsContainer() {
 		setCurrentPage(0);
 	};
 
+	// 카드에서 돌리지말고 컨테이너에서 한번만 호출! (wishes)
+
 	const handleFilterChange = (region, university) => {
 		setSelectedRegion(region);
 		setSelectedUniversity(university);

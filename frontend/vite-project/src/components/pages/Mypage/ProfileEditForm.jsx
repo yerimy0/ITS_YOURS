@@ -112,7 +112,7 @@ function ProfileEditForm({ userInfo }) {
 				onSelectUniversity={handleSelectUniversity}
 			/>
 			<ProfileImageUploader onImageSelected={setProfileImage} initialPreview={profileImage} />
-			<Form onSubmit={handleSubmit}>
+			<Form style={{ height: '0' }} onSubmit={handleSubmit}>
 				<Input type="text" className="my_info_input common_info" value={userId} disabled />
 				<Input
 					className="my_info_input common_info"
@@ -156,7 +156,7 @@ function ProfileEditForm({ userInfo }) {
 					setEmailVerified={setEmailVerified} // 콜백 전달
 				/>
 				<UniversitySearchForm
-					className="common_info"
+					className="profile_edit_last"
 					university={university}
 					setUniversity={setUniversity}
 					universityError={errors.university}

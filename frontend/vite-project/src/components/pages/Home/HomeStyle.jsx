@@ -23,6 +23,17 @@ const Box1 = styled.section`
 	.sec1_wrap {
 		z-index: 1;
 	}
+	.sec1_text {
+		animation: bounceTtext 1s 1 ease;
+	}
+
+	.sec1_name {
+		visibility: hidden;
+		animation: bounceTtext2 1s 1 ease;
+		animation-delay: 1s;
+		animation-fill-mode: forwards;
+	}
+
 	img {
 		display: block;
 		width: 100%;
@@ -30,13 +41,40 @@ const Box1 = styled.section`
 
 	.img1 {
 		animation: bounce 1s 20;
-
 		max-width: 300px;
 		position: absolute;
 		top: 50%;
 		left: 5%;
 		transform: translateY(-50%);
 		z-index: 1;
+	}
+
+	.img2 {
+		animation: bounce 1s 20;
+		max-width: 300px;
+		position: absolute;
+		top: 50%;
+		right: 5%;
+		transform: translateY(-50%);
+	}
+
+	@keyframes bounceTtext {
+		0% {
+			transform: translateX(-30%);
+		}
+		100% {
+			transform: translateX(0);
+		}
+	}
+	@keyframes bounceTtext2 {
+		0% {
+			transform: translateX(30%);
+			visibility: hidden;
+		}
+		100% {
+			transform: translateX(0);
+			visibility: visible;
+		}
 	}
 
 	@keyframes bounce {
@@ -47,15 +85,6 @@ const Box1 = styled.section`
 		50% {
 			transform: translateY(-40%);
 		}
-	}
-
-	.img2 {
-		animation: bounce 1s 20;
-		max-width: 300px;
-		position: absolute;
-		top: 50%;
-		right: 5%;
-		transform: translateY(-50%);
 	}
 
 	.br {
@@ -80,6 +109,7 @@ const Box1 = styled.section`
 			width: 100%;
 			font-size: 22px !important;
 			line-height: 30px !important;
+			animation: none;
 		}
 
 		.sec1_name {
@@ -89,6 +119,7 @@ const Box1 = styled.section`
 			transform: translate(-50%, 230%);
 			width: 100%;
 			font-size: 26px;
+			animation: none;
 		}
 
 		@keyframes bounce {
@@ -235,7 +266,7 @@ const ButtonBox = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
-	margin-top: 25px;
+	margin-top: 30px;
 
 	.sec3_button {
 		padding: 10px 25px;
@@ -271,9 +302,9 @@ const Button = styled.button`
 
 	&:hover {
 		// transform: scale(1.05);
-		background-color: #fff;
-		color: #009dff;
-		border: 1px solid #009dff;
+		background-color: #038ee5;
+		color: #fff;
+		border: 1px solid #038ee5;
 		transition: all 0.5s;
 	}
 `;

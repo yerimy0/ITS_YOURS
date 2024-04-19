@@ -26,7 +26,10 @@ const UniversityModal = ({ isOpen, onClose, onSelectUniversity }) => {
 						</ModalButton>
 					))
 				) : (
-					<p>해당 대학은 현재 서비스 준비 중입니다. 곧 업데이트될 예정이니 조금만 기다려 주세요!</p> // 검색 결과가 없을 때 메시지 표시
+					<p>
+						해당 대학은 현재 서비스 준비 중입니다. <br />곧 업데이트될 예정이니 조금만 기다려
+						주세요!
+					</p> // 검색 결과가 없을 때 메시지 표시
 				)}
 			</ModalContent>
 		</Modal>

@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ChatListProfile from './ChatListProfile';
 import { ChatListWrap, ChatListHeader, ChatContainer } from './ChatListStyle';
 import { getChatList, getChatDetail } from '../../../apis/service/Chat.api';
+import { ClickedChatContext } from '../../../pages/Chat';
+import { useNavigate } from 'react-router-dom';
 
 // 채팅방의 리스트 (왼쪽 만드는 페이지)
 function ChatList() {
@@ -9,6 +11,8 @@ function ChatList() {
 	const [productInfo, setProductInfo] = useState([]); // 제품 정보
 	const [chatRoomLists, setChatRoomLists] = useState({}); // 내 속한 채팅방 리스트
 	const [isLoaded, setIsLoaded] = useState(false);
+	const { setClickedChatroom, clickedChatroom } = useContext(ClickedChatContext);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		async function getList() {
@@ -22,11 +26,11 @@ function ChatList() {
 				// 각 채팅방의 상세 정보 가져오기
 				await Promise.all(
 					res.map(async chatRoomList => {
-						console.log('각 채팅방 id', chatRoomList._id);
+						// console.log('각 채팅방 id', chatRoomList._id);
 						const detailRes = await getChatDetail(chatRoomList._id);
-						console.log(detailRes);
-						console.log('buyer', detailRes.buyerId);
-						console.log('product', detailRes.productId);
+						// console.log(detailRes);
+						// console.log('buyer', detailRes.buyerId);
+						// console.log('product', detailRes.productId);
 
 						buyerIds.push(detailRes.buyerId);
 						productIds.push(detailRes.productId);
@@ -43,6 +47,11 @@ function ChatList() {
 		getList();
 	}, []);
 
+	function handleChatItem(chatroomId) {
+		// console.log(chatroomId);
+		navigate(`/chat/${chatroomId}`);
+	}
+
 	return (
 		<ChatListWrap>
 			<ChatListHeader>
@@ -53,6 +62,7 @@ function ChatList() {
 				{isLoaded &&
 					chatRoomLists.map((chatRoomList, i) => (
 						<ChatListProfile
+							onClick={handleChatItem(chatRoomList._id)}
 							key={`item=${i}`}
 							buyerInfo={buyerInfo[i]}
 							productInfo={productInfo[i]}

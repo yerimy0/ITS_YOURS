@@ -16,10 +16,6 @@ const {
 const getProductsList = async (req, res) => {
 	try {
 		const result = await productsService.getProductsList();
-		console.log(
-			'result::',
-			result.map(a => a.name),
-		);
 		res.status(200).json(result);
 	} catch (err) {
 		res.status(400).json({ message: 'failed' });

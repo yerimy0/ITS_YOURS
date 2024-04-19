@@ -1,23 +1,17 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	width: 1440px;
-	max-width: 100%;
+	width: 100%;
 	margin: 0 auto;
 	padding: 20px;
 	background: #fff;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	font-family: suit;
 	border-radius: 10px;
 `;
 
 export const TableTitle = styled.div`
-	color: #000;
-	font-family: suit;
 	font-size: 32px;
-	font-style: normal;
 	font-weight: 700;
-	line-height: normal;
 `;
 
 export const Table = styled.table`

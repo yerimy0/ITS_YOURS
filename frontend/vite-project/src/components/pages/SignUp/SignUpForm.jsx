@@ -88,11 +88,16 @@ function SignUpForm() {
 				const { data, error } = await signUpApi(formData);
 				if (error) {
 					console.error('회원가입 실패:', error);
-					if (error.response && error.response.status === 409) {
-						setUserIdError('이미 사용중인 아이디입니다');
+					if (error.response) {
+						if (error.response.status === 409) {
+							setUserIdError('이미 사용중인 아이디입니다');
+						} else if (error.response.status === 400) {
+							setEmailError('이미 사용중인 이메일입니다');
+						}
 					}
 				} else {
 					console.log('회원가입 성공:', data);
+					alert('회원가입을 축하드립니다! 이제너해와 함께해요 :)');
 					navigate('/login');
 				}
 			} catch (e) {
@@ -119,47 +124,48 @@ function SignUpForm() {
 				onSelectUniversity={handleSelectUniversity}
 			/>
 			<ProfileImageUploader onImageSelected={setProfileImage} />
-
-			<ProfileForm
-				userId={userId}
-				setUserId={setUserId}
-				password={password}
-				setPassword={setPassword}
-				confirmPassword={confirmPassword}
-				setConfirmPassword={setConfirmPassword}
-				name={name}
-				setName={setName}
-				nickname={nickname}
-				setNickname={setNickname}
-				userIdError={userIdError}
-				passwordError={passwordError}
-				confirmPasswordError={confirmPasswordError}
-				nameError={nameError}
-				nicknameError={nicknameError}
-				handleBlurUserId={handleBlurUserId}
-				handleBlurPassword={handleBlurPassword}
-				handleBlurConfirmPassword={handleBlurConfirmPassword}
-				handleBlurName={handleBlurName}
-				handleBlurNickname={handleBlurNickname}
-			/>
-			<EmailVerificationForm
-				className="sign_email"
-				email={email}
-				setEmail={setEmail}
-				emailVerificationCode={emailVerificationCode}
-				setEmailVerificationCode={setEmailVerificationCode}
-				emailError={emailError}
-				handleBlurEmail={handleBlurEmail}
-			/>
-			<UniversitySearchForm
-				university={university}
-				setUniversity={setUniversity}
-				universityError={universityError}
-				onSearchUniversity={handleOpenModal}
-			/>
-			<Button type="submit" onClick={handleSubmit} className="join_btn">
-				회원가입하기
-			</Button>
+			<div className="sign_wrap">
+				<ProfileForm
+					userId={userId}
+					setUserId={setUserId}
+					password={password}
+					setPassword={setPassword}
+					confirmPassword={confirmPassword}
+					setConfirmPassword={setConfirmPassword}
+					name={name}
+					setName={setName}
+					nickname={nickname}
+					setNickname={setNickname}
+					userIdError={userIdError}
+					passwordError={passwordError}
+					confirmPasswordError={confirmPasswordError}
+					nameError={nameError}
+					nicknameError={nicknameError}
+					handleBlurUserId={handleBlurUserId}
+					handleBlurPassword={handleBlurPassword}
+					handleBlurConfirmPassword={handleBlurConfirmPassword}
+					handleBlurName={handleBlurName}
+					handleBlurNickname={handleBlurNickname}
+				/>
+				<EmailVerificationForm
+					className="sign_email"
+					email={email}
+					setEmail={setEmail}
+					emailVerificationCode={emailVerificationCode}
+					setEmailVerificationCode={setEmailVerificationCode}
+					emailError={emailError}
+					handleBlurEmail={handleBlurEmail}
+				/>
+				<UniversitySearchForm
+					university={university}
+					setUniversity={setUniversity}
+					universityError={universityError}
+					onSearchUniversity={handleOpenModal}
+				/>
+				<Button type="submit" onClick={handleSubmit} className="join_btn">
+					회원가입하기
+				</Button>
+			</div>
 		</>
 	);
 }

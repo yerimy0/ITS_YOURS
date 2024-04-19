@@ -14,15 +14,20 @@ const ModalWrap = styled.div`
 `;
 
 const ModalContent = styled.div`
+	position: relative;
 	display: flex;
 	width: 500px;
 	height: auto;
-	padding: 20px 20px 30px 20px;
+	padding: 30px 0;
 	border-radius: 20px;
 	background: #fff;
 	box-shadow: 15px 15px 10px 0px rgba(0, 0, 0, 0.25);
 	flex-direction: column;
 	align-items: center;
+
+	@media (max-width: 900px) {
+		width: 85%;
+	}
 `;
 const ClearWrap = styled.div`
 	width: 100%;
@@ -34,11 +39,12 @@ const ClearButton = styled.button`
 	border: none;
 	background: none;
 	cursor: pointer;
+	position: absolute;
+	top: 15px;
+	right: 15px;
 	color: #ded8e1;
 	font-size: 24px;
-	line-height: 32px;
 	font-weight: 400;
-	padding: 5px;
 `;
 
 const TextWrap = styled.div`
@@ -54,11 +60,14 @@ const Text = styled.p`
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	font-size: 24px;
+	font-size: 26px;
 	font-style: normal;
-	font-weight: 700;
-	line-height: 32px;
+	font-weight: 600;
 	margin: 0;
+
+	@media (max-width: 900px) {
+		font-size: 22px;
+	}
 `;
 const NickName = styled.p`
 	width: 100%;
@@ -68,15 +77,24 @@ const NickName = styled.p`
 	text-align: center;
 	font-size: 22px;
 	font-style: normal;
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 28px;
 	margin: 0;
+
+	@media (max-width: 900px) {
+		font-size: 18px;
+	}
 `;
 
 const Profile = styled.div`
 	margin: 15px 0;
 	width: 200px;
 	height: 200px;
+
+	@media (max-width: 900px) {
+		width: 130px;
+		height: 130px;
+	}
 `;
 
 const ProfileImg = styled.img`
@@ -93,7 +111,7 @@ const EvaluationWrap = styled.div`
 	justify-content: center;
 	align-items: center;
 	margin: 10px 0;
-	gap: 20px;
+	gap: 10px;
 `;
 const GoodContainer = styled.div`
 	width: 184px;
@@ -106,6 +124,12 @@ const GoodContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	@media (max-width: 900px) {
+		width: 120px;
+		height: 120px;
+		background-size: 80%;
+	}
 `;
 
 const BadContainer = styled.div`
@@ -119,6 +143,12 @@ const BadContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	@media (max-width: 900px) {
+		width: 120px;
+		height: 120px;
+		background-size: 80%;
+	}
 `;
 
 const TextContainer = styled.div`
@@ -155,30 +185,33 @@ const EvaluationCount = styled.p`
 const University = styled.p`
 	width: 100%;
 	display: flex;
-	padding: 5px;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
 	font-size: 16px;
-	font-style: normal;
 	font-weight: 500;
-	line-height: 24px;
-	letter-spacing: 0.15px;
-	margin: 0;
+	margin: 20px 0 3px;
+	@media (max-width: 800px) {
+		word-break: keep-all;
+		margin-bottom: 10px;
+		width: 90%;
+	}
 `;
 const LocalDistrict = styled.p`
 	width: 100%;
 	display: flex;
-	padding: 5px;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
 	font-size: 16px;
-	font-style: normal;
 	font-weight: 500;
 	line-height: 24px;
-	letter-spacing: 0.15px;
 	margin: 0;
+
+	@media (max-width: 800px) {
+		word-break: keep-all;
+		width: 90%;
+	}
 `;
 
 export {

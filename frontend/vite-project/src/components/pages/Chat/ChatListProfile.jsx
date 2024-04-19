@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	ProfileWrap,
 	Profile,
@@ -11,33 +11,38 @@ import {
 	SendTime,
 } from './ChatListProfileStyle';
 
-function ChatListProfile() {
+function ChatListProfile({ userInfo, productInfo, product }) {
+	const [insertProduct, setInsertProduct] = useState({});
+
 	const [isActive, setIsActive] = useState(false);
+	console.log('상품', productInfo);
+	console.log('유저', userInfo);
 
 	function handleClick() {
 		setIsActive(!isActive);
 	}
 
+	useEffect(() => {
+		productInfo.map(e => {
+			if (e._id === product) setInsertProduct(e);
+		});
+	}, []);
 	return (
-		<>
-			<ProfileWrap className={isActive ? 'active' : ''} onClick={handleClick}>
-				<Profile>
-					<ProfileImg src="/profile.jpg" />
-				</Profile>
-				<ProfileInfo>
-					<Wrap>
-						<NickName>카페인 줄여야지</NickName>
-						<Notification />
-					</Wrap>
-					<Wrap>
-						<BookName>
-							데일 카네기의 인ㄹㅇㄴㄴㄴㄹㅇㄹㄴㄹㄴㅇㄴㄴㄹㄹㄴㅇㅇㄹㄴㅇㄹㄴㄹ간관계론
-						</BookName>
-						<SendTime>1시간 전</SendTime>
-					</Wrap>
-				</ProfileInfo>
-			</ProfileWrap>
-		</>
+		<ProfileWrap className={isActive ? 'active' : ''} onClick={handleClick}>
+			<Profile>
+				<ProfileImg src={userInfo[0].profilePic} />
+			</Profile>
+			<ProfileInfo>
+				<Wrap>
+					<NickName>{userInfo[0].nickName}</NickName>
+					<Notification />
+				</Wrap>
+				<Wrap>
+					<BookName>{insertProduct.name}</BookName>
+					{/* <SendTime>1시간 전</SendTime> */}
+				</Wrap>
+			</ProfileInfo>
+		</ProfileWrap>
 	);
 }
 

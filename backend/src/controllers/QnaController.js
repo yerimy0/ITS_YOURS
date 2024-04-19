@@ -57,8 +57,10 @@ const updateQna = async (req, res, next) => {
 		if (!id) {
 			throw new BadRequestError('로그인 후 이용해주세요.');
 		}
-		if (nickname !== chkDeleted.nickname || !isAdmin) {
-			throw new UnauthorizedError('권한이 없습니다.');
+		if (!isAdmin) {
+			if (nickname !== chkDeleted.nickname) {
+				throw new UnauthorizedError('권한이 없습니다.');
+			}
 		}
 		if (chkDeleted.deletedAt) {
 			throw new BadRequestError('이미 삭제된 QnA는 수정할 수 없습니다.');
@@ -93,8 +95,10 @@ const deleteQna = async (req, res, next) => {
 		if (!id) {
 			throw new BadRequestError('로그인 후 이용해주세요.');
 		}
-		if (nickname !== chkDeleted.nickname || !isAdmin) {
-			throw new UnauthorizedError('권한이 없습니다.');
+		if (!isAdmin) {
+			if (nickname !== chkDeleted.nickname) {
+				throw new UnauthorizedError('권한이 없습니다.');
+			}
 		}
 		if (chkDeleted.deletedAt) {
 			throw new BadRequestError('이미 삭제된 QnA입니다.');

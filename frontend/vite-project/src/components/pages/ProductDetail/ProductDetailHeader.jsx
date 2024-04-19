@@ -32,6 +32,7 @@ function ProductDetailHeader() {
 				// 상품 ID가 존재할 때만 데이터를 가져옵니다.
 				try {
 					const productData = await GetDetail(productId);
+					console.log(productData);
 					setProduct(productData);
 				} catch (error) {
 					console.error('상품 데이터를 불러오는 중 에러 발생:', error);
@@ -41,12 +42,13 @@ function ProductDetailHeader() {
 			}
 		};
 		loadProductData();
-	}, []);
+	}, [productId]);
 
 	// 채팅하기 버튼 클릭 시 채팅 화면으로 이동
 	async function handleChatButtonClick() {
 		console.log(product);
 		const res = await createChatroom(productId, product._id, id);
+		console.loog(res.data);
 		const chatroomId = res._id;
 		navigate(`/chat/${chatroomId}`); // 채팅 화면으로 이동
 	}

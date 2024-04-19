@@ -3,10 +3,11 @@ import styled from 'styled-components';
 const ChatWrap = styled.div`
 	width: 90%;
 	margin: 0 auto;
-	padding: 50px 0 150px;
+	padding: 90px 0 80px;
 
 	.chat_inner {
-		width: 100%;
+		width: 85%;
+		margin: 0 auto;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -18,8 +19,10 @@ const ChatWrap = styled.div`
 			0 6px 6px rgba(0, 0, 0, 0.23);
 	}
 
-	@media screen and (max-width: 1030px) {
+	@media screen and (max-width: 700px) {
+		padding: 70px 0 60px;
 		.chat_inner {
+			width: 100%;
 			flex-wrap: wrap;
 		}
 	}

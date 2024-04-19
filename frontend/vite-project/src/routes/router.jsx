@@ -36,174 +36,28 @@ const router = createBrowserRouter([
 			</Suspense>
 		),
 		children: [
-			{
-				path: '/',
-				element: (
-					<Suspense>
-						<Home />
-					</Suspense>
-				),
-			},
-			{
-				path: '/product/write',
-				element: (
-					<Suspense>
-						<ProductWrite />
-					</Suspense>
-				),
-			},
-			{
-				path: '/product',
-				element: (
-					<Suspense>
-						<Product />
-					</Suspense>
-				),
-			},
-			{
-				path: '/product/edit/:id',
-				element: (
-					<Suspense>
-						<ProductWrite />
-					</Suspense>
-				),
-			},
-			{
-				path: '/mypage/wish',
-				element: (
-					<Suspense>
-						<MyPageWish />
-					</Suspense>
-				),
-			},
-			{
-				path: '/mypage',
-				element: (
-					<Suspense>
-						<MyPage />
-					</Suspense>
-				),
-			},
-			{
-				path: '/product/:productId',
-				element: (
-					<Suspense>
-						<ProductDetail />
-					</Suspense>
-				),
-			},
-			{
-				path: '/saleshistory/:id',
-				element: (
-					<Suspense>
-						<SalesHistory />
-					</Suspense>
-				),
-			},
-			{
-				path: '/purchasehistory/:id',
-				element: (
-					<Suspense>
-						<PurchaseHistory />
-					</Suspense>
-				),
-			},
-			{
-				path: '/faq',
-				element: (
-					<Suspense>
-						<Faq />
-					</Suspense>
-				),
-			},
-			{
-				path: '/asksupportlist',
-				element: (
-					<Suspense>
-						<AskSupportList />
-					</Suspense>
-				),
-			},
-			{
-				path: '/asksupportwrite',
-				element: (
-					<Suspense>
-						<AskSupportWrite />
-					</Suspense>
-				),
-			},
-			{
-				path: '/signout',
-				element: (
-					<Suspense>
-						<SignOut />
-					</Suspense>
-				),
-			},
-			{
-				path: '/showid',
-				element: (
-					<Suspense>
-						<ShowId />
-					</Suspense>
-				),
-			},
-			{
-				path: '/profileedit',
-				element: (
-					<Suspense>
-						<ProfileEdit />
-					</Suspense>
-				),
-			},
-			{
-				path: '/chat',
-				element: (
-					<Suspense>
-						<Chat />
-					</Suspense>
-				),
-			},
-			{
-				path: '/chat/:chatroomId',
-				element: (
-					<Suspense>
-						<Chat />
-					</Suspense>
-				),
-			},
-			{
-				path: '/community',
-				element: (
-					<Suspense>
-						<Community />
-					</Suspense>
-				),
-			},
-			{
-				path: '/community/:id',
-				element: (
-					<Suspense>
-						<CommunityDetail />
-					</Suspense>
-				),
-			},
-			{
-				path: '/community/write',
-				element: (
-					<Suspense>
-						<CommunityWrite />
-					</Suspense>
-				),
-			},
-			{
-				path: '/community/edit/:id',
-				element: (
-					<Suspense>
-						<CommunityWrite />
-					</Suspense>
-				),
-			},
+			{ path: '/', element: <Home /> },
+			{ path: '/product/write', element: <ProductWrite /> },
+			{ path: '/product', element: <Product /> },
+			{ path: '/product/edit/:id', element: <ProductWrite /> },
+			{ path: '/*', element: <NotFound /> },
+			{ path: '/mypage/wish', element: <MyPageWish /> },
+			{ path: '/mypage', element: <MyPage /> },
+			{ path: '/product/:productId', element: <ProductDetail /> },
+			{ path: '/saleshistory/:id', element: <SalesHistory /> },
+			{ path: '/purchasehistory/:id', element: <PurchaseHistory /> },
+			{ path: '/faq', element: <Faq /> },
+			{ path: '/asksupportlist', element: <AskSupportList /> },
+			{ path: '/asksupportwrite', element: <AskSupportWrite /> },
+			{ path: '/signout', element: <SignOut /> },
+			{ path: '/showid', element: <ShowId /> },
+			{ path: '/profileedit', element: <ProfileEdit /> },
+			{ path: '/chat', element: <Chat /> }, // 채팅 목록
+			{ path: '/chat/:chatroomId', element: <Chat /> }, // 채팅 상세
+			{ path: '/community', element: <Community /> },
+			{ path: '/community/:id', element: <CommunityDetail /> },
+			{ path: '/community/write', element: <CommunityWrite /> },
+			{ path: '/community/edit/:id', element: <CommunityWrite /> },
 		],
 	},
 	{

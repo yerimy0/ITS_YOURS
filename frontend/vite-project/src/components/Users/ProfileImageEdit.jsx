@@ -1,27 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	ProfileWrapper,
 	ProfileImage,
 	IconWrapper,
 	HiddenFileInput,
 	IconImage,
-} from './UsersStyles';
+} from '../../components/pages/Mypage/ProfileEditFormStyles';
 
 function ProfileImageUploader({ onImageSelected, initialPreview }) {
-	const [preview, setPreview] = useState(initialPreview || '/defaultProfileImage.png');
+	const [preview, setPreview] = useState('');
+
+	useEffect(() => {
+		if (initialPreview) {
+			setPreview(initialPreview);
+		}
+	}, [initialPreview]);
 
 	const handleImageChange = event => {
 		const file = event.target.files[0];
 		if (file) {
-			setPreview(URL.createObjectURL(file));
+			const imageUrl = URL.createObjectURL(file);
+			setPreview(imageUrl);
 			onImageSelected(file);
 		}
 	};
 
 	return (
-		<ProfileWrapper>
+		<ProfileWrapper style={{ position: 'relative' }}>
 			<div className="profile_wrap" style={{ marginTop: '30px' }}>
-				<ProfileImage src={preview} alt={preview ? '' : '기본 프로필 이미지'} />
+				<ProfileImage src={preview} />
 				<form
 					className="form-box"
 					action="/api/members/me"

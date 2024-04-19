@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MenuButtonComponent from './MenuButtonComponent';
 import ProfileModal from './ProfileModal';
 import {
@@ -17,10 +17,13 @@ import {
 	Price,
 	PriceWon,
 } from './ChatRoomHeaderStyle';
+import { quitChat, getChatDetail, getChatList } from '../../../apis/service/Chat.api';
 
-function ChatRoomHeader() {
+function ChatRoomHeader({ userInfo, productInfo }) {
 	const [profileModalOpen, setProfileModalOpen] = useState(false);
+	const [chatroomId, setChatRoomId] = useState(''); //채팅방Id
 
+	// console.log(userInfo, productInfo);
 	const openProfileModal = () => {
 		setProfileModalOpen(true);
 	};
@@ -34,21 +37,21 @@ function ChatRoomHeader() {
 			<ChatRoomHeaderWrap>
 				<SellerProfile>
 					<Profile onClick={openProfileModal}>
-						<ProfileImg src="./profile.jpg" />
+						<ProfileImg src={userInfo.profilePic} />
 					</Profile>
 					<Wrap>
-						<NickName>카페인 줄여야지</NickName>
-						<MenuButtonComponent />
+						<NickName>{userInfo.nickName}</NickName>
+						<MenuButtonComponent userInfo={userInfo} productInfo={productInfo} />
 					</Wrap>
 				</SellerProfile>
 				<BookInfo>
 					<BookCover>
-						<BookImg src="/book_cover.jpg" />
+						<BookImg src={productInfo.imgUrls} />
 					</BookCover>
 					<TextWrap>
-						<Title>디지털 논리 설계와 컴퓨터 구조</Title>
+						<Title>{productInfo.name}</Title>
 						<PriceContainer>
-							<Price>27,000</Price>
+							<Price>{productInfo.price}</Price>
 							<PriceWon>원</PriceWon>
 						</PriceContainer>
 					</TextWrap>

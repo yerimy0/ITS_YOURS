@@ -4,7 +4,6 @@ import {
 	Title,
 	RedStar,
 	TopTitle,
-	Line,
 	RegButtons,
 	MainContent,
 	ProductTwoInput,
@@ -53,7 +52,7 @@ function EditForm() {
 	async function Eddit() {
 		const res = await UpdateRegister(id, register);
 		console.log(res);
-		navigate('/product');
+		navigate(`/saleshistory/${id}`);
 	}
 
 	function onChange(e) {
@@ -89,9 +88,6 @@ function EditForm() {
 						<TopTitle>상품 수정</TopTitle>
 						<RedStar>*필수 항목</RedStar>
 					</Title>
-					<Line>
-						<hr />
-					</Line>
 					<MainContent>
 						<InputImg onImageChange={handleImageChange} value={imgUrls} />
 						<Section label={'도서명'} onChange={onChange} value={name} name="name" />

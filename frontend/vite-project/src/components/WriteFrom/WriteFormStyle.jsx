@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const RegisterBox = styled.div`
+const RegisterBox = styled.form`
 	left: 263px;
 	display: flex;
 	align-items: center;
@@ -22,10 +22,11 @@ const RegisterBox = styled.div`
 		/* font-family: SUIT; */
 		font-style: normal;
 		display: flex;
-		padding: 8px;
+		padding: 10px;
 		justify-content: center;
 		align-items: center;
 		gap: 8px;
+		/* width: 100%; */
 
 		&:hover {
 			border: 1px solid #009dff;
@@ -104,7 +105,7 @@ const RedStar = styled.span`
 const TopTitle = styled.span`
 	text-align: center;
 	font-size: 28px;
-	font-weight: 700;
+	font-weight: 500;
 	line-height: 36px; /* 128.571% */
 `;
 
@@ -204,6 +205,7 @@ const SmallButton = styled.button`
 const BigButton = styled.button`
 	font-size: 18px;
 	width: 50%;
+
 	@media (max-width: 1000px) {
 		font-size: 16px;
 	}
@@ -212,6 +214,7 @@ const Img = styled.img`
 	display: flex;
 	width: 200px;
 	height: 200px;
+	object-fit: contain;
 	align-items: flex-start;
 	gap: 8px;
 `;

@@ -16,129 +16,97 @@ const ModalWrap = styled.div`
 const ModalContent = styled.div`
 	display: flex;
 	width: 500px;
-	height: 720px;
-	padding: 20px 20px 30px 20px;
+	padding: 25px 0 0;
 	border-radius: 20px;
-	background: #d4d4d4;
+	background: #fff;
 	box-shadow: 20px 20px 10px 0px rgba(0, 0, 0, 0.25);
 	flex-direction: column;
 	align-items: center;
 `;
 
 const Title = styled.h2`
-	width: 100%;
-	display: flex;
-	padding: 8px;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
 	font-size: 22px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 28px;
+	font-weight: 500;
+	margin-bottom: 5px;
 `;
 
 const Text = styled.p`
-	width: 100%;
-	display: flex;
-	padding: 8px;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
 	font-size: 16px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 24px;
-	margin: 0;
+	font-weight: 500;
+	color: #555;
+	margin-bottom: 20px;
 `;
 const ReportUl = styled.ul`
 	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
-	gap: 20px;
-	flex-wrap: wrap;
-	margin: 0;
-	padding: 10px 0;
+	display: block;
+	text-align: center;
+	margin-bottom: 10px;
 `;
 const ReportLi = styled.li`
-	width: 100%;
-	display: flex;
-	border-radius: 20px;
-	background: #fff;
-	padding: 8px 6px;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
-	flex-wrap: wrap;
-	text-align: center;
 	font-size: 18px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 26px;
-	cursor: pointer;
-	transition:
-		background-color 0.3s,
-		color 0.3s;
+	padding: 15px 0;
+	width: 100%;
+
 	&:hover {
-		background-color: #79747e;
-		color: #fff;
+		background: #fafafa;
+		cursor: pointer;
+		color: #009dff;
+		font-weight: 500;
 	}
-	&.active {
-		background-color: #79747e;
-		color: #fff;
+
+	@media (max-width: 500px) {
 	}
 `;
 const Buttons = styled.div`
 	width: 100%;
 	display: flex;
-	flex-direction: row;
-	justify-content: center;
 	align-items: center;
-	gap: 10px;
-	flex-grow: 1;
+	border-top: 1px solid #eee;
+
+	@media (max-width: 500px) {
+	}
 `;
 
 const CancelButton = styled.button`
-	display: flex;
-	width: auto;
-	height: auto;
-	padding: 8px 16px;
-	justify-content: center;
-	align-items: center;
-	border: 1px solid #009dff;
-	border-radius: 20px;
-	background: #fff;
+	width: 50%;
+	border-right: 1px solid #eee;
+	padding: 25px 0;
+	font-size: 18px;
 	color: #009dff;
-	font-size: 16px;
-	font-style: normal;
 	font-weight: 500;
-	line-height: 24px;
-	letter-spacing: 0.15px;
-	text-align: center;
-	white-space: nowrap;
+	border-bottom-left-radius: 20px;
+
+	&:hover {
+		background: #fafafa;
+		color: #038ee5;
+		transition: all 0.5s;
+	}
+
+	@media (max-width: 500px) {
+		font-size: 16px;
+		padding: 25px 0;
+	}
 `;
 
 const OkButton = styled.button`
-	display: flex;
-	width: auto;
-	height: auto;
-	padding: 8px 16px;
-	justify-content: center;
-	align-items: center;
-	border: 1px solid #009dff;
-	border-radius: 20px;
-	background: #009dff;
-	color: #fff;
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: 24px;
-	letter-spacing: 0.15px;
+	width: 50%;
 	text-align: center;
-	white-space: nowrap;
+	padding: 25px 0;
+	font-size: 18px;
+	color: #009dff;
+	font-weight: 500;
+	border-bottom-right-radius: 20px;
+
+	&:hover {
+		background: #fafafa;
+		color: #038ee5;
+		transition: all 0.5s;
+	}
+
+	@media (max-width: 500px) {
+		font-size: 16px;
+		padding: 25px 0;
+	}
 `;
 
 export {

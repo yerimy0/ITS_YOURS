@@ -16,8 +16,8 @@ function FAQTitle({ user, title, subtitle }) {
 		<Title>
 			{title ? (
 				<>
-					<div>{title}</div>
-					{subtitle && <SubTitle>{renderSubtitle(subtitle)}</SubTitle>}
+					<div className="bottom_title">{title}</div>
+					{subtitle && <SubTitle className="bottom_sub">{renderSubtitle(subtitle)}</SubTitle>}
 				</>
 			) : (
 				user && (

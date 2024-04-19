@@ -5,6 +5,11 @@ export const Wrapper = styled.div`
 	height: 100vh;
 	overflow-y: scroll;
 
+	.sign_wrap {
+		width: 600px;
+		margin: 0 auto;
+	}
+
 	.link_wrap {
 		width: 248px;
 		margin: 0 auto;
@@ -12,6 +17,7 @@ export const Wrapper = styled.div`
 	}
 
 	.logo_link {
+		margin-bottom: 70px;
 	}
 
 	.sign_logo {
@@ -38,7 +44,7 @@ export const Wrapper = styled.div`
 	}
 
 	.profile_form {
-		width: 50%;
+		width: 100%;
 		margin: 30px auto 0;
 	}
 
@@ -49,46 +55,46 @@ export const Wrapper = styled.div`
 	}
 
 	.join_btn {
-		width: 50%;
+		width: 100%;
 		margin: 0 auto;
 		display: block;
 		margin-top: 15px;
 	}
-	@media screen and (max-width: 500px) {
+	@media screen and (max-width: 700px) {
 		.login_container {
 			width: 90%;
 		}
 		.profile_form {
-			width: 90%;
+			width: 100%;
 		}
 		.join_btn {
-			width: 90%;
+			width: 100%;
+		}
+
+		.sign_wrap {
+			width: 88%;
 		}
 	}
 `;
 
-export const Logo = styled.img`
-	/* width: 100%;
-	margin: 0 auto; */
-`;
+export const Logo = styled.img``;
 
 export const Form = styled.form`
 	display: flex;
 	flex-direction: column;
-	width: 100%;
 `;
 
 export const Input = styled.input`
 	margin-top: 1rem;
 	padding: 0.7rem;
-	border: 1px solid #009dff;
+	border: 1px solid #ddd;
 	border-radius: 20px;
 
 	&::placeholder {
 		color: #79747e; // placeholder 글씨 색상을 회색으로 설정
 	}
 	&:disabled {
-		background-color: #f3f4f6; // 비활성화 상태의 배경색도 설정할 수 있습니다.
+		background-color: #f1f1f1; // 비활성화 상태의 배경색도 설정할 수 있습니다.
 	}
 `;
 
@@ -104,7 +110,10 @@ export const Button = styled.button`
 	cursor: pointer;
 
 	&:hover {
-		background-color: #002d7a;
+		border-color: #038ee5;
+		background-color: #038ee5;
+		color: #fff;
+		transition: all 0.5s;
 	}
 `;
 
@@ -143,40 +152,6 @@ export const Div2 = styled.div`
 	font-size: 14px;
 	color: #79747e;
 	padding: 0;
-`;
-
-export const SocialLogin = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 1rem;
-`;
-
-export const SocialLoginTitle = styled.div`
-	text-align: center;
-	margin: 20px 0;
-	color: #79747e;
-	display: flex;
-	align-items: center;
-	gap: 10px;
-`;
-
-export const SocialButtonContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	gap: 1rem;
-`;
-
-export const SocialButton = styled.button`
-	padding: 0.5rem;
-	border: none;
-	cursor: pointer;
-	background-color: #fff;
-
-	img {
-		width: 45px;
-		height: auto;
-	}
 `;
 
 export const ProfileWrapper = styled.div`
@@ -235,11 +210,14 @@ export const Title = styled.h1`
 	justify-content: center;
 	padding-bottom: 30px;
 	font-size: 48px;
-	font-style: normal;
-	font-weight: 700;
+	font-weight: 500;
 	line-height: 64px;
 	text-align: center;
 	margin: 0;
+
+	@media (max-width: 850px) {
+		font-size: 36px;
+	}
 `;
 
 export const ErrorMessage = styled.div`
@@ -251,20 +229,23 @@ export const ErrorMessage = styled.div`
 export const EmailErrorMessage = styled.div`
 	color: #b3261e;
 	font-size: 12px;
+	margin-left: 10px;
+
 	/* margin-right: 220px; */
 `;
 
 export const VerificationErrorMessage = styled.div`
 	color: #b3261e;
 	font-size: 12px;
+	margin-left: 10px;
 	/* margin-right: 270px; */
 `;
 
 export const InlineGroup = styled.div`
-	width: 50%;
+	width: 100%;
 	margin: 0 auto;
-	@media (max-width: 500px) {
-		width: 90%;
+	@media (max-width: 700px) {
+		width: 100%;
 	}
 `;
 
@@ -273,9 +254,8 @@ export const StyledInput = styled.input`
 	padding: 0.7rem;
 	margin-right: 0.5rem;
 	margin-top: 1rem;
-	border: 1px solid #009dff;
+	border: 1px solid #ddd;
 	border-radius: 20px;
-	color: #000; // 입력하는 글씨의 색상을 검정색으로 설정
 
 	&::placeholder {
 		color: #79747e; // placeholder의 글씨 색상을 회색으로 설정
@@ -292,19 +272,21 @@ export const SmallButton = styled.button`
 	cursor: pointer;
 
 	&:hover {
-		background-color: #002d7a;
+		border-color: #038ee5;
+		background-color: #038ee5;
+		color: #fff;
+		transition: all 0.5s;
 	}
 `;
 
 export const InputWithIcon = styled.div`
 	position: relative;
-	/* display: flex; */
-	/* align-items: center; */
-	width: 50%;
+
+	width: 100%;
 	margin: 0 auto;
 
-	@media (max-width: 500px) {
-		width: 90%;
+	@media (max-width: 700px) {
+		width: 100%;
 	}
 `;
 

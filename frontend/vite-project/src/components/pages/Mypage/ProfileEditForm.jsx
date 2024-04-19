@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchMyPageData, updateMyPageData } from '../../../apis/service/ProfileEdit';
 import ProfileImageUploader from '../../Users/ProfileImageEdit';
-import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
+import { Form, Input, Button, ErrorMessage } from './ProfileEditFormStyles';
 import {
 	validateUserId,
 	validatePassword,
@@ -16,6 +17,7 @@ import UniversitySearchForm from '../../Users/University/UniversitySearchForm';
 import UniversityModal from '../../Users/University/UniversityModal';
 
 function ProfileEditForm({ userInfo }) {
+	const navigate = useNavigate();
 	const [profileImage, setProfileImage] = useState(null);
 	const [userId, setUserId] = useState(userInfo?.userId || '');
 	const [password, setPassword] = useState('');
@@ -26,6 +28,7 @@ function ProfileEditForm({ userInfo }) {
 	const [nickname, setNickname] = useState(userInfo?.nickname || '');
 	const [errors, setErrors] = useState({});
 	const [emailVerificationCode, setEmailVerificationCode] = useState('');
+	const [isEmailVerified, setEmailVerified] = useState(false);
 	const [isModalOpen, setModalOpen] = useState(false);
 
 	useEffect(() => {
@@ -35,13 +38,13 @@ function ProfileEditForm({ userInfo }) {
 	const fetchProfileData = async () => {
 		try {
 			const data = await fetchMyPageData();
-			console.log(data);
+			console.log('Received data:', data);
 			setUserId(data.id);
 			setName(data.realName);
 			setEmail(data.email);
 			setUniversity(data.schoolName);
 			setNickname(data.nickName);
-			setProfileImage(data.profilePic); // 프로필 이미지 데이터를 설정합니다.
+			setProfileImage(data.profilePic);
 		} catch (error) {
 			console.error('프로필 정보 로딩 실패:', error);
 		}
@@ -61,33 +64,39 @@ function ProfileEditForm({ userInfo }) {
 		return Object.values(newErrors).every(error => error === '');
 	};
 
-	const handleSubmit = async event => {
+	async function handleSubmit(event) {
 		event.preventDefault();
 		if (!handleValidation()) {
 			console.error('유효성 검사 실패:', errors);
 			return;
 		}
+
+		if (!isEmailVerified) {
+			alert('프로필을 업데이트하기 전에 이메일 인증을 완료해주세요.');
+			return;
+		}
+
 		const formData = new FormData();
 		formData.append('userId', userId);
-		if (password) {
-			formData.append('password', password);
-		}
-		formData.append('name', name);
+		formData.append('password', password);
+		formData.append('realName', name);
 		formData.append('email', email);
-		formData.append('university', university);
-		formData.append('nickname', nickname);
+		formData.append('schoolName', university);
+		formData.append('nickName', nickname);
 		if (profileImage) {
-			formData.append('profileImage', profileImage);
+			formData.append('profilePic', profileImage);
 		}
 
 		try {
 			const response = await updateMyPageData(formData);
 			console.log('프로필 업데이트 완료:', response);
-			await fetchProfileData(); // 업데이트 후 프로필 데이터를 비동기적으로 다시 불러옵니다.
+			alert('수정이 완료되었습니다');
+			navigate('/mypage'); // 리디렉션
+			await fetchProfileData();
 		} catch (error) {
-			console.error('프로필 업데이트 오류:', error);
+			console.error('프로필 업데이트 오류:', error.response ? error.response.data : error);
 		}
-	};
+	}
 
 	const handleOpenModal = () => setModalOpen(true);
 	const handleCloseModal = () => setModalOpen(false);
@@ -104,10 +113,11 @@ function ProfileEditForm({ userInfo }) {
 				onClose={handleCloseModal}
 				onSelectUniversity={handleSelectUniversity}
 			/>
-			<ProfileImageUploader onImageSelected={setProfileImage} profileImage={profileImage} />
-			<Form onSubmit={handleSubmit}>
-				<Input type="text" value={userId} disabled />
+			<ProfileImageUploader onImageSelected={setProfileImage} initialPreview={profileImage} />
+			<Form style={{ height: '0' }} onSubmit={handleSubmit}>
+				<Input type="text" className="my_info_input common_info" value={userId} disabled />
 				<Input
+					className="my_info_input common_info"
 					type="password"
 					placeholder="*비밀번호를 입력해주세요"
 					value={password}
@@ -115,6 +125,7 @@ function ProfileEditForm({ userInfo }) {
 				/>
 				{errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
 				<Input
+					className="my_info_input common_info"
 					type="password"
 					placeholder="*비밀번호를 다시 입력해주세요"
 					value={confirmPassword}
@@ -122,6 +133,7 @@ function ProfileEditForm({ userInfo }) {
 				/>
 				{errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
 				<Input
+					className="my_info_input common_info"
 					type="text"
 					placeholder="*이름을 입력해주세요"
 					value={name}
@@ -129,6 +141,7 @@ function ProfileEditForm({ userInfo }) {
 				/>
 				{errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
 				<Input
+					className="my_info_input common_info"
 					type="text"
 					placeholder="*닉네임을 입력해주세요"
 					value={nickname}
@@ -136,19 +149,24 @@ function ProfileEditForm({ userInfo }) {
 				/>
 				{errors.nickname && <ErrorMessage>{errors.nickname}</ErrorMessage>}
 				<EmailVerificationForm
+					className="common_info"
 					email={email}
 					setEmail={setEmail}
 					emailVerificationCode={emailVerificationCode}
 					setEmailVerificationCode={setEmailVerificationCode}
 					emailError={errors.email}
+					setEmailVerified={setEmailVerified}
 				/>
 				<UniversitySearchForm
+					className="profile_edit_last"
 					university={university}
 					setUniversity={setUniversity}
 					universityError={errors.university}
 					onSearchUniversity={handleOpenModal}
 				/>
-				<Button type="submit">수정하기</Button>
+				<Button type="submit" className="my_info_button common_info">
+					수정하기
+				</Button>
 			</Form>
 		</>
 	);

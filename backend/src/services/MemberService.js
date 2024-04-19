@@ -35,8 +35,11 @@ async function signUp(id, password, realName, email, region, schoolName, nickNam
  * 로그인 기능 관련 DB작업이 모여있는 service입니다.
  */
 async function login(id, password) {
+	let isAdmin;
 	// 회원정보
+
 	const member = await Members.findOne({ id });
+	isAdmin = member.isAdmin;
 	if (!member) return null;
 
 	// 사용자 입력 비밀번호 vs 해시화된 비밀번호 교차비교
@@ -60,7 +63,7 @@ async function login(id, password) {
 			{ expiresIn: '14d' }, // 토큰 유효기간
 		);
 		// 액세스 토큰 & 관리자 회원여부 반환
-		return { accessToken }; // 객체로 반환
+		return { accessToken, isAdmin }; // 객체로 반환
 	}
 	// 로그인 실패
 	else {
@@ -123,10 +126,11 @@ async function updateMember(
 	nickName,
 	profilePic,
 ) {
+	const hashedPassword = await bcrypt.hash(password, 8);
 	const memberInfo = await Members.findOneAndUpdate(
 		{ id: userId },
 		{
-			password: password,
+			password: hashedPassword,
 			realName: realName,
 			email: email,
 			region: region,

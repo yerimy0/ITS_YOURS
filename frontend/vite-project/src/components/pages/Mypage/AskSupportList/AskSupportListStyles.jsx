@@ -51,8 +51,7 @@ export const Button = styled(ButtonStyles)`
 	font-weight: 500;
 
 	&:hover {
-		border: 1px solid #009dff;
-		background-color: #009dff;
+		background: #009dff;
 		color: #fff;
 		transition: all 0.5s;
 	}
@@ -63,11 +62,7 @@ export const Status = styled(ButtonStyles)`
 	margin-right: 10px;
 	border: 1px solid #f1f1f1;
 	background: #fff;
-	&:hover {
-		background-color: #009dff;
-		color: #fff;
-		transition: all 0.5s;
-	}
+	pointer-events: none;
 
 	@media (max-width: 850px) {
 		margin-right: 0;

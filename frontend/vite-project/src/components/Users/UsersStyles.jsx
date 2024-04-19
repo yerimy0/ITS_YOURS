@@ -72,7 +72,6 @@ export const Logo = styled.img``;
 export const Form = styled.form`
 	display: flex;
 	flex-direction: column;
-	width: 100%;
 `;
 
 export const Input = styled.input`
@@ -80,7 +79,6 @@ export const Input = styled.input`
 	padding: 0.7rem;
 	border: 1px solid #ddd;
 	border-radius: 20px;
-	font-size: 16px;
 
 	&::placeholder {
 		color: #79747e; // placeholder 글씨 색상을 회색으로 설정
@@ -102,7 +100,10 @@ export const Button = styled.button`
 	cursor: pointer;
 
 	&:hover {
-		background-color: #002d7a;
+		border-color: #038ee5;
+		background-color: #038ee5;
+		color: #fff;
+		transition: all 0.5s;
 	}
 `;
 
@@ -218,6 +219,8 @@ export const ErrorMessage = styled.div`
 export const EmailErrorMessage = styled.div`
 	color: #b3261e;
 	font-size: 12px;
+	margin-left: 10px;
+
 	/* margin-right: 220px; */
 `;
 
@@ -241,12 +244,10 @@ export const StyledInput = styled.input`
 	margin-right: 0.5rem;
 	margin-top: 1rem;
 	border: 1px solid #ddd;
-	font-size: 16px;
 	border-radius: 20px;
-	color: #000; // 입력하는 글씨의 색상을 검정색으로 설정
 
 	&::placeholder {
-		color: #999; // placeholder의 글씨 색상을 회색으로 설정
+		color: #79747e; // placeholder의 글씨 색상을 회색으로 설정
 	}
 `;
 
@@ -260,7 +261,10 @@ export const SmallButton = styled.button`
 	cursor: pointer;
 
 	&:hover {
-		background-color: #002d7a;
+		border-color: #038ee5;
+		background-color: #038ee5;
+		color: #fff;
+		transition: all 0.5s;
 	}
 `;
 

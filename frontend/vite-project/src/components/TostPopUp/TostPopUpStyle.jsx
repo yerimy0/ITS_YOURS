@@ -1,16 +1,20 @@
 import styled from 'styled-components';
 
 const TostWrap = styled.div`
-	width: 30%;
+	/* width: 30%; */
 	z-index: 5;
 	position: fixed;
 	bottom: 20px;
 	left: 50%;
 	transform: translateX(-50%);
-	background-color: #d4d4d4;
-	color: #fff;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	background: #fff;
 	padding: 10px 20px;
 	border-radius: 20px;
+
+	@media (max-width: 800px) {
+		width: 80%;
+	}
 `;
 
 const Text = styled.p`
@@ -21,10 +25,11 @@ const Text = styled.p`
 	align-items: center;
 	text-align: center;
 	font-size: 16px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 24px;
+	font-weight: 500;
 	margin: 0;
-	color: #000;
+
+	@media (max-width: 600px) {
+		font-size: 15px;
+	}
 `;
 export { TostWrap, Text };

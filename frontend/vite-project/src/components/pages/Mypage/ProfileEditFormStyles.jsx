@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
 export const SignOutLink = styled.div`
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
 	margin-top: 20px;
 	color: #79747e;
 	cursor: pointer;
@@ -13,6 +17,11 @@ export const SignOutLink = styled.div`
 export const Form = styled.form`
 	display: flex;
 	flex-direction: column;
+	width: 800px;
+	margin: 0 auto;
+	@media (max-width: 900px) {
+		width: 95%;
+	}
 `;
 
 export const Input = styled.input`
@@ -20,7 +29,7 @@ export const Input = styled.input`
 	padding: 0.7rem;
 	border: 1px solid #ddd;
 	border-radius: 20px;
-
+	width: 100%;
 	&::placeholder {
 		color: #79747e; // placeholder 글씨 색상을 회색으로 설정
 	}
@@ -56,9 +65,8 @@ export const ErrorMessage = styled.div`
 
 export const Wrapper = styled.div`
 	width: 100%;
-	height: 100vh;
-	overflow-y: scroll;
-
+	height: 110vh;
+	position: relative; /* overflow-y: scroll; */
 	.link_wrap {
 		width: 248px;
 		margin: 0 auto;
@@ -103,7 +111,7 @@ export const Wrapper = styled.div`
 	}
 
 	.join_btn {
-		width: 50%;
+		width: 100%;
 		margin: 0 auto;
 		display: block;
 		margin-top: 15px;
@@ -144,7 +152,7 @@ export const ProfileWrapper = styled.div`
 	margin-bottom: 2rem; */
 	display: flex;
 	justify-content: center;
-
+	height: auto;
 	.profile_wrap {
 		position: relative;
 		width: 120px;

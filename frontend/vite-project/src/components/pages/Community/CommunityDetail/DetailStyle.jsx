@@ -91,6 +91,7 @@ const Red = styled(Button)`
 const UserImg = styled.img`
 	width: 56px;
 	height: 56px;
+	object-fit: cover;
 	border-radius: 56px;
 `;
 

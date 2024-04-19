@@ -124,47 +124,48 @@ function SignUpForm() {
 				onSelectUniversity={handleSelectUniversity}
 			/>
 			<ProfileImageUploader onImageSelected={setProfileImage} />
-
-			<ProfileForm
-				userId={userId}
-				setUserId={setUserId}
-				password={password}
-				setPassword={setPassword}
-				confirmPassword={confirmPassword}
-				setConfirmPassword={setConfirmPassword}
-				name={name}
-				setName={setName}
-				nickname={nickname}
-				setNickname={setNickname}
-				userIdError={userIdError}
-				passwordError={passwordError}
-				confirmPasswordError={confirmPasswordError}
-				nameError={nameError}
-				nicknameError={nicknameError}
-				handleBlurUserId={handleBlurUserId}
-				handleBlurPassword={handleBlurPassword}
-				handleBlurConfirmPassword={handleBlurConfirmPassword}
-				handleBlurName={handleBlurName}
-				handleBlurNickname={handleBlurNickname}
-			/>
-			<EmailVerificationForm
-				className="sign_email"
-				email={email}
-				setEmail={setEmail}
-				emailVerificationCode={emailVerificationCode}
-				setEmailVerificationCode={setEmailVerificationCode}
-				emailError={emailError}
-				handleBlurEmail={handleBlurEmail}
-			/>
-			<UniversitySearchForm
-				university={university}
-				setUniversity={setUniversity}
-				universityError={universityError}
-				onSearchUniversity={handleOpenModal}
-			/>
-			<Button type="submit" onClick={handleSubmit} className="join_btn">
-				회원가입하기
-			</Button>
+			<div className="sign_wrap">
+				<ProfileForm
+					userId={userId}
+					setUserId={setUserId}
+					password={password}
+					setPassword={setPassword}
+					confirmPassword={confirmPassword}
+					setConfirmPassword={setConfirmPassword}
+					name={name}
+					setName={setName}
+					nickname={nickname}
+					setNickname={setNickname}
+					userIdError={userIdError}
+					passwordError={passwordError}
+					confirmPasswordError={confirmPasswordError}
+					nameError={nameError}
+					nicknameError={nicknameError}
+					handleBlurUserId={handleBlurUserId}
+					handleBlurPassword={handleBlurPassword}
+					handleBlurConfirmPassword={handleBlurConfirmPassword}
+					handleBlurName={handleBlurName}
+					handleBlurNickname={handleBlurNickname}
+				/>
+				<EmailVerificationForm
+					className="sign_email"
+					email={email}
+					setEmail={setEmail}
+					emailVerificationCode={emailVerificationCode}
+					setEmailVerificationCode={setEmailVerificationCode}
+					emailError={emailError}
+					handleBlurEmail={handleBlurEmail}
+				/>
+				<UniversitySearchForm
+					university={university}
+					setUniversity={setUniversity}
+					universityError={universityError}
+					onSearchUniversity={handleOpenModal}
+				/>
+				<Button type="submit" onClick={handleSubmit} className="join_btn">
+					회원가입하기
+				</Button>
+			</div>
 		</>
 	);
 }

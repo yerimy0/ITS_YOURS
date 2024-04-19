@@ -101,7 +101,7 @@ const PriceWrapper = styled.div`
 const Price = styled.div`
 	font-size: 24px;
 	font-weight: 600;
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 
 	@media (max-width: 800px) {
 		margin-bottom: 0;

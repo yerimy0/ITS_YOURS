@@ -19,24 +19,11 @@ import {
 } from './ChatRoomHeaderStyle';
 import { quitChat, getChatDetail, getChatList } from '../../../apis/service/Chat.api';
 
-function ChatRoomHeader() {
+function ChatRoomHeader({ userInfo, productInfo }) {
 	const [profileModalOpen, setProfileModalOpen] = useState(false);
 	const [chatroomId, setChatRoomId] = useState(''); //채팅방Id
-	const [userInfo, setUserInfo] = useState([]);
-	const [productInfo, setProductInfo] = useState([]);
-	useEffect(() => {
-		async function getList() {
-			const res = await getChatList();
-			setChatRoomId(res[0]._id);
 
-			const detailRes = await getChatDetail(chatroomId);
-			setUserInfo(detailRes.buyerId);
-			setProductInfo(detailRes.productId);
-			console.log(userInfo);
-		}
-		getList();
-	}, []);
-
+	// console.log(userInfo, productInfo);
 	const openProfileModal = () => {
 		setProfileModalOpen(true);
 	};

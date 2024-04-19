@@ -45,7 +45,10 @@ async function getDetailChat(chatroomId) {
 		.populate('sellerId', 'nickName profilePic');
 
 	const messages = await ChatMessage.find({ chatRoomId: chatroomId })
-		.populate('chatAuth', 'content')
+		.populate({
+			path: 'chatAuth',
+			select: 'nickName', // 'nickName' 필드만 가져오도록 수정
+		})
 		.sort({ chatCreatedAt: -1 });
 	return {
 		chatroom,

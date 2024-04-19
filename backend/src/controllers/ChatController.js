@@ -90,8 +90,6 @@ const saveChatMessage = async (req, res, next) => {
 //채팅방 내용보기
 const getDetailChat = async (req, res, next) => {
 	try {
-		console.log('params::', JSON.stringify(req.params));
-
 		const memberId = req.user._id;
 		const { chatroomId } = req.params;
 		const chatObjId = new ObjectId(chatroomId);

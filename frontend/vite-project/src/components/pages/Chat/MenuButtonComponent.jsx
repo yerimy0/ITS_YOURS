@@ -12,7 +12,6 @@ function MenuButtonComponent({ userInfo, productInfo }) {
 	const [buyUserModalOpen, setBuyUserModalOpen] = useState(false); // 사용자  모달 상태 추가
 	const [leaveRoomModalOpen, setLeaveRoomModalOpen] = useState(false); // 채팅방 나가기 모달 상태 추가
 
-	console.log(userInfo);
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen);
 	};
@@ -78,12 +77,13 @@ function MenuButtonComponent({ userInfo, productInfo }) {
 			<Modal
 				isOpen={buyUserModalOpen}
 				onClose={handleCloseModal}
-				title={`${userInfo.nickName}님과의 구매를 확정하시겠습니까?`}
+				title={`${userInfo.nickName}님과의 
+				구매를 확정하겠습니까?`}
 				content={
 					<>
 						이제너할 수 있도록! 구매를 확정 지어주세요 :)
 						<br />
-						다음 구메와 판매도 이제너해와 함께 해주세요!
+						다음 구매와 판매도 이제너해와 함께 해주세요!
 					</>
 				}
 				confirmText="구매 확정하기"

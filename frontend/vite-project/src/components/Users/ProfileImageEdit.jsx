@@ -5,7 +5,7 @@ import {
 	IconWrapper,
 	HiddenFileInput,
 	IconImage,
-} from './UsersStyles';
+} from '../../components/pages/Mypage/ProfileEditFormStyles';
 
 function ProfileImageUploader({ onImageSelected, initialPreview }) {
 	const [preview, setPreview] = useState('');
@@ -26,7 +26,7 @@ function ProfileImageUploader({ onImageSelected, initialPreview }) {
 	};
 
 	return (
-		<ProfileWrapper>
+		<ProfileWrapper style={{ position: 'relative' }}>
 			<div className="profile_wrap" style={{ marginTop: '30px' }}>
 				<ProfileImage src={preview} />
 				<form

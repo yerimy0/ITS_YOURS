@@ -126,10 +126,11 @@ async function updateMember(
 	nickName,
 	profilePic,
 ) {
+	const hashedPassword = await bcrypt.hash(password, 8);
 	const memberInfo = await Members.findOneAndUpdate(
 		{ id: userId },
 		{
-			password: password,
+			password: hashedPassword,
 			realName: realName,
 			email: email,
 			region: region,

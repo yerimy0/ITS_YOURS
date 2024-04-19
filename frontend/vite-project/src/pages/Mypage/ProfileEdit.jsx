@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { SignOutLink } from '../../components/pages/SignOut/SignOutStyles';
-import { Wrapper, Title } from '../../components/Users/UsersStyles';
+import { Wrapper, Title, SignOutLink } from '../../components/pages/Mypage/ProfileEditFormStyles';
 import ProfileEditForm from '../../components/pages/Mypage/ProfileEditForm';
 import SignOutModal from '../../components/pages/SignOut/SignOutModal';
 

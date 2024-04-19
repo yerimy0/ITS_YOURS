@@ -13,30 +13,28 @@ import {
 
 function ChatListProfile({ buyerInfo, productInfo }) {
 	const [isActive, setIsActive] = useState(false);
-	// console.log(buyerInfo);
-	// console.log(productInfo);
+
+	// console.log(buyerInfo, productInfo);
 	function handleClick() {
 		setIsActive(!isActive);
 	}
 
 	return (
-		<>
-			<ProfileWrap className={isActive ? 'active' : ''} onClick={handleClick}>
-				<Profile>
-					<ProfileImg src={buyerInfo.profilePic} />
-				</Profile>
-				<ProfileInfo>
-					<Wrap>
-						<NickName>{buyerInfo.nickName}</NickName>
-						<Notification />
-					</Wrap>
-					<Wrap>
-						<BookName>{productInfo.name}</BookName>
-						<SendTime>1시간 전</SendTime>
-					</Wrap>
-				</ProfileInfo>
-			</ProfileWrap>
-		</>
+		<ProfileWrap className={isActive ? 'active' : ''} onClick={handleClick}>
+			<Profile>
+				<ProfileImg src={buyerInfo.profilePic} />
+			</Profile>
+			<ProfileInfo>
+				<Wrap>
+					<NickName>{buyerInfo.nickName}</NickName>
+					<Notification />
+				</Wrap>
+				<Wrap>
+					<BookName>{productInfo.name}</BookName>
+					<SendTime>1시간 전</SendTime>
+				</Wrap>
+			</ProfileInfo>
+		</ProfileWrap>
 	);
 }
 

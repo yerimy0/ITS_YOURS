@@ -74,8 +74,8 @@ const ChatButton = styled.button`
 	align-items: center;
 	border: 1px solid #009dff;
 	border-radius: 20px;
-	background: #009dff;
-	color: #fff;
+	background: #fff;
+	color: #009dff;
 	font-size: 18px;
 	font-style: normal;
 	font-weight: 600;
@@ -83,10 +83,16 @@ const ChatButton = styled.button`
 	letter-spacing: 0.15px;
 	text-align: center;
 	white-space: nowrap;
+	width: 100%;
 	cursor: pointer;
 	&:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
+	}
+
+	&:hover {
+		background: #009dff;
+		color: #fff;
 	}
 	@media (max-width: 1000px) {
 		font-size: 16px;

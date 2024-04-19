@@ -180,6 +180,7 @@ const Nav = styled(HeaderMain)`
 
 	img {
 		width: 60px;
+		display: none;
 	}
 
 	@media screen and (max-width: 864px) {

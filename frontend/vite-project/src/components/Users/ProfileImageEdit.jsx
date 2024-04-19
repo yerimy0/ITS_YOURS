@@ -26,7 +26,7 @@ function ProfileImageUploader({ onImageSelected, initialPreview }) {
 	};
 
 	return (
-		<ProfileWrapper>
+		<ProfileWrapper style={{ position: 'relative' }}>
 			<div className="profile_wrap" style={{ marginTop: '30px' }}>
 				<ProfileImage src={preview} />
 				<form

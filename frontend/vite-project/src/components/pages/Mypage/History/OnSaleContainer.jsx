@@ -49,7 +49,7 @@ const OnSaleContainer = () => {
 				saleItems.map(onsale => (
 					<ForSalesList key={onsale._id}>
 						<OnSaleCard
-							imgUrls={onsale.imgUrls.map(url => url.replace('coversum', 'cover500'))}
+							imgUrls={onsale.imgUrls}
 							price={onsale.price}
 							name={onsale.name}
 							createdAt={onsale.createdAt}

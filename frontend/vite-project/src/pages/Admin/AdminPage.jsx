@@ -22,7 +22,7 @@ function AdminPage() {
 	return (
 		<AdminLayout>
 			<HeaderBar>
-				<NavLogo src="'../../../public/main_logo.png" alt="Logo" onClick={() => navigate('/')} />
+				<NavLogo src="/main_logo.png" alt="Logo" onClick={() => navigate('/')} />
 				<Header>안녕하세요 관리자님👋🏼,</Header>
 			</HeaderBar>
 			<ContentArea>

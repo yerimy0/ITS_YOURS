@@ -53,7 +53,7 @@ function EditForm() {
 	async function Eddit() {
 		const res = await UpdateRegister(id, register);
 		console.log(res);
-		navigate('/product');
+		navigate(`/saleshistory/${id}`);
 	}
 
 	function onChange(e) {

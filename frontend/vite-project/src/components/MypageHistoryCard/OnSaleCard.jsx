@@ -40,11 +40,7 @@ function OnSaleCard({ id, imgUrls, price, name, createdAt, wishescount, onDelete
 					<Date>{DateSlicer(createdAt)}</Date>
 				</SalesInfo>
 				<ButtonBox>
-					<EditBtn
-						onClick={() => navigate(`/product/edit/${id}`, { state: { from: 'saleshistory' } })}
-					>
-						수정
-					</EditBtn>
+					<EditBtn onClick={() => navigate(`/product/edit/${id}`)}>수정</EditBtn>
 					<DeleteBtn onClick={openDeleteModal}>삭제</DeleteBtn>
 				</ButtonBox>
 			</ProductCardWrap>

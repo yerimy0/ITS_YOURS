@@ -41,7 +41,7 @@ async function getChatroomList(memberId) {
 
 const getChatroomListWithFilter = async userId => {
 	const chatList = await Chatroom.find({
-		$or: [{ buyerId: userId }, { sellerId: userId }],
+		$and: [{ $or: [{ buyerId: userId }, { sellerId: userId }] }, { isActivated: true }],
 	});
 
 	return chatList;
@@ -124,6 +124,10 @@ async function confirmPurchase(productId) {
 		{ isCompleted: true },
 		{ new: true },
 	);
+
+	if (result) {
+		await Chatroom.updateMany({ productId: productId }, { $set: { isActivated: false } });
+	}
 	return result;
 }
 

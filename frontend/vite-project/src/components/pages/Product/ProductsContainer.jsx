@@ -27,7 +27,10 @@ function ProductsContainer() {
 	const itemsPerPage = 20;
 
 	useEffect(() => {
-		console.log('route');
+		loadDefaultProducts();
+	}, []);
+
+	useEffect(() => {
 		if (region.state && region.state.searchResults) {
 			console.log('test::');
 			handleSearchResults(region.state.searchResults);
@@ -40,6 +43,7 @@ function ProductsContainer() {
 	const loadDefaultProducts = async () => {
 		try {
 			const productsData = await fetchDefaultProducts();
+			productsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 			setProducts(productsData);
 			setDisplayProducts(productsData);
 			setFilteredProducts(productsData);

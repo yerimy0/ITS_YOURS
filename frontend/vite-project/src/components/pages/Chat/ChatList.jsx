@@ -19,7 +19,7 @@ function ChatList() {
 			try {
 				const res = await getChatList(); // 현 유저가 속한 채팅방 리스트 가져오기
 				setChatRoomLists(res); // 리스트 저장
-
+				console.log('채팅 리스트', res);
 				const buyerIds = [];
 				const productIds = [];
 
@@ -28,12 +28,12 @@ function ChatList() {
 					res.map(async chatRoomList => {
 						// console.log('각 채팅방 id', chatRoomList._id);
 						const detailRes = await getChatDetail(chatRoomList._id);
-						// console.log(detailRes);
+						console.log('상세', detailRes);
 						// console.log('buyer', detailRes.buyerId);
 						// console.log('product', detailRes.productId);
 
-						buyerIds.push(detailRes.buyerId);
-						productIds.push(detailRes.productId);
+						buyerIds.push(detailRes.chatroom.buyerId);
+						productIds.push(detailRes.chatroom.productId);
 					}),
 				);
 
@@ -61,12 +61,14 @@ function ChatList() {
 			<ChatContainer>
 				{isLoaded &&
 					chatRoomLists.map((chatRoomList, i) => (
-						<ChatListProfile
-							onClick={handleChatItem(chatRoomList._id)}
+						<div
 							key={`item=${i}`}
-							buyerInfo={buyerInfo[i]}
-							productInfo={productInfo[i]}
-						/>
+							onClick={() => {
+								handleChatItem(chatRoomList._id);
+							}}
+						>
+							<ChatListProfile buyerInfo={buyerInfo[i]} productInfo={productInfo[i]} />
+						</div>
 					))}
 			</ChatContainer>
 		</ChatListWrap>

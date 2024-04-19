@@ -122,6 +122,10 @@ function WriteForm() {
 			console.log('전달할 객체 이미지', formData.imgUrls);
 			await Register(formData);
 			navigate('/product');
+			window.scrollTo({
+				top: 800,
+				behavior: 'smooth',
+			});
 		} catch (err) {
 			console.error(err);
 		}

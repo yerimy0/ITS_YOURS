@@ -37,6 +37,7 @@ function LoginForm() {
 			const res = await loginApi(userId, password);
 			if (res.accessToken) {
 				document.cookie = `authToken=${res.accessToken}; path=/; Secure`;
+				console.log(res);
 				setId(userId);
 				if (res.isAdmin === true) {
 					navigate('/adminpage');

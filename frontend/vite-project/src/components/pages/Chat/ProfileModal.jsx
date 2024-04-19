@@ -23,14 +23,12 @@ import { getChatList, getChatDetail } from '../../../apis/service/Chat.api';
 function ProfileModal({ isOpen, onClose }) {
 	const [chatroomId, setChatRoomId] = useState(''); //채팅방Id
 	const [buyerInfo, setBuyerInfo] = useState([]);
-	const [productInfo, setProductInfo] = useState([]);
 	useEffect(() => {
 		async function getList() {
 			const res = await getChatList();
 			setChatRoomId(res[0]._id);
 			const detailRes = await getChatDetail(chatroomId);
-			setBuyerInfo(detailRes.buyerId);
-			setProductInfo(detailRes.productId);
+			setBuyerInfo(detailRes.buyerInfo);
 		}
 		getList();
 	}, []);

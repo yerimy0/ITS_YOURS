@@ -6,13 +6,14 @@ async function createChatroom(productId, sellerId, buyerNickName) {
 	console.log(res);
 	return res.data;
 }
+
 async function getChatList() {
 	const res = await instance.get(`/chat`);
 	// console.log(res.data);
 	return res.data;
 }
 async function getChatDetail(chatroomId) {
-	// console.log('chatroomId', chatroomId);
+	console.log('chatroomId', chatroomId);
 	const res = await instance.get(`/chat/detail/${chatroomId}`);
 	// console.log(res.data.data.chatroom);
 	return res.data.data;

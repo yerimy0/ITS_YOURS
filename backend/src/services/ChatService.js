@@ -24,7 +24,10 @@ async function getOneChatRoom(chatroomId) {
 }
 
 async function getChatroomList(memberId) {
-	const chatList = await Chatroom.find({ $or: [{ buyerId: memberId }, { sellerId: memberId }] });
+	const chatList = await Chatroom.find({ $or: [{ buyerId: memberId }, { sellerId: memberId }] })
+		.populate('buyerId', 'nickName profilePic')
+		.populate('sellerId', 'nickName profilePic');
+
 	return chatList;
 }
 

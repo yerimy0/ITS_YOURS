@@ -29,13 +29,16 @@ function ProductsContainer() {
 	useEffect(() => {
 		loadDefaultProducts();
 	}, []);
+
 	useEffect(() => {
 		if (region.state && region.state.searchResults) {
+			console.log('test::');
 			handleSearchResults(region.state.searchResults);
 		} else {
+			console.log('loadDefaultProducts::');
 			loadDefaultProducts();
 		}
-	}, [region.state]);
+	}, []);
 
 	const loadDefaultProducts = async () => {
 		try {

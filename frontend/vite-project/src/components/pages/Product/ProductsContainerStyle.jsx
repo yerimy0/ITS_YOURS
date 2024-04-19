@@ -3,11 +3,12 @@ import styled from 'styled-components';
 const ProductsWrap = styled.section`
 	/* display: flex; */
 	/* max-width: 1200px; */
-	width: 100%;
+	width: 1330px;
 	margin: 0 auto;
 	/* flex-direction: column; */
 	padding: 0 50px;
 	@media (max-width: 1000px) {
+		width: 100%;
 		padding: 0 15px;
 	}
 `;

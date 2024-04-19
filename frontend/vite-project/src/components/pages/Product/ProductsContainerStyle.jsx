@@ -7,7 +7,7 @@ const ProductsWrap = styled.section`
 	margin: 0 auto;
 	/* flex-direction: column; */
 	padding: 0 50px;
-	@media (max-width: 1000px) {
+	@media (max-width: 1400px) {
 		width: 100%;
 		padding: 0 15px;
 	}

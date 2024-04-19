@@ -27,12 +27,15 @@ function ProductsContainer() {
 	const itemsPerPage = 20;
 
 	useEffect(() => {
+		console.log('route');
 		if (region.state && region.state.searchResults) {
+			console.log('test::');
 			handleSearchResults(region.state.searchResults);
 		} else {
+			console.log('loadDefaultProducts::');
 			loadDefaultProducts();
 		}
-	}, [region.state]);
+	}, []);
 
 	const loadDefaultProducts = async () => {
 		try {

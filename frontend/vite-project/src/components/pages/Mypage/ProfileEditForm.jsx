@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchMyPageData, updateMyPageData } from '../../../apis/service/ProfileEdit';
 import ProfileImageUploader from '../../Users/ProfileImageEdit';
 import { Form, Input, Button, ErrorMessage } from '../../Users/UsersStyles';
@@ -16,6 +17,7 @@ import UniversitySearchForm from '../../Users/University/UniversitySearchForm';
 import UniversityModal from '../../Users/University/UniversityModal';
 
 function ProfileEditForm({ userInfo }) {
+	const navigate = useNavigate();
 	const [profileImage, setProfileImage] = useState(null);
 	const [userId, setUserId] = useState(userInfo?.userId || '');
 	const [password, setPassword] = useState('');
@@ -36,13 +38,13 @@ function ProfileEditForm({ userInfo }) {
 	const fetchProfileData = async () => {
 		try {
 			const data = await fetchMyPageData();
-			console.log('Received data:', data); // 서버로부터 받은 데이터를 확인합니다.
+			console.log('Received data:', data);
 			setUserId(data.id);
 			setName(data.realName);
 			setEmail(data.email);
 			setUniversity(data.schoolName);
 			setNickname(data.nickName);
-			setProfileImage(data.profilePic); // 프로필 이미지 데이터를 설정합니다.
+			setProfileImage(data.profilePic);
 		} catch (error) {
 			console.error('프로필 정보 로딩 실패:', error);
 		}
@@ -85,12 +87,12 @@ function ProfileEditForm({ userInfo }) {
 			formData.append('profilePic', profileImage);
 		}
 
-		console.log('Sending data:', Object.fromEntries(formData));
-
 		try {
 			const response = await updateMyPageData(formData);
 			console.log('프로필 업데이트 완료:', response);
-			await fetchProfileData(); // 업데이트 후 프로필 데이터를 비동기적으로 다시 불러옵니다.
+			alert('수정이 완료되었습니다');
+			navigate('/mypage'); // 리디렉션
+			await fetchProfileData();
 		} catch (error) {
 			console.error('프로필 업데이트 오류:', error.response ? error.response.data : error);
 		}
@@ -153,7 +155,7 @@ function ProfileEditForm({ userInfo }) {
 					emailVerificationCode={emailVerificationCode}
 					setEmailVerificationCode={setEmailVerificationCode}
 					emailError={errors.email}
-					setEmailVerified={setEmailVerified} // 콜백 전달
+					setEmailVerified={setEmailVerified}
 				/>
 				<UniversitySearchForm
 					className="profile_edit_last"

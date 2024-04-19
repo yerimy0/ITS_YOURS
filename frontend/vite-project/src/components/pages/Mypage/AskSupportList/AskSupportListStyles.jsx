@@ -3,21 +3,30 @@ import styled from 'styled-components';
 export const Container = styled.div`
 	max-width: 800px;
 	margin: 0 auto;
+	padding: 20px;
+
+	@media (max-width: 850px) {
+	}
 `;
 
 export const InquiryList = styled.ul`
 	list-style: none;
 	padding: 0;
-	border-top: 1px solid #ccc;
+	min-height: 250px;
+	border-top: 1px solid #eee;
+	position: relative;
 `;
 
 export const InquiryItem = styled.li`
-	border-bottom: 1px solid #ccc;
-	padding: 10px;
+	padding: 20px 15px;
 	display: flex;
 	justify-content: space-between;
-	align-items: flex-start;
-	margin: 20px 0;
+	align-items: center;
+	border-bottom: 1px solid #eee;
+
+	&:hover {
+		background: #f9f9f9;
+	}
 `;
 
 export const Content = styled.div`
@@ -26,37 +35,53 @@ export const Content = styled.div`
 `;
 
 export const ButtonStyles = styled.button`
-	padding: 8px 15px;
-	font-size: 10px;
+	padding: 10px 0;
+	font-size: 14px;
 	cursor: pointer;
 	border-radius: 20px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 60px;
-	height: 40px;
+	width: 80px;
 `;
 
 export const Button = styled(ButtonStyles)`
-	background-color: white;
-	border: 1px solid #009dff;
-	color: #009dff;
+	background-color: #fff;
+	border: 1px solid #f1f1f1;
+	font-weight: 500;
+
 	&:hover {
+		border: 1px solid #009dff;
 		background-color: #009dff;
-		color: white;
+		color: #fff;
+		transition: all 0.5s;
 	}
 `;
 
 export const Status = styled(ButtonStyles)`
-	background-color: #009dff;
 	border: none;
-	color: white;
 	margin-right: 10px;
+	border: 1px solid #f1f1f1;
+	background: #fff;
+	&:hover {
+		background-color: #009dff;
+		color: #fff;
+		transition: all 0.5s;
+	}
+
+	@media (max-width: 850px) {
+		margin-right: 0;
+	}
 `;
 
 export const ActionContainer = styled.div`
 	display: flex;
 	align-items: center;
+
+	@media (max-width: 850px) {
+		flex-direction: column;
+		gap: 10px;
+	}
 `;
 
 export const InquiryButton = styled(ButtonStyles)`
@@ -73,11 +98,16 @@ export const InquiryButton = styled(ButtonStyles)`
 		background-color: #009dff;
 		color: white;
 	}
+
+	@media (max-width: 850px) {
+	}
 `;
 
 export const EmptyMessage = styled.div`
-  text-align: center; // 텍스트를 가운데 정렬
-  font-size: 20px; // 글씨 크기 20px로 설정
-  color: #666; // 글씨 색상 설정 (선택적)
-  padding: 20px; // 패딩 추가 (선택적)
+	font-size: 20px; // 글씨 크기 20px로 설정
+	color: #666; // 글씨 색상 설정 (선택적)
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 `;

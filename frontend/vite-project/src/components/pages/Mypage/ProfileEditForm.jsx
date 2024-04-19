@@ -113,8 +113,9 @@ function ProfileEditForm({ userInfo }) {
 			/>
 			<ProfileImageUploader onImageSelected={setProfileImage} initialPreview={profileImage} />
 			<Form onSubmit={handleSubmit}>
-				<Input type="text" value={userId} disabled />
+				<Input type="text" className="my_info_input common_info" value={userId} disabled />
 				<Input
+					className="my_info_input common_info"
 					type="password"
 					placeholder="*비밀번호를 입력해주세요"
 					value={password}
@@ -122,6 +123,7 @@ function ProfileEditForm({ userInfo }) {
 				/>
 				{errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
 				<Input
+					className="my_info_input common_info"
 					type="password"
 					placeholder="*비밀번호를 다시 입력해주세요"
 					value={confirmPassword}
@@ -129,6 +131,7 @@ function ProfileEditForm({ userInfo }) {
 				/>
 				{errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
 				<Input
+					className="my_info_input common_info"
 					type="text"
 					placeholder="*이름을 입력해주세요"
 					value={name}
@@ -136,6 +139,7 @@ function ProfileEditForm({ userInfo }) {
 				/>
 				{errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
 				<Input
+					className="my_info_input common_info"
 					type="text"
 					placeholder="*닉네임을 입력해주세요"
 					value={nickname}
@@ -143,6 +147,7 @@ function ProfileEditForm({ userInfo }) {
 				/>
 				{errors.nickname && <ErrorMessage>{errors.nickname}</ErrorMessage>}
 				<EmailVerificationForm
+					className="common_info"
 					email={email}
 					setEmail={setEmail}
 					emailVerificationCode={emailVerificationCode}
@@ -151,12 +156,15 @@ function ProfileEditForm({ userInfo }) {
 					setEmailVerified={setEmailVerified} // 콜백 전달
 				/>
 				<UniversitySearchForm
+					className="common_info"
 					university={university}
 					setUniversity={setUniversity}
 					universityError={errors.university}
 					onSearchUniversity={handleOpenModal}
 				/>
-				<Button type="submit">수정하기</Button>
+				<Button type="submit" className="my_info_button common_info">
+					수정하기
+				</Button>
 			</Form>
 		</>
 	);

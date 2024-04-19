@@ -61,7 +61,15 @@ function InputImg({ onImageChange, value }) {
 									<Img src={file} alt={`image-${index}`} />
 								)
 							) : (
-								' 📸 Upload a file'
+								<>
+									<img
+										src="/file_i4.png"
+										className="file_icon"
+										alt="File Icon"
+										style={{ marginRight: '8px', width: '26px', height: '26px' }}
+									/>
+									Upload a file
+								</>
 							)}
 							{/* {console.log(file)} */}
 						</ButtonUpload>

@@ -104,7 +104,7 @@ const RedStar = styled.span`
 const TopTitle = styled.span`
 	text-align: center;
 	font-size: 28px;
-	font-weight: 700;
+	font-weight: 500;
 	line-height: 36px; /* 128.571% */
 `;
 
@@ -212,6 +212,7 @@ const Img = styled.img`
 	display: flex;
 	width: 200px;
 	height: 200px;
+	object-fit: contain;
 	align-items: flex-start;
 	gap: 8px;
 `;

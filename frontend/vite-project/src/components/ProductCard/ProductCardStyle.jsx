@@ -19,7 +19,7 @@ const ProductCardWrap = styled.div`
 
 const ProductImage = styled.img`
 	/* display: flex; */
-	height: 250px;
+	height: 300px;
 	width: 100%;
 	/* margin: 0 auto;
 	display: block; */
@@ -30,6 +30,10 @@ const ProductImage = styled.img`
 
 	&:hover {
 		// transform: skewX(1deg);
+	}
+
+	@media (max-width: 400px) {
+		height: 250px;
 	}
 `;
 

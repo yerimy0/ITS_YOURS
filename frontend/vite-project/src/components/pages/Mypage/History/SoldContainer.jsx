@@ -51,7 +51,7 @@ const SoldContainer = () => {
 				soldItems.map(sold => (
 					<ForSalesList key={sold._id}>
 						<SoldCard
-							imgUrls={sold.imgUrls}
+							imgUrls={sold.imgUrls.map(url => url.replace('coversum', 'cover500'))}
 							price={sold.price}
 							name={sold.name}
 							sellDate={sold.sellDate}

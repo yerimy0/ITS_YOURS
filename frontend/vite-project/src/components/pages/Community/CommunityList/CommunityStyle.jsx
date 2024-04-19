@@ -19,9 +19,18 @@ const Box = styled.div`
 	.comm_list_wrap {
 		min-height: 400px;
 	}
-	@media (max-width: 1000px) {
+	@media (max-width: 1002px) {
+		.header_logo {
+			display: none;
+		}
+	}
+	@media (max-width: 375px) {
 		width: 100%;
 		padding: 0 15px;
+
+		.header_logo {
+			display: block;
+		}
 		.header_logo {
 			width: 40%;
 			position: absolute;
@@ -42,6 +51,7 @@ const HeaderTop = styled.div`
 	align-items: center;
 	padding: 0 50px 100px;
 	border-bottom: 1px solid #eee;
+
 	@media (max-width: 1000px) {
 		padding: 15px;
 		margin-top: 30px;
@@ -164,7 +174,7 @@ const ListLeft = styled.div`
 
 const List = styled.div`
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	align-items: flex-start;
 	gap: 10px;
 	align-self: stretch;

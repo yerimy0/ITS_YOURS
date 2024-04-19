@@ -20,23 +20,21 @@ function ChatListProfile({ buyerInfo, productInfo }) {
 	}
 
 	return (
-		<>
-			<ProfileWrap className={isActive ? 'active' : ''} onClick={handleClick}>
-				<Profile>
-					<ProfileImg src={buyerInfo.profilePic} />
-				</Profile>
-				<ProfileInfo>
-					<Wrap>
-						<NickName>{buyerInfo.nickName}</NickName>
-						<Notification />
-					</Wrap>
-					<Wrap>
-						<BookName>{productInfo.name}</BookName>
-						<SendTime>1시간 전</SendTime>
-					</Wrap>
-				</ProfileInfo>
-			</ProfileWrap>
-		</>
+		<ProfileWrap className={isActive ? 'active' : ''} onClick={handleClick}>
+			<Profile>
+				<ProfileImg src={buyerInfo.profilePic} />
+			</Profile>
+			<ProfileInfo>
+				<Wrap>
+					<NickName>{buyerInfo.nickName}</NickName>
+					<Notification />
+				</Wrap>
+				<Wrap>
+					<BookName>{productInfo.name}</BookName>
+					<SendTime>1시간 전</SendTime>
+				</Wrap>
+			</ProfileInfo>
+		</ProfileWrap>
 	);
 }
 

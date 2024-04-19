@@ -72,11 +72,11 @@ function ChatRoom() {
 			setUserInfo(res.chatroom.buyerId);
 			setProductInfo(res.chatroom.productId);
 			setReceivedMes(res.messages);
-			console.log(res.messages);
+			console.log(res.messages.content);
 		}
 		getRoom();
 		socket.emit('ask_join', { roomNum: chatroomId });
-	}, []);
+	}, [chatroomId]);
 
 	// socket 랜더링시, 방 조인 + 메시지 수신
 	useEffect(() => {
@@ -93,21 +93,21 @@ function ChatRoom() {
 					<ChatSction>
 						<ChatRoomHeader userInfo={userInfo} productInfo={productInfo} />
 						<ChatContainer>
-							<ChatDate>2024. 3. 28</ChatDate>
+							<ChatDate>채팅방이 생성되었습니다.</ChatDate>
 							<ChatWrap>
 								{receivedMes.map((msg, i) => {
-									// {// chatAuth == '' }
-									return (
-										<SendTextWrap>
+									return msg.chatAuth.id === id ? (
+										<SendTextWrap key={i}>
 											<SendTime>{chatTime(msg.chatCreatedAt)}</SendTime>
 											<SendText>{msg.content}</SendText>
 										</SendTextWrap>
+									) : (
+										<ReplyTextWrap key={i}>
+											<ReplyText>{msg.content}</ReplyText>
+											<ReplyTime>{chatTime(msg.chatCreatedAt)}</ReplyTime>
+										</ReplyTextWrap>
 									);
 								})}
-								{/* <ReplyTextWrap>
-									<ReplyText></ReplyText>
-									<ReplyTime>오후 12:50</ReplyTime>
-								</ReplyTextWrap> */}
 							</ChatWrap>
 						</ChatContainer>
 					</ChatSction>

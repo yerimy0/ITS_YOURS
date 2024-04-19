@@ -32,8 +32,8 @@ function ChatList() {
 						// console.log('buyer', detailRes.buyerId);
 						// console.log('product', detailRes.productId);
 
-						buyerIds.push(detailRes.buyerId);
-						productIds.push(detailRes.productId);
+						buyerIds.push(detailRes.chatroom.buyerId);
+						productIds.push(detailRes.chatroom.productId);
 					}),
 				);
 
@@ -62,7 +62,9 @@ function ChatList() {
 				{isLoaded &&
 					chatRoomLists.map((chatRoomList, i) => (
 						<ChatListProfile
-							onClick={handleChatItem(chatRoomList._id)}
+							onClick={() => {
+								handleChatItem(chatRoomList._id);
+							}}
 							key={`item=${i}`}
 							buyerInfo={buyerInfo[i]}
 							productInfo={productInfo[i]}

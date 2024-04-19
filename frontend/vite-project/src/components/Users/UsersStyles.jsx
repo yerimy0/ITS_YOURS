@@ -5,6 +5,11 @@ export const Wrapper = styled.div`
 	height: 100vh;
 	overflow-y: scroll;
 
+	.sign_wrap {
+		width: 600px;
+		margin: 0 auto;
+	}
+
 	.link_wrap {
 		width: 248px;
 		margin: 0 auto;
@@ -12,6 +17,7 @@ export const Wrapper = styled.div`
 	}
 
 	.logo_link {
+		margin-bottom: 70px;
 	}
 
 	.sign_logo {
@@ -38,7 +44,7 @@ export const Wrapper = styled.div`
 	}
 
 	.profile_form {
-		width: 50%;
+		width: 100%;
 		margin: 30px auto 0;
 	}
 
@@ -49,20 +55,24 @@ export const Wrapper = styled.div`
 	}
 
 	.join_btn {
-		width: 50%;
+		width: 100%;
 		margin: 0 auto;
 		display: block;
 		margin-top: 15px;
 	}
-	@media screen and (max-width: 500px) {
+	@media screen and (max-width: 700px) {
 		.login_container {
 			width: 90%;
 		}
 		.profile_form {
-			width: 90%;
+			width: 100%;
 		}
 		.join_btn {
-			width: 90%;
+			width: 100%;
+		}
+
+		.sign_wrap {
+			width: 88%;
 		}
 	}
 `;
@@ -227,14 +237,15 @@ export const EmailErrorMessage = styled.div`
 export const VerificationErrorMessage = styled.div`
 	color: #b3261e;
 	font-size: 12px;
+	margin-left: 10px;
 	/* margin-right: 270px; */
 `;
 
 export const InlineGroup = styled.div`
-	width: 50%;
+	width: 100%;
 	margin: 0 auto;
-	@media (max-width: 500px) {
-		width: 90%;
+	@media (max-width: 700px) {
+		width: 100%;
 	}
 `;
 
@@ -270,13 +281,12 @@ export const SmallButton = styled.button`
 
 export const InputWithIcon = styled.div`
 	position: relative;
-	/* display: flex; */
-	/* align-items: center; */
-	width: 50%;
+
+	width: 100%;
 	margin: 0 auto;
 
-	@media (max-width: 500px) {
-		width: 90%;
+	@media (max-width: 700px) {
+		width: 100%;
 	}
 `;
 

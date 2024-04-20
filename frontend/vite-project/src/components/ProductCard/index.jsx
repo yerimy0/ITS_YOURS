@@ -22,7 +22,7 @@ function formatPrice(price) {
 function ProductCard({ productId, imgUrls, name, price, onClick }) {
 	return (
 		<ProductCardWrap productId={productId}>
-			<ProductImage onClick={onClick} src={imgUrls} alt={name} />
+			<ProductImage onClick={onClick} src={imgUrls[0]} alt={name} />
 			<ProductInfoWrap>
 				<ProductInfo onClick={onClick}>
 					<ProductTitle>{name}</ProductTitle>

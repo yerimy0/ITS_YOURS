@@ -11,21 +11,28 @@ const transporter = nodemailer.createTransport({
 	},
 });
 
-async function sendCustomEmail({ to, subject, text, newPassword }) {
+async function sendCustomEmail({ to, subject, templateName, replacements }) {
 	try {
-		// HTML 템플릿 파일을 동기적으로 읽기
-		let templatePath = path.join(__dirname, 'EmailForm.html');
-		let html = fs.readFileSync(templatePath, 'utf8'); // HTML 파일 내용을 읽습니다.
+		let templatePath = path.join(__dirname, `${templateName}.html`);
+		let html = fs.readFileSync(templatePath, 'utf8');
 
-		// {{newPassword}} 부분을 사용자의 임시 비밀번호로 치환
-		html = html.replace('{{newPassword}}', newPassword);
+		// replacements 객체에 있는 모든 키-값 쌍을 사용하여 템플릿 내용을 치환
+		Object.keys(replacements).forEach(key => {
+			html = html.replace(`{{${key}}}`, replacements[key]);
+		});
 
-		// mailOptions 객체를 여기서 정의합니다.
+		// replacements 객체에 있는 모든 키-값 쌍을 사용하여 템플릿 내용을 치환
+		Object.keys(replacements).forEach(key => {
+			const regex = new RegExp(`{{${key}}}`, 'g'); // 정규 표현식 사용
+			console.log(`Replacing: ${key} with: ${replacements[key]}`); // 치환 과정 로깅
+			html = html.replace(regex, replacements[key]);
+		});
+
 		const mailOptions = {
 			from: process.env.EMAIL_USER,
 			to,
 			subject,
-			html, // 수정된 html을 사용
+			html,
 		};
 
 		const result = await transporter.sendMail(mailOptions);
@@ -37,4 +44,42 @@ async function sendCustomEmail({ to, subject, text, newPassword }) {
 	}
 }
 
-module.exports = { sendCustomEmail };
+async function sendPasswordEmail(email, verificationCode) {
+	await sendCustomEmail({
+		to: email,
+		subject: '[이제너해] 인증번호 안내',
+		templateName: 'FindPwEmailForm',
+		replacements: {
+			verificationCode: verificationCode, // 인증번호를 치환할 위치
+		},
+	});
+}
+
+async function sendQnAReplyEmail(email, answer) {
+	await sendCustomEmail({
+		to: email,
+		subject: '[이제너해] QnA 답변 안내',
+		templateName: 'QnaAnswerForm',
+		replacements: {
+			answer: answer, // 답변을 치환할 위치
+		},
+	});
+}
+
+async function sendVerifyEmail(email, verificationCode) {
+	await sendCustomEmail({
+		to: email,
+		subject: '[이제너해] 회원가입 이메일 인증코드입니다.',
+		templateName: 'SignUpEmailForm',
+		replacements: {
+			verificationCode: verificationCode, // 답변을 치환할 위치
+		},
+	});
+}
+
+module.exports = {
+	sendCustomEmail,
+	sendPasswordEmail,
+	sendQnAReplyEmail,
+	sendVerifyEmail,
+};

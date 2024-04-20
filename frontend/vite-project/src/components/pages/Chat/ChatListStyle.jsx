@@ -1,43 +1,34 @@
 import styled from 'styled-components';
 
 const ChatListWrap = styled.section`
-	display: flex;
-	width: 600px;
-	height: 750px;
-	padding: 10px 10px 15px 10px;
-	flex-direction: column;
-	align-items: center;
-	gap: 20px;
+	width: 36%;
+
+	@media screen and (max-width: 1030px) {
+		width: 100%;
+	}
 `;
 
 const ChatListHeader = styled.div`
+	font-size: 16px;
+	font-weight: 700;
+	margin-bottom: 20px;
 	width: 100%;
 	display: flex;
-	height: auto;
-	padding: 15px 10px;
-	justify-content: center;
 	align-items: center;
-	font-size: 24px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 32px;
-	box-sizing: border-box;
+	font-family: 'moiraione-regular', sans-serif;
+	font-size: 26px;
+
+	img {
+		width: 60px;
+	}
 `;
 
 const ChatContainer = styled.div`
-	width: 100%;
-	display: flex;
-	flex-wrap: nowrap;
-	padding: 10px 30px 20px 30px;
-	flex-direction: column-reverse;
-	align-items: center;
-	gap: 25px;
-	box-sizing: border-box;
+	height: 650px;
 	overflow-y: scroll;
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
-	::-webkit-scrollbar {
-		display: none; /* Chrome, Safari, Opera */
+
+	@media screen and (max-width: 1030px) {
+		height: 296px;
 	}
 `;
 

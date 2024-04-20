@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import {
 	ProfileWrap,
 	Profile,
@@ -10,25 +11,31 @@ import {
 	SendTime,
 } from './ChatListProfileStyle';
 
-function ChatListProfile() {
+function ChatListProfile({ userInfo, productInfo }) {
+	const [insertProduct, setInsertProduct] = useState({});
+
+	const [isActive, setIsActive] = useState(false);
+	function handleClick() {
+		setIsActive(!isActive);
+	}
+
+	useEffect(() => {}, []);
 	return (
-		<>
-			<ProfileWrap>
-				<Profile>
-					<ProfileImg src="/profile.jpg" />
-				</Profile>
-				<ProfileInfo>
-					<Wrap>
-						<NickName>카페인 줄여야지</NickName>
-						<Notification />
-					</Wrap>
-					<Wrap>
-						<BookName>데일 카네기의 인간관계론</BookName>
-						<SendTime>1시간 전</SendTime>
-					</Wrap>
-				</ProfileInfo>
-			</ProfileWrap>
-		</>
+		<ProfileWrap className={isActive ? 'active' : ''} onClick={handleClick}>
+			<Profile>
+				<ProfileImg src={userInfo.profilePic} />
+			</Profile>
+			<ProfileInfo>
+				<Wrap>
+					<NickName>{userInfo.nickName}</NickName>
+					<Notification />
+				</Wrap>
+				<Wrap>
+					<BookName>{productInfo.name}</BookName>
+					{/* <SendTime>1시간 전</SendTime> */}
+				</Wrap>
+			</ProfileInfo>
+		</ProfileWrap>
 	);
 }
 

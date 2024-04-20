@@ -7,6 +7,10 @@ const BookInfo = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	gap: 10px;
+	margin: 40px 0 0 0;
+	@media (max-width: 1000px) {
+		margin: 0;
+	}
 `;
 const Div = styled.div`
 	display: flex;
@@ -18,9 +22,10 @@ const SubTilte = styled.p`
 	align-items: center;
 	font-size: 16px;
 	font-style: normal;
-	font-weight: 400;
+	font-weight: 500;
 	line-height: 28px;
 	margin: 0;
+	color: #444;
 `;
 
 const SubContent = styled.p`
@@ -31,6 +36,7 @@ const SubContent = styled.p`
 	font-weight: 400;
 	line-height: 20px;
 	margin: 0;
+	color: #444;
 `;
 
 export { BookInfo, Div, SubTilte, SubContent };

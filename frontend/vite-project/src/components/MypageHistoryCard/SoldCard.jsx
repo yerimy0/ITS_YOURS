@@ -1,24 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../Modal';
 
-const SoldCard = ({ itemId, onDelete }) => {
-	const [itemData, setItemData] = useState(null);
+function SoldCard({ isCompleted, imgUrls, price, name, wishescount, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	useEffect(() => {
-		const fetchItemData = async () => {
-			try {
-				const response = await fetch(`https://api.example.com/items/${itemId}`);
-				const data = await response.json();
-				setItemData(data);
-			} catch (error) {
-				console.error('item 데이터를 가져오는데 실패했습니다.', error);
-			}
-		};
-
-		fetchItemData();
-	}, [itemId]);
 
 	const openDeleteModal = () => {
 		setIsModalOpen(true);
@@ -28,56 +13,50 @@ const SoldCard = ({ itemId, onDelete }) => {
 		setIsModalOpen(false);
 	};
 
-	const handleDelete = () => {
-		console.log('삭제처리', itemId);
-		onDelete(itemId);
-		closeDeleteModal(false);
+	const handleSoldDelete = () => {
+		onDelete();
+		closeDeleteModal();
 	};
 
 	return (
 		<>
-			{itemData ? (
-				<ProductCardWrap>
-					<ImageBox>
-						<ForSalesListImage src={itemData.image} alt={itemData.title} />
-					</ImageBox>
-					<SalesInfo>
-						<Title>{itemData.title}</Title>
-						<Price>{`${itemData.price}원`}</Price>
-						<Stats>
-							<Icon src="heart.svg" alt="Wish" />
-							<Status>{itemData.like}</Status>
-							<Icon src="chat_bubble_oval.svg" alt="Chat" />
-							<Status>{itemData.chat}</Status>
-						</Stats>
-					</SalesInfo>
-					<ButtonBox>
-						<DeleteBtn onClick={openDeleteModal}>삭제</DeleteBtn>
-					</ButtonBox>
-				</ProductCardWrap>
-			) : (
-				<div>데이터 로딩중...</div>
-			)}
+			<ProductCardWrap>
+				<ImageBox>
+					<ForSalesListImage src={imgUrls} alt="" />
+				</ImageBox>
+				<SalesInfo>
+					<Title>{name}</Title>
+					<PriceWrapper>
+						<Price>{Number(price).toLocaleString()}</Price>
+						<Won>원</Won>
+					</PriceWrapper>
+					<Stats>
+						<Icon src="/heart.svg" alt="Wish" />
+						<Status>{wishescount}</Status>
+					</Stats>
+					{isCompleted && <SoldCompleteDiv>판매완료</SoldCompleteDiv>}
+				</SalesInfo>
+				<ButtonBox>
+					<DeleteBtn onClick={openDeleteModal}>삭제</DeleteBtn>
+				</ButtonBox>
+			</ProductCardWrap>
 			<Modal
 				isOpen={isModalOpen}
 				onClose={closeDeleteModal}
 				title="정말 삭제하시겠습니까?"
 				content="삭제된 데이터는 복구할 수 없습니다."
 				confirmText="확인"
-				onConfirm={handleDelete}
+				onConfirm={handleSoldDelete}
 			/>
 		</>
 	);
-};
+}
 
 export default SoldCard;
 
 const ProductCardWrap = styled.div`
 	display: flex;
-	padding: 10px;
-	&:hover {
-		cursor: pointer;
-	}
+	align-items: center;
 `;
 
 const ImageBox = styled.div`
@@ -88,24 +67,34 @@ const ImageBox = styled.div`
 const ForSalesListImage = styled.img`
 	width: 100px;
 	height: 150px;
+	object-fit: cover;
 `;
 
 const SalesInfo = styled.div`
 	margin-left: 10px;
-	display: flex;
-	flex-direction: column;
 `;
 
-const Title = styled.h2`
+const Title = styled.div`
 	font-size: 20px;
-	font-weight: 300;
-	font-family: SUIT;
+	margin-bottom: 5px;
 `;
 
-const Price = styled.span`
+const PriceWrapper = styled.div`
+	display: flex;
+	align-items: baseline;
+`;
+
+const Price = styled.div`
 	font-size: 24px;
-	font-weight: 700;
-	font-family: SUIT;
+	font-weight: 600;
+	margin-bottom: 20px;
+`;
+
+const Won = styled.div`
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+	margin-left: 5px;
 `;
 
 const Stats = styled.div`
@@ -120,8 +109,7 @@ const Icon = styled.img`
 `;
 
 const Status = styled.span`
-	font-size: 20px;
-	margin-right: 10px;
+	font-size: 18px;
 `;
 
 const ButtonBox = styled.div`
@@ -131,17 +119,30 @@ const ButtonBox = styled.div`
 `;
 
 const DeleteBtn = styled.button`
-	width: 66px;
-	height: 53px;
-	border-radius: 20px;
+	width: 100px;
+	padding: 10px 0;
+	border-radius: 5px;
 	border: 1px solid #ded8e1;
 	background: #fff;
-	color: #000;
-	font-family: SUIT;
 	font-size: 16px;
-	font-weight: 700;
-	margin: 3px;
+	font-weight: 500;
+
 	&:hover {
-		cursor: pointer;
+		border: 1px solid #009dff;
+		background-color: #009dff;
+		color: #fff;
+		transition: all 0.5s;
 	}
+`;
+
+const SoldCompleteDiv = styled.div`
+	font-size: 16px;
+	border: 1px solid #666;
+	background: #666666;
+	color: #ffffff;
+	border-radius: 5px;
+	width: 100px;
+	margin-top: 5px;
+	padding: 5px 0;
+	text-align: center;
 `;

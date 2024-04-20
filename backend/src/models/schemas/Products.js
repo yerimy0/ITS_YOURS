@@ -47,8 +47,19 @@ const ProductsSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	//학교명
 	schoolName: {
 		type: String,
+		required: true,
+	},
+	//위도
+	latitude: {
+		type: Number,
+		required: true,
+	},
+	//경도
+	longitude: {
+		type: Number,
 		required: true,
 	},
 	// 상품 설명

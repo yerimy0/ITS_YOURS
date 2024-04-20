@@ -11,6 +11,7 @@ import {
 	BodyDetail,
 	BodyId,
 } from './AdminModalStyle';
+import DateSlicer from '../../utils/dateSlicer';
 
 function AdminModal({ isOpen, onClose, qna, onAnswer }) {
 	const [answer, setAnswer] = useState('');
@@ -23,8 +24,9 @@ function AdminModal({ isOpen, onClose, qna, onAnswer }) {
 		if (answer.trim()) {
 			onAnswer(answer, qna.id);
 			setAnswer('');
+			onClose();
 		} else {
-			alert('');
+			alert('답변을 입력해주세요.');
 		}
 	};
 
@@ -33,9 +35,9 @@ function AdminModal({ isOpen, onClose, qna, onAnswer }) {
 			<ModalContent>
 				<ModalHeader>답변하기</ModalHeader>
 				<ModalBody>
-					<BodyId htmlFor="qnaName">{qna.id}</BodyId>
-					<BodyDate htmlFor="qnaDate">{qna.date}•</BodyDate>
-					<BodyDetail htmlFor="qnaContent">{qna.detail}</BodyDetail>
+					<BodyId>{qna.nickname}</BodyId>
+					<BodyDate>{DateSlicer(qna.createdAt)}•</BodyDate>
+					<BodyDetail>{qna.content}</BodyDetail>
 					<Input
 						id="answerInput"
 						type="text"

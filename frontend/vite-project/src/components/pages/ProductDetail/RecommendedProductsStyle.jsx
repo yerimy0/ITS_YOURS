@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const RecommendedProducts = styled.div`
 	margin-top: 10px;
-	border-top: 2px solid #000;
+	border-top: 1px solid #ddd;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -15,9 +15,13 @@ const Title = styled.p`
 	align-items: center;
 	font-size: 28px;
 	font-style: normal;
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 36px;
 	margin: 10px 0;
+	@media (max-width: 1000px) {
+		font-size: 18px;
+		margin: 0;
+	}
 `;
 
 const ProductContainer = styled.div`
@@ -27,6 +31,9 @@ const ProductContainer = styled.div`
 	align-content: center;
 	row-gap: 213px;
 	flex-wrap: wrap;
+	@media (max-width: 1000px) {
+		row-gap: 35px;
+	}
 `;
 
 export { RecommendedProducts, Title, ProductContainer };

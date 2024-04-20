@@ -19,9 +19,10 @@ async function submitInquiry(title, content) {
 	}
 }
 
-async function deleteInquiry(id) {
+async function deleteInquiry(_id) {
 	try {
-		await instance.delete(`/qna/${id}`);
+		console.log(_id);
+		await instance.delete('/qna/', { params: { qnaId: _id } });
 	} catch (error) {
 		console.error(
 			'문의 삭제에 실패했습니다:',

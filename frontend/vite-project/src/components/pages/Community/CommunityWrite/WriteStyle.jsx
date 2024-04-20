@@ -9,76 +9,58 @@ const Box = styled.div`
 `;
 
 const WriteForm = styled.div`
-	margin: 0 20% 5% 20%;
-	display: flex;
+	width: 80%;
+	margin: 0 auto;
 	padding: 48px 47px;
-	justify-content: center;
-	align-items: flex-start;
-	align-content: flex-start;
-	gap: 26px -21px;
-	flex: 1 0 0;
-	align-self: stretch;
-	flex-wrap: wrap;
 
 	border-radius: 30px;
-	border: 1px solid #ded8e1;
+	box-shadow:
+		0 10px 20px rgba(0, 0, 0, 0.09),
+		0 6px 6px rgba(0, 0, 0, 0.02);
 
-	background: #fff;
+	@media (max-width: 500px) {
+		width: 90%;
+		padding: 40px 20px;
+	}
 `;
 
-const InputBox = styled.div`
+const InputBox = styled.form`
 	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: flex-start;
-	align-content: flex-start;
-	align-self: stretch;
-	gap: 15px;
-	flex-wrap: wrap;
-	flex-direction: column;
 `;
 const InputTitle = styled.input`
-	width: 90%;
-	height: 50px;
-	color: #000;
-
-	border-radius: 10px;
-	border: 1px solid #ded8e1;
-	font-family: SUIT;
-	font-size: 15px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
+	display: block;
+	width: 100%;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+	border-radius: 0 !important;
+	font-size: 32px;
+	font-weight: 600;
 	&placeholder {
 		color: #ded8e1;
+	}
+
+	@media (max-width: 500px) {
+		font-size: 22px;
 	}
 `;
 
 const InputContent = styled.textarea`
-	color: #000;
-	display: flex;
-	height: 200px;
-	border-radius: 10px;
-	border: 1px solid #ded8e1;
-	font-family: SUIT;
-	font-size: 15px;
-	font-style: normal;
-	font-weight: 400;
-	align-self: stretch;
+	width: 100%;
+	min-height: 300px;
+	font-size: 18px;
+	margin: 20px 0;
 	&placeholder {
 		color: #ded8e1;
 		text-align: center;
 	}
-`;
 
-const AlertMessage = styled.div`
-	font-family: SUIT;
-	font-size: 15px;
-	font-style: normal;
-	font-weight: 400;
+	@media (max-width: 500px) {
+		min-height: 200px;
+	}
 `;
 
 const Img = styled.img`
 	width: 50%;
 `;
-export { Box, WriteForm, InputBox, InputTitle, InputContent, AlertMessage, Img };
+
+export { Box, WriteForm, InputBox, InputTitle, InputContent, Img };

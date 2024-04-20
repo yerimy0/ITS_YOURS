@@ -6,9 +6,9 @@ import {
 	InputBox,
 	InputTitle,
 	InputContent,
-	AlertMessage,
 	Img,
 } from '../CommunityWrite/WriteStyle';
+import { RedStar } from '../../../WriteFrom/WriteFormStyle';
 import { Button } from '../CommunityList/CommunityStyle';
 import { ProductImg, ButtonUpload } from '../../../WriteFrom/WriteFormStyle';
 import { UpdateCommunnity, GetDetail } from '../../../../apis/service/community.api';
@@ -35,53 +35,63 @@ function CommuEddit({ id }) {
 
 	const fileInputRef = useRef(null);
 
-	const handleInputChange = e => {
+	function handleInputChange(e) {
 		setIsBlanked(false);
 		const { name, value } = e.target;
 		setWriteCommu({ ...writeCommu, [name]: value });
-	};
+	}
 
-	const handleImageChange = e => {
+	function handleImageChange(e) {
 		const file = e.target.files[0];
-		const reader = new FileReader();
-		reader.onload = () => {
-			setImgUrl(reader.result);
-			setWriteCommu({ ...writeCommu, photos: reader.result });
-		};
-
 		if (file) {
-			reader.readAsDataURL(file);
-		}
-	};
-
-	const handleClick = () => {
-		fileInputRef.current.click();
-	};
-
-	const handleSubmit = () => {
-		async function update() {
-			await UpdateCommunnity(id, writeCommu);
-			navigate('/community');
-		}
-		if (writeCommu.title !== '' && writeCommu.content !== '') {
-			update();
+			setWriteCommu({ ...writeCommu, photos: file });
+			setImgUrl(URL.createObjectURL(file));
 		} else {
-			setIsBlanked(true);
+			setWriteCommu({ ...writeCommu, photos: '/commu_default_pic.png' });
 		}
-	};
+	}
+
+	function handleClick() {
+		fileInputRef.current.click();
+	}
+
+	async function handleSubmit() {
+		console.log(writeCommu.photos);
+		try {
+			if (writeCommu.title !== '' && writeCommu.content !== '') {
+				const formData = new FormData();
+				formData.append('title', writeCommu.title);
+				formData.append('content', writeCommu.content);
+				formData.append('photos', writeCommu.photos);
+
+				await UpdateCommunnity(id, formData);
+				navigate('/community');
+			} else {
+				setIsBlanked(true);
+			}
+		} catch (err) {
+			console.error(err);
+		}
+	}
 
 	return (
 		<Box>
 			<CommuHeader />
 			<WriteForm>
-				<InputBox>
+				<InputBox
+					encType="multipart/form-data"
+					onSubmit={e => {
+						e.preventDefault();
+					}}
+				>
+					{isBlanked && <RedStar>제목과 내용을 모두 입력해주세요 :)</RedStar>}
 					<InputTitle
 						placeholder="제목을 입력해주세요"
 						name="title"
 						value={writeCommu.title}
 						onChange={handleInputChange}
 					/>
-					{isBlanked && <AlertMessage>제목과 내용을 모두 입력해주세요 :)</AlertMessage>}
+
 					<InputContent
 						placeholder="글 내용을 입력해주세요"
 						name="content"
@@ -94,6 +104,7 @@ function CommuEddit({ id }) {
 						</ButtonUpload>
 						<input
 							type="file"
+							name="photos"
 							ref={fileInputRef}
 							onChange={handleImageChange}
 							style={{ display: 'none' }}

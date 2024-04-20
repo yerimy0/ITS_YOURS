@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import {
 	ModalWrap,
 	ModalContent,
@@ -18,8 +18,11 @@ import {
 	University,
 	LocalDistrict,
 } from './ProfileModalStyle';
+import { getChatList, getChatDetail } from '../../../apis/service/Chat.api';
 
-function ProfileModal({ isOpen, onClose }) {
+function ProfileModal({ userInfo, isOpen, onClose }) {
+	const [chatroomId, setChatRoomId] = useState(''); //채팅방Id
+
 	if (!isOpen) return null;
 	return (
 		<ModalWrap>
@@ -29,10 +32,10 @@ function ProfileModal({ isOpen, onClose }) {
 				</ClearWrap>
 				<TextWrap>
 					<Text>안녕하세요</Text>
-					<NickName>카페인 줄여야지님의 페이지입니다.</NickName>
+					<NickName>{`${userInfo.nickName}님의 페이지입니다.`}</NickName>
 				</TextWrap>
 				<Profile>
-					<ProfileImg src="/profile.jpg" />
+					<ProfileImg src={userInfo.profilePic} />
 				</Profile>
 				<EvaluationWrap>
 					<GoodContainer>
@@ -48,8 +51,8 @@ function ProfileModal({ isOpen, onClose }) {
 						</TextContainer>
 					</BadContainer>
 				</EvaluationWrap>
-				<University>카페인 줄여야지님의 대학교는 서울대학교입니다.</University>
-				<LocalDistrict>카페인 줄여야지님의 위치는 관악구 입니다.</LocalDistrict>
+				<University>{`${userInfo.nickName} 님의 대학교는 서울대학교입니다.`}</University>
+				<LocalDistrict>{`${userInfo.nickName}님의 위치는 관악구 입니다.`}</LocalDistrict>
 			</ModalContent>
 		</ModalWrap>
 	);

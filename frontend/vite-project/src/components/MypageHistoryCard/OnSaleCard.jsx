@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Modal from '../Modal';
+import DateSlicer from '../../utils/dateSlicer';
 
-const OnSaleCard = ({ itemId, onDelete, onEdit }) => {
+function OnSaleCard({ id, imgUrl, price, name, createdAt, wishescount, onDelete }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const openDeleteModal = () => {
 		setIsModalOpen(true);
@@ -13,62 +16,60 @@ const OnSaleCard = ({ itemId, onDelete, onEdit }) => {
 		setIsModalOpen(false);
 	};
 
-	const handleDelete = () => {
-		onDelete(itemId);
+	const handleConfirmDelete = () => {
+		onDelete();
 		closeDeleteModal();
 	};
 
 	return (
 		<>
-			{itemData ? (
-				<ProductCardWrap>
-					<ImageBox>
-						<ForSalesListImage src={itemData.image} alt={itemData.title} />
-					</ImageBox>
-					<SalesInfo>
-						<Title>{itemData.title}</Title>
-						<Price>{`${itemData.price}원`}</Price>
-						<Stats>
-							<Icon src="heart.svg" alt="Wish" />
-							<Status>{itemData.like}</Status>
-							<Icon src="chat_bubble_oval.svg" alt="Chat" />
-							<Status>{itemData.chat}</Status>
-						</Stats>
-						<Date>{itemData.Date}</Date>
-					</SalesInfo>
-					<ButtonBox>
-						<EdditBtn onClick={() => onEdit(itemId)}>수정</EdditBtn>
-						<DeleteBtn onClick={openDeleteModal}>삭제</DeleteBtn>
-					</ButtonBox>
-				</ProductCardWrap>
-			) : (
-				<div>데이터 로딩중...</div>
-			)}
+			<ProductCardWrap>
+				<ImageBox>
+					<ForSalesListImage src={imgUrl} alt="" onClick={() => navigate(`/product/${id}`)} />
+				</ImageBox>
+				<SalesInfo>
+					<Title>{name}</Title>
+					<PriceWrapper>
+						<Price>{Number(price).toLocaleString()}</Price>
+						<Won>원</Won>
+					</PriceWrapper>
+					<Stats>
+						<Icon src="/heart.svg" alt="Wish" />
+						<Status>{wishescount}</Status>
+					</Stats>
+					<Date>{DateSlicer(createdAt)}</Date>
+				</SalesInfo>
+				<ButtonBox>
+					<EditBtn onClick={() => navigate(`/product/edit/${id}`)}>수정</EditBtn>
+					<DeleteBtn onClick={openDeleteModal}>삭제</DeleteBtn>
+				</ButtonBox>
+			</ProductCardWrap>
 			<Modal
 				isOpen={isModalOpen}
 				onClose={closeDeleteModal}
 				title="정말 삭제하시겠습니까?"
 				content="삭제된 데이터는 복구할 수 없습니다."
 				confirmText="확인"
-				onConfirm={handleDelete}
+				onConfirm={handleConfirmDelete}
 			/>
 		</>
 	);
-};
+}
 
 export default OnSaleCard;
 
 const ProductCardWrap = styled.div`
 	display: flex;
-	padding: 10px;
-	&:hover {
-		cursor: pointer;
-	}
+	align-items: center;
+	/* padding: 10px; */
 `;
 
 const ImageBox = styled.div`
 	border: 1px solid #ded8e1;
-	padding: 10px;
+
+	&:hover {
+		cursor: pointer;
+	}
 `;
 
 const ForSalesListImage = styled.img`
@@ -78,20 +79,49 @@ const ForSalesListImage = styled.img`
 
 const SalesInfo = styled.div`
 	margin-left: 10px;
-	display: flex;
-	flex-direction: column;
+	/* display: flex; */
+	/* flex-direction: column; */
 `;
 
-const Title = styled.h2`
+const Title = styled.div`
 	font-size: 20px;
-	font-weight: 300;
-	font-family: SUIT;
+	margin-bottom: 5px;
+
+	@media (max-width: 800px) {
+		font-size: 16px;
+		width: 95%;
+	}
 `;
 
-const Price = styled.span`
+const PriceWrapper = styled.div`
+	display: flex;
+	align-items: center;
+`;
+
+const Price = styled.div`
 	font-size: 24px;
-	font-weight: 700;
-	font-family: SUIT;
+	font-weight: 600;
+	/* margin-bottom: 20px; */
+
+	@media (max-width: 800px) {
+		margin-bottom: 0;
+		font-size: 18px;
+		font-weight: 500;
+	}
+`;
+
+const Won = styled.div`
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+	margin-top: 5px;
+	margin-left: 5px;
+
+	@media (max-width: 800px) {
+		margin: 0 0 0 4px;
+		font-size: 14px;
+		font-weight: 500;
+	}
 `;
 
 const Stats = styled.div`
@@ -103,51 +133,82 @@ const Icon = styled.img`
 	width: 22px;
 	height: 22px;
 	margin-right: 5px;
+
+	@media (max-width: 800px) {
+		width: 20px;
+		height: 20px;
+		margin-right: 3px;
+	}
 `;
 
 const Status = styled.span`
-	font-size: 20px;
-	margin-right: 10px;
+	font-size: 18px;
+
+	@media (max-width: 800px) {
+		font-size: 16px;
+	}
 `;
 
 const Date = styled.span`
-	font-size: 18px;
+	font-size: 16px;
+
+	@media (max-width: 800px) {
+		font-size: 14px;
+	}
 `;
 
 const ButtonBox = styled.div`
 	margin-left: auto; /* 버튼을 오른쪽으로 정렬 */
 	display: flex;
-	padding-top: 50px;
+
+	@media (max-width: 800px) {
+		flex-direction: column;
+		gap: 10px;
+	}
 `;
 
-const EdditBtn = styled.button`
-	border-radius: 20px;
+const EditBtn = styled.button`
+	border-radius: 5px;
 	border: 1px solid #009dff;
-	background: #fff;
-	width: 66px;
-	height: 53px;
+	padding: 10px 0;
+	width: 100px;
 	color: #009dff;
-	font-family: SUIT;
 	font-size: 16px;
-	font-weight: 700;
-	margin: 3px;
+	font-weight: 500;
+	margin-right: 10px;
+
 	&:hover {
-		cursor: pointer;
+		border: 1px solid #009dff;
+		background-color: #009dff;
+		color: #fff;
+		transition: all 0.5s;
+	}
+
+	@media (max-width: 800px) {
+		width: 70px;
+		margin: 0;
+		padding: 5px 0;
 	}
 `;
 
 const DeleteBtn = styled.button`
-	width: 66px;
-	height: 53px;
-	border-radius: 20px;
+	border-radius: 5px;
 	border: 1px solid #ded8e1;
-	background: #fff;
-	color: #000;
-	font-family: SUIT;
+	padding: 10px 0;
+	width: 100px;
 	font-size: 16px;
-	font-weight: 700;
-	margin: 3px;
+	font-weight: 500;
+
 	&:hover {
-		cursor: pointer;
+		border: 1px solid #009dff;
+		background-color: #009dff;
+		color: #fff;
+		transition: all 0.5s;
+	}
+
+	@media (max-width: 800px) {
+		width: 70px;
+		margin: 0;
+		padding: 5px 0;
 	}
 `;

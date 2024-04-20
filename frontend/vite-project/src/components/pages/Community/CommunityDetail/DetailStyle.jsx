@@ -1,13 +1,52 @@
 import styled from 'styled-components';
 
 const DetailBox = styled.div`
-	margin: 0 20%;
+	width: 60%;
+	margin: 0 auto;
 	display: flex;
-	width: auto;
 	padding: 30px;
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 57px;
+	box-shadow:
+		0 10px 20px rgba(0, 0, 0, 0.09),
+		0 6px 6px rgba(0, 0, 0, 0.02);
+	border-radius: 20px;
+	margin-top: 50px;
+
+	.commu_detail_title {
+		font-size: 32px;
+		font-weight: 600;
+		margin-bottom: 10px;
+	}
+
+	@media (max-width: 860px) {
+		padding: 20px;
+		.commu_detail_title {
+			font-size: 20px;
+			font-weight: 600;
+			word-break: break-all;
+		}
+
+		.commu_detail_wrap {
+			width: 50%;
+		}
+	}
+
+	.commu_title_box {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		width: 100%;
+	}
+
+	.send_btn {
+		width: auto;
+		padding-right: 20px;
+	}
+	@media (max-width: 865px) {
+		width: 90%;
+	}
 `;
 
 const DetailTop = styled.div`
@@ -18,10 +57,10 @@ const DetailTop = styled.div`
 `;
 
 const TitleBox = styled.div`
-	display: flex;
+	/* display: flex;
 	justify-content: space-between;
 	align-items: flex-end;
-	align-self: stretch;
+	align-self: stretch; */
 `;
 
 const Buttons = styled.div`
@@ -30,13 +69,15 @@ const Buttons = styled.div`
 	align-items: center;
 	gap: 10px;
 	flex: 1 0 0;
+	flex-direction: row;
+	flex-basis: auto;
 `;
 
 const Button = styled.button`
 	background-color: #fff;
 	border: none;
 	color: #666;
-
+	display: inline-block;
 	text-align: right;
 	font-family: SUIT;
 	font-size: 14px;
@@ -52,24 +93,20 @@ const Red = styled(Button)`
 const UserImg = styled.img`
 	width: 56px;
 	height: 56px;
+	object-fit: cover;
 	border-radius: 56px;
 `;
 
 const Profile = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 16px;
-	align-self: stretch;
+	gap: 20px;
 `;
 
 const UsernDate = styled.div`
 	display: flex;
-	padding: 0px 10px;
 	flex-direction: column;
-	justify-content: center;
-	align-items: flex-start;
-	gap: 8px;
-	flex: 1 0 0;
+	gap: 4px;
 `;
 
 const Writer = styled.p`
@@ -99,7 +136,9 @@ const ContentBox = styled.div`
 	align-self: stretch;
 `;
 const Content = styled(Writer)`
-	font-weight: 700;
+	font-weight: 400;
+	font-size: 18px;
+	white-space: pre-line;
 `;
 
 const CommentsBox = styled.div`
@@ -116,25 +155,29 @@ const CommentList = styled(CommentsBox)`
 `;
 
 const CommentInput = styled.input`
+	/* width: 800px;
 	display: flex;
-	height: 35px;
+	height: 50px;
 	padding: 8px;
 	justify-content: center;
 	align-items: center;
 	align-self: stretch;
 	border-radius: 20px;
 	border: 1px solid #888;
+	margin-right: 15px; */
+	width: 95%;
+	padding: 10px 0 10px 20px;
+	font-size: 16px;
 
-	background: #fff;
+	/* background: #fff;
 	&:focus {
 		border: 1px solid var(--main_blue, #009dff);
-	}
+	} */
 `;
 
 const CommentNum = styled(Writer)`
-	font-size: 24px;
+	font-size: 18px;
 	font-weight: 400;
-	line-height: 32px; /* 133.333% */
 `;
 
 const Comments = styled.div`
@@ -163,28 +206,30 @@ const CommentTexts = styled.div`
 	flex: 1 0 0;
 `;
 const InnerTop = styled.div`
+	width: 100%;
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	align-self: stretch;
+	/* align-self: stretch; */
 `;
 const InnerBottom = styled(InnerTop)`
-	height: 50px;
-	justify-content: space-between;
+	/* height: 50px; */
+	/* justify-content: space-between; */
 `;
 
 const CommentContext = styled.div`
 	display: flex;
-	height: 24px;
+	/* height: 24px; */
 	align-items: center;
 	gap: 4px;
 	p {
-		color: #000;
-		font-family: SUIT;
 		font-size: 16px;
-		font-style: normal;
-		font-weight: 400;
-		line-height: 24px; /* 150% */
+		/* height: auto; */
+	}
+
+	@media (max-width: 500px) {
+		width: 56%;
+		/* height: 24px; */
 	}
 `;
 

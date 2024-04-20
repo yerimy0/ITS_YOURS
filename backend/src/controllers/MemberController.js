@@ -1,7 +1,14 @@
-const { access } = require('fs');
 const memberService = require('../services/MemberService');
-const wishesService = require('../services/WishesService');
-const { log } = require('console');
+const categoryService = require('../services/CategoryService');
+
+const {
+	NotFoundError,
+	BadRequestError,
+	InternalServerError,
+	ConflictError,
+	ForbiddenError,
+	UnauthorizedError,
+} = require('../config/CustomError');
 
 /**
  * 회원가입 controller
@@ -11,7 +18,23 @@ const { log } = require('console');
  */
 const signUp = async (req, res, next) => {
 	try {
-		const { id, password, realName, email, region, schoolName, nickName, profilePic } = req.body;
+		const { id, password, realName, email, schoolName, nickName } = req.body;
+		let profilePic = req.file ? req.file.location : ''; // 파일 경로 저장
+
+		let region = await categoryService.getRegionBySchoolName(schoolName);
+
+		const isRegisteredId = await memberService.getMember(id);
+		const isRegisteredEmail = await memberService.getMemberByEmail(email);
+
+		if (!id || !password || !realName || !email || !region || !schoolName || !nickName) {
+			throw new BadRequestError('필수 정보를 모두 입력하세요.');
+		}
+		if (isRegisteredId) {
+			throw new ConflictError('이미 사용중인 아이디입니다.');
+		}
+		if (isRegisteredEmail) {
+			throw new BadRequestError('이미 사용중인 이메일입니다.');
+		}
 		//서비스 접근, signUp 메소드 실행
 		const member = await memberService.signUp(
 			id,
@@ -25,7 +48,7 @@ const signUp = async (req, res, next) => {
 		);
 		//통신 실패
 		if (!member) {
-			throw new Error('서버 오류 입니다.');
+			throw new InternalServerError('서버 오류 입니다.');
 		}
 		//통신 성공
 		res.status(200).json({ data: member, message: '회원 가입 성공' });
@@ -43,37 +66,32 @@ const signUp = async (req, res, next) => {
 const login = async (req, res, next) => {
 	try {
 		const { id, password } = req.body;
+		if (!id || !password) {
+			throw new BadRequestError('아이디와 패스워드가 모두 필요합니다.');
+		}
+		const isRegistered = await memberService.getMember(id);
+
+		if (!isRegistered) {
+			throw new NotFoundError('가입 정보가 없습니다.');
+		}
+		if (isRegistered.deletedAt) {
+			throw new BadRequestError('이미 탈퇴한 회원입니다.');
+		}
+
 		const loginResult = await memberService.login(id, password);
 		if (!loginResult) {
-			res.status(404).json({
-				message: '없는 유저입니다',
-			});
-		} else if (loginResult === false) {
-			// 로그인 실패 시 처리
-			res.status(401).json({
-				message: '로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.',
-			});
-		} else {
-			// 로그인 성공 시 처리
-			const { accessToken, isAdmin } = loginResult;
-
-			// accessToken을 쿠키로 설정
-			// res.cookie('accessToken', accessToken, {
-			// 	// httpOnly: true, // JavaScript를 통한 접근 방지
-			// 	maxAge: 14 * 24 * 60 * 60 * 1000, // 쿠키 유효기간 설정 (14일)
-			// });
-
-			res.status(200).json({
-				isAdmin: isAdmin, // 관리자 여부
-				message: '로그인에 성공했습니다!',
-				accessToken: accessToken,
-			});
+			throw new ForbiddenError('아이디 또는 비밀번호를 잘못 입력하셨습니다.');
 		}
-	} catch (error) {
-		next(error);
+		const { accessToken, isAdmin } = loginResult;
+		res.status(200).json({
+			accessToken: accessToken,
+			isAdmin: isAdmin,
+			message: '로그인에 성공했습니다!',
+		});
+	} catch (err) {
+		next(err);
 	}
 };
-
 /**
  * 회원정보 조회 controller
  * 작성자 : 유경아
@@ -83,13 +101,38 @@ const login = async (req, res, next) => {
 const getMember = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
+
+		if (!userId) {
+			throw new UnauthorizedError('로그인이 필요한 서비스입니다.');
+		}
+
 		const memberInfo = await memberService.getMember(userId);
 
-		if (!memberInfo) {
-			return res.status(404).json({ data: null, message: '사용자 정보를 찾을 수 없습니다.' });
+		if (!memberInfo || memberInfo.deletedAt) {
+			throw new NotFoundError('사용자 정보를 찾을 수 없습니다.');
 		}
 		// 사용자 정보 조회 성공 응답
 		res.status(200).json(memberInfo);
+	} catch (err) {
+		next(err);
+	}
+};
+
+/**
+ * 상품글 > 판매자 정보 조회 API
+ * 작성자: 이정은
+ * 작성 시작일 : 2024-04-15
+ * 상품글의 sellerId 로 판매자의 정보를 조회해오는 API입니다.
+ */
+const getSellerInfo = async (req, res, next) => {
+	try {
+		const { id } = req.query;
+		const sellerInfo = await memberService.getSellerInfo(id);
+
+		if (!sellerInfo) {
+			throw new BadRequestError('사용자 정보를 찾을 수 없습니다.');
+		}
+		res.status(200).json(sellerInfo);
 	} catch (err) {
 		next(err);
 	}
@@ -101,16 +144,45 @@ const getMember = async (req, res, next) => {
  * 작성 시작일 : 2024-04-08
  * 회원 정보수정에 필요한 동작들을 모아놓은 controller입니다.
  */
-const updateMember = async (req, res) => {
+const updateMember = async (req, res, next) => {
 	try {
-		// 현재 로그인한 사용자의 ID를 인증 시스템에서 가져옵니다.
-		// 예시에서는 req.user.id를 사용한다고 가정합니다.
 		const userId = req.user.id;
-		const updatedMember = await memberService.updateMember(userId, req.body);
+		let profilePic = req.file ? req.file.location : '';
+		const { password, realName, email, schoolName, nickName } = req.body;
 
-		res.json(updatedMember);
-	} catch (error) {
-		res.status(500).json({ message: error.message });
+		let region = await categoryService.getRegionBySchoolName(schoolName);
+
+		const chkDeleted = await memberService.getMember(userId);
+
+		if (!userId) {
+			throw new BadRequestError('로그인이 필요한 서비스입니다.');
+		}
+
+		if (!password || !realName || !email || !region || !schoolName || !nickName) {
+			throw new BadRequestError('필수 정보를 모두 입력하세요.');
+		}
+
+		if (chkDeleted.deletedAt) {
+			throw new BadRequestError('이미 탈퇴한 회원의 정보는 수정할 수 없습니다.');
+		}
+
+		const memberInfo = await memberService.updateMember(
+			userId,
+			password,
+			realName,
+			email,
+			region,
+			schoolName,
+			nickName,
+			profilePic,
+		);
+
+		res.status(200).json({
+			message: '회원정보수정 성공',
+			data: memberInfo,
+		});
+	} catch (err) {
+		next(err);
 	}
 };
 
@@ -120,19 +192,23 @@ const updateMember = async (req, res) => {
  * 작성 시작일 : 2024-04-08
  * 회원 정보 삭제에 필요한 동작들을 모아놓은 controller입니다.
  */
-const deleteMember = async (req, res) => {
+const deleteMember = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
-		const deleteMember = await memberService.deleteMember(userId);
 
-		if (!deleteMember) {
-			return res.status(400).json({ message: '회원 정보를 찾을 수 없습니다.', deleteMember });
+		if (!userId) {
+			throw new UnauthorizedError('로그인이 필요한 서비스입니다.');
 		}
 
+		const memberInfo = await memberService.getMember(userId);
+		if (memberInfo.deletedAt) {
+			throw new BadRequestError('이미 탈퇴한 회원입니다.');
+		}
+
+		const deleteMember = await memberService.deleteMember(userId);
 		return res.status(200).json(deleteMember);
 	} catch (err) {
-		console.log(err);
-		return res.status(500).json({ message: '회원 정보 삭제 중 오류가 발생했습니다' });
+		next(err);
 	}
 };
 
@@ -141,20 +217,63 @@ async function findId(req, res) {
 	try {
 		const { realName, email } = req.body;
 		const userId = await memberService.findIdByNameAndEmail(realName, email);
-		res.json({ message: '사용자의 아이디를 찾았습니다.', userId });
+		res.status(200).json({ message: '사용자의 아이디를 찾았습니다.', userId });
 	} catch (error) {
-		res.status(400).json({ success: false, message: error.message });
+		throw new BadRequestError(error.message);
 	}
 }
 
 async function resetPassword(req, res) {
 	try {
 		const { id, email } = req.body;
-		await memberService.resetPasswordAndSendEmail(id, email);
-		res.json({ message: '임시 비밀번호가 이메일로 전송되었습니다.' });
+		const reset = await memberService.resetPassword(id, email);
+		res.status(200).json({ message: '임시 비밀번호가 이메일로 전송되었습니다.', reset });
 	} catch (error) {
-		res.status(400).json({ success: false, message: error.message });
+		throw new BadRequestError(error.message);
 	}
 }
 
-module.exports = { signUp, login, getMember, updateMember, deleteMember, findId, resetPassword };
+// 이메일 인증코드 전송
+async function sendVerifyEmail(req, res, next) {
+	try {
+		const { email, code } = req.body;
+		if (!email) {
+			throw new BadRequestError('이메일을 입력해주세요');
+		}
+		await memberService.sendEmailVerification(email);
+		res.status(200).json({ message: '인증코드가 이메일로 전송되었습니다.' });
+	} catch (err) {
+		next(err);
+	}
+}
+
+// 인증코드 검증
+async function verifyCode(req, res, next) {
+	try {
+		const { email, code } = req.body;
+		if (!email || !code) {
+			throw new BadRequestError('이메일과 인증코드를 모두 입력해주세요.');
+		}
+		const isVerified = await memberService.chkVerifyCode(email, code);
+		if (isVerified) {
+			res.status(200).json({ isVerified });
+		} else {
+			throw new BadRequestError('인증코드가 일치하지 않습니다.');
+		}
+	} catch (err) {
+		next(err);
+	}
+}
+
+module.exports = {
+	signUp,
+	login,
+	getMember,
+	getSellerInfo,
+	updateMember,
+	deleteMember,
+	findId,
+	resetPassword,
+	sendVerifyEmail,
+	verifyCode,
+};

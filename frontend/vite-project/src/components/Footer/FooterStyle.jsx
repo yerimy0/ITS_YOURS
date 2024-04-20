@@ -12,14 +12,13 @@ const Content = styled.div`
 	align-items: center;
 	gap: 23px;
 	bottom: 0px;
+	margin-top: 100px;
 `;
 
 const Icons = styled.div`
 	display: flex;
-	width: 149px;
 	justify-content: center;
 	gap: 27px;
-	flex-shrink: 0;
 `;
 
 const Line = styled.div`
@@ -30,12 +29,9 @@ const Line = styled.div`
 const Developer = styled.div`
 	color: #fff;
 
+	font-size: 14px;
 	text-align: center;
-	font-size: 10px;
-	font-family: SUIT;
-	font-style: normal;
-	font-weight: 100;
-	line-height: normal;
+	line-height: 22px;
 `;
 
 export { Content, Icons, Line, Developer };

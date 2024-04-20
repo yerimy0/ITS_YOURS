@@ -1,58 +1,63 @@
 import styled from 'styled-components';
 
 const SearchWrap = styled.div`
-	max-width: 1200px;
+	// max-width: 1200px;
+	// width: 100%;
+	// display: flex;
+	// justify-content: center;
+	// align-items: center;
 	width: 100%;
 	display: flex;
-	justify-content: center;
-	align-items: center;
 `;
 
 const SearchInputBox = styled.div`
-	width: 100%;
-	height: 60px;
-	border: 2px solid #000;
-	border-radius: 20px;
-	box-sizing: border-box;
-	justify-content: space-between;
 	display: flex;
 	align-items: center;
-	padding: 0 15px;
+	justify-content: space-between;
+	width: 70%;
+	margin: 0 auto;
+	position: relative;
+	border: 1px solid #ddd;
+	padding: 15px 20px;
+
+	border-radius: 20px !important;
+
+	@media screen and (max-width: 864px) {
+		width: 100%;
+		padding: 10px 10px;
+	}
 `;
 
 const SearchInput = styled.input`
-	width: 100%;
-	border: none;
-	font-size: 28px;
-	line-height: 36px;
-	font-weight: 400;
-	position: relative;
-	padding: 5px;
-	background: none;
-	&:focus {
-		outline: none;
+	display: block;
+	width: 90%;
+	text-align: start;
+	font-size: 20px;
+
+	@media screen and (max-width: 864px) {
+		font-size: 14px;
 	}
 `;
 const ClearButton = styled.button`
-	cursor: pointer;
-	border: none;
-	background: none;
-	cursor: pointer;
 	color: #ded8e1;
 	font-size: 24px;
-	line-height: 32px;
-	font-weight: 400;
-	position: relative;
-	padding: 5px;
+	width: 10%;
+	@media (max-width: 1000px) {
+		font-size: 14px;
+	}
 `;
 
 const SearchButton = styled.button`
-	cursor: pointer;
-	background-color: transparent;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border: none;
+	img {
+		width: 25px;
+		height: 25px;
+	}
+	@media (max-width: 1000px) {
+		img {
+			width: 18px;
+			height: 18px;
+		}
+	}
 `;
 
 export { SearchWrap, SearchInputBox, SearchInput, ClearButton, SearchButton };

@@ -4,7 +4,6 @@ import {
 	Title,
 	RedStar,
 	TopTitle,
-	Line,
 	RegButtons,
 	MainContent,
 	ProductTwoInput,
@@ -15,13 +14,12 @@ import { Section, Section2, Section3, Section4 } from '../WriteFrom/components/S
 import { useEffect, useState, createContext } from 'react';
 import { GetDetail, UpdateRegister } from '../../apis/service/product.api';
 
-export let RegisterContext = createContext();
-export let SetRegisterContext = createContext(() => {});
+export const SetRegisterContext = createContext(() => {});
+export const RegisterContext = createContext();
 
 function EditForm() {
 	const navigate = useNavigate();
 	const { id } = useParams();
-	const [isValid, setIsValid] = useState(false);
 	const [register, setRegister] = useState({
 		name: '',
 		price: 0,
@@ -51,15 +49,10 @@ function EditForm() {
 		GetContent();
 	}, []);
 
-	useEffect(() => {
-		const isFilled = Object.values(register).every(value => value !== '');
-		setIsValid(isFilled);
-	}, [register]);
-
 	async function Eddit() {
 		const res = await UpdateRegister(id, register);
 		console.log(res);
-		navigate('/product');
+		navigate(`/saleshistory/${id}`);
 	}
 
 	function onChange(e) {
@@ -77,6 +70,16 @@ function EditForm() {
 		});
 	}
 
+	function handleSubmit(e) {
+		e.preventDefault();
+		const isFilled = Object.values(register).every(value => value !== '');
+		if (isFilled) {
+			Eddit();
+		} else {
+			alert('모든 필수 항목을 입력해주세요!');
+		}
+	}
+
 	return (
 		<SetRegisterContext.Provider value={setRegister}>
 			<RegisterContext.Provider value={register}>
@@ -85,9 +88,6 @@ function EditForm() {
 						<TopTitle>상품 수정</TopTitle>
 						<RedStar>*필수 항목</RedStar>
 					</Title>
-					<Line>
-						<hr />
-					</Line>
 					<MainContent>
 						<InputImg onImageChange={handleImageChange} value={imgUrls} />
 						<Section label={'도서명'} onChange={onChange} value={name} name="name" />
@@ -105,16 +105,7 @@ function EditForm() {
 						<Section4 value={condition} />
 					</MainContent>
 					<RegButtons>
-						<BigButton
-							className="Button"
-							onClick={() => {
-								if (isValid) {
-									Eddit();
-								} else {
-									alert('모든 필수 항목을 입력해주세요!');
-								}
-							}}
-						>
+						<BigButton className="Button" onClick={handleSubmit}>
 							수정하기
 						</BigButton>
 					</RegButtons>

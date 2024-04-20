@@ -1,92 +1,192 @@
 import styled from 'styled-components';
 const HeaderMain = styled.div`
-	height: auto;
-	padding: 1% 0;
-	width: auto;
-	height: 100px;
-	justify-content: space-between;
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
-	list-style: none;
-	.HambergerBtn {
+	padding: 15px 30px;
+	background-color: ${props => (props.isMainPage ? '#b1e9f8' : ' #fff')};
+
+	.ham_wrap {
 		display: none;
-		font-size: 40px;
 	}
 
-	@media screen and (max-width: 1080px) {
-		flex-direction: column;
+	// .ham_img {
+	// 	display: none;
+	// }
 
-		.HambergerBtn {
-			display: block;
+	.main_logo {
+		display: block;
+		width: 210px;
+	}
+
+	.ToggleBox {
+		display: none;
+	}
+
+	.ham_background {
+		display: none;
+	}
+
+	.no-scroll {
+		overflow: hidden;
+		height: 100%;
+	}
+	@media screen and (max-width: 864px) {
+		padding: 15px 20px 15px 55px;
+
+		.main_logo {
+			width: 130px;
 		}
-	}
 
-	a {
-		text-decoration: none;
-		color: #000;
-		text-align: center;
-		font-family: SUIT;
-		font-style: normal;
-		font-weight: 600;
-		line-height: normal;
-		margin-right: 25px;
+		.ham_a {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+		}
+
+		.ham_wrap {
+			display: block;
+			position: absolute;
+			left: 15px;
+		}
+
+		.ham_img {
+			display: block;
+			width: 38px;
+		}
+
+		.ToggleBox {
+			display: block;
+			position: fixed;
+			top: 0;
+			left: 0;
+			background: #fff;
+			width: 75%;
+			height: 100vh;
+			z-index: 999;
+			padding: 20px;
+
+			.li {
+				font-size: 20px;
+				padding: 20px 5px;
+
+				.li_i {
+					width: 30px;
+				}
+			}
+		}
+
+		.close_btn {
+			position: absolute;
+			width: 30px;
+			right: 20px;
+
+			img {
+				width: 100%;
+			}
+		}
+
+		.img_wrap {
+			display: flex;
+			align-items: center;
+			width: 100%;
+			margin: 50px 0 30px;
+
+			.img1 {
+				width: 60px;
+			}
+			.img2 {
+				width: 130px;
+			}
+		}
+
+		h2 {
+			font-size: 22px;
+			font-weight: 500;
+			margin-bottom: 100px;
+
+			span {
+				color: #009dff;
+				font-weight: 700;
+			}
+		}
+
+		.ham_background {
+			position: fixed; /* 또는 absolute, 화면 전체를 커버하도록 조정 */
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100vh;
+			z-index: 998;
+			background-color: rgba(0, 0, 0, 0.5); /* 불투명한 검정색 */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 	}
 `;
 
+const NavWrap = styled.div`
+	display: flex;
+	align-items: center;
+	width: 80%;
+	gap: 30px;
+
+	@media screen and (max-width: 864px) {
+		width: auto;
+	}
+`;
+const MainLogo = styled.div``;
+
 const RightNav = styled.div`
 	display: flex;
-	width: 837px;
-	height: 55px;
 	align-items: center;
-	gap: 30px;
-	.MainLink {
-		font-weight: 900;
-	}
-    a {
-		font-size: 25px;
+	justify-content: flex-start;
+	gap: 5%;
+	width: 70%;
 
-    @media screen and (max-width: 1080px) {
-        width: 100%;
-		li {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-		}
+	@media screen and (max-width: 864px) {
+		width: auto;
+		display: none;
+	}
+
+	li {
+		font-size: 20px;
+		font-weight: 500;
+		cursor: pointer;
 	}
 `;
 
 const LeftNav = styled.div`
 	display: flex;
-	height: 55px;
-	padding: 0px 20px;
-	justify-content: flex-end;
-	align-items: flex-start;
+	align-items: center;
 	gap: 20px;
-	flex-wrap: wrap;
-
-	a {
-		font-size: 15px;
-		flex-wrap: wrap;
-	}
-
-	@media screen and (max-width: 1080px) {
-		width: 100%;
-		li {
-			display: flex;
-			flex-direction: column;
-			width: 100%;
-			align-items: center;
-		}
+	width: 100%;
+	justify-content: flex-end;
+	@media (max-width: 1000px) {
+		display: none;
 	}
 `;
 
 const Nav = styled(HeaderMain)`
-	align-items: flex-start;
-	@media screen and (max-width: 1080px) {
-		flex-direction: column;
-		width: 100%;
-		align-items: center;
+	width: 30%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	cursor: pointer;
+	padding: 0;
+	background: transparent;
+
+	img {
+		width: 60px;
+		display: none;
+	}
+
+	@media screen and (max-width: 864px) {
+		width: 45%;
 	}
 `;
 
-export { RightNav, LeftNav, HeaderMain, Nav };
+export { RightNav, LeftNav, HeaderMain, Nav, MainLogo, NavWrap };

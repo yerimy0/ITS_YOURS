@@ -1,17 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function PurchaseHistoryCard({ _id, imgUrls, price, sellerId, name, buyDate, type }) {
+function PurchaseHistoryCard({ imgUrls, price, name, sellerId }) {
 	return (
 		<>
-			<PurchaseCardWrap>
+			<PurchaseCardWrap className="purch_list">
 				<ImageBox>
-					<ForPurchaseListImage src={imgUrls} alt="" />
+					<ForPurchaseListImage
+						src={imgUrls.map(url => url.replace('coversum', 'cover500'))}
+						alt=""
+					/>
 				</ImageBox>
 				<PurchaseListTitle>
 					{name}
 					<PurchaseListPrice>
-						<PurchaseListPriceNum>{price}</PurchaseListPriceNum>
+						<PurchaseListPriceNum>{Number(price).toLocaleString()}</PurchaseListPriceNum>
 						<PurchaseListWon>원</PurchaseListWon>
 					</PurchaseListPrice>
 					<PurchaseListSeller>{sellerId}</PurchaseListSeller>
@@ -24,9 +27,14 @@ export default PurchaseHistoryCard;
 
 const PurchaseCardWrap = styled.div`
 	display: flex;
-	margin-left: 50px;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+	padding: 10px 15px;
+	border-top: 1px solid #eee;
+
 	&:hover {
-		cursor: pointer;
+		background: #f4f4f4;
 	}
 `;
 
@@ -47,25 +55,24 @@ const ForPurchaseListImage = styled.img`
 
 const PurchaseListTitle = styled.div`
 	color: var(--M3-black, #000);
-	font-family: SUIT;
 	font-size: 20px;
-	font-style: normal;
-	font-weight: 300;
 	letter-spacing: 0.15px;
-	margin-top: 40px;
 	margin-left: 10px;
+
+	@media (max-width: 500px) {
+		font-size: 16px;
+	}
 `;
 
 const PurchaseListPrice = styled.div`
 	display: flex;
+	margin-top: 50px;
 `;
 
 const PurchaseListPriceNum = styled.div`
 	color: var(--M3-black, #000);
-	font-family: SUIT;
 	font-size: 24px;
-	font-style: normal;
-	font-weight: 700;
+	font-weight: 600;
 	display: inline-block;
 	margin: 0px;
 `;
@@ -79,7 +86,7 @@ const PurchaseListWon = styled.div`
 	line-height: 24px;
 	display: inline-block;
 	margin: 0px;
-	flex-direction: column-reverse;
+	margin-top: 5px;
 `;
 
 const PurchaseListSeller = styled.div`
@@ -92,30 +99,4 @@ const PurchaseListSeller = styled.div`
 	display: inline-block;
 	margin: 0px;
 	flex-direction: column-reverse;
-`;
-
-const PurchaseListBtnBox = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	margin-left: 1000px;
-	margin-top: 100px;
-`;
-
-const DeleteBtnBox = styled.div`
-	margin-left: auto; /* 버튼을 오른쪽으로 정렬 */
-`;
-const DeleteBtn = styled.button`
-	width: 66px;
-	height: 53px;
-	border-radius: 20px;
-	border: 1px solid #ded8e1;
-	background: #fff;
-	color: #000;
-	font-family: SUIT;
-	font-size: 16px;
-	font-weight: 700;
-	margin: 3px;
-	&:hover {
-		cursor: pointer;
-	}
 `;

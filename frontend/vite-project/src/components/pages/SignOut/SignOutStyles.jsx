@@ -24,56 +24,101 @@ export const ModalBackground = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-	padding: 32px;
-	background: #fff;
-	border-radius: 20px;
 	display: flex;
+	width: 450px;
+	padding: 30px 0 0;
+	border-radius: 20px;
+	background: #fff;
+	box-shadow: 15px 15px 10px 0px rgba(0, 0, 0, 0.25);
 	flex-direction: column;
 	align-items: center;
-	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-`;
 
-export const ModalTitle = styled.h1`
-	color: #333;
-	font-size: 22px;
-	text-align: center;
-	margin-bottom: 24px;
-`;
-
-export const ModalMessage = styled.p`
-	color: #666;
-	font-size: 16px;
-	text-align: center;
-	margin-bottom: 32px;
-	line-height: 1.5;
-`;
-
-export const ButtonsContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-`;
-
-export const Button = styled.button`
-	padding: 12px 0;
-	margin-bottom: 10px;
-	border: none;
-	border-radius: 20px;
-	font-size: 16px;
-	cursor: pointer;
-	&:last-child {
-		margin-bottom: 0;
+	@media (max-width: 500px) {
+		width: 80%;
+		padding: 25px 0 0;
 	}
 `;
 
+export const ModalTitle = styled.h1`
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-size: 24px;
+	font-weight: 500;
+	margin-bottom: 15px;
+	white-space: pre-line;
+
+	@media (max-width: 500px) {
+		font-size: 22px;
+	}
+`;
+
+export const ModalMessage = styled.p`
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	font-size: 18px;
+	margin-bottom: 30px;
+	color: #444;
+	white-space: pre-line;
+
+	@media (max-width: 500px) {
+		font-size: 16px;
+	}
+`;
+
+export const ButtonsContainer = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	border-top: 1px solid #eee;
+
+	@media (max-width: 500px) {
+	}
+`;
+
+export const Button = styled.button`
+	margin-bottom: 10px;
+`;
+
 export const ConfirmButton = styled(Button)`
-	background-color: #eee;
-	color: #333;
+	width: 50%;
+	border-right: 1px solid #eee;
+	padding: 30px 0;
+	font-size: 18px;
+	color: #009dff;
+	font-weight: 500;
+	border-bottom-left-radius: 20px;
+
+	&:hover {
+		background: #fafafa;
+		color: #038ee5;
+		transition: all 0.5s;
+	}
 `;
 
 export const CancelButton = styled(Button)`
-	background-color: #b3261e;
-	color: white;
+	width: 50%;
+	text-align: center;
+	padding: 30px 0;
+	font-size: 18px;
+	color: #009dff;
+	font-weight: 500;
+	border-bottom-right-radius: 20px;
+
+	&:hover {
+		background: #fafafa;
+		color: #038ee5;
+		transition: all 0.5s;
+	}
+
+	@media (max-width: 500px) {
+		font-size: 16px;
+		padding: 25px 0;
+	}
 `;
 
 export const SignOutContainer = styled.div`
@@ -134,20 +179,4 @@ export const HighlightedText = styled.span`
 	color: #009dff;
 `;
 
-export const CheckButton = styled.button`
-	background-color: #009dff;
-	color: white;
-	border: none;
-	border-radius: 20px;
-	padding: 10px 20px;
-	margin-top: 32px;
-	font-size: 16px;
-	cursor: pointer;
-	&:hover {
-		background-color: #002d7a;
-	}
-	@media (max-width: 768px) {
-		padding: 8px 16px;
-		font-size: 14px;
-	}
-`;
+export const CheckButton = styled.button``;

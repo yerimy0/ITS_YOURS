@@ -1,7 +1,7 @@
 const { Products } = require('../models/index');
 
 async function getProductsList() {
-	const productsList = await Products.find();
+	const productsList = await Products.find({ deletedAt: { $exists: false } });
 
 	return productsList;
 }
@@ -40,6 +40,8 @@ async function insertProduct({
 	region,
 	schoolName,
 	description,
+	longitude,
+	latitude,
 }) {
 	const newProduct = {
 		name: name,
@@ -52,6 +54,8 @@ async function insertProduct({
 		sellerId: userId,
 		schoolName: schoolName,
 		description: description,
+		longitude: longitude,
+		latitude: latitude,
 	};
 
 	const product = await Products.create(newProduct);
@@ -61,55 +65,34 @@ async function insertProduct({
 //상품정보 수정
 async function updateProduct(
 	prodId,
-	{ name, imgUrls, price, author, publisher, condition, region, description },
+	{ name, imgUrls, price, author, publisher, condition, description },
 ) {
-	try {
-		const product = await Products.findOne({ _id: prodId });
+	// 상품을 업데이트하고자 하는 정보로 업데이트합니다.
+	await Products.findOneAndUpdate(
+		{ _id: prodId },
+		{
+			name: name,
+			imgUrls: imgUrls,
+			price: price,
+			author: author,
+			publisher: publisher,
+			condition: condition,
+			description: description,
+			updatedAt: Date.now() + 9 * 60 * 60 * 1000,
+		},
+	);
+	const result = await Products.findOne({ _id: prodId });
 
-		if (product.deletedAt) {
-			throw new Error('이미 삭제된 상품입니다.');
-		}
-		// 상품을 업데이트하고자 하는 정보로 업데이트합니다.
-		await Products.findOneAndUpdate(
-			{ _id: prodId },
-			{
-				name: name,
-				imgUrls: imgUrls,
-				price: price,
-				author: author,
-				publisher: publisher,
-				condition: condition,
-				region: region,
-				description: description,
-				updatedAt: Date.now() + 9 * 60 * 60 * 1000,
-			},
-		);
-		const result = await Products.findOne({ _id: prodId });
-
-		return result;
-	} catch (error) {
-		throw new Error('상품 정보를 업데이트하는 동안 오류가 발생했습니다.');
-	}
+	return result;
 }
 
 // 상품 정보 삭제
 async function deleteProduct(prodId) {
-	try {
-		// 상품을 삭제하고자 하는 정보로 업데이트합니다.
-		const product = await Products.findOne({ _id: prodId });
-		if (product.deletedAt) {
-			throw new Error('이미 삭제된 상품입니다.');
-		}
-		await Products.findOneAndUpdate(
-			{ _id: prodId },
-			{ deletedAt: Date.now() + 9 * 60 * 60 * 1000 },
-		);
-		const result = await Products.findOne({ _id: prodId });
+	// 상품을 삭제하고자 하는 정보로 업데이트합니다.
+	await Products.findOneAndUpdate({ _id: prodId }, { deletedAt: Date.now() + 9 * 60 * 60 * 1000 });
+	const result = await Products.findOne({ _id: prodId });
 
-		return result;
-	} catch (error) {
-		throw new Error('상품 정보를 삭제하는 동안 오류가 발생했습니다.');
-	}
+	return result;
 }
 
 async function tradedProductsByBuyerId(buyerId) {
@@ -120,6 +103,20 @@ async function tradedProductsByBuyerId(buyerId) {
 	return tradedProducts;
 }
 
+// 판매내역 조회
+async function tradedProductsBySellerId(sellerId) {
+	const tradedProducts = await Products.find({ sellerId, deletedAt: { $exists: false } });
+	return tradedProducts;
+}
+
+// 판매내역 삭제
+async function deleteSalesHis(sellerId, prodId) {
+	await Products.findOneAndUpdate({ _id: prodId }, { deletedAt: Date.now() + 9 * 60 * 60 * 1000 });
+	const result = await Products.findOne({ _id: prodId });
+
+	return result;
+}
+
 module.exports = {
 	getProductsList,
 	searchProduct,
@@ -128,4 +125,6 @@ module.exports = {
 	updateProduct,
 	deleteProduct,
 	tradedProductsByBuyerId,
+	tradedProductsBySellerId,
+	deleteSalesHis,
 };

@@ -1,6 +1,6 @@
+require('dotenv').config();
 const express = require('express');
 const logger = require('morgan');
-const upload = require('./src/config/MulterConfig');
 
 const insertDataRouter = require('./src/routes/InsertDataRouter');
 const memberRouter = require('./src/routes/MemberRouter');
@@ -10,11 +10,13 @@ const postRouter = require('./src/routes/PostRouter');
 const commentRouter = require('./src/routes/CommentRouter');
 const wishRouter = require('./src/routes/WishesRouter');
 const categoriesRouter = require('./src/routes/CategoryRouter');
+const errorHandler = require('./src/middlewares/ErrorHandler');
+const chatRouter = require('./src/routes/ChatRouter');
+
 const cors = require('cors');
 
 const mongoose = require('mongoose');
 
-require('dotenv').config();
 mongoose.connect(
 	`mongodb+srv://${process.env.DB_ID}:${process.env.DB_PW}@itsyours.gerbwmz.mongodb.net/`,
 );
@@ -27,8 +29,9 @@ const app = express();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+//
 const corsOptions = {
-	origin: 'http://localhost:5173',
+	origin: ['http://localhost:5173', 'http://34.47.86.42'],
 	credentials: true,
 };
 app.use(cors(corsOptions));
@@ -51,5 +54,7 @@ app.use('/api/community', postRouter);
 app.use('/api/community', commentRouter);
 app.use('/api/wishes', wishRouter);
 app.use('/api/categories', categoriesRouter);
+app.use('/api/chat', chatRouter);
+app.use(errorHandler);
 
 module.exports = app;

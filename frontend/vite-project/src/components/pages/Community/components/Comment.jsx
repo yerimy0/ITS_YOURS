@@ -17,48 +17,57 @@ import {
 	CommentList,
 } from '../CommunityDetail/DetailStyle';
 import { useState, useEffect, useContext, createContext } from 'react';
-import { Line } from '../CommunityList/CommunityStyle';
+import { IoSend } from 'react-icons/io5';
+import { Line, Label, SendBtn } from '../CommunityList/CommunityStyle';
 import {
 	Getcommets,
 	PostComment,
 	DeleteComment,
 	UpdateComment,
 } from '../../../../apis/service/community.api';
+import Modal from '../../../Modal';
 import detailDate from '../../../../utils/writeTime';
 
 const GetCommentsContext = createContext();
 
 function CommentSection({ id }) {
-	const [comments, setComments] = useState([]);
-	const [length, setLength] = useState(0);
-	const [newComment, setNewComment] = useState('');
+	const [comments, setComments] = useState([]); // 불러올 댓글 정보
+	const [length, setLength] = useState(0); // 댓글 갯수
+	const [newComment, setNewComment] = useState(''); // 새로 입력할 댓글
 
 	useEffect(() => {
 		getComments();
-	}, [id]);
+	}, []);
 
-	const getComments = async () => {
+	// 댓글 목록 불러오기
+	async function getComments() {
 		const res = await Getcommets(id);
 		setComments(res);
 		setLength(res.length);
-	};
+	}
 
-	const onChange = e => {
+	// 댓글 입력 input
+	async function onChange(e) {
 		setNewComment(e.target.value);
-	};
+	}
 
-	const activeEnter = async e => {
+	// 엔터를 통한 댓글 포스팅
+	async function activeEnter(e) {
 		if (e.key === 'Enter') {
 			if (newComment.trim() === '') return;
-			await postComment();
+			await PostComment(newComment, id);
+			setNewComment('');
+			await getComments();
 		}
-	};
+	}
 
-	const postComment = async () => {
+	// 클릭을 통한 댓글 포스팅
+	async function onClick() {
+		if (newComment.trim() === '') return;
 		await PostComment(newComment, id);
 		setNewComment('');
 		await getComments();
-	};
+	}
 
 	return (
 		<GetCommentsContext.Provider value={getComments}>
@@ -71,44 +80,64 @@ function CommentSection({ id }) {
 						))}
 					</Comments>
 				</CommentList>
-				<CommentInput value={newComment} onChange={onChange} onKeyDown={activeEnter} />
+				<Label className="commu_comment_box">
+					<CommentInput
+						value={newComment}
+						onChange={onChange}
+						onKeyDown={activeEnter}
+						placeholder="댓글을 입력하세요"
+					/>
+					<SendBtn className="send_btn" onClick={onClick}>
+						<IoSend />
+					</SendBtn>
+				</Label>
 			</CommentsBox>
 		</GetCommentsContext.Provider>
 	);
 }
 
 function Each({ comment, id }) {
-	const getComments = useContext(GetCommentsContext);
-	const [isEditing, setIsEditing] = useState(false);
-	const [updatedComment, setUpdatedComment] = useState(comment.content);
+	const getComments = useContext(GetCommentsContext); // 현재 댓글 목록 불러오기
+	const [isEditing, setIsEditing] = useState(false); // 댓글 수정중인지 여부
+	const [updatedComment, setUpdatedComment] = useState(comment.content); // 수정할 댓글 상태
+	const [modalOpen, setModalOpen] = useState(false); // 삭제 관련 모달 표시 여부
 
-	const time = detailDate(comment.createdAt);
+	const time = detailDate(comment.createdAt); // 댓글 입력 시간 단위 (00전)
 
-	async function onClickDelete() {
-		const commentId = comment._id;
-		await DeleteComment(id, commentId);
-		await getComments();
-	}
-
+	// 클릭을 통한 댓글 수정 버튼
 	async function onClickUpdate() {
+		if (updatedComment.trim() === '') return;
 		const commentId = comment._id;
 		await UpdateComment(updatedComment, id, commentId);
-		await getComments();
+		getComments();
 		setIsEditing(false);
 	}
 
+	// 엔터를 통한 댓글 수정 버튼
 	async function activeEnter(e) {
 		if (e.key === 'Enter') {
 			if (updatedComment.trim() === '') return;
 			const commentId = comment._id;
 			await UpdateComment(updatedComment, id, commentId);
-			await getComments();
+			getComments();
 			setIsEditing(false);
 		}
 	}
 
+	// 수정 상태 업데이트
 	async function handleEdit() {
 		setIsEditing(true);
+	}
+
+	const handleOpenModal = () => setModalOpen(true);
+	const handleCloseModal = () => setModalOpen(false);
+
+	// 댓글 삭제 버튼
+	async function onClickDelete() {
+		const commentId = comment._id;
+		await DeleteComment(id, commentId);
+		getComments();
+		setModalOpen(false);
 	}
 
 	return (
@@ -138,8 +167,18 @@ function Each({ comment, id }) {
 							) : (
 								<Button onClick={handleEdit}>수정</Button>
 							)}
-							<Button onClick={onClickDelete}>삭제</Button>
+							<Button onClick={handleOpenModal}>삭제</Button>
 						</Buttons>
+						{modalOpen && (
+							<Modal
+								isOpen={handleOpenModal}
+								onClose={handleCloseModal}
+								title="댓글삭제"
+								content="댓글을 정말 삭제하시겠습니까?"
+								confirmText="삭제"
+								onConfirm={onClickDelete}
+							/>
+						)}
 					</InnerBottom>
 				</CommentTexts>
 			</Comment>

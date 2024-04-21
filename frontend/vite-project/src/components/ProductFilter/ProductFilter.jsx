@@ -1,73 +1,101 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuSlidersHorizontal } from "react-icons/lu";
-import { Alignments, Bilnd, Alignment, Filter, FilterButton, FilterContent} from './ProductFilterStyle';
+import { LuSlidersHorizontal } from 'react-icons/lu';
+import {
+	Alignments,
+	Bilnd,
+	Alignment,
+	Filter,
+	FilterButton,
+	FilterContent,
+} from './ProductFilterStyle';
 import ProductFilterLogic from './ProductFilterLogic';
 
-const ProductFilter = () => {
-  const [showButtons, setShowButtons] = useState(false);
-  const [filteredBooks, setFilteredBooks] = useState([]);
-  const filterRef = useRef(null);
-  const [latestClicked, setLatestClicked] = useState(false);
-  const [lowCostClicked, setLowCostClicked] = useState(false);
+const ProductFilter = ({ onFilterChange, onSortChange }) => {
+	const [showButtons, setShowButtons] = useState(false);
+	const filterRef = useRef(null);
 
-  const handleLatestClick = () => {
-    setLatestClicked(true);
-    setLowCostClicked(false); // 다른 버튼은 클릭되지 않은 상태로 설정
-  };
+	// 정렬 상태
+	const [latestClicked, setLatestClicked] = useState(false);
+	const [cheapestClicked, setCheapestClicked] = useState(false);
 
-  const handleLowCostClick = () => {
-    setLowCostClicked(true);
-    setLatestClicked(false); 
-  };
+	// 필터 상태
+	const [selectedLocation, setSelectedLocation] = useState('');
+	const [selectedUniversity, setSelectedUniversity] = useState('');
 
-  //필터 창 열기
-  const openFilter = () => {
-    setShowButtons(true);
-  };
+	// 정렬 옵션 변경
+	const handleSortChange = sortOption => {
+		onSortChange(sortOption);
+		setLatestClicked(sortOption === 'latest');
+		setCheapestClicked(sortOption === 'cheapest');
+	};
 
-  //필터 창 닫기
-  const closeFilter = () => {
-    setShowButtons(false);
-  };
+	// 최신순 클릭 이벤트
+	const handleLatestClick = () => {
+		handleSortChange('latest');
+	};
 
-  // 필터 창 외부 클릭 시 창 닫기
-  const handleClickOutside = (event) => {
-    if (filterRef.current && !filterRef.current.contains(event.target)) {
-      closeFilter();
-    }
-  };
+	// 저가순 클릭 이벤트
+	const handleCheapestClick = () => {
+		handleSortChange('cheapest');
+	};
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+	// 필터 창 열기
+	const openFilter = () => {
+		setShowButtons(true);
+	};
 
-  return (
-    <>
-     <Alignments>
-          <Bilnd>정렬</Bilnd>
-          <Alignment onClick={handleLatestClick} isActive={latestClicked} >최신순</Alignment>
-          <Alignment onClick={handleLowCostClick} isActive={lowCostClicked} >저가순</Alignment>
-        </Alignments>
-        <Filter>
-          <FilterButton onClick={openFilter}>
-          <LuSlidersHorizontal size="24" />
-          필터
-          </FilterButton>
-          {showButtons && (
-            <FilterContent ref={filterRef}>
-              <ProductFilterLogic onUpdateFilteredBooks={setFilteredBooks} onCloseFilter={closeFilter} />
-              {/* 필터링된 책 목록 출력 */}
-              {filteredBooks.map((book, index) => (
-                <div key={index}>{/* 책 정보 표시 */}</div>
-              ))}
-            </FilterContent>
-          )}
-        </Filter>
-    </>
-  );
+	// 필터 창 닫기
+	const closeFilter = () => {
+		setShowButtons(false);
+	};
+
+	// 필터 창 외부 클릭 시 창 닫기
+	const handleClickOutside = e => {
+		if (filterRef.current && !filterRef.current.contains(e.target)) {
+			closeFilter();
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
+
+	return (
+		<>
+			<Alignments>
+				<Bilnd>정렬</Bilnd>
+				<Alignment onClick={handleLatestClick} isActive={latestClicked}>
+					최신순
+				</Alignment>
+				<Alignment onClick={handleCheapestClick} isActive={cheapestClicked}>
+					저가순
+				</Alignment>
+			</Alignments>
+			<Filter>
+				<FilterButton onClick={openFilter}>
+					<LuSlidersHorizontal size="24" />
+					필터
+				</FilterButton>
+				{showButtons && (
+					<FilterContent ref={filterRef}>
+						<ProductFilterLogic
+							onApplyFilter={(location, university) => {
+								onFilterChange(location, university);
+								setSelectedLocation(location);
+								setSelectedUniversity(university);
+							}}
+							onCloseFilter={closeFilter}
+							selectedLocation={selectedLocation}
+							selectedUniversity={selectedUniversity}
+						/>
+					</FilterContent>
+				)}
+			</Filter>
+		</>
+	);
 };
 
 export default ProductFilter;

@@ -1,53 +1,69 @@
-import styled from "styled-components" 
+import styled from 'styled-components';
+const HeaderMain = styled.div`
+	.HambergerBtn {
+		display: none;
+	}
 
+	@media screen and (max-width: 864px) {
+		.HambergerBtn {
+			display: block;
+			position: absolute;
+		}
+	}
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px 20px;
+	background-color: ${props => (props.isMainPage ? '#b1e9f8' : ' #fff')};
+`;
+
+const NavWrap = styled.div`
+	display: flex;
+	align-items: center;
+	width: 80%;
+	gap: 30px;
+`;
+const MainLogo = styled.div``;
+
+// 햄버거 버튼 숨기고 일단 right nav 숨기는데 여기부분 필요할것같아요!
 const RightNav = styled.div`
-    display: flex;
-    width: 837px;
-    height: 55px;
-    align-items: center;
-    gap: 30px;
-    .MainLink {
-        font-weight: 900; 
-    }
-    a{
-        font-size: 25px;
-    }
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 5%;
+	width: 70%;
 
+	@media screen and (max-width: 864px) {
+		display: none;
+	}
+
+	li {
+		font-size: 20px;
+		font-weight: 500;
+	}
 `;
 
 const LeftNav = styled.div`
-    display: flex;
-    height: 55px;
-    padding: 0px 20px;
-    justify-content: flex-end;
-    align-items: flex-start;
-    gap: 20px;
-    flex: 1 0 0;
-    a {
-        font-size: 15px;
-    }
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	width: 100%;
+	justify-content: flex-end;
 
+	img {
+		width: 65px;
+	}
 `;
 
-const HeaderMain  = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    flex: 1 0 0;
-    padding-top: 20px;
-    width: 100vw;
-
-    a {
-        text-decoration: none;
-        color: #000;
-        text-align: center;
-        font-family: SUIT;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-        margin-right: 25px;
-    }
+const Nav = styled(HeaderMain)`
+	width: 30%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	cursor: pointer;
+	padding: 0;
+	background: transparent;
 `;
 
-
-export {RightNav, HeaderMain, LeftNav  };
+export { RightNav, LeftNav, HeaderMain, Nav, MainLogo, NavWrap };

@@ -1,40 +1,64 @@
-import React, { useState, useMemo } from 'react';
-import WishBtn from "./WishButtonStyle";
-import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
+import React, { useState, useEffect, useContext } from 'react';
+import WishBtn from './WishButtonStyle';
+import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+import UserIdContext from '../../context/UserIdContext';
+import { fetchUserWishList, toggleWishlist } from '../../apis/service/WishApi';
 
-function WishButton () {
-  const [isWishAdd, setIsWishAdd] = useState(false);
-  const [wishCount, setWishCount] = useState(0);
+// WishButton 컴포넌트
+function WishButton({ productId }) {
+	const [isWishAdd, setIsWishAdd] = useState(false);
+	const { id } = useContext(UserIdContext);
+	const navigate = useNavigate();
 
-  const toggleWishAdd = () => {
-    setIsWishAdd(!isWishAdd);
-  };
+	// 사용자가 상품을 찜했는지 확인
+	useEffect(() => {
+		const fetchStatus = async () => {
+			if (!id) {
+				return; // 로그인하지 않은 상태라면 함수 종료
+			}
 
-  const wishCountHandler = () => {
-    toggleWishAdd();
-    if (!isWishAdd) {
-      setWishCount(prevCount => prevCount + 1);
-      fetch(`API_URL`,{
-        method: "POST",
-        body: JSON.stringify({
-          "user_id": 8, //더미
-          "product_id": 2 //더미
-        }),
-      })
-    }
-  };
+			try {
+				const wishData = await fetchUserWishList(id);
+				const isProductInWishlist = wishData.some(wish => wish.productId._id === productId);
+				setIsWishAdd(isProductInWishlist);
+			} catch (error) {
+				console.error('Error fetching wish status:', error);
+			}
+		};
 
-  const WishIcon = useMemo(() => {
-    return isWishAdd ? <IoIosHeart size="24" color="#FECCBE" /> : <IoIosHeartEmpty size="24" />;
-  }, [isWishAdd]);
+		fetchStatus();
+	}, [productId, id]);
 
-  return (
-    <>
-      <WishBtn onClick={wishCountHandler}>
-        {WishIcon}
-      </WishBtn>
-    </>
-  );
+	// 찜 버튼 상태 토글 함수
+	const wishCountHandler = async () => {
+		if (!id) {
+			navigate('/login'); // 사용자가 로그인하지 않은 상태라면 로그인 페이지로 이동
+			return;
+		}
+
+		const newIsWishAdd = !isWishAdd;
+
+		try {
+			const res = await toggleWishlist(productId);
+			if (res.status === 200) {
+				setIsWishAdd(newIsWishAdd);
+			} else {
+				console.error('Error toggling wishlist:', res);
+			}
+		} catch (error) {
+			console.error('API 요청 에러:', error);
+		}
+	};
+
+	// 아이콘 렌더링
+	const WishIcon = isWishAdd ? (
+		<IoIosHeart size="24" color="#FECCBE" />
+	) : (
+		<IoIosHeartEmpty size="24" />
+	);
+
+	return <WishBtn onClick={wishCountHandler}>{WishIcon}</WishBtn>;
 }
 
 export default WishButton;

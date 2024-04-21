@@ -1,97 +1,132 @@
 import React, { useState, useEffect } from 'react';
-import {LocationList, UniversityList, LocationItem, FilterList, Buttons, FilterInButton} from './ProductFilterStyle';
+import {
+	LocationList,
+	UniversityList,
+	LocationItem,
+	FilterList,
+	Buttons,
+	FilterInButton,
+} from './ProductFilterStyle';
+import { fetchLocations } from '../../apis/service/CategoriesApi';
 
-function ProductFilterLogic({ onUpdateFilteredBooks, onCloseFilter }) {
-  const [locations, setLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState('');
-  const [universities, setUniversities] = useState([]);
-  const [selectedUniversity, setSelectedUniversity] = useState('');
-  const [filteredBooks, setFilteredBooks] = useState([]);
-  const [isConfirmEnabled, setIsConfirmEnabled] = useState(false);
+function ProductFilterLogic({
+	onApplyFilter,
+	onCloseFilter,
+	selectedLocation,
+	selectedUniversity,
+}) {
+	const [locations, setLocations] = useState([]);
+	const [currentLocation, setCurrentLocation] = useState(selectedLocation);
+	const [currentUniversity, setCurrentUniversity] = useState(selectedUniversity);
+	const [universities, setUniversities] = useState([]);
 
-  // 컴포넌트가 마운트될 때 지역 데이터 호출
-  useEffect(() => {
-    fetchLocations();
-  }, []);
+	// 컴포넌트가 마운트될 때 선택된 지역과 대학교 초기화
+	useEffect(() => {
+		setCurrentLocation(selectedLocation);
+		setCurrentUniversity(selectedUniversity);
+	}, [selectedLocation, selectedUniversity]);
 
-  // 대학교 선택 여부에 따라 확인 버튼 활성/비활성화
-  useEffect(() => {
-    setIsConfirmEnabled(selectedUniversity !== '');
-  }, [selectedUniversity]);
+	useEffect(() => {
+		fetchLocations()
+			.then(data => {
+				// 데이터를 이용한 로직
+				if (Array.isArray(data)) {
+					const sortedLocations = data.sort((a, b) => a.region.localeCompare(b.region));
+					setLocations(sortedLocations);
+					if (currentLocation) {
+						const selectedLocationData = sortedLocations.find(
+							location => location.region === currentLocation,
+						);
+						if (selectedLocationData) {
+							setUniversities(['전체', ...selectedLocationData.universities]);
+						}
+					}
+				}
+			})
+			.catch(err => {
+				console.error('지역 데이터를 가져오는 중 오류가 발생했습니다.', err);
+			});
+	}, [currentLocation]);
 
-  // 지역 데이터
-  const fetchLocations = () => {
-    setLocations(['강북구', '강남구', '강동구', '동대문구']); //더미 데이터
-  };
+	// 지역 선택했을 떄 호출
+	const handleLocationSelect = locationId => {
+		const locationData = locations.find(location => location._id === locationId);
+		if (locationData) {
+			setCurrentLocation(locationId);
+			setUniversities(['전체', ...locationData.universities]);
+		}
+		setCurrentUniversity('전체');
+	};
 
-  // 대학교 데이터
-  const fetchUniversities = (locationId) => {
-    setUniversities(['서울대', '고려대', '연세대', '이화여대']); //더미 데이터
-  };
+	// 대학교 선택했을 때 호출
+	const handleUniversitySelect = university => {
+		setCurrentUniversity(prevUniversity => (prevUniversity === university ? '전체' : university));
+		if (university !== '전체') {
+			const locationData = locations.find(location => location.universities.includes(university));
+			if (locationData) {
+				setCurrentLocation(locationData.region);
+			}
+		}
+	};
 
-  // 지역을 선택했을 때 호출
-  const handleLocationSelect = (locationId) => {
-    setSelectedLocation(locationId);
-    fetchUniversities(locationId); // 선택한 지역에 해당하는 대학교 데이터
-    setSelectedUniversity(''); // 선택한 지역이 변경되면 선택된 대학교 초기화
-    setFilteredBooks([]); // 필터링된 책 데이터 초기화
-  };
+	const handleApplyFilter = () => {
+		const selectedLocationName = locations.find(
+			location => location.region === currentLocation,
+		)?.region;
 
-  // 대학교를 선택했을 때 호출
-  const handleUniversitySelect = (universityId) => {
-    setSelectedUniversity(prevUniversity => prevUniversity === universityId ? '' : universityId);
-    setFilteredBooks([]); // 필터링된 책 데이터 초기화
-  };
+		onApplyFilter(selectedLocationName, currentUniversity);
+		onCloseFilter();
+	};
 
-  // 필터 초기화
-  const handleResetFilter = () => {
-    setSelectedLocation('');
-    setSelectedUniversity('');
-    setUniversities([]);
-    setFilteredBooks([]);
-    onCloseFilter();
-  };
+	const handleResetFilter = () => {
+		setCurrentLocation('');
+		setCurrentUniversity('');
+		onApplyFilter('', '');
+		onCloseFilter();
+	};
 
-  // 확인 버튼을 눌렀을 때 호출
-  const handleApplyFilter = () => {
-    if (selectedUniversity) {
-      onUpdateFilteredBooks(filteredBooks); // 필터링된 책 데이터를 부모 컴포넌트로 전달
-      onCloseFilter();
-    }
-  };
+	return (
+		<>
+			<FilterList className="filterlist">
+				<LocationList className="locationlist">
+					{locations.map(location => (
+						<LocationItem
+							key={location._id}
+							className={currentLocation === location.region ? 'selected' : ''}
+							onClick={() => handleLocationSelect(location._id)}
+						>
+							{location.region}
+						</LocationItem>
+					))}
+				</LocationList>
 
-  return (
-    <>
-    <FilterList>
-      <LocationList>
-        {locations.map((location, index) => (
-          <LocationItem
-            key={index}
-            className={selectedLocation === location ? 'selected' : ''}
-            onClick={() => handleLocationSelect(location)}
-          >
-            {location}
-          </LocationItem>
-        ))}
-      </LocationList>
-      <UniversityList>
-        {universities.map((university, index) => (
-          <LocationItem
-            key={index}
-            className={selectedUniversity === university ? 'selected' : ''}
-            onClick={() => handleUniversitySelect(university)}
-          >
-            {university}
-          </LocationItem>
-        ))}
-      </UniversityList>
-    </FilterList>
-      <Buttons>
-        <FilterInButton color="#009DFF" backgroundColor="#fff" onClick={handleResetFilter}>초기화</FilterInButton>
-        <FilterInButton color="#fff" backgroundColor="#009DFF" disabled={!isConfirmEnabled} onClick={handleApplyFilter}>확인</FilterInButton>
-      </Buttons>
-    </>
-  );
+				<UniversityList className="universitylist">
+					{universities.map(university => (
+						<LocationItem
+							key={university._id} // 대학의 고유한 ID를 key로 사용
+							className={currentUniversity === university.name ? 'selected' : ''}
+							onClick={() => handleUniversitySelect(university.name)} // 대학 이름을 전달
+						>
+							{university.name}
+						</LocationItem>
+					))}
+				</UniversityList>
+			</FilterList>
+			<Buttons className="buttons">
+				<FilterInButton
+					className="but1"
+					color="#009DFF"
+					backgroundColor="#fff"
+					onClick={handleResetFilter}
+				>
+					초기화
+				</FilterInButton>
+				<FilterInButton color="#fff" backgroundColor="#009DFF" onClick={handleApplyFilter}>
+					확인
+				</FilterInButton>
+			</Buttons>
+		</>
+	);
 }
 
 export default ProductFilterLogic;

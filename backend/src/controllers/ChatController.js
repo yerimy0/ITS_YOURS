@@ -55,7 +55,6 @@ const getChatroomList = async (req, res, next) => {
 
 		// 사용자의 실제 ID를 사용하여 채팅방 목록 불러오기
 		const chatList = await chatService.getChatroomListWithFilter(member._id);
-		console.log('q', chatList);
 		if (!chatList || chatList.length === 0) {
 			throw new NotFoundError('채팅 목록이 없습니다.');
 		}
